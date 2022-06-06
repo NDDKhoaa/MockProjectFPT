@@ -9,11 +9,11 @@
 		<version>2.3.1.BUILD-SNAPSHOT</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>carpark</groupId>
-	<artifactId>CarPark</artifactId>
+	<groupId>mockproject</groupId>
+	<artifactId>MockProject</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>CarPark</name>
-	<description>Demo project for Spring Boot</description>
+	<name>MockProject</name>
+	<description>Mock Project for Final</description>
 
 	<properties>
 		<java.version>12</java.version>
