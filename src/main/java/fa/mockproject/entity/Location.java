@@ -17,14 +17,11 @@ public class Location {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "location_id", unique = true, nullable = false)
-	private long locationId;
+	@Column(name = "location_id", length = 20, unique = true, nullable = false)
+	private String locationId;
 
 	@Column(name = "location_name", length = 250, nullable = false)
 	private String locationName;
-
-	@Column(name = "address", length = 250, nullable = false)
-	private String address;
 
 	@Column(name = "remarks", length = 250, nullable = true)
 	private String remarks;
@@ -37,18 +34,17 @@ public class Location {
 		super();
 	}
 
-	public Location(String locationName, String address, String remarks) {
+	public Location(String locationName, String remarks) {
 		super();
 		this.locationName = locationName;
-		this.address = address;
 		this.remarks = remarks;
 	}
 
-	public long getLocationId() {
+	public String getLocationId() {
 		return locationId;
 	}
 
-	public void setLocationId(long locationId) {
+	public void setLocationId(String locationId) {
 		this.locationId = locationId;
 	}
 
@@ -58,14 +54,6 @@ public class Location {
 
 	public void setLocationName(String locationName) {
 		this.locationName = locationName;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
 	}
 
 	public String getRemarks() {
@@ -86,8 +74,7 @@ public class Location {
 
 	@Override
 	public String toString() {
-		return "Location [locationId=" + locationId + ", locationName=" + locationName + ", address=" + address
-				+ ", remarks=" + remarks + "]";
+		return "Location [locationId=" + locationId + ", locationName=" + locationName + ", remarks=" + remarks + "]";
 	}
 
 }

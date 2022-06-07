@@ -17,8 +17,8 @@ public class University {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "university_id", unique = true, nullable = false)
-	private long universityId;
+	@Column(name = "university_id",length = 20, unique = true, nullable = false)
+	private String universityId;
 
 	@Column(name = "university_name", length = 250, unique = true, nullable = false)
 	private String universityName;
@@ -27,7 +27,7 @@ public class University {
 	private String remarks;
 
 	@OneToOne
-	@JoinColumn(name = "trainee_candidate_profile_id", nullable = false)
+	@JoinColumn(name = "trainee_candidate_profile_id", nullable = true)
 	private TraineeCandidateProfile traineeCandidateProfile;
 
 	public University() {
@@ -41,11 +41,11 @@ public class University {
 		this.traineeCandidateProfile = traineeCandidateProfile;
 	}
 
-	public long getUniversityId() {
+	public String getUniversityId() {
 		return universityId;
 	}
 
-	public void setUniversityId(long universityId) {
+	public void setUniversityId(String universityId) {
 		this.universityId = universityId;
 	}
 

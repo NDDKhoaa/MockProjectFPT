@@ -17,8 +17,8 @@ public class Channel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "channel_id", unique = true, nullable = false)
-	private long channelId;
+	@Column(name = "channel_id", length=20,unique = true, nullable = false)
+	private String channelId;
 	
 	@ManyToOne
 	@JoinColumn(name = "candidate_id", nullable = false)
@@ -41,11 +41,11 @@ public class Channel {
 		this.channelName = channelName;
 	}
 
-	public long getChannelId() {
+	public String getChannelId() {
 		return channelId;
 	}
 
-	public void setChannelId(long channelId) {
+	public void setChannelId(String channelId) {
 		this.channelId = channelId;
 	}
 
