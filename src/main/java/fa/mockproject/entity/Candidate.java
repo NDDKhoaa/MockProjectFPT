@@ -1,13 +1,18 @@
 package fa.mockproject.entity;
 
-import java.sql.Date;
+import java.time.LocalDate;
+import java.util.Set;
 
 import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -22,27 +27,33 @@ public class Candidate {
 	@Column(name = "candidate_id", unique = true, nullable = false)
 	private long candidateId;
 
-	@Column(name = "trainee_candidate_profile_id", nullable = false)
+	@OneToOne
+	@JoinColumn(name = "trainee_candidate_profile_id", nullable = false)
 	private TraineeCandidateProfile traineeCandidateProfile;
 
 	@DateTimeFormat
 	@Column(name = "application_date", nullable = false)
-	private Date applicationDate;
+	private LocalDate applicationDate;
 
-	@Column(name = "channel_id", nullable = false)
-	private Channel channel;
+	@OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL)
+	@JoinColumn(name = "channel_id", nullable = false)
+	private Set<Channel> channel;
 
-	@Column(name = "location_id", nullable = false)
-	private Location location;
+	@OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL)
+	@JoinColumn(name = "location_id", nullable = false)
+	private Set<Location> location;
 
-	@Column(name = "entry_test_id", nullable = false)
-	private EntryTest entryTest;
+	@OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL)
+	@JoinColumn(name = "entry_test_id", nullable = false)
+	private Set<EntryTest> entryTest;
 
-	@Column(name = "interview_id", nullable = false)
-	private Interview interviewId;
+	@OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL)
+	@JoinColumn(name = "interview_id", nullable = false)
+	private Set<Interview> interview;
 
-	@Column(name = "offer_id", nullable = false)
-	private Offer offerId;
+	@OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL)
+	@JoinColumn(name = "offer_id", nullable = false)
+	private Set<Offer> offer;
 
 	@Column(name = "status", length = 250, nullable = false)
 	private String status;
@@ -70,52 +81,52 @@ public class Candidate {
 		this.traineeCandidateProfile = traineeCandidateProfile;
 	}
 
-	public Date getApplicationDate() {
+	public LocalDate getApplicationDate() {
 		return applicationDate;
 	}
 
-	public void setApplicationDate(Date applicationDate) {
+	public void setApplicationDate(LocalDate applicationDate) {
 		this.applicationDate = applicationDate;
 	}
 
-	public Channel getChannel() {
+	public Set<Channel> getChannel() {
 		return channel;
 	}
 
-	public void setChannel(Channel channel) {
+	public void setChannel(Set<Channel> channel) {
 		this.channel = channel;
 	}
 
-	public Location getLocation() {
+	public Set<Location> getLocation() {
 		return location;
 	}
 
-	public void setLocation(Location location) {
+	public void setLocation(Set<Location> location) {
 		this.location = location;
 	}
 
-	public EntryTest getEntryTest() {
+	public Set<EntryTest> getEntryTest() {
 		return entryTest;
 	}
 
-	public void setEntryTest(EntryTest entryTest) {
+	public void setEntryTest(Set<EntryTest> entryTest) {
 		this.entryTest = entryTest;
 	}
 
-	public Interview getInterviewId() {
-		return interviewId;
+	public Set<Interview> getInterview() {
+		return interview;
 	}
 
-	public void setInterviewId(Interview interviewId) {
-		this.interviewId = interviewId;
+	public void setInterview(Set<Interview> interview) {
+		this.interview = interview;
 	}
 
-	public Offer getOfferId() {
-		return offerId;
+	public Set<Offer> getOffer() {
+		return offer;
 	}
 
-	public void setOfferId(Offer offerId) {
-		this.offerId = offerId;
+	public void setOffer(Set<Offer> offer) {
+		this.offer = offer;
 	}
 
 	public String getStatus() {
@@ -132,13 +143,6 @@ public class Candidate {
 
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
-	}
-
-	@Override
-	public String toString() {
-		return "Candidate [candidateId=" + candidateId + ", applicationDate=" + applicationDate + ", channel=" + channel
-				+ ", location=" + location + ", entryTest=" + entryTest + ", interviewId=" + interviewId + ", offerId="
-				+ offerId + ", status=" + status + ", remarks=" + remarks + "]";
 	}
 
 }

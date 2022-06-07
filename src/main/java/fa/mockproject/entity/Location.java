@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -27,7 +29,8 @@ public class Location {
 	@Column(name = "remarks", length = 250, nullable = true)
 	private String remarks;
 
-	@Column(name = "candidate_id", nullable = false)
+	@ManyToOne
+	@JoinColumn(name = "candidate_id", nullable = false)
 	private Candidate candidate;
 
 	public Location() {

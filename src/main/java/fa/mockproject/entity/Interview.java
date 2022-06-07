@@ -2,6 +2,7 @@ package fa.mockproject.entity;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -9,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -28,7 +31,7 @@ public class Interview {
 
 	@DateTimeFormat
 	@Column(name = "date", nullable = false)
-	private Date date;
+	private LocalDate date;
 
 	@Column(name = "interviewer", length = 250, nullable = false)
 	private String interviewer;
@@ -42,14 +45,15 @@ public class Interview {
 	@Column(name = "remarks", length = 250, nullable = true)
 	private String remarks;
 
-	@Column(name = "candidate_id", nullable = false)
+	@ManyToOne
+	@JoinColumn(name = "candidate_id", nullable = false)
 	private Candidate candidate;
 
 	public Interview() {
 		super();
 	}
 
-	public Interview(BigDecimal time, Date date, String interviewer, String comments, String result,
+	public Interview(BigDecimal time, LocalDate date, String interviewer, String comments, String result,
 			String remarks) {
 		super();
 		this.time = time;
@@ -76,11 +80,11 @@ public class Interview {
 		this.time = time;
 	}
 
-	public Date getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 

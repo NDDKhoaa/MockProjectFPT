@@ -2,6 +2,7 @@ package fa.mockproject.entity;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -9,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -28,7 +31,7 @@ public class EntryTest {
 
 	@DateTimeFormat
 	@Column(name = "date", nullable = false)
-	private Date date;
+	private LocalDate date;
 
 	@Column(name = "language_valuator", nullable = false)
 	private int languageValuator;
@@ -48,14 +51,15 @@ public class EntryTest {
 	@Column(name = "remarks", length = 250, nullable = true)
 	private String remarks;
 
-	@Column(name = "candidate_id", nullable = false)
+	@ManyToOne
+	@JoinColumn(name = "candidate_id", nullable = false)
 	private Candidate candidate;
 
 	public EntryTest() {
 		super();
 	}
 
-	public EntryTest(BigDecimal time, Date date, int languageValuator, String languageResult, int technicalValuator,
+	public EntryTest(BigDecimal time, LocalDate date, int languageValuator, String languageResult, int technicalValuator,
 			String technicalResult, String result, String remarks) {
 		super();
 		this.time = time;
@@ -84,11 +88,11 @@ public class EntryTest {
 		this.time = time;
 	}
 
-	public Date getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 

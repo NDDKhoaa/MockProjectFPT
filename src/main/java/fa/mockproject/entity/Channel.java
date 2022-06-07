@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -17,8 +19,9 @@ public class Channel {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "channel_id", unique = true, nullable = false)
 	private long channelId;
-
-	@Column(name = "candidate_id", length = 200, nullable = true)
+	
+	@ManyToOne
+	@JoinColumn(name = "candidate_id", nullable = false)
 	private Candidate candidate;
 
 	@Column(name = "remarks", length = 250, nullable = true)
