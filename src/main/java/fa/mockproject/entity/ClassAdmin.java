@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,13 +20,15 @@ public class ClassAdmin {
 	@Column(name = "class_admin_id")
 	private int classAdminId;
 	
-	@Column(name = "class_id")
+	@OneToOne
+	@JoinColumn(name = "class_id", nullable = false)
 	private ClassBatch classBatch;
 	
-	@Column(name = "class_admin_profile_id")
+	@OneToOne
+	@JoinColumn(name = "class_admin_profile_id", nullable = false)
 	private ClassAdminProfile classAdminProfile;
 	
-	@Column(name = "remark", length = 200)
+	@Column(name = "remark", length = 200, nullable = true)
 	private String remarks;
 	
 	public ClassAdmin() {
