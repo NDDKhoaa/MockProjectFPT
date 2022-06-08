@@ -1,7 +1,5 @@
 package fa.mockproject.entity;
 
-<<<<<<< HEAD
-
 import javax.persistence.*;
 
 @Entity
@@ -10,8 +8,8 @@ import javax.persistence.*;
 public class LearningPath {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "learning_path_id", nullable = false, length = 10)
-    private Integer learningPathId;
+    @Column(name = "learning_path_id", nullable = false)
+    private long learningPathId;
 
     @ManyToOne
     @JoinColumn(name = "topic_id")
@@ -30,7 +28,7 @@ public class LearningPath {
         this.traineeId = traineeId;
     }
 
-    public Integer getLearningPathId() {
+    public long getLearningPathId() {
         return learningPathId;
     }
 
@@ -54,9 +52,3 @@ public class LearningPath {
         this.traineeId = traineeId;
     }
 }
-
-=======
-public class LearningPath {
-
-}
->>>>>>> cc5e892 (Entity + Service)

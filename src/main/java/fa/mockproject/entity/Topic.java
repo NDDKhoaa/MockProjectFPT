@@ -10,16 +10,16 @@ public class Topic {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "topic_id", nullable = false, length = 10)
-    private Integer topicId;
+    @Column(name = "topic_id", nullable = false)
+    private long topicId;
 
     @OneToMany(mappedBy="topic", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<LearningPath> learningPathId;
 
-    @Column(name = "remarks", length = 10)
+    @Column(name = "remarks")
     private Integer remarks;
 
-    @Column(name = "topic_name", length = 10)
+    @Column(name = "topic_name")
     private Integer topicName;
 
     public Topic() {
@@ -32,7 +32,7 @@ public class Topic {
         this.topicName = topicName;
     }
 
-    public Integer getTopicId() {
+    public long getTopicId() {
         return topicId;
     }
 

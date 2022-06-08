@@ -8,29 +8,29 @@ import javax.persistence.*;
 public class AllowanceGroup {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "group", nullable = false, length = 10)
-    private int group;
+    @Column(name = "group", nullable = false)
+    private long group;
 
     @OneToOne(mappedBy = "allowance_group", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Allowance allowance;
 
-    @Column(name = "remarks", length = 10)
+    @Column(name = "remarks")
     private Integer remarks;
 
     public AllowanceGroup() {
     }
 
-    public AllowanceGroup(int group, Allowance allowance, Integer remarks) {
+    public AllowanceGroup(long group, Allowance allowance, Integer remarks) {
         this.group = group;
         this.allowance = allowance;
         this.remarks = remarks;
     }
 
-    public int getGroup() {
+    public long getGroup() {
         return group;
     }
 
-    public void setGroup(int group) {
+    public void setGroup(long group) {
         this.group = group;
     }
 

@@ -1,7 +1,5 @@
 package fa.mockproject.entity;
 
-<<<<<<< HEAD
-
 import javax.persistence.*;
 
 @Entity
@@ -10,17 +8,17 @@ import javax.persistence.*;
 public class Status {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "status_id", nullable = false, length = 10)
-    private Integer statusId;
+    @Column(name = "status_id", nullable = false)
+    private long statusId;
 
     @ManyToOne
     @JoinColumn(name = "trainee_candidate id", nullable = false)
     private Trainee traineeId;
 
-    @Column(name = "remarks", length = 10)
+    @Column(name = "remarks")
     private Integer remarks;
 
-    @Column(name = "batch_class_id", length = 10)
+    @Column(name = "batch_class_id")
     private Integer batchClassId;
 
     public Status() {
@@ -33,7 +31,7 @@ public class Status {
         this.batchClassId = batchClassId;
     }
 
-    public Integer getStatusId() {
+    public long getStatusId() {
         return statusId;
     }
 
@@ -64,8 +62,4 @@ public class Status {
     public void setBatchClassId(Integer batchClassId) {
         this.batchClassId = batchClassId;
     }
-=======
-public class Status {
-
->>>>>>> cc5e892 (Entity + Service)
 }

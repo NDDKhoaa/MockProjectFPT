@@ -1,7 +1,5 @@
 package fa.mockproject.entity;
 
-<<<<<<< HEAD
-
 import javax.persistence.*;
 
 @Entity
@@ -10,29 +8,29 @@ import javax.persistence.*;
 public class GPA {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "GPA_id", nullable = false, length = 10)
-    private int gpaId;
+    @Column(name = "GPA_id", nullable = false)
+    private long gpaId;
 
     @ManyToOne
     @JoinColumn(name = "trainee_candidate id", nullable = false)
     private Trainee traineeId;
 
-    @Column(name = "class_id", length = 10)
+    @Column(name = "class_id")
     private Integer classId;
 
-    @Column(name = "attendant_id", length = 10)
+    @Column(name = "attendant_id")
     private Integer attendantId;
 
-    @Column(name = "allowance_id", length = 10)
+    @Column(name = "allowance_id")
     private Integer allowanceId;
 
-    @Column(name = "GPA_result", length = 10)
+    @Column(name = "GPA_result")
     private Integer gpaResult;
 
-    @Column(name = "remarks", length = 10)
+    @Column(name = "remarks")
     private Integer remarks;
 
-    @Column(name = "GPAGPA_id", length = 10)
+    @Column(name = "GPAGPA_id")
     private int gpaGpaId;
 
     public GPA() {
@@ -49,11 +47,11 @@ public class GPA {
         this.gpaGpaId = gpaGpaId;
     }
 
-    public int getGpaId() {
+    public long getGpaId() {
         return gpaId;
     }
 
-    public void setGpaId(int gpaId) {
+    public void setGpaId(long gpaId) {
         this.gpaId = gpaId;
     }
 
@@ -112,8 +110,4 @@ public class GPA {
     public void setGpaGpaId(int gpaGpaId) {
         this.gpaGpaId = gpaGpaId;
     }
-=======
-public class GPA {
-
->>>>>>> cc5e892 (Entity + Service)
 }
