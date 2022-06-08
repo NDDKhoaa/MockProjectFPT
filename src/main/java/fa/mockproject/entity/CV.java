@@ -59,6 +59,13 @@ public class CV {
 		this.content = content;
 	}
 
+	
+	public CV(long cvId, String name) {
+		super();
+		this.cvId = cvId;
+		this.name = name;
+	}
+
 	public long getSize() {
 		return size;
 	}
