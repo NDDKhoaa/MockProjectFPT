@@ -1,6 +1,6 @@
 package fa.mockproject.entity;
 
-<<<<<<< HEAD
+
 import javax.persistence.*;
 
 @Entity
@@ -53,8 +53,4 @@ public class LearningPath {
         this.traineeId = traineeId;
     }
 }
-=======
-public class LearningPath {
 
-}
->>>>>>> cc5e892 (Entity + Service)
