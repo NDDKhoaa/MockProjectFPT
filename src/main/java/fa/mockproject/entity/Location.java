@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -26,9 +27,9 @@ public class Location {
 	@Column(name = "remarks", length = 250, nullable = true)
 	private String remarks;
 
-	@ManyToOne
-	@JoinColumn(name = "candidate_id", nullable = false)
-	private Candidate candidate;
+	@OneToOne
+	@JoinColumn(name = "class_id", nullable = false)
+	private ClassBatch classBatch;
 
 	public Location() {
 		super();
@@ -64,17 +65,18 @@ public class Location {
 		this.remarks = remarks;
 	}
 
-	public Candidate getCandidate() {
-		return candidate;
+	public ClassBatch getClassBatch() {
+		return classBatch;
 	}
 
-	public void setCandidate(Candidate candidate) {
-		this.candidate = candidate;
+	public void setClassBatch(ClassBatch classBatch) {
+		this.classBatch = classBatch;
 	}
 
 	@Override
 	public String toString() {
-		return "Location [locationId=" + locationId + ", locationName=" + locationName + ", remarks=" + remarks + "]";
+		return "Location [locationId=" + locationId + ", locationName=" + locationName + ", remarks=" + remarks
+				+ ", classBatch=" + classBatch + "]";
 	}
 
 }
