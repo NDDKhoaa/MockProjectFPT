@@ -20,15 +20,14 @@ public class ClassAdmin {
 	@Column(name = "class_admin_id")
 	private int classAdminId;
 	
-	@OneToOne
-	@JoinColumn(name = "class_id", nullable = false)
+	@OneToOne(mappedBy = "classAdmin")
 	private ClassBatch classBatch;
 	
-	@OneToOne
+	@OneToOne()
 	@JoinColumn(name = "class_admin_profile_id", nullable = false)
 	private ClassAdminProfile classAdminProfile;
 	
-	@Column(name = "remark", length = 200, nullable = true)
+	@Column(name = "remark", length = 255, nullable = true)
 	private String remarks;
 	
 	public ClassAdmin() {

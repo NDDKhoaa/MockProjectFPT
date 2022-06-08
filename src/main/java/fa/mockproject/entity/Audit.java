@@ -22,29 +22,28 @@ public class Audit {
 	@Column(name = "audit_id")
 	private int auditId;
 	
-	@OneToOne
-	@JoinColumn(name = "class_id", nullable = false)
+	@OneToOne(mappedBy = "audit")
 	private ClassBatch classBatch;
 	
 	@Column(name = "date", nullable = false)
 	private LocalDate date;
 	
-	@Column(name = "event_category", length = 100, nullable = false)
+	@Column(name = "event_category", length = 255, nullable = false)
 	private String eventCategory;
 	
-	@Column(name = "related_party_or_people", length = 100, nullable = false)
+	@Column(name = "related_party_or_people", length = 255, nullable = false)
 	private String relatedPartyOrPeople;
 	
-	@Column(name = "action", length = 100, nullable = false)
+	@Column(name = "action", length = 255, nullable = false)
 	private String action;
 	
-	@Column(name = "pic", length = 50, nullable = false)
+	@Column(name = "pic", length = 255, nullable = false)
 	private String pic;
 	
 	@Column(name = "deadline", nullable =  false)
 	private LocalDate deadline;
 	
-	@Column(name = "note", length = 200, nullable = true)
+	@Column(name = "note", length = 255, nullable = true)
 	private String note;
 	
 	public Audit() {

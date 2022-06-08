@@ -19,10 +19,10 @@ public class Faculty {
 	@Column(name = "faculty_id")
 	private int facultyId;
 	
-	@Column(name = "faculty_name", length = 100, unique = true, nullable = false)
+	@Column(name = "faculty_name", length = 255, unique = true, nullable = false)
 	private String facultyName;
 	
-	@Column(name = "remarks", length = 200, nullable = true)
+	@Column(name = "remarks", length = 255, nullable = true)
 	private String remarks;
 	
 	@OneToOne(mappedBy = "faculty")

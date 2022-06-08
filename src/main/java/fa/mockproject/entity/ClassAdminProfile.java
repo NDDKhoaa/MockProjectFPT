@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -22,11 +21,10 @@ public class ClassAdminProfile {
 	@Column(name = "class_admin_profile_id")
 	private int classAdminProfileId;
 	
-	@OneToOne
-	@JoinColumn(name = "class_admin_id", nullable = false)
+	@OneToOne(mappedBy = "classAdminProfile")
 	private ClassAdmin classAdmin;
 	
-	@Column(name = "full_name", length = 50, nullable = false)
+	@Column(name = "full_name", length = 255, nullable = false)
 	private String fullName;
 	
 	@Column(name = "date_of_birth", nullable = false)
@@ -38,10 +36,10 @@ public class ClassAdminProfile {
 	@Column(name = "phone", unique = true, nullable = false)
 	private long phone;
 	
-	@Column(name = "email", length = 50, unique = true, nullable = false)
+	@Column(name = "email", length = 255, unique = true, nullable = false)
 	private String email;
 	
-	@Column(name = "remarks", length = 200, nullable = true)
+	@Column(name = "remarks", length = 255, nullable = true)
 	private String remarks;
 	
 	public ClassAdminProfile() {
