@@ -1,4 +1,4 @@
-package fa.mockproject.entity;
+package src.main.java.fa.mockproject.entity;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
