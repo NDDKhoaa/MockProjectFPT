@@ -1,4 +1,4 @@
-package com.minhhieu.entity;
+package fa.mockproject.entity;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
