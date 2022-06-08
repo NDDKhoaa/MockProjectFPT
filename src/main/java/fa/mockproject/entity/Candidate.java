@@ -7,6 +7,7 @@ import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,8 +28,7 @@ public class Candidate {
 	@Column(name = "candidate_id", unique = true, nullable = false)
 	private long candidateId;
 
-	@OneToOne
-	@JoinColumn(name = "trainee_candidate_profile_id", nullable = false)
+	@OneToOne(mappedBy="candidate", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private TraineeCandidateProfile traineeCandidateProfile;
 
 	@DateTimeFormat

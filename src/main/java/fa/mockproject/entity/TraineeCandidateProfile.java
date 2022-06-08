@@ -16,100 +16,82 @@ import javax.persistence.Table;
 @Table(name = "TraineeCandidateProfile")
 public class TraineeCandidateProfile {
 	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "trainee_candidate_profile_id", nullable = false)
-    private int traineeCandidateProfileId;
-	
-	//TraineeID
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column(name = "trainee_candidate_profile_id", nullable = false)
+	private int traineeCandidateProfileId;
+
+	// TraineeID
 	@OneToOne
-	@JoinColumn(name = "trainee_candidate_id", nullable = false, unique=true)
+	@JoinColumn(name = "trainee_candidate_id", nullable = false, unique = true)
 	private Trainee trainee;
-	
-	@OneToOne(mappedBy="traineeCandidateProfile", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+	@OneToOne(mappedBy = "traineeCandidateProfile", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Candidate candidate;
-	
-	@Column(name = "full_name", nullable = false)
+
+	@Column(name = "full_name", length = 250, nullable = false)
 	private String fullName;
-	
+
 	@Column(name = "date_of_birth", nullable = false)
 	private LocalDate dateOfBirth;
-	
+
 	@Column(name = "gender", nullable = false)
-	private int gender;
-	
-	@Column(name = "university_id", nullable = false)
-	private int universityId;
-	
-	@Column(name = "faculty_id", nullable = false)
-	private int facultyId;
-	
+	private String gender;
+
+	@OneToOne
+	@JoinColumn(name = "university_id", nullable = false)
+	private University university;
+
+	@OneToOne
+	@JoinColumn(name = "faculty_id", nullable = false)
+	private Faculty faculty;
+
 	@Column(name = "graduation_year", nullable = false)
 	private LocalDate graduationYear;
-	
-	@Column(name = "phone", nullable = false, unique=true)
+
+	@Column(name = "phone", nullable = false, unique = true)
 	private long phone;
-	
-	@Column(name = "email", nullable = false, unique=true)
+
+	@Column(name = "email", nullable = false, length = 250, unique = true)
 	private String email;
-	
-	@Column(name = "type", nullable = false)
-	private int type;
-	
-	@Column(name = "skill", nullable = false)
-	private int skill;
-	
-	@Column(name = "foreign_language", nullable = false)
-	private int foreignLanguage;
-	
-	@Column(name = "level", nullable = false)
-	private int level;
-	
+
+	@Column(name = "type", length = 250, nullable = false)
+	private String type;
+
+	@Column(name = "skill", length = 250, nullable = false)
+	private String skill;
+
+	@Column(name = "foreign_language", length = 250, nullable = false)
+	private String foreignLanguage;
+
+	@Column(name = "level", length = 250, nullable = false)
+	private String level;
+
 	@Column(name = "CV", nullable = false)
-	private int CV;
-	
-	@Column(name = "allocation_status", nullable = true)
-	private int allocationStatus;
-	
-	@Column(name = "remarks", nullable = true)
-	private int remarks;
+	private CV cv;
+
+	@Column(name = "allocation_status", length = 250, nullable = true)
+	private String allocationStatus;
+
+	@Column(name = "remarks", length = 250, nullable = true)
+	private String remarks;
 
 	public TraineeCandidateProfile() {
 		super();
 	}
 
-	public TraineeCandidateProfile(int traineeCandidateProfileId, int fullName, LocalDate dateOfBirth, int gender,
-			int universityId, int facultyId, LocalDate graduationYear, long phone, int email, int type, int skill,
-			int foreignLanguage, int level, int cV, int allocationStatus, int remarks) {
-		super();
-		this.traineeCandidateProfileId = traineeCandidateProfileId;
-		this.fullName = fullName;
-		this.dateOfBirth = dateOfBirth;
-		this.gender = gender;
-		this.universityId = universityId;
-		this.facultyId = facultyId;
-		this.graduationYear = graduationYear;
-		this.phone = phone;
-		this.email = email;
-		this.type = type;
-		this.skill = skill;
-		this.foreignLanguage = foreignLanguage;
-		this.level = level;
-		CV = cV;
-		this.allocationStatus = allocationStatus;
-		this.remarks = remarks;
-	}
-
-	public TraineeCandidateProfile(int traineeCandidateProfileId, Trainee trainee, int fullName, LocalDate dateOfBirth,
-			int gender, int universityId, int facultyId, LocalDate graduationYear, long phone, int email, int type,
-			int skill, int foreignLanguage, int level, int cV, int allocationStatus, int remarks) {
+	public TraineeCandidateProfile(int traineeCandidateProfileId, Trainee trainee, Candidate candidate, String fullName,
+			LocalDate dateOfBirth, String gender, University university, Faculty faculty, LocalDate graduationYear,
+			long phone, String email, String type, String skill, String foreignLanguage, String level, CV cv,
+			String allocationStatus, String remarks) {
 		super();
 		this.traineeCandidateProfileId = traineeCandidateProfileId;
 		this.trainee = trainee;
+		this.candidate = candidate;
 		this.fullName = fullName;
 		this.dateOfBirth = dateOfBirth;
 		this.gender = gender;
-		this.universityId = universityId;
-		this.facultyId = facultyId;
+		this.university = university;
+		this.faculty = faculty;
 		this.graduationYear = graduationYear;
 		this.phone = phone;
 		this.email = email;
@@ -117,7 +99,7 @@ public class TraineeCandidateProfile {
 		this.skill = skill;
 		this.foreignLanguage = foreignLanguage;
 		this.level = level;
-		CV = cV;
+		this.cv = cv;
 		this.allocationStatus = allocationStatus;
 		this.remarks = remarks;
 	}
@@ -138,11 +120,19 @@ public class TraineeCandidateProfile {
 		this.trainee = trainee;
 	}
 
-	public int getFullName() {
+	public Candidate getCandidate() {
+		return candidate;
+	}
+
+	public void setCandidate(Candidate candidate) {
+		this.candidate = candidate;
+	}
+
+	public String getFullName() {
 		return fullName;
 	}
 
-	public void setFullName(int fullName) {
+	public void setFullName(String fullName) {
 		this.fullName = fullName;
 	}
 
@@ -154,28 +144,28 @@ public class TraineeCandidateProfile {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	public int getGender() {
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(int gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 
-	public int getUniversityId() {
-		return universityId;
+	public University getUniversity() {
+		return university;
 	}
 
-	public void setUniversityId(int universityId) {
-		this.universityId = universityId;
+	public void setUniversity(University university) {
+		this.university = university;
 	}
 
-	public int getFacultyId() {
-		return facultyId;
+	public Faculty getFaculty() {
+		return faculty;
 	}
 
-	public void setFacultyId(int facultyId) {
-		this.facultyId = facultyId;
+	public void setFaculty(Faculty faculty) {
+		this.faculty = faculty;
 	}
 
 	public LocalDate getGraduationYear() {
@@ -194,77 +184,77 @@ public class TraineeCandidateProfile {
 		this.phone = phone;
 	}
 
-	public int getEmail() {
+	public String getEmail() {
 		return email;
 	}
 
-	public void setEmail(int email) {
+	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	public int getType() {
+	public String getType() {
 		return type;
 	}
 
-	public void setType(int type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 
-	public int getSkill() {
+	public String getSkill() {
 		return skill;
 	}
 
-	public void setSkill(int skill) {
+	public void setSkill(String skill) {
 		this.skill = skill;
 	}
 
-	public int getForeignLanguage() {
+	public String getForeignLanguage() {
 		return foreignLanguage;
 	}
 
-	public void setForeignLanguage(int foreignLanguage) {
+	public void setForeignLanguage(String foreignLanguage) {
 		this.foreignLanguage = foreignLanguage;
 	}
 
-	public int getLevel() {
+	public String getLevel() {
 		return level;
 	}
 
-	public void setLevel(int level) {
+	public void setLevel(String level) {
 		this.level = level;
 	}
 
-	public int getCV() {
-		return CV;
+	public CV getCv() {
+		return cv;
 	}
 
-	public void setCV(int cV) {
-		CV = cV;
+	public void setCv(CV cv) {
+		this.cv = cv;
 	}
 
-	public int getAllocationStatus() {
+	public String getAllocationStatus() {
 		return allocationStatus;
 	}
 
-	public void setAllocationStatus(int allocationStatus) {
+	public void setAllocationStatus(String allocationStatus) {
 		this.allocationStatus = allocationStatus;
 	}
 
-	public int getRemarks() {
+	public String getRemarks() {
 		return remarks;
 	}
 
-	public void setRemarks(int remarks) {
+	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
 
 	@Override
 	public String toString() {
 		return "TraineeCandidateProfile [traineeCandidateProfileId=" + traineeCandidateProfileId + ", fullName="
-				+ fullName + ", dateOfBirth=" + dateOfBirth + ", gender=" + gender + ", universityId=" + universityId
-				+ ", facultyId=" + facultyId + ", graduationYear=" + graduationYear + ", phone=" + phone + ", email="
+				+ fullName + ", dateOfBirth=" + dateOfBirth + ", gender=" + gender + ", university=" + university
+				+ ", faculty=" + faculty + ", graduationYear=" + graduationYear + ", phone=" + phone + ", email="
 				+ email + ", type=" + type + ", skill=" + skill + ", foreignLanguage=" + foreignLanguage + ", level="
-				+ level + ", CV=" + CV + ", allocationStatus=" + allocationStatus + ", remarks=" + remarks + "]";
+				+ level + ", cv=" + cv + ", allocationStatus=" + allocationStatus + ", remarks=" + remarks + "]";
 	}
 
 }
