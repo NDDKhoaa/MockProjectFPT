@@ -28,31 +28,31 @@ public class Candidate {
 	@Column(name = "candidate_id", unique = true, nullable = false)
 	private long candidateId;
 
-	@OneToOne(mappedBy="candidate", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private TraineeCandidateProfile traineeCandidateProfile;
 
 	@DateTimeFormat
 	@Column(name = "application_date", nullable = false)
 	private LocalDate applicationDate;
 
-	@OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL)
-	@JoinColumn(name = "channel_id", nullable = false)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "channel_id", nullable = false, insertable = false, updatable = false)
 	private Set<Channel> channel;
 
-	@OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL)
-	@JoinColumn(name = "location_id", nullable = false)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "location_id", nullable = false, insertable = false, updatable = false)
 	private Set<Location> location;
 
-	@OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL)
-	@JoinColumn(name = "entry_test_id", nullable = false)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "entry_test_id", nullable = false, insertable = false, updatable = false)
 	private Set<EntryTest> entryTest;
 
-	@OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL)
-	@JoinColumn(name = "interview_id", nullable = false)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "interview_id", nullable = false, insertable = false, updatable = false)
 	private Set<Interview> interview;
 
-	@OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL)
-	@JoinColumn(name = "offer_id", nullable = false)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "offer_id", nullable = false, insertable = false, updatable = false)
 	private Set<Offer> offer;
 
 	@Column(name = "status", length = 250, nullable = false)

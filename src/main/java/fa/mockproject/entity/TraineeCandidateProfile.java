@@ -1,6 +1,7 @@
 package fa.mockproject.entity;
 
 import java.time.LocalDate;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,18 +28,11 @@ public class TraineeCandidateProfile {
 
 	@OneToOne(mappedBy = "traineeCandidateProfile", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Candidate candidate;
-<<<<<<< HEAD
 
 
 	@Column(name = "full_name", length = 250, nullable = false)
 	private String fullName;
 
-=======
-	
-	@Column(name = "full_name", nullable = false)
-	private int fullName;
-	
->>>>>>> cc5e892 (Entity + Service)
 	@Column(name = "date_of_birth", nullable = false)
 	private LocalDate dateOfBirth;
 
@@ -74,7 +68,8 @@ public class TraineeCandidateProfile {
 	@Column(name = "level", length = 255, nullable = false)
 	private String level;
 
-	@Column(name = "CV", nullable = false)
+	@OneToOne
+	@JoinColumn(name = "cv_id", nullable = false)
 	private CV cv;
 
 	@Column(name = "allocation_status", length = 255, nullable = true)
@@ -87,17 +82,11 @@ public class TraineeCandidateProfile {
 		super();
 	}
 
-<<<<<<< HEAD
 	
 	public TraineeCandidateProfile(int traineeCandidateProfileId, Trainee trainee, Candidate candidate, String fullName,
 			LocalDate dateOfBirth, String gender, University university, Faculty faculty, LocalDate graduationYear,
 			String phone, String email, String type, String skill, String foreignLanguage, String level, CV cv,
 			String allocationStatus, String remarks) {
-=======
-	public TraineeCandidateProfile(int traineeCandidateProfileId, int fullName, LocalDate dateOfBirth, int gender,
-			int universityId, int facultyId, LocalDate graduationYear, long phone, String email, int type, int skill,
-			int foreignLanguage, int level, int cV, int allocationStatus, int remarks) {
->>>>>>> cc5e892 (Entity + Service)
 		super();
 		this.traineeCandidateProfileId = traineeCandidateProfileId;
 		this.trainee = trainee;
@@ -119,31 +108,6 @@ public class TraineeCandidateProfile {
 		this.remarks = remarks;
 	}
 
-<<<<<<< HEAD
-=======
-	public TraineeCandidateProfile(int traineeCandidateProfileId, Trainee trainee, int fullName, LocalDate dateOfBirth,
-			int gender, int universityId, int facultyId, LocalDate graduationYear, long phone, String email, int type,
-			int skill, int foreignLanguage, int level, int cV, int allocationStatus, int remarks) {
-		super();
-		this.traineeCandidateProfileId = traineeCandidateProfileId;
-		this.trainee = trainee;
-		this.fullName = fullName;
-		this.dateOfBirth = dateOfBirth;
-		this.gender = gender;
-		this.universityId = universityId;
-		this.facultyId = facultyId;
-		this.graduationYear = graduationYear;
-		this.phone = phone;
-		this.email = email;
-		this.type = type;
-		this.skill = skill;
-		this.foreignLanguage = foreignLanguage;
-		this.level = level;
-		CV = cV;
-		this.allocationStatus = allocationStatus;
-		this.remarks = remarks;
-	}
->>>>>>> cc5e892 (Entity + Service)
 
 	public int getTraineeCandidateProfileId() {
 		return traineeCandidateProfileId;
