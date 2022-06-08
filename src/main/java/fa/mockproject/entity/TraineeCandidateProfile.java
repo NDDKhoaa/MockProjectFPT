@@ -28,6 +28,7 @@ public class TraineeCandidateProfile {
 	@OneToOne(mappedBy = "traineeCandidateProfile", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Candidate candidate;
 
+
 	@Column(name = "full_name", length = 250, nullable = false)
 	private String fullName;
 
@@ -48,40 +49,41 @@ public class TraineeCandidateProfile {
 	@Column(name = "graduation_year", nullable = false)
 	private LocalDate graduationYear;
 
-	@Column(name = "phone", nullable = false, unique = true)
-	private long phone;
+	@Column(name = "phone", nullable = false,length = 255, unique = true)
+	private String phone;
 
-	@Column(name = "email", nullable = false, length = 250, unique = true)
+	@Column(name = "email", nullable = false, length = 255, unique = true)
 	private String email;
 
-	@Column(name = "type", length = 250, nullable = false)
+	@Column(name = "type", length = 255, nullable = false)
 	private String type;
 
-	@Column(name = "skill", length = 250, nullable = false)
+	@Column(name = "skill", length = 255, nullable = false)
 	private String skill;
 
-	@Column(name = "foreign_language", length = 250, nullable = false)
+	@Column(name = "foreign_language", length = 255, nullable = false)
 	private String foreignLanguage;
 
-	@Column(name = "level", length = 250, nullable = false)
+	@Column(name = "level", length = 255, nullable = false)
 	private String level;
 
 	@Column(name = "CV", nullable = false)
 	private CV cv;
 
-	@Column(name = "allocation_status", length = 250, nullable = true)
+	@Column(name = "allocation_status", length = 255, nullable = true)
 	private String allocationStatus;
 
-	@Column(name = "remarks", length = 250, nullable = true)
+	@Column(name = "remarks", length = 255, nullable = true)
 	private String remarks;
 
 	public TraineeCandidateProfile() {
 		super();
 	}
 
+	
 	public TraineeCandidateProfile(int traineeCandidateProfileId, Trainee trainee, Candidate candidate, String fullName,
 			LocalDate dateOfBirth, String gender, University university, Faculty faculty, LocalDate graduationYear,
-			long phone, String email, String type, String skill, String foreignLanguage, String level, CV cv,
+			String phone, String email, String type, String skill, String foreignLanguage, String level, CV cv,
 			String allocationStatus, String remarks) {
 		super();
 		this.traineeCandidateProfileId = traineeCandidateProfileId;
@@ -103,6 +105,7 @@ public class TraineeCandidateProfile {
 		this.allocationStatus = allocationStatus;
 		this.remarks = remarks;
 	}
+
 
 	public int getTraineeCandidateProfileId() {
 		return traineeCandidateProfileId;
@@ -176,11 +179,11 @@ public class TraineeCandidateProfile {
 		this.graduationYear = graduationYear;
 	}
 
-	public long getPhone() {
+	public String getPhone() {
 		return phone;
 	}
 
-	public void setPhone(long phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 

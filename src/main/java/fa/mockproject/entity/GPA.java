@@ -1,5 +1,6 @@
 package fa.mockproject.entity;
 
+
 import javax.persistence.*;
 
 @Entity

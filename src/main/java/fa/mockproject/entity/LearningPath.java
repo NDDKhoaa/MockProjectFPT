@@ -1,5 +1,6 @@
 package fa.mockproject.entity;
 
+
 import javax.persistence.*;
 
 @Entity
@@ -52,3 +53,4 @@ public class LearningPath {
         this.traineeId = traineeId;
     }
 }
+

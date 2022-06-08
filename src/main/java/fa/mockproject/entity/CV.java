@@ -15,14 +15,17 @@ import javax.persistence.Table;
 @Cacheable
 public class CV {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "cv_id", nullable = false, unique = true)
 	private long cvId;
 
-	@Column(name = "name", length = 512, nullable = false,unique = true)
+	@Column(name = "name", length = 512, nullable = false, unique = true)
 	private String name;
 
-	@Column(name = "content", nullable = false)
+	@Column(name = "size", nullable = true)
+	private long size;
+
+	@Column(name = "content", nullable = true)
 	private byte[] content;
 
 	public long getCvId() {
@@ -49,10 +52,19 @@ public class CV {
 		this.content = content;
 	}
 
-	public CV(String name, byte[] content) {
+	public CV(String name, long size, byte[] content) {
 		super();
 		this.name = name;
+		this.size = size;
 		this.content = content;
+	}
+
+	public long getSize() {
+		return size;
+	}
+
+	public void setSize(long size) {
+		this.size = size;
 	}
 
 	public CV() {
@@ -61,7 +73,7 @@ public class CV {
 
 	@Override
 	public String toString() {
-		return "CV [cvId=" + cvId + ", name=" + name + ", content=" + Arrays.toString(content) + "]";
+		return "CV [cvId=" + cvId + ", name=" + name + ", size=" + size + ", content=" + Arrays.toString(content) + "]";
 	}
 
 }

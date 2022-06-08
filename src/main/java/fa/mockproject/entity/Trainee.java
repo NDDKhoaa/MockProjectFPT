@@ -71,13 +71,13 @@ public class Trainee {
 
 
 
-	public Trainee(TraineeCandidate traineeCandidate, ClassBatch classBatch,
+	public Trainee(TraineeCandidateProfile traineeCandidate, ClassBatch classBatch,
 			TraineeCandidateProfile traineeCandidateProfile, List<AttendantStatus> listAttendantStatus,
 			List<Allowance> listAllowances, List<GPA> listGPA, List<RewardPenalty> listRewardPenalties,
 			List<LearningPath> listLearningPaths, List<Guarantee> listGuarantees,
 			List<InterviewValuation> listinterviewValuations, List<Status> listStatus, int remarks) {
 		super();
-		this.traineeCandidate = traineeCandidate;
+		this.traineeCandidateProfile = traineeCandidate;
 		this.classBatch = classBatch;
 		this.traineeCandidateProfile = traineeCandidateProfile;
 		this.listAttendantStatus = listAttendantStatus;
@@ -91,14 +91,14 @@ public class Trainee {
 		this.remarks = remarks;
 	}
 
-	public Trainee(int traineeCandidateID, TraineeCandidate traineeCandidate, ClassBatch classBatch,
+	public Trainee(int traineeCandidateID, TraineeCandidateProfile traineeCandidate, ClassBatch classBatch,
 			TraineeCandidateProfile traineeCandidateProfile, List<AttendantStatus> listAttendantStatus,
 			List<Allowance> listAllowances, List<GPA> listGPA, List<RewardPenalty> listRewardPenalties,
 			List<LearningPath> listLearningPaths, List<Guarantee> listGuarantees,
 			List<InterviewValuation> listinterviewValuations, List<Status> listStatus, int remarks) {
 		super();
 		this.traineeCandidateID = traineeCandidateID;
-		this.traineeCandidate = traineeCandidate;
+		this.traineeCandidateProfile = traineeCandidate;
 		this.classBatch = classBatch;
 		this.traineeCandidateProfile = traineeCandidateProfile;
 		this.listAttendantStatus = listAttendantStatus;
@@ -120,12 +120,12 @@ public class Trainee {
 		this.traineeCandidateID = traineeCandidateID;
 	}
 
-	public TraineeCandidate getTraineeCandidate() {
-		return traineeCandidate;
+	public TraineeCandidateProfile getTraineeCandidate() {
+		return traineeCandidateProfile;
 	}
 
-	public void setTraineeCandidate(TraineeCandidate traineeCandidate) {
-		this.traineeCandidate = traineeCandidate;
+	public void setTraineeCandidate(TraineeCandidateProfile traineeCandidate) {
+		this.traineeCandidateProfile = traineeCandidate;
 	}
 
 	public ClassBatch getClassBatch() {
