@@ -1,5 +1,6 @@
 package fa.mockproject.entity;
 
+<<<<<<< HEAD
 
 import javax.persistence.*;
 
@@ -54,3 +55,8 @@ public class LearningPath {
     }
 }
 
+=======
+public class LearningPath {
+
+}
+>>>>>>> cc5e892 (Entity + Service)

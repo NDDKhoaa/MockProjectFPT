@@ -1,5 +1,6 @@
 package fa.mockproject.entity;
 
+<<<<<<< HEAD
 
 import javax.persistence.*;
 
@@ -63,4 +64,8 @@ public class Status {
     public void setBatchClassId(Integer batchClassId) {
         this.batchClassId = batchClassId;
     }
+=======
+public class Status {
+
+>>>>>>> cc5e892 (Entity + Service)
 }
