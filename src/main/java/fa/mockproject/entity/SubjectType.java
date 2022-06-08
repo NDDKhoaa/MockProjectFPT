@@ -3,45 +3,45 @@ package fa.mockproject.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name="Budget")
+@Table(name = "Subject_Type")
 @Cacheable
-public class Budget {
-    @Id
-    @Column(name="Budget_ID",unique=true)
-    @GeneratedValue(strategy=GenerationType.SEQUENCE)
-    private long budgetId;
-    
-    @Column(name="Class_ID")
+public class SubjectType {
+	@Id
+	@Column(name="Subject_Type_ID",unique=true)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	private long subjectTypeId;
+	
+	@Column(name="Class_ID")
     private long classId;
     
     @Column(name="Remarks",nullable=true)
     private String remarks;
     
-    @Column(name="Budget_Name")
-    private String budgetName;
+    @Column(name="Subject_Type_Name")
+    private String subjectTypeName;
     
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="Class_ID") 
     private ClassBatch classBatchClassId;
     
-    public Budget() {
+    public SubjectType() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Budget(long classId, String remarks, String budgetName, ClassBatch classBatchClassId) {
+	public SubjectType(long classId, String remarks, String subjectTypeName, ClassBatch classBatchClassId) {
 		super();
 		this.classId = classId;
 		this.remarks = remarks;
-		this.budgetName = budgetName;
+		this.subjectTypeName = subjectTypeName;
 		this.classBatchClassId = classBatchClassId;
 	}
 
-	public long getBudgetId() {
-		return budgetId;
+	public long getSubjectTypeId() {
+		return subjectTypeId;
 	}
 
-	public void setBudgetId(long budgetId) {
-		this.budgetId = budgetId;
+	public void setSubjectTypeId(long subjectTypeId) {
+		this.subjectTypeId = subjectTypeId;
 	}
 
 	public long getClassId() {
@@ -60,12 +60,12 @@ public class Budget {
 		this.remarks = remarks;
 	}
 
-	public String getBudgetName() {
-		return budgetName;
+	public String getSubjectTypeName() {
+		return subjectTypeName;
 	}
 
-	public void setBudgetName(String budgetName) {
-		this.budgetName = budgetName;
+	public void setSubjectTypeName(String subjectTypeName) {
+		this.subjectTypeName = subjectTypeName;
 	}
 
 	public ClassBatch getClassBatchClassId() {
@@ -78,8 +78,9 @@ public class Budget {
 
 	@Override
 	public String toString() {
-		return "Budget [budgetId=" + budgetId + ", classId=" + classId + ", remarks=" + remarks + ", budgetName="
-				+ budgetName + "]";
+		return "SubjectType [subjectTypeId=" + subjectTypeId + ", classId=" + classId + ", remarks=" + remarks
+				+ ", subjectTypeName=" + subjectTypeName + "]";
 	}
+    
     
 }
