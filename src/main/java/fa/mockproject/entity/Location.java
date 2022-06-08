@@ -1,15 +1,6 @@
 package fa.mockproject.entity;
 
-import javax.persistence.Cacheable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "Location")
@@ -18,17 +9,17 @@ public class Location {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "location_id", length = 20, unique = true, nullable = false)
+	@Column(name = "Location_ID", length = 20, unique = true, nullable = false)
 	private String locationId;
 
-	@Column(name = "location_name", length = 250, nullable = false)
+	@Column(name = "Location_Name", nullable = false)
 	private String locationName;
 
-	@Column(name = "remarks", length = 250, nullable = true)
+	@Column(name = "Remarks", length = 250, nullable = true)
 	private String remarks;
 
-	@OneToOne
-	@JoinColumn(name = "class_id", nullable = false)
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "Class_id", nullable = false)
 	private ClassBatch classBatch;
 
 	public Location() {
@@ -75,8 +66,7 @@ public class Location {
 
 	@Override
 	public String toString() {
-		return "Location [locationId=" + locationId + ", locationName=" + locationName + ", remarks=" + remarks
-				+ ", classBatch=" + classBatch + "]";
+		return "Location [locationId=" + locationId + ", locationName=" + locationName + ", remarks=" + remarks + "]";
 	}
 
 }

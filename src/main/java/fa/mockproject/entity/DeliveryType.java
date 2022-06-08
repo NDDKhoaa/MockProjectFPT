@@ -25,11 +25,10 @@ public class DeliveryType {
 		// TODO Auto-generated constructor stub
 	}
 
-	public DeliveryType(long classId, String remarks, ClassBatch classBatchClassId) {
+	public DeliveryType(long classId, String remarks) {
 		super();
 		this.classId = classId;
 		this.remarks = remarks;
-		this.classBatchClassId = classBatchClassId;
 	}
 
 	public long getDeliveryTypeId() {

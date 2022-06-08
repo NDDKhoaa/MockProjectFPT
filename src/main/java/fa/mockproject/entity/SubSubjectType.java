@@ -28,12 +28,11 @@ public class SubSubjectType {
 		// TODO Auto-generated constructor stub
 	}
 
-	public SubSubjectType(long classId, String remarks, String subSubjectTypeName, ClassBatch classBatchClassId) {
+	public SubSubjectType(long classId, String remarks, String subSubjectTypeName) {
 		super();
 		this.classId = classId;
 		this.remarks = remarks;
 		this.subSubjectTypeName = subSubjectTypeName;
-		this.classBatchClassId = classBatchClassId;
 	}
 
 	public long getSubSubjectTypeId() {

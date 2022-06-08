@@ -28,12 +28,11 @@ public class Budget {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Budget(long classId, String remarks, String budgetName, ClassBatch classBatchClassId) {
+	public Budget(long classId, String remarks, String budgetName) {
 		super();
 		this.classId = classId;
 		this.remarks = remarks;
 		this.budgetName = budgetName;
-		this.classBatchClassId = classBatchClassId;
 	}
 
 	public long getBudgetId() {
