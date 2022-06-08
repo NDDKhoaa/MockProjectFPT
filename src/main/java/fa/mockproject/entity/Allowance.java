@@ -1,5 +1,6 @@
 package fa.mockproject.entity;
 
+<<<<<<< HEAD
 import javax.persistence.*;
 
 @Entity
@@ -87,4 +88,8 @@ public class Allowance {
     public void setRemarks(Integer remarks) {
         this.remarks = remarks;
     }
+=======
+public class Allowance {
+
+>>>>>>> cc5e892 (Entity + Service)
 }
