@@ -21,6 +21,8 @@ import javax.persistence.Table;
 @Cacheable
 public class ClassBatch {
 	
+	private static final String DATE_FORMAT = "dd/MM/yyyy";
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "class_id")

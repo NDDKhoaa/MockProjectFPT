@@ -16,6 +16,8 @@ import javax.persistence.Table;
 @Cacheable
 public class ClassAdminProfile {
 	
+	private static final String DATE_FORMAT = "dd/MM/yyyy";
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "class_admin_profile_id")

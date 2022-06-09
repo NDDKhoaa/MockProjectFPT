@@ -5,16 +5,31 @@ import java.time.LocalDate;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+enum AuditEventCategory {
+	Trainer,
+	Trainee,
+	Courseware,
+	Organization,
+	Logistics,
+	Management,
+	Calendar,
+	Others
+}
+
 @Entity
 @Table(name = "Audit")
 @Cacheable
 public class Audit {
+	
+	private static final String DATE_FORMAT = "dd/MM/yyyy";
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -27,8 +42,9 @@ public class Audit {
 	@Column(name = "date", nullable = false)
 	private LocalDate date;
 	
+	@Enumerated(EnumType.STRING)
 	@Column(name = "event_category", length = 255, nullable = false)
-	private String eventCategory;
+	private AuditEventCategory eventCategory;
 	
 	@Column(name = "related_party_or_people", length = 255, nullable = false)
 	private String relatedPartyOrPeople;
@@ -49,7 +65,7 @@ public class Audit {
 		super();
 	}
 
-	public Audit(int auditId, ClassBatch classBatch, LocalDate date, String eventCategory, String relatedPartyOrPeople,
+	public Audit(int auditId, ClassBatch classBatch, LocalDate date, AuditEventCategory eventCategory, String relatedPartyOrPeople,
 			String action, String pic, LocalDate deadline, String note) {
 		super();
 		this.auditId = auditId;
@@ -87,11 +103,11 @@ public class Audit {
 		this.date = date;
 	}
 
-	public String getEventCategory() {
+	public AuditEventCategory getEventCategory() {
 		return eventCategory;
 	}
 
-	public void setEventCategory(String eventCategory) {
+	public void setEventCategory(AuditEventCategory eventCategory) {
 		this.eventCategory = eventCategory;
 	}
 
