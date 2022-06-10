@@ -15,7 +15,7 @@ public class AttendantStatus {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "attendant_status_id", nullable = false, unique=true)
+    @Column(name = "attendant_status_id")
     private int attendantStatusId;
 	
 	//TraineeID
@@ -29,14 +29,14 @@ public class AttendantStatus {
 	@Column(name = "mileStones", nullable = false)
 	private int mileStones;
 	
-	@Column(name = "remarks", nullable = true)
-	private int remarks;
+	@Column(name = "remarks", nullable = true, length = 255)
+	private String remarks;
 
 	public AttendantStatus() {
 		super();
 	}
 
-	public AttendantStatus(int attendantStatusId, int disciplinePoint, int mileStones, int remarks) {
+	public AttendantStatus(int attendantStatusId, int disciplinePoint, int mileStones, String remarks) {
 		super();
 		this.attendantStatusId = attendantStatusId;
 		this.disciplinePoint = disciplinePoint;
@@ -44,7 +44,7 @@ public class AttendantStatus {
 		this.remarks = remarks;
 	}
 
-	public AttendantStatus(int attendantStatusId, Trainee trainee, int disciplinePoint, int mileStones, int remarks) {
+	public AttendantStatus(int attendantStatusId, Trainee trainee, int disciplinePoint, int mileStones, String remarks) {
 		super();
 		this.attendantStatusId = attendantStatusId;
 		this.trainee = trainee;
@@ -85,11 +85,11 @@ public class AttendantStatus {
 		this.mileStones = mileStones;
 	}
 
-	public int getRemarks() {
+	public String getRemarks() {
 		return remarks;
 	}
 
-	public void setRemarks(int remarks) {
+	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
 

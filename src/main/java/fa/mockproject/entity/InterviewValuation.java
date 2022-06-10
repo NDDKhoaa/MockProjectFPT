@@ -23,17 +23,17 @@ public class InterviewValuation {
 	@Column(name = "date", nullable = false)
 	private LocalDate date;
 	
-	@Column(name = "interviewer", nullable = false)
-	private int interviewer;
+	@Column(name = "interviewer", nullable = false, length = 55)
+	private String interviewer;
 	
-	@Column(name = "remarks", nullable = false)
-	private int remarks;
+	@Column(name = "remarks", nullable = false, length = 255)
+	private String remarks;
 
 	public InterviewValuation() {
 		super();
 	}
 
-	public InterviewValuation(int interviewValuationId, LocalDate date, int interviewer, int remarks) {
+	public InterviewValuation(int interviewValuationId, LocalDate date, String interviewer, String remarks) {
 		super();
 		this.interviewValuationId = interviewValuationId;
 		this.date = date;
@@ -41,7 +41,7 @@ public class InterviewValuation {
 		this.remarks = remarks;
 	}
 
-	public InterviewValuation(int interviewValuationId, Trainee trainee, LocalDate date, int interviewer, int remarks) {
+	public InterviewValuation(int interviewValuationId, Trainee trainee, LocalDate date, String interviewer, String remarks) {
 		super();
 		this.interviewValuationId = interviewValuationId;
 		this.trainee = trainee;
@@ -74,19 +74,19 @@ public class InterviewValuation {
 		this.date = date;
 	}
 
-	public int getInterviewer() {
+	public String getInterviewer() {
 		return interviewer;
 	}
 
-	public void setInterviewer(int interviewer) {
+	public void setInterviewer(String interviewer) {
 		this.interviewer = interviewer;
 	}
 
-	public int getRemarks() {
+	public String getRemarks() {
 		return remarks;
 	}
 
-	public void setRemarks(int remarks) {
+	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
 
@@ -95,5 +95,4 @@ public class InterviewValuation {
 		return "InterviewValuation [interviewValuationId=" + interviewValuationId + ", date=" + date + ", interviewer="
 				+ interviewer + ", remarks=" + remarks + "]";
 	}
-
 }
