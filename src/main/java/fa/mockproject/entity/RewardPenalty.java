@@ -1,13 +1,18 @@
 package fa.mockproject.entity;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "RewardPenalty")
 public class RewardPenalty {
+	
 	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "reward_penalty_id")

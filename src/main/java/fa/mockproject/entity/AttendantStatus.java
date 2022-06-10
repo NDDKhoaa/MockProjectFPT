@@ -98,6 +98,4 @@ public class AttendantStatus {
 		return "AttendantStatus [attendantStatusId=" + attendantStatusId + ", disciplinePoint=" + disciplinePoint
 				+ ", mileStones=" + mileStones + ", remarks=" + remarks + "]";
 	}
-	
-	
 }

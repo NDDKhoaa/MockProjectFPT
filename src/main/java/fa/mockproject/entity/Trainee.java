@@ -69,8 +69,6 @@ public class Trainee {
 		this.remarks = remarks;
 	}
 
-
-
 	public Trainee(TraineeCandidateProfile traineeCandidate, ClassBatch classBatch,
 			TraineeCandidateProfile traineeCandidateProfile, List<AttendantStatus> listAttendantStatus,
 			List<Allowance> listAllowances, List<GPA> listGPA, List<RewardPenalty> listRewardPenalties,

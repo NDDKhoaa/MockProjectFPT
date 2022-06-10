@@ -16,6 +16,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "TraineeCandidateProfile")
 public class TraineeCandidateProfile {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "trainee_candidate_profile_id", nullable = false)
