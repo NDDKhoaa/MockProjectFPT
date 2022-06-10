@@ -11,7 +11,7 @@ public class AllowanceGroup {
     @Column(name = "group", nullable = false)
     private long group;
 
-    @OneToOne(mappedBy = "allowance_group", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "allowance_id", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Allowance allowance;
 
     @Column(name = "remarks")

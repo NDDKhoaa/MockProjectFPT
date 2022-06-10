@@ -14,7 +14,7 @@ public class Topic {
     private long topicId;
 
     @OneToMany(mappedBy="topic", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<LearningPath> learningPathId;
+    private Set<LearningPath> learningPaths;
 
     @Column(name = "remarks")
     private Integer remarks;
@@ -27,7 +27,7 @@ public class Topic {
 
     public Topic(Integer topicId, Set<LearningPath> learningPathId, Integer remarks, Integer topicName) {
         this.topicId = topicId;
-        this.learningPathId = learningPathId;
+        this.learningPaths = learningPathId;
         this.remarks = remarks;
         this.topicName = topicName;
     }
@@ -40,12 +40,12 @@ public class Topic {
         this.topicId = topicId;
     }
 
-    public Set<LearningPath> getLearningPathId() {
-        return learningPathId;
+    public Set<LearningPath> getLearningPaths() {
+        return learningPaths;
     }
 
-    public void setLearningPathId(Set<LearningPath> learningPathId) {
-        this.learningPathId = learningPathId;
+    public void setLearningPaths(Set<LearningPath> learningPathId) {
+        this.learningPaths = learningPathId;
     }
 
     public Integer getRemarks() {
