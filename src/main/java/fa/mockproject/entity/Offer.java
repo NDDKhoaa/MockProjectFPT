@@ -23,20 +23,20 @@ public class Offer {
 	@Column(name = "job_rank", nullable = false)
 	private int jobRank;
 
-	@Column(name = "technology", length = 250, nullable = false)
+	@Column(name = "technology", length = 255, nullable = false)
 	private String technology;
 
 	@Column(name = "offer_salary", nullable = false)
 	private long offerSalary;
 
-	@Column(name = "contract_type", length = 250, nullable = false)
+	@Column(name = "contract_type", length = 255, nullable = false)
 	private String contractType;
 
-	@Column(name = "remarks", length = 200, nullable = true)
+	@Column(name = "remarks", length = 255, nullable = true)
 	private String remarks;
 
 	@ManyToOne
-	@JoinColumn(name = "candidate_id", nullable = false)
+	@JoinColumn(name = "candidate_id", nullable = true)
 	private Candidate candidate;
 
 	public Offer() {

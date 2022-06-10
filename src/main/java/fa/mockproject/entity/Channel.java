@@ -21,13 +21,13 @@ public class Channel {
 	private String channelId;
 	
 	@ManyToOne
-	@JoinColumn(name = "candidate_id", nullable = false)
+	@JoinColumn(name = "candidate_id", nullable = true)
 	private Candidate candidate;
 
-	@Column(name = "remarks", length = 250, nullable = true)
+	@Column(name = "remarks", length = 255, nullable = true)
 	private String remarks;
 
-	@Column(name = "channel_name", length = 250, nullable = false)
+	@Column(name = "channel_name", length = 255, nullable = false)
 	private String channelName;
 
 	public Channel() {
@@ -40,7 +40,7 @@ public class Channel {
 		this.remarks = remarks;
 		this.channelName = channelName;
 	}
-
+	
 	public String getChannelId() {
 		return channelId;
 	}
