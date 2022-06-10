@@ -18,7 +18,7 @@ public class ClassAdmin {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "class_admin_id")
-	private int classAdminId;
+	private long classAdminId;
 	
 	@OneToOne(mappedBy = "classAdmin")
 	private ClassBatch classBatch;
@@ -34,19 +34,18 @@ public class ClassAdmin {
 		super();
 	}
 
-	public ClassAdmin(int classAdminId, ClassBatch classBatch, ClassAdminProfile classAdminProfile, String remarks) {
+	public ClassAdmin(ClassBatch classBatch, ClassAdminProfile classAdminProfile, String remarks) {
 		super();
-		this.classAdminId = classAdminId;
 		this.classBatch = classBatch;
 		this.classAdminProfile = classAdminProfile;
 		this.remarks = remarks;
 	}
 
-	public int getClassAdminId() {
+	public long getClassAdminId() {
 		return classAdminId;
 	}
 
-	public void setClassAdminId(int classAdminId) {
+	public void setClassAdminId(long classAdminId) {
 		this.classAdminId = classAdminId;
 	}
 

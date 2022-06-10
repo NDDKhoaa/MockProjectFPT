@@ -17,7 +17,7 @@ public class Faculty {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "faculty_id")
-	private int facultyId;
+	private long facultyId;
 	
 	@Column(name = "faculty_name", length = 255, unique = true, nullable = false)
 	private String facultyName;
@@ -32,19 +32,18 @@ public class Faculty {
 		super();
 	}
 
-	public Faculty(int facultyId, String facultyName, String remarks, TraineeCandidateProfile traineeCandidateProfile) {
+	public Faculty(String facultyName, String remarks, TraineeCandidateProfile traineeCandidateProfile) {
 		super();
-		this.facultyId = facultyId;
 		this.facultyName = facultyName;
 		this.remarks = remarks;
 		this.traineeCandidateProfile = traineeCandidateProfile;
 	}
 
-	public int getFacultyId() {
+	public long getFacultyId() {
 		return facultyId;
 	}
 
-	public void setFacultyId(int facultyId) {
+	public void setFacultyId(long facultyId) {
 		this.facultyId = facultyId;
 	}
 

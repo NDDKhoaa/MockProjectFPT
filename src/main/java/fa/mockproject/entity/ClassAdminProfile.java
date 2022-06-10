@@ -21,7 +21,7 @@ public class ClassAdminProfile {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "class_admin_profile_id")
-	private int classAdminProfileId;
+	private long classAdminProfileId;
 	
 	@OneToOne(mappedBy = "classAdminProfile")
 	private ClassAdmin classAdmin;
@@ -48,10 +48,9 @@ public class ClassAdminProfile {
 		super();
 	}
 
-	public ClassAdminProfile(int classAdminProfileId, ClassAdmin classAdmin, String fullName, LocalDate dateOfBirth,
+	public ClassAdminProfile(ClassAdmin classAdmin, String fullName, LocalDate dateOfBirth,
 			int gender, long phone, String email, String remarks) {
 		super();
-		this.classAdminProfileId = classAdminProfileId;
 		this.classAdmin = classAdmin;
 		this.fullName = fullName;
 		this.dateOfBirth = dateOfBirth;
@@ -61,11 +60,11 @@ public class ClassAdminProfile {
 		this.remarks = remarks;
 	}
 
-	public int getClassAdminProfileId() {
+	public long getClassAdminProfileId() {
 		return classAdminProfileId;
 	}
 
-	public void setClassAdminProfileId(int classAdminProfileId) {
+	public void setClassAdminProfileId(long classAdminProfileId) {
 		this.classAdminProfileId = classAdminProfileId;
 	}
 

@@ -1,12 +1,12 @@
 package fa.mockproject.entity;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +15,50 @@ import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+enum SubSubjectTypeEnum {
+	Cloud("Cloud"),
+	BigData("Big Data"),
+	CAD("CAD"),
+	CAE("CAE"),
+	SAP("SAP"),
+	ITGeneral("IT General"),
+	Test("Test"),
+	Others("Others");
+	
+	private String string;
+
+	SubSubjectTypeEnum(String string) {
+		this.string = string;
+	}
+
+	public String getValue() {
+		return string;
+	}
+}
+
+enum ClassStatusEnum {
+	Draft("Draft"),
+	Submitted("Submitted"),
+	Rejected("Rejected"),
+	Declined("Declined"),
+	Planning("Planning"),
+	Planned("Planned"),
+	InProgress("In-Progress"),
+	PendingForReview("Pending For Review"),
+	Closed("Closed"),
+	WaitingForMoreInformation("WaitingForMoreInformation");
+	
+	private String string;
+
+	ClassStatusEnum(String string) {
+		this.string = string;
+	}
+
+	public String getString() {
+		return string;
+	}
+}
 
 @Entity
 @Table(name = "ClassBatch")
@@ -62,8 +106,9 @@ public class ClassBatch {
 	private long estimatedBudget;
 	
 	@OneToOne
+	@Enumerated
 	@Column(name = "sub_subject_type_id", nullable = false)
-	private SubSubjectType subSubjectType;
+	private SubSubjectTypeEnum subSubjectType;
 	
 	@OneToOne
 	@Column(name = "delivery_type_id", nullable = false)
@@ -114,8 +159,9 @@ public class ClassBatch {
 	@Column(name = "subject_type_id", nullable = false)
 	private SubjectType subjectType;
 	
+	@Enumerated
 	@Column(name = "status", length = 255, nullable = false)
-	private String status;
+	private ClassStatusEnum status;
 	
 	@Column(name = "remarks", length = 255, nullable = true)
 	private String remarks;
@@ -124,15 +170,14 @@ public class ClassBatch {
 		super();
 	}
 
-	public ClassBatch(long classId, String className, String classCode, LocalDate expectedStartDate,
+	public ClassBatch(String className, String classCode, LocalDate expectedStartDate,
 			LocalDate expectedEndDate, Location location, String detailLocation, ClassAdmin classAdmin,
-			int plannedTraineeNumber, Budget budget, long estimatedBudget, SubSubjectType subSubjectType,
+			int plannedTraineeNumber, Budget budget, long estimatedBudget, SubSubjectTypeEnum subSubjectType,
 			DeliveryType deliveryType, FormatType formatType, Scope scope, SupplierPartner supplierPartner,
 			LocalDate actualStartDate, LocalDate actualEndDate, int acceptedTraineeNumber, int actualTraineeNumber,
 			List<Trainer> trainers, int milestones, byte[] curriculum, Audit audit, Trainee trainee,
-			SubjectType subjectType, String status, String remarks) {
+			SubjectType subjectType, ClassStatusEnum status, String remarks) {
 		super();
-		this.classId = classId;
 		this.className = className;
 		this.classCode = classCode;
 		this.expectedStartDate = expectedStartDate;
@@ -250,11 +295,11 @@ public class ClassBatch {
 		this.estimatedBudget = estimatedBudget;
 	}
 
-	public SubSubjectType getSubSubjectType() {
+	public SubSubjectTypeEnum getSubSubjectType() {
 		return subSubjectType;
 	}
 
-	public void setSubSubjectType(SubSubjectType subSubjectType) {
+	public void setSubSubjectType(SubSubjectTypeEnum subSubjectType) {
 		this.subSubjectType = subSubjectType;
 	}
 
@@ -370,11 +415,11 @@ public class ClassBatch {
 		this.subjectType = subjectType;
 	}
 
-	public String getStatus() {
+	public ClassStatusEnum getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(ClassStatusEnum status) {
 		this.status = status;
 	}
 

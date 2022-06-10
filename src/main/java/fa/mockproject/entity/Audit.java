@@ -34,7 +34,7 @@ public class Audit {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "audit_id")
-	private int auditId;
+	private long auditId;
 	
 	@OneToOne(mappedBy = "audit")
 	private ClassBatch classBatch;
@@ -65,10 +65,9 @@ public class Audit {
 		super();
 	}
 
-	public Audit(int auditId, ClassBatch classBatch, LocalDate date, AuditEventCategory eventCategory, String relatedPartyOrPeople,
+	public Audit(ClassBatch classBatch, LocalDate date, AuditEventCategory eventCategory, String relatedPartyOrPeople,
 			String action, String pic, LocalDate deadline, String note) {
 		super();
-		this.auditId = auditId;
 		this.classBatch = classBatch;
 		this.date = date;
 		this.eventCategory = eventCategory;
@@ -79,11 +78,11 @@ public class Audit {
 		this.note = note;
 	}
 
-	public int getAuditId() {
+	public long getAuditId() {
 		return auditId;
 	}
 
-	public void setAuditId(int auditId) {
+	public void setAuditId(long auditId) {
 		this.auditId = auditId;
 	}
 
