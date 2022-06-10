@@ -16,6 +16,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "TraineeCandidateProfile")
 public class TraineeCandidateProfile {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "trainee_candidate_profile_id", nullable = false)
@@ -30,7 +31,7 @@ public class TraineeCandidateProfile {
 	private Candidate candidate;
 
 
-	@Column(name = "full_name", length = 250, nullable = false)
+	@Column(name = "full_name", length = 255, nullable = false)
 	private String fullName;
 
 	@Column(name = "date_of_birth", nullable = false)

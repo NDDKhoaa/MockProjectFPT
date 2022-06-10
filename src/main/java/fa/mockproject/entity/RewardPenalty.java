@@ -1,17 +1,22 @@
 package fa.mockproject.entity;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "RewardPenalty")
 public class RewardPenalty {
+	
 	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "reward_penalty_id", nullable = false)
-    private int rewardPenaltyId;
+    @Column(name = "reward_penalty_id")
+    private long rewardPenaltyId;
 	
 	//TraineeID
 	@ManyToOne
@@ -24,14 +29,14 @@ public class RewardPenalty {
 	@Column(name = "point", nullable = false)
 	private int point;
 	
-	@Column(name = "comments", nullable = false)
-	private int comments;
+	@Column(name = "comments", nullable = false, length = 255)
+	private String comments;
 
 	public RewardPenalty() {
 		super();
 	}
 
-	public RewardPenalty(int rewardPenaltyId, int milestones, int point, int comments) {
+	public RewardPenalty(int rewardPenaltyId, int milestones, int point, String comments) {
 		super();
 		this.rewardPenaltyId = rewardPenaltyId;
 		this.milestones = milestones;
@@ -39,7 +44,7 @@ public class RewardPenalty {
 		this.comments = comments;
 	}
 
-	public RewardPenalty(int rewardPenaltyId, Trainee trainee, int milestones, int point, int comments) {
+	public RewardPenalty(int rewardPenaltyId, Trainee trainee, int milestones, int point, String comments) {
 		super();
 		this.rewardPenaltyId = rewardPenaltyId;
 		this.trainee = trainee;
@@ -48,7 +53,7 @@ public class RewardPenalty {
 		this.comments = comments;
 	}
 
-	public int getRewardPenaltyId() {
+	public long getRewardPenaltyId() {
 		return rewardPenaltyId;
 	}
 
@@ -80,11 +85,11 @@ public class RewardPenalty {
 		this.point = point;
 	}
 
-	public int getComments() {
+	public String getComments() {
 		return comments;
 	}
 
-	public void setComments(int comments) {
+	public void setComments(String comments) {
 		this.comments = comments;
 	}
 

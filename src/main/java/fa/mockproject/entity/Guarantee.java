@@ -1,14 +1,16 @@
 package fa.mockproject.entity;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-
-
+@Entity
+@Table(name = "Guarantee")
 public class Guarantee {
 	
 	@Id
@@ -24,21 +26,21 @@ public class Guarantee {
 	@Column(name = "FSU", nullable = false)
 	private int FSU;
 	
-	@Column(name = "comments", nullable = false)
-	private int comments;
+	@Column(name = "comments", nullable = false, length = 255)
+	private String comments;
 
 	public Guarantee() {
 		super();
 	}
 
-	public Guarantee(int guaranteeId, int fSU, int comments) {
+	public Guarantee(int guaranteeId, int fSU, String comments) {
 		super();
 		this.guaranteeId = guaranteeId;
 		FSU = fSU;
 		this.comments = comments;
 	}
 
-	public Guarantee(int guaranteeId, Trainee trainee, int fSU, int comments) {
+	public Guarantee(int guaranteeId, Trainee trainee, int fSU, String comments) {
 		super();
 		this.guaranteeId = guaranteeId;
 		this.trainee = trainee;
@@ -70,11 +72,11 @@ public class Guarantee {
 		FSU = fSU;
 	}
 
-	public int getComments() {
+	public String getComments() {
 		return comments;
 	}
 
-	public void setComments(int comments) {
+	public void setComments(String comments) {
 		this.comments = comments;
 	}
 
