@@ -1,5 +1,8 @@
 package fa.mockproject.repository;
 
-public interface ClassRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import fa.mockproject.entity.Class;
+
+public interface ClassRepository extends JpaRepository<Class, Long>{
 
 }
