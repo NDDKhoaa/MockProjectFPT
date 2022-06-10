@@ -5,4 +5,5 @@ import fa.mockproject.entity.AttendantStatus;
 
 public interface AttendantStatusRepository extends JpaRepository<AttendantStatus, Long> {
 	
+	
 }

@@ -6,4 +6,5 @@ import fa.mockproject.entity.TraineeCandidateProfile;
 
 public interface TraineeCandidateProfileRepository extends JpaRepository<TraineeCandidateProfile, Long> {
 
+	
 }

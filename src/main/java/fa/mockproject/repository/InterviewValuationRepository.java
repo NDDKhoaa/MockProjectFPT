@@ -6,4 +6,5 @@ import fa.mockproject.entity.InterviewValuation;
 
 public interface InterviewValuationRepository extends JpaRepository<InterviewValuation, Long> {
 
+	
 }

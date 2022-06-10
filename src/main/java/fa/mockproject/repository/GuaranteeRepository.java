@@ -6,4 +6,5 @@ import fa.mockproject.entity.Guarantee;
 
 public interface GuaranteeRepository extends JpaRepository<Guarantee, Long> {
 	
+	
 }
