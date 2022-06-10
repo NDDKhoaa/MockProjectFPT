@@ -32,20 +32,20 @@ public class Interview {
 	@Column(name = "date", nullable = false)
 	private LocalDate date;
 
-	@Column(name = "interviewer", length = 250, nullable = false)
+	@Column(name = "interviewer", length = 255, nullable = false)
 	private String interviewer;
 
 	@Column(name = "comments", length = 1000, nullable = false)
 	private String comments;
 
-	@Column(name = "result", length = 250, nullable = false)
+	@Column(name = "result", length = 255, nullable = false)
 	private String result;
 
-	@Column(name = "remarks", length = 250, nullable = true)
+	@Column(name = "remarks", length = 255, nullable = true)
 	private String remarks;
 
 	@ManyToOne
-	@JoinColumn(name = "candidate_id", nullable = false)
+	@JoinColumn(name = "candidate_id",nullable = true)
 	private Candidate candidate;
 
 	public Interview() {
@@ -129,9 +129,8 @@ public class Interview {
 
 	@Override
 	public String toString() {
-		return "Interview [interviewId=" + interviewId + ", time=" + time + ", date=" + date
-				+ ", interviewer=" + interviewer + ", comments=" + comments + ", result=" + result + ", remarks="
-				+ remarks + "]";
+		return "Interview [interviewId=" + interviewId + ", time=" + time + ", date=" + date + ", interviewer="
+				+ interviewer + ", comments=" + comments + ", result=" + result + ", remarks=" + remarks + "]";
 	}
 
 }

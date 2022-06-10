@@ -35,23 +35,23 @@ public class EntryTest {
 	@Column(name = "language_valuator", nullable = false)
 	private int languageValuator;
 
-	@Column(name = "language_result", length = 250, nullable = false)
+	@Column(name = "language_result", length = 255, nullable = false)
 	private String languageResult;
 
 	@Column(name = "techinal_valuator", nullable = false)
 	private int technicalValuator;
 
-	@Column(name = "technical_result", length = 250, nullable = false)
+	@Column(name = "technical_result", length = 255, nullable = false)
 	private String technicalResult;
 
-	@Column(name = "result", length = 250, nullable = false)
+	@Column(name = "result", length = 255, nullable = false)
 	private String result;
 
-	@Column(name = "remarks", length = 250, nullable = true)
+	@Column(name = "remarks", length = 255, nullable = true)
 	private String remarks;
 
 	@ManyToOne
-	@JoinColumn(name = "candidate_id", nullable = false)
+	@JoinColumn(name = "candidate_id", nullable = true)
 	private Candidate candidate;
 
 	public EntryTest() {

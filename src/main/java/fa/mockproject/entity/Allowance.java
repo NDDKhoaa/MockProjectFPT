@@ -1,6 +1,6 @@
 package fa.mockproject.entity;
 
-<<<<<<< HEAD
+
 import javax.persistence.*;
 
 @Entity
@@ -9,21 +9,21 @@ import javax.persistence.*;
 public class Allowance {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "group", nullable = false)
-    private long group;
+    @Column(name = "allowance_id", nullable = false)
+    private long allowanceId;
 
     @ManyToOne
     @JoinColumn(name = "trainee_candidate id", nullable = false)
     private Trainee traineeId;
 
     @OneToOne
-    @JoinColumn(name = "allowance_group", nullable = false)
+    @JoinColumn(name = "group", nullable = false)
     private AllowanceGroup allowanceGroup;
 
     @Column(name = "class_id")
     private Integer classId;
 
-    @Column(name = "allowance_result" )
+    @Column(name = "allowance_result")
     private int allowanceResult;
 
     @Column(name = "remarks")
@@ -33,7 +33,7 @@ public class Allowance {
     }
 
     public Allowance(long group, Trainee traineeId, AllowanceGroup allowanceGroup, Integer classId, int allowanceResult, Integer remarks) {
-        this.group = group;
+        this.allowanceId = group;
         this.traineeId = traineeId;
         this.allowanceGroup = allowanceGroup;
         this.classId = classId;
@@ -41,12 +41,12 @@ public class Allowance {
         this.remarks = remarks;
     }
 
-    public long getGroup() {
-        return group;
+    public long getAllowanceId() {
+        return allowanceId;
     }
 
-    public void setGroup(long group) {
-        this.group = group;
+    public void setAllowanceId(long allowanceId) {
+        this.allowanceId = allowanceId;
     }
 
     public Trainee getTraineeId() {
@@ -88,8 +88,4 @@ public class Allowance {
     public void setRemarks(Integer remarks) {
         this.remarks = remarks;
     }
-=======
-public class Allowance {
-
->>>>>>> cc5e892 (Entity + Service)
 }

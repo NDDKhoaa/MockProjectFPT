@@ -1,6 +1,6 @@
 package fa.mockproject.entity;
 
-import java.util.Arrays;
+import java.sql.Blob;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -8,7 +8,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import fa.mockproject.model.TraineeCandidateProfileModel;
 
 @Entity
 @Table(name = "CV")
@@ -26,7 +30,11 @@ public class CV {
 	private long size;
 
 	@Column(name = "content", nullable = true)
-	private byte[] content;
+	private Blob content;
+
+	@ManyToOne
+	@JoinColumn(name = "candidate_id", nullable = true)
+	private Candidate candidate;
 
 	public long getCvId() {
 		return cvId;
@@ -44,22 +52,14 @@ public class CV {
 		this.name = name;
 	}
 
-	public byte[] getContent() {
+	public Blob getContent() {
 		return content;
 	}
 
-	public void setContent(byte[] content) {
+	public void setContent(Blob content) {
 		this.content = content;
 	}
 
-	public CV(String name, long size, byte[] content) {
-		super();
-		this.name = name;
-		this.size = size;
-		this.content = content;
-	}
-
-	
 	public CV(long cvId, String name) {
 		super();
 		this.cvId = cvId;
@@ -78,9 +78,16 @@ public class CV {
 		super();
 	}
 
+	public CV(TraineeCandidateProfileModel model) {
+		super();
+		this.name = model.getCVname();
+		this.size = model.getSize();
+		this.content = model.getContent();
+	}
+
 	@Override
 	public String toString() {
-		return "CV [cvId=" + cvId + ", name=" + name + ", size=" + size + ", content=" + Arrays.toString(content) + "]";
+		return "CV [cvId=" + cvId + ", name=" + name + ", size=" + size + "]";
 	}
 
 }

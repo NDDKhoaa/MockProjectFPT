@@ -36,29 +36,33 @@ public class Candidate {
 	private LocalDate applicationDate;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "channel_id", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "channel_id", nullable = true, insertable = false, updatable = false)
 	private Set<Channel> channel;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "location_id", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "location_id", nullable = true, insertable = false, updatable = false)
 	private Set<Location> location;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "entry_test_id", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "entry_test_id", nullable = true, insertable = false, updatable = false)
 	private Set<EntryTest> entryTest;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "interview_id", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "interview_id", nullable = true, insertable = false, updatable = false)
 	private Set<Interview> interview;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "offer_id", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "offer_id", nullable = true, insertable = false, updatable = false)
 	private Set<Offer> offer;
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "cv_id", nullable = true, insertable = false, updatable = false)
+	private Set<CV> CV;
 
-	@Column(name = "status", length = 250, nullable = false)
+	@Column(name = "status", length = 255, nullable = true)
 	private String status;
 
-	@Column(name = "remarks", length = 250, nullable = false)
+	@Column(name = "remarks", length = 255, nullable = true)
 	private String remarks;
 
 	public Candidate() {

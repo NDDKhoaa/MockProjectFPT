@@ -1,6 +1,5 @@
 package fa.mockproject.entity;
 
-<<<<<<< HEAD
 import javax.persistence.*;
 
 @Entity
@@ -111,8 +110,4 @@ public class GPA {
     public void setGpaGpaId(int gpaGpaId) {
         this.gpaGpaId = gpaGpaId;
     }
-=======
-public class GPA {
-
->>>>>>> cc5e892 (Entity + Service)
 }
