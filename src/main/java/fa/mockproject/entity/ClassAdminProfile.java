@@ -16,6 +16,7 @@ import javax.persistence.Table;
 @Cacheable
 public class ClassAdminProfile {
 	
+	@SuppressWarnings("unused")
 	private static final String DATE_FORMAT = "dd/MM/yyyy";
 	
 	@Id
@@ -35,8 +36,8 @@ public class ClassAdminProfile {
 	@Column(name = "gender", nullable = false)
 	private int gender;
 	
-	@Column(name = "phone", unique = true, nullable = false)
-	private long phone;
+	@Column(name = "phone", length = 255, unique = true, nullable = false)
+	private String phone;
 	
 	@Column(name = "email", length = 255, unique = true, nullable = false)
 	private String email;
@@ -49,7 +50,7 @@ public class ClassAdminProfile {
 	}
 
 	public ClassAdminProfile(ClassAdmin classAdmin, String fullName, LocalDate dateOfBirth,
-			int gender, long phone, String email, String remarks) {
+			int gender, String phone, String email, String remarks) {
 		super();
 		this.classAdmin = classAdmin;
 		this.fullName = fullName;
@@ -100,11 +101,11 @@ public class ClassAdminProfile {
 		this.gender = gender;
 	}
 
-	public long getPhone() {
+	public String getPhone() {
 		return phone;
 	}
 
-	public void setPhone(long phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 

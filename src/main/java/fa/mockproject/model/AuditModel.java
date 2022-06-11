@@ -1,65 +1,32 @@
-package fa.mockproject.entity;
+package fa.mockproject.model;
 
 import java.time.LocalDate;
 
-import javax.persistence.Cacheable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
+import fa.mockproject.entity.ClassBatch;
 import fa.mockproject.entity.enumtype.AuditEventCategoryEnum;
 
-@Entity
-@Table(name = "Audit")
-@Cacheable
-public class Audit {
-	
+public class AuditModel {
+
 	@SuppressWarnings("unused")
 	private static final String DATE_FORMAT = "dd/MM/yyyy";
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "audit_id")
 	private long auditId;
-	
-	@OneToOne(mappedBy = "audit")
 	private ClassBatch classBatch;
-	
-	@Column(name = "date", nullable = false)
 	private LocalDate date;
-	
-	@Enumerated(EnumType.STRING)
-	@Column(name = "event_category", length = 255, nullable = false)
 	private AuditEventCategoryEnum eventCategory;
-	
-	@Column(name = "related_party_or_people", length = 255, nullable = false)
 	private String relatedPartyOrPeople;
-	
-	@Column(name = "action", length = 255, nullable = false)
 	private String action;
-	
-	@Column(name = "pic", length = 255, nullable = false)
 	private String pic;
-	
-	@Column(name = "deadline", nullable =  false)
 	private LocalDate deadline;
-	
-	@Column(name = "note", length = 255, nullable = true)
 	private String note;
 	
-	public Audit() {
+	public AuditModel() {
 		super();
 	}
-
-	public Audit(ClassBatch classBatch, LocalDate date, AuditEventCategoryEnum eventCategory, String relatedPartyOrPeople,
-			String action, String pic, LocalDate deadline, String note) {
+	
+	public AuditModel(long auditId, ClassBatch classBatch, LocalDate date, AuditEventCategoryEnum eventCategory,
+			String relatedPartyOrPeople, String action, String pic, LocalDate deadline, String note) {
 		super();
+		this.auditId = auditId;
 		this.classBatch = classBatch;
 		this.date = date;
 		this.eventCategory = eventCategory;
@@ -144,7 +111,7 @@ public class Audit {
 
 	@Override
 	public String toString() {
-		return "Audit [auditId=" + auditId + ", classBatch=" + classBatch + ", date=" + date + ", eventCategory="
+		return "AuditModel [auditId=" + auditId + ", classBatch=" + classBatch + ", date=" + date + ", eventCategory="
 				+ eventCategory + ", relatedPartyOrPeople=" + relatedPartyOrPeople + ", action=" + action + ", pic="
 				+ pic + ", deadline=" + deadline + ", note=" + note + "]";
 	}
