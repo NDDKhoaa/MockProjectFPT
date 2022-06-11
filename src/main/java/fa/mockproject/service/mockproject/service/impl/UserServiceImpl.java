@@ -1,4 +1,4 @@
-package fa.mockproject.service.impl;
+package fa.mockproject.service.mockproject.service.impl;
 
 import fa.mockproject.entity.User;
 import fa.mockproject.repository.UserRepository;

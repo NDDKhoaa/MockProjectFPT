@@ -1,4 +1,4 @@
-package fa.mockproject.entity;
+package fa.mockproject.service.mockproject.entity;
 
 public enum Role {
     ADMIN,

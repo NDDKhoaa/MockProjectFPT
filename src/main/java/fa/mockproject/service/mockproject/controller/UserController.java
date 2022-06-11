@@ -1,4 +1,4 @@
-package fa.mockproject.controller;
+package fa.mockproject.service.mockproject.controller;
 
 import fa.mockproject.entity.User;
 import fa.mockproject.model.UserModel;
@@ -45,7 +45,7 @@ public class UserController {
         return "login";
     }
 
-  /*  @GetMapping(path = {"/editEmployee"})
+ /*   @GetMapping(path = {"/editEmployee"})
     public String editEmployee(Model model, int employeeId, ModelMap modelMap) {
         Employee viewEmployee = employeeService.getEmployeeById(employeeId);
         Account account = accountService.findAccountByEmployeeId(viewEmployee);

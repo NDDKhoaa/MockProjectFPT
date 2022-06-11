@@ -1,5 +1,6 @@
-package fa.mockproject.entity;
+package fa.mockproject.service.mockproject.entity;
 
+import fa.mockproject.entity.Role;
 import fa.mockproject.model.UserModel;
 import lombok.Getter;
 import lombok.Setter;
