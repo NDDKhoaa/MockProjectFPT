@@ -17,13 +17,13 @@ public class University {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "university_id",length = 20, unique = true, nullable = false)
+	@Column(name = "university_id", length = 20, unique = true, nullable = false)
 	private String universityId;
 
-	@Column(name = "university_name", length = 250, unique = true, nullable = false)
+	@Column(name = "university_name", length = 255, unique = true, nullable = false)
 	private String universityName;
 
-	@Column(name = "remarks", length = 250, nullable = true)
+	@Column(name = "remarks", length = 255, nullable = true)
 	private String remarks;
 
 	@OneToOne

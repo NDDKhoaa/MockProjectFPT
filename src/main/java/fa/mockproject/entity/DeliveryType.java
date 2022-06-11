@@ -17,6 +17,9 @@ public class DeliveryType {
     @Column(name="Remarks",nullable=true)
     private String remarks;
     
+    @Column(name="Delivery_Type_Name")
+    private String deliveryTypeName;
+    
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="Class_ID") 
     private ClassBatch classBatchClassId;
@@ -25,10 +28,19 @@ public class DeliveryType {
 		// TODO Auto-generated constructor stub
 	}
 
-	public DeliveryType(long classId, String remarks) {
+	public DeliveryType(long classId, String remarks, String deliveryTypeName) {
 		super();
 		this.classId = classId;
 		this.remarks = remarks;
+		this.deliveryTypeName = deliveryTypeName;
+	}
+
+	public String getDeliveryTypeName() {
+		return deliveryTypeName;
+	}
+
+	public void setDeliveryTypeName(String deliveryTypeName) {
+		this.deliveryTypeName = deliveryTypeName;
 	}
 
 	public long getDeliveryTypeId() {
@@ -65,7 +77,9 @@ public class DeliveryType {
 
 	@Override
 	public String toString() {
-		return "DeliveryType [deliveryTypeId=" + deliveryTypeId + ", classId=" + classId + ", remarks=" + remarks + "]";
+		return "DeliveryType [deliveryTypeId=" + deliveryTypeId + ", classId=" + classId + ", remarks=" + remarks
+				+ ", deliveryTypeName=" + deliveryTypeName + "]";
 	}
-    
+
+
 }

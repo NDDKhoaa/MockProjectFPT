@@ -11,9 +11,6 @@ public class Budget {
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
     private long budgetId;
     
-    @Column(name="Class_ID")
-    private long classId;
-    
     @Column(name="Remarks",nullable=true)
     private String remarks;
     
@@ -28,9 +25,7 @@ public class Budget {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Budget(long classId, String remarks, String budgetName) {
-		super();
-		this.classId = classId;
+	public Budget(String remarks, String budgetName) {
 		this.remarks = remarks;
 		this.budgetName = budgetName;
 	}
@@ -41,14 +36,6 @@ public class Budget {
 
 	public void setBudgetId(long budgetId) {
 		this.budgetId = budgetId;
-	}
-
-	public long getClassId() {
-		return classId;
-	}
-
-	public void setClassId(long classId) {
-		this.classId = classId;
 	}
 
 	public String getRemarks() {
@@ -77,7 +64,7 @@ public class Budget {
 
 	@Override
 	public String toString() {
-		return "Budget [budgetId=" + budgetId + ", classId=" + classId + ", remarks=" + remarks + ", budgetName="
+		return "Budget [budgetId=" + budgetId + ", remarks=" + remarks + ", budgetName="
 				+ budgetName + "]";
 	}
     

@@ -11,9 +11,6 @@ public class SubSubjectType {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long subSubjectTypeId;
 	
-	@Column(name="Class_ID")
-    private long classId;
-    
     @Column(name="Remarks",nullable=true)
     private String remarks;
     
@@ -28,9 +25,7 @@ public class SubSubjectType {
 		// TODO Auto-generated constructor stub
 	}
 
-	public SubSubjectType(long classId, String remarks, String subSubjectTypeName) {
-		super();
-		this.classId = classId;
+	public SubSubjectType(String remarks, String subSubjectTypeName) {
 		this.remarks = remarks;
 		this.subSubjectTypeName = subSubjectTypeName;
 	}
@@ -41,14 +36,6 @@ public class SubSubjectType {
 
 	public void setSubSubjectTypeId(long subSubjectTypeId) {
 		this.subSubjectTypeId = subSubjectTypeId;
-	}
-
-	public long getClassId() {
-		return classId;
-	}
-
-	public void setClassId(long classId) {
-		this.classId = classId;
 	}
 
 	public String getRemarks() {
@@ -77,7 +64,7 @@ public class SubSubjectType {
 
 	@Override
 	public String toString() {
-		return "SubSubjectType [subSubjectTypeId=" + subSubjectTypeId + ", classId=" + classId + ", remarks=" + remarks
+		return "SubSubjectType [subSubjectTypeId=" + subSubjectTypeId +", remarks=" + remarks
 				+ ", subSubjectTypeName=" + subSubjectTypeName + "]";
 	}
     
