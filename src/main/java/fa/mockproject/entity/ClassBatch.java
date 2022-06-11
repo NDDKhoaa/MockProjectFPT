@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,55 +17,16 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-enum SubSubjectTypeEnum {
-	Cloud("Cloud"),
-	BigData("Big Data"),
-	CAD("CAD"),
-	CAE("CAE"),
-	SAP("SAP"),
-	ITGeneral("IT General"),
-	Test("Test"),
-	Others("Others");
-	
-	private String string;
-
-	SubSubjectTypeEnum(String string) {
-		this.string = string;
-	}
-
-	public String getValue() {
-		return string;
-	}
-}
-
-enum ClassStatusEnum {
-	Draft("Draft"),
-	Submitted("Submitted"),
-	Rejected("Rejected"),
-	Declined("Declined"),
-	Planning("Planning"),
-	Planned("Planned"),
-	InProgress("In-Progress"),
-	PendingForReview("Pending For Review"),
-	Closed("Closed"),
-	WaitingForMoreInformation("WaitingForMoreInformation");
-	
-	private String string;
-
-	ClassStatusEnum(String string) {
-		this.string = string;
-	}
-
-	public String getString() {
-		return string;
-	}
-}
+import fa.mockproject.entity.enumtype.BudgetCodeEnum;
+import fa.mockproject.entity.enumtype.ClassStatusEnum;
+import fa.mockproject.entity.enumtype.SubSubjectTypeEnum;
 
 @Entity
 @Table(name = "ClassBatch")
 @Cacheable
 public class ClassBatch {
 	
+	@SuppressWarnings("unused")
 	private static final String DATE_FORMAT = "dd/MM/yyyy";
 	
 	@Id
@@ -97,6 +59,10 @@ public class ClassBatch {
 	
 	@Column(name = "planned_trainee_number", nullable = false)
 	private int plannedTraineeNumber;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "budget_code", nullable = false)
+	private BudgetCodeEnum budgetCode;
 	
 	@OneToOne
 	@Column(name = "budget_id", nullable = false)
@@ -153,7 +119,7 @@ public class ClassBatch {
 	private Audit audit;
 	
 	@OneToMany(mappedBy = "classBatch")
-	private Trainee trainee;
+	private List<Trainee> trainees;
 	
 	@OneToOne
 	@Column(name = "subject_type_id", nullable = false)
@@ -170,12 +136,12 @@ public class ClassBatch {
 		super();
 	}
 
-	public ClassBatch(String className, String classCode, LocalDate expectedStartDate,
-			LocalDate expectedEndDate, Location location, String detailLocation, ClassAdmin classAdmin,
-			int plannedTraineeNumber, Budget budget, long estimatedBudget, SubSubjectTypeEnum subSubjectType,
+	public ClassBatch(String className, String classCode, LocalDate expectedStartDate, LocalDate expectedEndDate,
+			Location location, String detailLocation, ClassAdmin classAdmin, int plannedTraineeNumber,
+			BudgetCodeEnum budgetCode, Budget budget, long estimatedBudget, SubSubjectTypeEnum subSubjectType,
 			DeliveryType deliveryType, FormatType formatType, Scope scope, SupplierPartner supplierPartner,
 			LocalDate actualStartDate, LocalDate actualEndDate, int acceptedTraineeNumber, int actualTraineeNumber,
-			List<Trainer> trainers, int milestones, byte[] curriculum, Audit audit, Trainee trainee,
+			List<Trainer> trainers, int milestones, byte[] curriculum, Audit audit, List<Trainee> trainees,
 			SubjectType subjectType, ClassStatusEnum status, String remarks) {
 		super();
 		this.className = className;
@@ -186,6 +152,7 @@ public class ClassBatch {
 		this.detailLocation = detailLocation;
 		this.classAdmin = classAdmin;
 		this.plannedTraineeNumber = plannedTraineeNumber;
+		this.budgetCode = budgetCode;
 		this.budget = budget;
 		this.estimatedBudget = estimatedBudget;
 		this.subSubjectType = subSubjectType;
@@ -201,7 +168,7 @@ public class ClassBatch {
 		this.milestones = milestones;
 		this.curriculum = curriculum;
 		this.audit = audit;
-		this.trainee = trainee;
+		this.trainees = trainees;
 		this.subjectType = subjectType;
 		this.status = status;
 		this.remarks = remarks;
@@ -277,6 +244,14 @@ public class ClassBatch {
 
 	public void setPlannedTraineeNumber(int plannedTraineeNumber) {
 		this.plannedTraineeNumber = plannedTraineeNumber;
+	}
+
+	public BudgetCodeEnum getBudgetCode() {
+		return budgetCode;
+	}
+
+	public void setBudgetCode(BudgetCodeEnum budgetCode) {
+		this.budgetCode = budgetCode;
 	}
 
 	public Budget getBudget() {
@@ -399,12 +374,12 @@ public class ClassBatch {
 		this.audit = audit;
 	}
 
-	public Trainee getTrainee() {
-		return trainee;
+	public List<Trainee> getTrainee() {
+		return trainees;
 	}
 
-	public void setTrainee(Trainee trainee) {
-		this.trainee = trainee;
+	public void setTrainee(List<Trainee> trainees) {
+		this.trainees = trainees;
 	}
 
 	public SubjectType getSubjectType() {
