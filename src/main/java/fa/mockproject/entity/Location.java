@@ -10,7 +10,7 @@ public class Location {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "location_id", length = 20, unique = true, nullable = false)
-	private String locationId;
+	private long locationId;
 
 	@Column(name = "location_name", nullable = false)
 	private String locationName;
@@ -32,11 +32,11 @@ public class Location {
 		this.remarks = remarks;
 	}
 
-	public String getLocationId() {
+	public long getLocationId() {
 		return locationId;
 	}
 
-	public void setLocationId(String locationId) {
+	public void setLocationId(long locationId) {
 		this.locationId = locationId;
 	}
 
