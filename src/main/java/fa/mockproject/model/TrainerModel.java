@@ -2,6 +2,8 @@ package fa.mockproject.model;
 
 import java.time.LocalDate;
 
+import fa.mockproject.entity.Trainer;
+
 public class TrainerModel {
 	
 	private long trainerId;
@@ -34,6 +36,21 @@ public class TrainerModel {
 		this.email = email;
 		this.experience = experience;
 		this.remarks = remarks;
+	}
+	
+	public TrainerModel(Trainer trainer) {
+		super();
+		this.trainerId = trainer.getTrainerId();
+		this.type = trainer.getType();
+		this.fullName = trainer.getTrainerProfile().getFullName();
+		this.dateOfBirth = trainer.getTrainerProfile().getDateOfBirth();
+		this.gender = trainer.getTrainerProfile().getGender();
+		this.unit = trainer.getTrainerProfile().getUnit();
+		this.major = trainer.getTrainerProfile().getMajor();
+		this.phone = trainer.getTrainerProfile().getPhone();
+		this.email = trainer.getTrainerProfile().getEmail();
+		this.experience = trainer.getTrainerProfile().getExperience();
+		this.remarks = trainer.getRemarks();
 	}
 
 	public long getTrainerId() {

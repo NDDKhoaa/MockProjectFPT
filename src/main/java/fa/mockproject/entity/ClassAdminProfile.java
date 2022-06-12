@@ -27,6 +27,9 @@ public class ClassAdminProfile {
 	@OneToOne(mappedBy = "classAdminProfile")
 	private ClassAdmin classAdmin;
 	
+	@Column(name = "account", length = 255, unique = true, nullable = false)
+	private String account;
+	
 	@Column(name = "full_name", length = 255, nullable = false)
 	private String fullName;
 	
@@ -49,10 +52,11 @@ public class ClassAdminProfile {
 		super();
 	}
 
-	public ClassAdminProfile(ClassAdmin classAdmin, String fullName, LocalDate dateOfBirth,
-			int gender, String phone, String email, String remarks) {
+	public ClassAdminProfile(ClassAdmin classAdmin, String account, String fullName, LocalDate dateOfBirth, int gender,
+			String phone, String email, String remarks) {
 		super();
 		this.classAdmin = classAdmin;
+		this.account = account;
 		this.fullName = fullName;
 		this.dateOfBirth = dateOfBirth;
 		this.gender = gender;
@@ -75,6 +79,14 @@ public class ClassAdminProfile {
 
 	public void setClassAdmin(ClassAdmin classAdmin) {
 		this.classAdmin = classAdmin;
+	}
+
+	public String getAccount() {
+		return account;
+	}
+
+	public void setAccount(String account) {
+		this.account = account;
 	}
 
 	public String getFullName() {

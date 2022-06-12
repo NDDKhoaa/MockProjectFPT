@@ -2,6 +2,7 @@ package fa.mockproject.model;
 
 import java.time.LocalDate;
 
+import fa.mockproject.entity.Audit;
 import fa.mockproject.entity.ClassBatch;
 import fa.mockproject.entity.enumtype.AuditEventCategoryEnum;
 
@@ -35,6 +36,19 @@ public class AuditModel {
 		this.pic = pic;
 		this.deadline = deadline;
 		this.note = note;
+	}
+	
+	public AuditModel(Audit audit) {
+		super();
+		this.auditId = audit.getAuditId();
+		this.classBatch = audit.getClassBatch();
+		this.date = audit.getDate();
+		this.eventCategory = audit.getEventCategory();
+		this.relatedPartyOrPeople = audit.getRelatedPartyOrPeople();
+		this.action = audit.getAction();
+		this.pic = audit.getPic();
+		this.deadline = audit.getDeadline();
+		this.note = audit.getNote();
 	}
 
 	public long getAuditId() {

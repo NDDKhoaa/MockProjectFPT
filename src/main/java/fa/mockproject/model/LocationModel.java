@@ -1,5 +1,7 @@
 package fa.mockproject.model;
 
+import fa.mockproject.entity.Location;
+
 public class LocationModel {
 
 	private long locationId;
@@ -15,6 +17,13 @@ public class LocationModel {
 		this.locationId = locationId;
 		this.locationName = locationName;
 		this.remarks = remarks;
+	}
+	
+	public LocationModel(Location location) {
+		super();
+		this.locationId = location.getLocationId();
+		this.locationName = location.getLocationName();
+		this.remarks = location.getRemarks();
 	}
 
 	public long getLocationId() {

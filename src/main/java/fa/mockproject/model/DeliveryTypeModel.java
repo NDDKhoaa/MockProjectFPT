@@ -1,5 +1,7 @@
 package fa.mockproject.model;
 
+import fa.mockproject.entity.DeliveryType;
+
 public class DeliveryTypeModel {
 	
 	private long deliveryTypeId;
@@ -15,6 +17,13 @@ public class DeliveryTypeModel {
 		this.deliveryTypeId = deliveryTypeId;
 		this.deliveryTypeName = deliveryTypeName;
 		this.remarks = remarks;
+	}
+	
+	public DeliveryTypeModel(DeliveryType deliveryType) {
+		super();
+		this.deliveryTypeId = deliveryType.getDeliveryTypeId();
+		this.deliveryTypeName = deliveryType.getDeliveryTypeName();
+		this.remarks = deliveryType.getRemarks();
 	}
 
 	public long getDeliveryTypeId() {
