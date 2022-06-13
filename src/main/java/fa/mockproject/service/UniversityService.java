@@ -2,21 +2,18 @@ package fa.mockproject.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import fa.mockproject.entity.University;
-import fa.mockproject.repository.UniversityRepository;
 
-@Service
-public class UniversityService {
+public interface UniversityService {
 
-	@Autowired
-	UniversityRepository repo;
-	
-	public List<University> ListAll(){
-		return (List<University>)repo.findAll();
-	}
-	
+	public List<University> listAll();
+
+	public void save(University university);
+
+	public University get(String universityId);
+
+	public void delete(University university);
+
+	public void deleteById(String universityId);
 
 }
