@@ -7,27 +7,29 @@ import javax.persistence.*;
 @Cacheable
 public class SubSubjectType {
 	@Id
-	@Column(name="sub_subject_type_id",unique=true)
+	@Column(name = "sub_subject_type_id")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long subSubjectTypeId;
 	
-    @Column(name="remarks",nullable=true)
+	@Column(name = "sub_subject_type_name", length = 255, nullable = false)
+	private String subSubjectTypeName;
+	
+    @Column(name = "remarks", length = 255, nullable = true)
     private String remarks;
     
-    @Column(name="sub_subject_type_name")
-    private String subSubjectTypeName;
-    
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="class_id") 
-    private ClassBatch classBatchClassId;
-    
-    public SubSubjectType() {
-		// TODO Auto-generated constructor stub
+    @OneToOne(mappedBy = "subSubjectType")
+    private ClassBatch classBatch;
+
+	public SubSubjectType() {
+		super();
 	}
 
-	public SubSubjectType(String remarks, String subSubjectTypeName) {
-		this.remarks = remarks;
+	public SubSubjectType(long subSubjectTypeId, String subSubjectTypeName, String remarks, ClassBatch classBatch) {
+		super();
+		this.subSubjectTypeId = subSubjectTypeId;
 		this.subSubjectTypeName = subSubjectTypeName;
+		this.remarks = remarks;
+		this.classBatch = classBatch;
 	}
 
 	public long getSubSubjectTypeId() {
@@ -38,14 +40,6 @@ public class SubSubjectType {
 		this.subSubjectTypeId = subSubjectTypeId;
 	}
 
-	public String getRemarks() {
-		return remarks;
-	}
-
-	public void setRemarks(String remarks) {
-		this.remarks = remarks;
-	}
-
 	public String getSubSubjectTypeName() {
 		return subSubjectTypeName;
 	}
@@ -54,18 +48,26 @@ public class SubSubjectType {
 		this.subSubjectTypeName = subSubjectTypeName;
 	}
 
-	public ClassBatch getClassBatchClassId() {
-		return classBatchClassId;
+	public String getRemarks() {
+		return remarks;
 	}
 
-	public void setClassBatchClassId(ClassBatch classBatchClassId) {
-		this.classBatchClassId = classBatchClassId;
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+
+	public ClassBatch getClassBatch() {
+		return classBatch;
+	}
+
+	public void setClassBatch(ClassBatch classBatch) {
+		this.classBatch = classBatch;
 	}
 
 	@Override
 	public String toString() {
-		return "SubSubjectType [subSubjectTypeId=" + subSubjectTypeId +", remarks=" + remarks
-				+ ", subSubjectTypeName=" + subSubjectTypeName + "]";
+		return "SubSubjectType [subSubjectTypeId=" + subSubjectTypeId + ", subSubjectTypeName=" + subSubjectTypeName
+				+ ", remarks=" + remarks + ", classBatch=" + classBatch + "]";
 	}
     
 }

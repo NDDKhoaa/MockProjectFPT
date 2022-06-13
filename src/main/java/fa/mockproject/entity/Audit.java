@@ -12,7 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import fa.mockproject.entity.enumtype.AuditEventCategoryEnum;
@@ -30,7 +30,7 @@ public class Audit {
 	@Column(name = "audit_id")
 	private long auditId;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "class_batch_id", nullable = false)
 	private ClassBatch classBatch;
 	

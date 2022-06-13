@@ -10,37 +10,26 @@ public class DeliveryType {
 	@Column(name="delivery_type_id",unique=true)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long deliveryTypeId;
-	
-	@Column(name="class_id")
-    private long classId;
-    
-    @Column(name="remarks",nullable=true)
-    private String remarks;
     
     @Column(name="delivery_type_name")
     private String deliveryTypeName;
     
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="class_id") 
-    private ClassBatch classBatchClassId;
+    @Column(name="remarks",nullable=true)
+    private String remarks;
     
-    public DeliveryType() {
-		// TODO Auto-generated constructor stub
-	}
+    @OneToOne(mappedBy = "deliveryType")
+    private ClassBatch classBatch;
 
-	public DeliveryType(long classId, String remarks, String deliveryTypeName) {
+	public DeliveryType() {
 		super();
-		this.classId = classId;
+	}
+
+	public DeliveryType(long deliveryTypeId, String deliveryTypeName, String remarks, ClassBatch classBatch) {
+		super();
+		this.deliveryTypeId = deliveryTypeId;
+		this.deliveryTypeName = deliveryTypeName;
 		this.remarks = remarks;
-		this.deliveryTypeName = deliveryTypeName;
-	}
-
-	public String getDeliveryTypeName() {
-		return deliveryTypeName;
-	}
-
-	public void setDeliveryTypeName(String deliveryTypeName) {
-		this.deliveryTypeName = deliveryTypeName;
+		this.classBatch = classBatch;
 	}
 
 	public long getDeliveryTypeId() {
@@ -51,12 +40,12 @@ public class DeliveryType {
 		this.deliveryTypeId = deliveryTypeId;
 	}
 
-	public long getClassId() {
-		return classId;
+	public String getDeliveryTypeName() {
+		return deliveryTypeName;
 	}
 
-	public void setClassId(long classId) {
-		this.classId = classId;
+	public void setDeliveryTypeName(String deliveryTypeName) {
+		this.deliveryTypeName = deliveryTypeName;
 	}
 
 	public String getRemarks() {
@@ -67,19 +56,18 @@ public class DeliveryType {
 		this.remarks = remarks;
 	}
 
-	public ClassBatch getClassBatchClassId() {
-		return classBatchClassId;
+	public ClassBatch getClassBatch() {
+		return classBatch;
 	}
 
-	public void setClassBatchClassId(ClassBatch classBatchClassId) {
-		this.classBatchClassId = classBatchClassId;
+	public void setClassBatch(ClassBatch classBatch) {
+		this.classBatch = classBatch;
 	}
 
 	@Override
 	public String toString() {
-		return "DeliveryType [deliveryTypeId=" + deliveryTypeId + ", classId=" + classId + ", remarks=" + remarks
-				+ ", deliveryTypeName=" + deliveryTypeName + "]";
+		return "DeliveryType [deliveryTypeId=" + deliveryTypeId + ", deliveryTypeName=" + deliveryTypeName
+				+ ", remarks=" + remarks + ", classBatch=" + classBatch + "]";
 	}
-
-
+    
 }

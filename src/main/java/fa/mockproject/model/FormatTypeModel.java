@@ -4,34 +4,34 @@ import fa.mockproject.entity.FormatType;
 
 public class FormatTypeModel {
 
-	private long formattype_id;
+	private long formatTypeId;
 	private String formatTypeName;
 	private String remarks;
 	
 	public FormatTypeModel() {
 		super();
 	}
-	
-	public FormatTypeModel(long formattype_id, String formatTypeName, String remarks) {
+
+	public FormatTypeModel(long formatTypeId, String formatTypeName, String remarks) {
 		super();
-		this.formattype_id = formattype_id;
+		this.formatTypeId = formatTypeId;
 		this.formatTypeName = formatTypeName;
 		this.remarks = remarks;
 	}
 	
 	public FormatTypeModel(FormatType formatType) {
 		super();
-		this.formattype_id = formatType.getFormattype_id();
+		this.formatTypeId = formatType.getFormatTypeId();
 		this.formatTypeName = formatType.getFormatTypeName();
 		this.remarks = formatType.getRemarks();
 	}
 
-	public long getFormattype_id() {
-		return formattype_id;
+	public long getFormatTypeId() {
+		return formatTypeId;
 	}
 
-	public void setFormattype_id(long formattype_id) {
-		this.formattype_id = formattype_id;
+	public void setFormatTypeId(long formatTypeId) {
+		this.formatTypeId = formatTypeId;
 	}
 
 	public String getFormatTypeName() {
@@ -52,7 +52,7 @@ public class FormatTypeModel {
 
 	@Override
 	public String toString() {
-		return "FormatTypeModel [formattype_id=" + formattype_id + ", formatTypeName=" + formatTypeName + ", remarks="
+		return "FormatTypeModel [formatTypeId=" + formatTypeId + ", formatTypeName=" + formatTypeName + ", remarks="
 				+ remarks + "]";
 	}
 	

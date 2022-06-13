@@ -18,36 +18,45 @@ public class SupplierPartner {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name= "supplierpartner_id")
-	private int supplierpartner_id;
+	@Column(name= "supplier_partner_id")
+	private int supplierPartnerId;
+	
+	@Column(name = "supplier_partner_name", length = 255, nullable = false)
+	private String supplierPartnerName;
 	
 	@OneToOne
 	@JoinColumn(name = "class_id", nullable = false)
 	private ClassBatch classBatch;
 	
-	@Column(name= "remarks")
-	private int remarks;
-	
-	
-	
-	@Column(name= "supplierpartner_name")
-	private int supplierpartner_name;
+	@Column(name= "remarks",  length = 255, nullable = true)
+	private String remarks;
 
-	public int getSupplierpartner_id() {
-		return supplierpartner_id;
+	public SupplierPartner() {
+		super();
 	}
 
-	public void setSupplierpartner_id(int supplierpartner_id) {
-		this.supplierpartner_id = supplierpartner_id;
-	}
-
-
-	public int getRemarks() {
-		return remarks;
-	}
-
-	public void setRemarks(int remarks) {
+	public SupplierPartner(int supplierPartnerId, String supplierPartnerName, ClassBatch classBatch, String remarks) {
+		super();
+		this.supplierPartnerId = supplierPartnerId;
+		this.supplierPartnerName = supplierPartnerName;
+		this.classBatch = classBatch;
 		this.remarks = remarks;
+	}
+
+	public int getSupplierPartnerId() {
+		return supplierPartnerId;
+	}
+
+	public void setSupplierPartnerId(int supplierPartnerId) {
+		this.supplierPartnerId = supplierPartnerId;
+	}
+
+	public String getSupplierPartnerName() {
+		return supplierPartnerName;
+	}
+
+	public void setSupplierPartnerName(String supplierPartnerName) {
+		this.supplierPartnerName = supplierPartnerName;
 	}
 
 	public ClassBatch getClassBatch() {
@@ -58,28 +67,18 @@ public class SupplierPartner {
 		this.classBatch = classBatch;
 	}
 
-	public int getSupplierpartner_name() {
-		return supplierpartner_name;
+	public String getRemarks() {
+		return remarks;
 	}
 
-	public void setSupplierpartner_name(int supplierpartner_name) {
-		this.supplierpartner_name = supplierpartner_name;
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
 	}
 
 	@Override
 	public String toString() {
-		return "SupplierPartner [supplierpartner_id=" + supplierpartner_id +  ", remarks="
-				+ remarks + ", classBatch=" + classBatch + ", supplierpartner_name=" + supplierpartner_name + "]";
+		return "SupplierPartner [supplierPartnerId=" + supplierPartnerId + ", supplierPartnerName="
+				+ supplierPartnerName + ", classBatch=" + classBatch + ", remarks=" + remarks + "]";
 	}
-
-	public SupplierPartner(int supplierpartner_id, int remarks, ClassBatch classBatch,
-			int supplierpartner_name) {
-		super();
-		this.supplierpartner_id = supplierpartner_id;
-		this.remarks = remarks;
-		this.classBatch = classBatch;
-		this.supplierpartner_name = supplierpartner_name;
-	}
-	
 	
 }
