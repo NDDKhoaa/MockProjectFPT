@@ -6,17 +6,18 @@ import javax.persistence.*;
 @Table(name = "Status")
 @Cacheable
 public class Status {
+	
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "status_id", nullable = false)
     private long statusId;
 
     @ManyToOne
-    @JoinColumn(name = "trainee_candidate id", nullable = false)
-    private Trainee traineeId;
+    @JoinColumn(name = "trainee_candidate_id", nullable = false)
+    private Trainee trainee;
 
     @Column(name = "remarks")
-    private Integer remarks;
+    private String remarks;
 
     @Column(name = "batch_class_id")
     private Integer batchClassId;
@@ -24,9 +25,9 @@ public class Status {
     public Status() {
     }
 
-    public Status(Integer statusId, Trainee traineeId, Integer remarks, Integer batchClassId) {
+    public Status(Integer statusId, Trainee trainee, String remarks, Integer batchClassId) {
         this.statusId = statusId;
-        this.traineeId = traineeId;
+        this.trainee = trainee;
         this.remarks = remarks;
         this.batchClassId = batchClassId;
     }
@@ -40,18 +41,18 @@ public class Status {
     }
 
     public Trainee getTraineeId() {
-        return traineeId;
+        return trainee;
     }
 
     public void setTraineeId(Trainee traineeId) {
-        this.traineeId = traineeId;
+        this.trainee = traineeId;
     }
 
-    public Integer getRemarks() {
+    public String getRemarks() {
         return remarks;
     }
 
-    public void setRemarks(Integer remarks) {
+    public void setRemarks(String remarks) {
         this.remarks = remarks;
     }
 
