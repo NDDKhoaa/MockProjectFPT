@@ -5,13 +5,14 @@ import fa.mockproject.model.UserModel;
 import fa.mockproject.service.SecurityService;
 import fa.mockproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -36,6 +37,7 @@ public class UserController {
         securityService.autoLogin(userModel.getEmail(), userModel.getPassword());
         return "redirect:/login";
     }
+
     @GetMapping("/login")
     public String login(Model model, String error, String logout) {
         if (error != null)
@@ -45,24 +47,32 @@ public class UserController {
         return "login";
     }
 
-  /*  @GetMapping(path = {"/editEmployee"})
-    public String editEmployee(Model model, int employeeId, ModelMap modelMap) {
-        Employee viewEmployee = employeeService.getEmployeeById(employeeId);
-        Account account = accountService.findAccountByEmployeeId(viewEmployee);
-        modelMap.addAttribute("employeeModel", new EmployeeModel());
-        model.addAttribute("employee", viewEmployee);
-        model.addAttribute("account", account);
-        return "editEmployee";
+    @RequestMapping(path = {"/listUser"}, method = RequestMethod.GET)
+    public String listUsers(Model model, int page, int size) {
+        PageRequest pageable = PageRequest.of(page, size);
+        List<User> users = userService.users(pageable);
+        model.addAttribute("users", users);
+        return "listUser";
     }
 
-    @PostMapping("/editEmployee")
-    public String editEmployee(@ModelAttribute("employeeModel") EmployeeModel employeeModel, BindingResult bindingResult) {
-        userValidator.validate(employeeModel, bindingResult);
+    @GetMapping(path = {"/editUser"})
+    public String editUser(Model model, long userId, ModelMap modelMap) {
+        User viewUser = userService.findUserByUserId(userId);
+        User user = userService.findByUserId(viewUser);
+        modelMap.addAttribute("userModel", new UserModel());
+        model.addAttribute("viewUser", viewUser);
+        model.addAttribute("user", user);
+        return "editUser";
+    }
+
+    @PostMapping("/editUser")
+    public String editEmployee(@ModelAttribute("employeeModel") UserModel userModel, BindingResult bindingResult) {
+
         if (bindingResult.hasErrors()) {
-            return "editEmployee" + "?employeeId=" + employeeModel.getEmployeeId();
+            return "editUser" + "?employeeId=" + userModel.getUserId();
         }
-        employeeService.update(new Employee(employeeModel));
-        return "redirect:/listEmployee";
-    }*/
+        userService.update(new User(userModel));
+        return "redirect:/";
+    }
 }
 
