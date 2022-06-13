@@ -71,8 +71,5 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "editUser" + "?employeeId=" + userModel.getUserId();
         }
-        userService.update(new User(userModel));
-        return "redirect:/";
-    }
 }
 

@@ -3,22 +3,22 @@ package fa.mockproject.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Subject_Type")
+@Table(name = "SubjectType")
 @Cacheable
 public class SubjectType {
 	@Id
-	@Column(name="Subject_Type_ID",unique=true)
+	@Column(name="subject_type_id",unique=true)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long subjectTypeId;
 	
-    @Column(name="Remarks",nullable=true)
+    @Column(name="remarks",nullable=true)
     private String remarks;
     
-    @Column(name="Subject_Type_Name")
+    @Column(name="subject_type_name")
     private String subjectTypeName;
     
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="Class_ID") 
+    @JoinColumn(name="class_id") 
     private ClassBatch classBatchClassId;
     
     public SubjectType() {

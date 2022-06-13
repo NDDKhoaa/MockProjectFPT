@@ -7,18 +7,18 @@ import javax.persistence.*;
 @Cacheable
 public class Budget {
     @Id
-    @Column(name="Budget_ID",unique=true)
+    @Column(name="budget_id",unique=true)
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
     private long budgetId;
     
-    @Column(name="Remarks",nullable=true)
+    @Column(name="remarks",nullable=true)
     private String remarks;
     
-    @Column(name="Budget_Name")
+    @Column(name="budget_name")
     private String budgetName;
     
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="Class_ID") 
+    @JoinColumn(name="class_id") 
     private ClassBatch classBatchClassId;
     
     public Budget() {
