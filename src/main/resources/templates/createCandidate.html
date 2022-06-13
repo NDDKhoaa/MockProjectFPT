@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Create Candidate</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+table, tr, th, td {
+	border: 1px solid black;
+}
+
+.tablesetting {
+	padding: 10px;
+	border: 1px solid black;
+}
+
+.inputsetting {
+	padding: 9px;
+	border: 1px solid black;
+}
+
+.selectsetting {
+	padding: 11px;
+	border: 1px solid black;
+}
+
+.radiosetting {
+	padding: 6.5px;
+}
+</style>
+</head>
+<body>
+	<div class="container-fluid">
+		<div style="width: 1000px;">
+			<form th:action="@{/saveProfile}" th:object="${traineeCandidateForm}"
+				enctype="multipart/form-data" method="POST">
+				<div>
+					<div class="row tablesetting">Personal Information</div>
+					<div class="row">
+						<div class="col-lg-2 tablesetting">Empl ID</div>
+						<div class="col-lg-2 tablesetting">.</div>
+						<div class="col-lg-2 tablesetting">Type</div>
+						<div class="col-lg-2 tablesetting">
+							Candidate <input type="text" th:field="*{typeId}"
+								style="display: none;" />
+						</div>
+
+						<div class="col-lg-2 tablesetting">Status</div>
+						<div class="col-lg-2 tablesetting">New</div>
+						<input type="text" th:field="*{statusId}" style="display: none;" />
+					</div>
+
+
+
+					<div class="row">
+						<div class="col-lg-2 tablesetting">Application Date</div>
+						<div>
+							<input class="col-lg-4 inputsetting" type="date"
+								th:field="*{applicationDate}" />
+						</div>
+						<div class="col-lg-2 tablesetting">Channel *</div>
+						<div>
+							<select class="col-lg-4 selectsetting" th:field="*{channelId}">
+								<option th:value="0">Select Channel</option>
+								<option th:each="channel:${channelList}"
+									th:value="${channel.channelId}"
+									th:text="${channel.channelName }"></option>
+							</select>
+						</div>
+					</div>
+
+
+
+					<div class="row">
+						<div class="col-lg-2 tablesetting">Site</div>
+						<div>
+							<select class="col-lg-4 selectsetting" th:field="*{locationId}">
+								<option th:value="0">Select Site</option>
+								<option th:each="location:${locationList}"
+									th:value="${location.locationId }"
+									th:text="${location.locationName }"></option>
+							</select>
+						</div>
+						<div class="col-lg-2 tablesetting">Account</div>
+						<div class="col-lg-4 tablesetting">.</div>
+					</div>
+
+
+
+					<div class="row">
+						<div class="col-lg-2 tablesetting">Name *</div>
+						<div>
+							<input class="col-lg-4 tablesetting" type="text"
+								th:field="*{fullName}" placeholder="Full Name" />
+						</div>
+						<div class="col-lg-2 tablesetting">Gender *</div>
+						<div class="col-lg-2 radiosetting text-center"
+							style="border: 1px solid black; border-style: solid none solid solid;">
+							<input type="radio" th:field="*{gender}" th:value="Male">
+							<label th:text="Male"></label>
+						</div>
+						<div class="col-lg-2 radiosetting text-center"
+							style="border: 1px solid black; border-style: solid solid solid none;">
+							<input type="radio" th:field="*{gender}" th:value="Female">
+							<label th:text="Female"></label>
+						</div>
+					</div>
+
+
+
+					<div class="row">
+						<div class="col-lg-2 tablesetting">DOB *</div>
+						<div>
+							<input type="date" class="col-lg-4 inputsetting"
+								th:field="*{dateOfBirth}" />
+						</div>
+						<div class="col-lg-2 tablesetting">CV</div>
+						<div>
+							<input class="col-lg-4 inputsetting" type="file" name="file"
+								accept="file/pdf, file/doc,file/docx" />
+						</div>
+					</div>
+
+
+
+					<div class="row">
+						<div class="col-lg-2 tablesetting">University</div>
+						<div>
+							<select class="col-lg-4 selectsetting" th:field="*{universityId}">
+								<option th:value="0">Select University</option>
+								<option th:each="university:${universityList}"
+									th:value="${university.universityId }"
+									th:text="${university.universityName }"></option>
+							</select>
+						</div>
+						<div class="col-lg-2 tablesetting">Faculty</div>
+						<div>
+							<select class="col-lg-4 selectsetting" th:field="*{facultyId}">
+								<option th:value="0">Select Faculty</option>
+								<option th:each="faculty:${facultyList}"
+									th:value="${faculty.facultyId }"
+									th:text="${faculty.facultyName }"></option>
+							</select>
+						</div>
+					</div>
+
+
+
+					<div class="row">
+						<div class="col-lg-2 tablesetting">Phone *</div>
+						<div>
+							<input class="col-lg-4 tablesetting" type="text"
+								th:field="*{Phone}" placeholder="Phone Number" />
+						</div>
+						<div class="col-lg-2 tablesetting">Email *</div>
+						<div>
+							<input class="col-lg-4 tablesetting" type="email"
+								th:field="*{email}" placeholder="Email" />
+						</div>
+					</div>
+
+
+
+					<div class="row">
+						<div class="col-lg-2 tablesetting">Skill</div>
+						<div>
+							<select class="col-lg-4 selectsetting" th:field="*{skillId}">
+								<option th:value="0">Select Skill</option>
+								<option th:each="skill:${skillList}"
+									th:value="${skill.skillId }" th:text="${skill.skillName }"></option>
+							</select>
+						</div>
+						<div class="col-lg-2 tablesetting">Graduation Year</div>
+						<div>
+							<input type="month" class="col-lg-4 inputsetting"
+								th:field="*{graduationYear}" />
+						</div>
+					</div>
+
+
+
+					<div class="row">
+						<div class="col-lg-2 tablesetting">Foreign Language</div>
+						<div>
+							<input class="col-lg-4 tablesetting" type="text"
+								th:field="*{foreignLanguage}" placeholder="Foreign Language" />
+						</div>
+						<div class="col-lg-2 tablesetting">Level</div>
+						<div>
+							<input class="col-lg-4 tablesetting" type="text"
+								th:field="*{level}" placeholder="Level" />
+						</div>
+					</div>
+
+
+
+					<div class="row">
+						<div class="col-lg-2 tablesetting">Note</div>
+						<div>
+							<input class="col-lg-10 tablesetting" type="text"
+								th:field="*{remarks}" />
+						</div>
+					</div>
+
+
+
+					<div class="row">
+						<div class="col-lg-2 tablesetting">History</div>
+						<div class="col-lg-10 tablesetting">.</div>
+					</div>
+
+
+
+					<div class="row">
+						<input type="submit" value="Submit" /> <input type="button"
+							value="Close" onclick="history.back()"/>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+</body>
+</html>
