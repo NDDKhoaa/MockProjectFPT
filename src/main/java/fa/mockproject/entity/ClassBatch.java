@@ -65,8 +65,7 @@ public class ClassBatch {
 	@Column(name = "budget_code", nullable = false)
 	private BudgetCodeEnum budgetCode;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "budget_id", nullable = false)
+	@OneToMany(mappedBy = "classBatch", cascade = CascadeType.ALL)
 	private Budget budget;
 	
 	@Column(name = "estimated_budget", nullable = false)
@@ -88,8 +87,7 @@ public class ClassBatch {
 	@JoinColumn(name = "scope_id", nullable = false)
 	private Scope scope;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "supplier_partner_id", nullable = false)
+	@OneToOne(mappedBy = "classBatch", cascade = CascadeType.ALL)
 	private SupplierPartner supplierPartner;
 	
 	@Column(name = "actual_start_date", nullable = false)
@@ -128,6 +126,9 @@ public class ClassBatch {
 	@Column(name = "status", length = 255, nullable = false)
 	private ClassBatchStatusEnum status;
 	
+	@Column(name = "weighted_number", length = 255, nullable = true)
+	private String weightedNumber;
+	
 	@Column(name = "history", length = 255, nullable = true)
 	private String history;
 	
@@ -145,7 +146,7 @@ public class ClassBatch {
 			SupplierPartner supplierPartner, LocalDate actualStartDate, LocalDate actualEndDate,
 			int acceptedTraineeNumber, int actualTraineeNumber, List<Trainer> trainers, int milestones,
 			byte[] curriculum, List<Audit> audits, List<Trainee> trainees, SubjectType subjectType,
-			ClassBatchStatusEnum status, String history, String remarks) {
+			ClassBatchStatusEnum status, String weightedNumber, String history, String remarks) {
 		super();
 		this.classId = classId;
 		this.className = className;
@@ -175,6 +176,7 @@ public class ClassBatch {
 		this.trainees = trainees;
 		this.subjectType = subjectType;
 		this.status = status;
+		this.weightedNumber = weightedNumber;
 		this.history = history;
 		this.remarks = remarks;
 	}
@@ -401,6 +403,14 @@ public class ClassBatch {
 
 	public void setStatus(ClassBatchStatusEnum status) {
 		this.status = status;
+	}
+
+	public String getWeightedNumber() {
+		return weightedNumber;
+	}
+
+	public void setWeightedNumber(String weightedNumber) {
+		this.weightedNumber = weightedNumber;
 	}
 
 	public String getHistory() {

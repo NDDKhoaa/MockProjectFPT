@@ -9,17 +9,16 @@ public class Location {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "location_id", length = 20, unique = true, nullable = false)
+	@Column(name = "location_id")
 	private long locationId;
 
-	@Column(name = "location_name", nullable = false)
+	@Column(name = "location_name", length = 255, nullable = false)
 	private String locationName;
 
-	@Column(name = "remarks", length = 250, nullable = true)
+	@Column(name = "remarks", length = 255, nullable = true)
 	private String remarks;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "class_id", nullable = false)
+	@OneToOne(mappedBy = "location")
 	private ClassBatch classBatch;
 
 	public Location() {

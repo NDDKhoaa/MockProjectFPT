@@ -9,9 +9,7 @@ public class BudgetModel {
     private String unit;
     private Integer unitExpense;
     private Integer quantity;
-    private Long amount;
     private Integer tax;
-    private Long sum;
     private String note;
     
 	public BudgetModel() {
@@ -25,9 +23,7 @@ public class BudgetModel {
 		this.unit = unit;
 		this.unitExpense = unitExpense;
 		this.quantity = quantity;
-		this.amount = amount;
 		this.tax = tax;
-		this.sum = sum;
 		this.note = note;
 	}
 	
@@ -38,9 +34,7 @@ public class BudgetModel {
 		this.unit = budget.getUnit();
 		this.unitExpense = budget.getUnitExpense();
 		this.quantity = budget.getQuantity();
-		this.amount = budget.getAmount();
 		this.tax = budget.getTax();
-		this.sum = budget.getSum();
 		this.note = budget.getNote();
 	}
 	public long getBudgetId() {
@@ -74,22 +68,20 @@ public class BudgetModel {
 		this.quantity = quantity;
 	}
 	public Long getAmount() {
-		return amount;
-	}
-	public void setAmount(Long amount) {
-		this.amount = amount;
+		if (this.unitExpense == null || this.quantity == null) {
+			return null;
+		}
+		return (long) (this.unitExpense * this.quantity);
 	}
 	public Integer getTax() {
 		return tax;
 	}
-	public void setTax(Integer tax) {
-		this.tax = tax;
-	}
-	public Long getSum() {
-		return sum;
-	}
-	public void setSum(Long sum) {
-		this.sum = sum;
+	public Float getSum() {
+		Long amount = this.getAmount();
+		if (amount == null) {
+			return null;
+		}		
+		return (float) amount + amount * tax;
 	}
 	public String getNote() {
 		return note;
@@ -97,11 +89,11 @@ public class BudgetModel {
 	public void setNote(String note) {
 		this.note = note;
 	}
+	
 	@Override
 	public String toString() {
 		return "BudgetModel [budgetId=" + budgetId + ", item=" + item + ", unit=" + unit + ", unitExpense="
-				+ unitExpense + ", quantity=" + quantity + ", amount=" + amount + ", tax=" + tax + ", sum=" + sum
-				+ ", note=" + note + "]";
+				+ unitExpense + ", quantity=" + quantity + ", tax=" + tax + ", note=" + note + "]";
 	}
     
 }

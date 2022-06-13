@@ -131,6 +131,7 @@ public class ClassBatchModel {
 		this.traineeModels = new ArrayList<TraineeModel>();
 		classBatch.getTrainees().forEach(trainee -> {this.traineeModels.add(new TraineeModel(trainee));});
 		this.subjectTypeModel = new SubjectTypeModel(classBatch.getSubjectType());
+		this.weightedNumber = classBatch.getWeightedNumber();
 		this.history = classBatch.getHistory();
 		this.status = classBatch.getStatus();
 		this.remarks = classBatch.getRemarks();
