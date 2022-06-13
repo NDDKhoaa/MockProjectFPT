@@ -1,5 +1,6 @@
 package fa.mockproject.entity;
 
+import java.util.Set;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -7,8 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -27,9 +27,8 @@ public class Skill {
 	@Column(name = "remarks", length = 255, nullable = true)
 	private String remarks;
 
-	@OneToOne
-	@JoinColumn(name = "trainee_candidate_profile_id", nullable = true)
-	private TraineeCandidateProfile traineeCanditaCandidateProfile;
+	@OneToMany(mappedBy = "skill")
+	private Set<TraineeCandidateProfile> traineeCanditaCandidateProfile;
 
 	public String getSkillId() {
 		return skillId;
@@ -55,11 +54,11 @@ public class Skill {
 		this.remarks = remarks;
 	}
 
-	public TraineeCandidateProfile getTraineeCanditaCandidateProfile() {
+	public Set<TraineeCandidateProfile> getTraineeCanditaCandidateProfile() {
 		return traineeCanditaCandidateProfile;
 	}
 
-	public void setTraineeCanditaCandidateProfile(TraineeCandidateProfile traineeCanditaCandidateProfile) {
+	public void setTraineeCanditaCandidateProfile(Set<TraineeCandidateProfile> traineeCanditaCandidateProfile) {
 		this.traineeCanditaCandidateProfile = traineeCanditaCandidateProfile;
 	}
 
@@ -68,7 +67,7 @@ public class Skill {
 	}
 
 	public Skill(String skillId, String skillName, String remarks,
-			TraineeCandidateProfile traineeCanditaCandidateProfile) {
+			Set<TraineeCandidateProfile> traineeCanditaCandidateProfile) {
 		super();
 		this.skillId = skillId;
 		this.skillName = skillName;
@@ -76,14 +75,17 @@ public class Skill {
 		this.traineeCanditaCandidateProfile = traineeCanditaCandidateProfile;
 	}
 
+	public Skill(Skill find) {
+		super();
+		this.skillId = find.getSkillId();
+		this.skillName = find.getSkillName();
+		this.remarks = find.getRemarks();
+	}
+
 	@Override
 	public String toString() {
 		return "Skill [skillId=" + skillId + ", skillName=" + skillName + ", remarks=" + remarks
 				+ ", traineeCanditaCandidateProfile=" + traineeCanditaCandidateProfile + "]";
 	}
-
-	
-
-	
 
 }
