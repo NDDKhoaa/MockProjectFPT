@@ -1,6 +1,6 @@
 package fa.mockproject.entity.enumtype;
 
-public enum ClassStatusEnum {
+public enum ClassBatchStatusEnum {
 	Draft("Draft"),
 	Submitted("Submitted"),
 	Rejected("Rejected"),
@@ -14,7 +14,7 @@ public enum ClassStatusEnum {
 	
 	private String string;
 
-	ClassStatusEnum(String string) {
+	ClassBatchStatusEnum(String string) {
 		this.string = string;
 	}
 

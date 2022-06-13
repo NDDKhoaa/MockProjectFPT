@@ -1,5 +1,7 @@
 package fa.mockproject.model;
 
+import fa.mockproject.entity.Scope;
+
 public class ScopeModel {
 	
 	private long scopeId;
@@ -15,6 +17,13 @@ public class ScopeModel {
 		this.scopeId = scopeId;
 		this.scopeName = scopeName;
 		this.remarks = remarks;
+	}
+	
+	public ScopeModel(Scope scope) {
+		super();
+		this.scopeId = scope.getScopeId();
+		this.scopeName = scope.getScopeName();
+		this.remarks = scope.getRemarks();
 	}
 
 	public long getScopeId() {

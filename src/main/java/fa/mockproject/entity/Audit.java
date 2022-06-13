@@ -7,9 +7,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -28,7 +30,8 @@ public class Audit {
 	@Column(name = "audit_id")
 	private long auditId;
 	
-	@OneToOne(mappedBy = "audit")
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "class_batch_id", nullable = false)
 	private ClassBatch classBatch;
 	
 	@Column(name = "date", nullable = false)

@@ -1,5 +1,7 @@
 package fa.mockproject.model;
 
+import fa.mockproject.entity.FormatType;
+
 public class FormatTypeModel {
 
 	private long formattype_id;
@@ -15,6 +17,13 @@ public class FormatTypeModel {
 		this.formattype_id = formattype_id;
 		this.formatTypeName = formatTypeName;
 		this.remarks = remarks;
+	}
+	
+	public FormatTypeModel(FormatType formatType) {
+		super();
+		this.formattype_id = formatType.getFormattype_id();
+		this.formatTypeName = formatType.getFormatTypeName();
+		this.remarks = formatType.getRemarks();
 	}
 
 	public long getFormattype_id() {

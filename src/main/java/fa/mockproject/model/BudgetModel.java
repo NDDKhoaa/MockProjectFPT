@@ -1,21 +1,23 @@
 package fa.mockproject.model;
 
+import fa.mockproject.entity.Budget;
+
 public class BudgetModel {
 
     private long budgetId;
     private String item;
     private String unit;
-    private int unitExpense;
-    private int quantity;
+    private Integer unitExpense;
+    private Integer quantity;
     private Long amount;
-    private int tax;
+    private Integer tax;
     private Long sum;
     private String note;
     
 	public BudgetModel() {
 		super();
 	}
-	public BudgetModel(long budgetId, String item, String unit, int unitExpense, int quantity, Long amount, int tax,
+	public BudgetModel(long budgetId, String item, String unit, Integer unitExpense, Integer quantity, Long amount, Integer tax,
 			Long sum, String note) {
 		super();
 		this.budgetId = budgetId;
@@ -27,6 +29,19 @@ public class BudgetModel {
 		this.tax = tax;
 		this.sum = sum;
 		this.note = note;
+	}
+	
+	public BudgetModel(Budget budget) {
+		super();
+		this.budgetId = budget.getBudgetId();
+		this.item = budget.getItem();
+		this.unit = budget.getUnit();
+		this.unitExpense = budget.getUnitExpense();
+		this.quantity = budget.getQuantity();
+		this.amount = budget.getAmount();
+		this.tax = budget.getTax();
+		this.sum = budget.getSum();
+		this.note = budget.getNote();
 	}
 	public long getBudgetId() {
 		return budgetId;
@@ -46,16 +61,16 @@ public class BudgetModel {
 	public void setUnit(String unit) {
 		this.unit = unit;
 	}
-	public int getUnitExpense() {
+	public Integer getUnitExpense() {
 		return unitExpense;
 	}
-	public void setUnitExpense(int unitExpense) {
+	public void setUnitExpense(Integer unitExpense) {
 		this.unitExpense = unitExpense;
 	}
-	public int getQuantity() {
+	public Integer getQuantity() {
 		return quantity;
 	}
-	public void setQuantity(int quantity) {
+	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
 	public Long getAmount() {
@@ -64,10 +79,10 @@ public class BudgetModel {
 	public void setAmount(Long amount) {
 		this.amount = amount;
 	}
-	public int getTax() {
+	public Integer getTax() {
 		return tax;
 	}
-	public void setTax(int tax) {
+	public void setTax(Integer tax) {
 		this.tax = tax;
 	}
 	public Long getSum() {

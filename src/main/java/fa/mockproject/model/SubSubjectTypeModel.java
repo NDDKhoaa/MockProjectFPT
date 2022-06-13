@@ -1,5 +1,7 @@
 package fa.mockproject.model;
 
+import fa.mockproject.entity.SubSubjectType;
+
 public class SubSubjectTypeModel {
 	
 	private long subSubjectTypeId;
@@ -15,6 +17,13 @@ public class SubSubjectTypeModel {
 		this.subSubjectTypeId = subSubjectTypeId;
 		this.subSubjectTypeName = subSubjectTypeName;
 		this.remarks = remarks;
+	}
+	
+	public SubSubjectTypeModel(SubSubjectType subSubjectType) {
+		super();
+		this.subSubjectTypeId = subSubjectType.getSubSubjectTypeId();
+		this.subSubjectTypeName = subSubjectType.getSubSubjectTypeName();
+		this.remarks = subSubjectType.getRemarks();
 	}
 
 	public long getSubSubjectTypeId() {
