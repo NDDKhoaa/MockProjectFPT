@@ -22,12 +22,12 @@ public class TrainerServiceImpl implements TrainerService{
 
 	@Override
 	public void save(TrainerModel trainerModel) {
-		Trainer trainer = Trainer(trainerModel);
-		trainerRepository.save(trainer);
+		
+		
 	}
 
 	@Override
-	public Trainer findByTrainer_id(int trainer_id) {
+	public Trainer findByTrainerId(int trainerId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
