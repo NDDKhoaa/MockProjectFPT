@@ -1,5 +1,7 @@
 package fa.mockproject.model;
 
+import fa.mockproject.entity.Trainer;
+
 public class TraineeModel {
 	private long id;
 	private String account;
@@ -16,14 +18,15 @@ public class TraineeModel {
 	private String history;
 	private String TPBAccount;
 	private String commitment;
+	private Trainer trainer;
 	
 	public TraineeModel() {
 		super();
 	}
-
+	
 	public TraineeModel(long id, String account, String fullName, String status, String allocationStatus, String gender,
 			String universityName, String falcutyName, long phone, String email, boolean salaryPaid,
-			String allowanceGroup, String history, String tPBAccount, String commitment) {
+			String allowanceGroup, String history, String tPBAccount, String commitment, Trainer trainer) {
 		super();
 		this.id = id;
 		this.account = account;
@@ -40,9 +43,16 @@ public class TraineeModel {
 		this.history = history;
 		TPBAccount = tPBAccount;
 		this.commitment = commitment;
+		this.trainer = trainer;
 	}
 
+	public Trainer getTrainer() {
+		return trainer;
+	}
 
+	public void setTrainer(Trainer trainer) {
+		this.trainer = trainer;
+	}
 
 	public long getId() {
 		return id;

@@ -1,6 +1,8 @@
 package fa.mockproject.entity;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.Cacheable;
@@ -12,11 +14,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import fa.mockproject.model.TraineeCandidateProfileModel;
 
 @Entity
 @Table(name = "Candidate")
@@ -35,32 +40,25 @@ public class Candidate {
 	@Column(name = "application_date", nullable = false)
 	private LocalDate applicationDate;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "channel_id", nullable = true, insertable = false, updatable = false)
-	private Set<Channel> channel;
+	@OneToOne()
+	@JoinColumn(name = "channel_id", nullable = true)
+	private Channel channel;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "location_id", nullable = true, insertable = false, updatable = false)
-	private Set<Location> location;
-
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "entry_test_id", nullable = true, insertable = false, updatable = false)
+	@JoinColumn(name = "entry_test_id", nullable = true)
 	private Set<EntryTest> entryTest;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "interview_id", nullable = true, insertable = false, updatable = false)
+	@JoinColumn(name = "interview_id", nullable = true)
 	private Set<Interview> interview;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "offer_id", nullable = true, insertable = false, updatable = false)
+	@JoinColumn(name = "offer_id", nullable = true)
 	private Set<Offer> offer;
-	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "cv_id", nullable = true, insertable = false, updatable = false)
-	private Set<CV> CV;
 
-	@Column(name = "status", length = 255, nullable = true)
-	private String status;
+	@ManyToOne
+	@JoinColumn(name = "status", nullable = true)
+	private TraineeCandidateProfileStatus status;
 
 	@Column(name = "remarks", length = 255, nullable = true)
 	private String remarks;
@@ -93,20 +91,12 @@ public class Candidate {
 		this.applicationDate = applicationDate;
 	}
 
-	public Set<Channel> getChannel() {
+	public Channel getChannel() {
 		return channel;
 	}
 
-	public void setChannel(Set<Channel> channel) {
+	public void setChannel(Channel channel) {
 		this.channel = channel;
-	}
-
-	public Set<Location> getLocation() {
-		return location;
-	}
-
-	public void setLocation(Set<Location> location) {
-		this.location = location;
 	}
 
 	public Set<EntryTest> getEntryTest() {
@@ -133,11 +123,11 @@ public class Candidate {
 		this.offer = offer;
 	}
 
-	public String getStatus() {
+	public TraineeCandidateProfileStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(TraineeCandidateProfileStatus status) {
 		this.status = status;
 	}
 
@@ -147,6 +137,18 @@ public class Candidate {
 
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
+	}
+
+	public Candidate(TraineeCandidateProfileModel model, Channel channel2, TraineeCandidateProfile profile2,
+			TraineeCandidateProfileStatus status2) {
+		Date dateApplicationDate = model.getApplicationDate();
+		LocalDate localDateApplicationDate = dateApplicationDate.toInstant().atZone(ZoneId.systemDefault())
+				.toLocalDate();
+		this.applicationDate = localDateApplicationDate;
+		this.channel = channel2;
+		this.status = status2;
+		this.remarks = model.getRemarks();
+		this.traineeCandidateProfile = profile2;
 	}
 
 }

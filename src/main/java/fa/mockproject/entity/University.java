@@ -1,13 +1,14 @@
 package fa.mockproject.entity;
 
+import java.util.Set;
+
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -26,19 +27,24 @@ public class University {
 	@Column(name = "remarks", length = 255, nullable = true)
 	private String remarks;
 
-	@OneToOne
-	@JoinColumn(name = "trainee_candidate_profile_id", nullable = true)
-	private TraineeCandidateProfile traineeCandidateProfile;
+	@OneToMany(mappedBy = "university")
+	private Set<TraineeCandidateProfile> traineeCandidateProfile;
 
 	public University() {
 		super();
 	}
 
-	public University(String universityName, String remarks, TraineeCandidateProfile traineeCandidateProfile) {
+	public University(String universityName, String remarks, Set<TraineeCandidateProfile> traineeCandidateProfile) {
 		super();
 		this.universityName = universityName;
 		this.remarks = remarks;
 		this.traineeCandidateProfile = traineeCandidateProfile;
+	}
+
+	public University(University findById) {
+		this.universityId = findById.getUniversityId();
+		this.universityName = findById.getUniversityName();
+		this.remarks = findById.getRemarks();
 	}
 
 	public String getUniversityId() {
@@ -65,11 +71,11 @@ public class University {
 		this.remarks = remarks;
 	}
 
-	public TraineeCandidateProfile getTraineeCandidateProfile() {
+	public Set<TraineeCandidateProfile> getTraineeCandidateProfile() {
 		return traineeCandidateProfile;
 	}
 
-	public void setTraineeCandidateProfile(TraineeCandidateProfile traineeCandidateProfile) {
+	public void setTraineeCandidateProfile(Set<TraineeCandidateProfile> traineeCandidateProfile) {
 		this.traineeCandidateProfile = traineeCandidateProfile;
 	}
 
