@@ -63,7 +63,7 @@ public class Trainee {
 		super();
 	}
 	
-	public Trainee(int traineeCandidateID, int remarks) {
+	public Trainee(long traineeCandidateID, int remarks) {
 		super();
 		this.traineeCandidateID = traineeCandidateID;
 		this.remarks = remarks;
@@ -89,7 +89,7 @@ public class Trainee {
 		this.remarks = remarks;
 	}
 
-	public Trainee(int traineeCandidateID, TraineeCandidateProfile traineeCandidate, ClassBatch classBatch,
+	public Trainee(long traineeCandidateID, TraineeCandidateProfile traineeCandidate, ClassBatch classBatch,
 			TraineeCandidateProfile traineeCandidateProfile, List<AttendantStatus> listAttendantStatus,
 			List<Allowance> listAllowances, List<GPA> listGPA, List<RewardPenalty> listRewardPenalties,
 			List<LearningPath> listLearningPaths, List<Guarantee> listGuarantees,
@@ -110,11 +110,11 @@ public class Trainee {
 		this.remarks = remarks;
 	}
 
-	public int getTraineeCandidateID() {
+	public long getTraineeCandidateID() {
 		return traineeCandidateID;
 	}
 
-	public void setTraineeCandidateID(int traineeCandidateID) {
+	public void setTraineeCandidateID(long traineeCandidateID) {
 		this.traineeCandidateID = traineeCandidateID;
 	}
 
