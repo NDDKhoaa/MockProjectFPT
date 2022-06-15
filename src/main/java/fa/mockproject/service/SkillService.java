@@ -2,20 +2,18 @@ package fa.mockproject.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import fa.mockproject.entity.Skill;
-import fa.mockproject.repository.SkillRepository;
 
-@Service
-public class SkillService {
-	@Autowired
-	private SkillRepository repo;
-
-	public List<Skill> ListAll(){
-		return (List<Skill>)repo.findAll();
-	}
+public interface SkillService {
 	
+	public List<Skill> listAll();
+
+	public void save(Skill skill);
+
+	public Skill get(String skillId);
+
+	public void delete(Skill skill);
+
+	public void deleteById(String skillId);
 
 }
