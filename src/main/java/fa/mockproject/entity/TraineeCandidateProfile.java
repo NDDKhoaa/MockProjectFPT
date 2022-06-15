@@ -19,8 +19,8 @@ public class TraineeCandidateProfile {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "trainee_candidate_profile_id", nullable = false)
-	private int traineeCandidateProfileId;
+	@Column(name = "trainee_candidate_profile_id")
+	private long traineeCandidateProfileId;
 
 	// TraineeID
 	@OneToOne
@@ -84,9 +84,12 @@ public class TraineeCandidateProfile {
 	}
 
 	
-	public TraineeCandidateProfile(int traineeCandidateProfileId, Trainee trainee, Candidate candidate, String fullName,
-			LocalDate dateOfBirth, String gender, University university, Faculty faculty, LocalDate graduationYear,
-			String phone, String email, String type, String skill, String foreignLanguage, String level, CV cv,
+	public TraineeCandidateProfile(long traineeCandidateProfileId, Trainee trainee,
+			Candidate candidate, String fullName,
+			LocalDate dateOfBirth, String gender,
+			University university, Faculty faculty, LocalDate graduationYear,
+			String phone, String email, String type, String skill, String foreignLanguage,
+			String level, CV cv,
 			String allocationStatus, String remarks) {
 		super();
 		this.traineeCandidateProfileId = traineeCandidateProfileId;
@@ -110,11 +113,11 @@ public class TraineeCandidateProfile {
 	}
 
 
-	public int getTraineeCandidateProfileId() {
+	public long getTraineeCandidateProfileId() {
 		return traineeCandidateProfileId;
 	}
 
-	public void setTraineeCandidateProfileId(int traineeCandidateProfileId) {
+	public void setTraineeCandidateProfileId(long traineeCandidateProfileId) {
 		this.traineeCandidateProfileId = traineeCandidateProfileId;
 	}
 
