@@ -1,7 +1,5 @@
 package fa.mockproject.entity;
 
-import java.sql.Blob;
-
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.Lob;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import fa.mockproject.model.TraineeCandidateProfileModel;
@@ -20,24 +19,29 @@ import fa.mockproject.model.TraineeCandidateProfileModel;
 public class CV {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "cv_id", nullable = false, unique = true)
+	@Column(name = "cv_id", nullable = true, unique = true)
 	private long cvId;
 
-	@Column(name = "name", length = 512, nullable = false, unique = true)
+	@Column(name = "name", length = 512, nullable = true, unique = true)
 	private String name;
 
 	@Column(name = "size", nullable = true)
 	private long size;
 
+	@Lob
 	@Column(name = "content", nullable = true)
-	private Blob content;
+	private byte[] content;
 
-	@ManyToOne
-	@JoinColumn(name = "candidate_id", nullable = true)
-	private Candidate candidate;
+	@OneToOne
+	@JoinColumn(name = "trainee_candidate_profile_id", nullable = true)
+	private TraineeCandidateProfile traineeCandidateProfile;
 
 	public long getCvId() {
 		return cvId;
+	}
+
+	public CV() {
+		super();
 	}
 
 	public void setCvId(long cvId) {
@@ -52,12 +56,20 @@ public class CV {
 		this.name = name;
 	}
 
-	public Blob getContent() {
+	public byte[] getContent() {
 		return content;
 	}
 
-	public void setContent(Blob content) {
+	public void setContent(byte[] content) {
 		this.content = content;
+	}
+
+	public TraineeCandidateProfile getTraineeCandidateProfile() {
+		return traineeCandidateProfile;
+	}
+
+	public void setTraineeCandidateProfile(TraineeCandidateProfile traineeCandidateProfile) {
+		this.traineeCandidateProfile = traineeCandidateProfile;
 	}
 
 	public CV(long cvId, String name) {
@@ -74,8 +86,12 @@ public class CV {
 		this.size = size;
 	}
 
-	public CV() {
+	public CV(TraineeCandidateProfileModel model, TraineeCandidateProfile profile) {
 		super();
+		this.name = model.getCVname();
+		this.size = model.getSize();
+		this.content = model.getContent();
+		this.traineeCandidateProfile = profile;
 	}
 
 	public CV(TraineeCandidateProfileModel model) {
