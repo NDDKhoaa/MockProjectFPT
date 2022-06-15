@@ -29,16 +29,16 @@ import fa.mockproject.entity.TraineeCandidateProfileStatus;
 import fa.mockproject.entity.TraineeCandidateProfileType;
 import fa.mockproject.entity.University;
 import fa.mockproject.model.TraineeCandidateProfileModel;
-import fa.mockproject.service.SecurityServiceImpl;
 import fa.mockproject.service.impl.CVServiceImpl;
 import fa.mockproject.service.impl.CandidateServiceImpl;
 import fa.mockproject.service.impl.ChannelServiceImpl;
+import fa.mockproject.service.impl.FacultyServiceImpl;
+import fa.mockproject.service.impl.LocationServiceImpl;
 import fa.mockproject.service.impl.SkillServiceImpl;
 import fa.mockproject.service.impl.TraineeCandidateProfileServiceImpl;
 import fa.mockproject.service.impl.TraineeCandidateProfileStatusServiceImpl;
 import fa.mockproject.service.impl.TraineeCandidateProfileTypeServiceImpl;
 import fa.mockproject.service.impl.UniversityServiceImpl;
-import fa.mockproject.service.impl.UserServiceImpl;
 
 @Controller
 public class ProfileController {
@@ -63,12 +63,6 @@ public class ProfileController {
 
 	@Autowired
 	private CVServiceImpl cvService;
-
-	@Autowired
-	private UserServiceImpl userService;
-
-	@Autowired
-	private SecurityServiceImpl securityService;
 
 	@Autowired
 	private TraineeCandidateProfileServiceImpl traineeCandidateProfileService;
@@ -116,7 +110,7 @@ public class ProfileController {
 		CV cv = new CV(model);
 		TraineeCandidateProfile profile = new TraineeCandidateProfile(model, location, university, faculty, skill, cv,
 				type);
-		Candidate candidate = new Candidate(model, channel, profile, status);
+		Candidate candidate = new Candidate(model, channel, location, profile, status);
 		cvService.save(cv);
 		candidateService.save(candidate);
 		traineeCandidateProfileService.save(profile);

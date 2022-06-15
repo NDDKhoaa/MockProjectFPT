@@ -25,7 +25,7 @@ public class Status {
     public Status() {
     }
 
-    public Status(Integer statusId, Trainee trainee, String remarks, Integer batchClassId) {
+    public Status(long statusId, Trainee trainee, String remarks, Integer batchClassId) {
         this.statusId = statusId;
         this.trainee = trainee;
         this.remarks = remarks;
@@ -36,7 +36,7 @@ public class Status {
         return statusId;
     }
 
-    public void setStatusId(Integer statusId) {
+    public void setStatusId(long statusId) {
         this.statusId = statusId;
     }
 

@@ -15,8 +15,8 @@ public class Guarantee {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "guarantee_id", nullable = false, unique=true)
-    private int guaranteeId;
+    @Column(name = "guarantee_id")
+    private long guaranteeId;
 	
 	//TraineeID
 	@ManyToOne
@@ -33,14 +33,14 @@ public class Guarantee {
 		super();
 	}
 
-	public Guarantee(int guaranteeId, int fSU, String comments) {
+	public Guarantee(long guaranteeId, int fSU, String comments) {
 		super();
 		this.guaranteeId = guaranteeId;
 		FSU = fSU;
 		this.comments = comments;
 	}
 
-	public Guarantee(int guaranteeId, Trainee trainee, int fSU, String comments) {
+	public Guarantee(long guaranteeId, Trainee trainee, int fSU, String comments) {
 		super();
 		this.guaranteeId = guaranteeId;
 		this.trainee = trainee;
@@ -48,11 +48,11 @@ public class Guarantee {
 		this.comments = comments;
 	}
 
-	public int getGuaranteeId() {
+	public long getGuaranteeId() {
 		return guaranteeId;
 	}
 
-	public void setGuaranteeId(int guaranteeId) {
+	public void setGuaranteeId(long guaranteeId) {
 		this.guaranteeId = guaranteeId;
 	}
 

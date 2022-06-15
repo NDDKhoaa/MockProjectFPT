@@ -18,61 +18,63 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Trainee")
 public class Trainee {
-	
+
 	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "trainee_candiDate_id")
-    private long traineeCandidateID;
-	
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column(name = "trainee_candiDate_id")
+	private long traineeCandidateID;
+
 	// Foreign key cua table Class Batch
 	@ManyToOne
-	@JoinColumn(name="class_id", nullable=false)
+	@JoinColumn(name = "class_id", nullable = false)
 	private ClassBatch classBatch;
-	
-	@OneToOne(mappedBy="trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+	@OneToOne(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private TraineeCandidateProfile traineeCandidateProfile;
-	
-	@OneToMany(mappedBy="trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<AttendantStatus> listAttendantStatus;
-	
-	@OneToMany(mappedBy="trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Allowance> listAllowances;
-	
-	@OneToMany(mappedBy="trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<GPA> listGPA;
-	
-	@OneToMany(mappedBy="trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<RewardPenalty> listRewardPenalties;
-	
-	@OneToMany(mappedBy="trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<LearningPath> listLearningPaths;
-	
-	@OneToMany(mappedBy="trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Guarantee> listGuarantees;
-	
-	@OneToMany(mappedBy="trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<InterviewValuation> listinterviewValuations;
-	
-	@OneToMany(mappedBy="trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Status> listStatus;
-	
+
 	@Column(name = "remarks", nullable = true)
 	private int remarks;
 
 	public Trainee() {
 		super();
 	}
-	
+
 	public Trainee(long traineeCandidateID, int remarks) {
 		super();
 		this.traineeCandidateID = traineeCandidateID;
 		this.remarks = remarks;
 	}
 
-	public Trainee(TraineeCandidateProfile traineeCandidate, ClassBatch classBatch,
-			TraineeCandidateProfile traineeCandidateProfile, List<AttendantStatus> listAttendantStatus,
-			List<Allowance> listAllowances, List<GPA> listGPA, List<RewardPenalty> listRewardPenalties,
-			List<LearningPath> listLearningPaths, List<Guarantee> listGuarantees,
+	public Trainee(TraineeCandidateProfile traineeCandidate, /* ClassBatch classBatch, */
+			TraineeCandidateProfile traineeCandidateProfile,
+			/*
+			 * List<AttendantStatus> listAttendantStatus, List<Allowance> listAllowances,
+			 */ /* List<GPA> listGPA, */ List<RewardPenalty> listRewardPenalties,
+			/* List<LearningPath> listLearningPaths, */ List<Guarantee> listGuarantees,
 			List<InterviewValuation> listinterviewValuations, List<Status> listStatus, int remarks) {
 		super();
 		this.traineeCandidateProfile = traineeCandidate;
@@ -126,13 +128,12 @@ public class Trainee {
 		this.traineeCandidateProfile = traineeCandidate;
 	}
 
-	public ClassBatch getClassBatch() {
-		return classBatch;
-	}
+	public ClassBatch getClassBatch() { 
+		return classBatch; 
+		}
 
-	public void setClassBatch(ClassBatch classBatch) {
-		this.classBatch = classBatch;
-	}
+		public void setClassBatch(ClassBatch classBatch) { this.classBatch =
+		classBatch; }
 
 	public TraineeCandidateProfile getTraineeCandidateProfile() {
 		return traineeCandidateProfile;
