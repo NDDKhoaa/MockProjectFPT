@@ -1,6 +1,8 @@
 package fa.mockproject.entity;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,26 +12,29 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import fa.mockproject.model.TraineeCandidateProfileModel;
 
 @Entity
 @Table(name = "TraineeCandidateProfile")
 public class TraineeCandidateProfile {
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "trainee_candidate_profile_id", nullable = false)
-	private int traineeCandidateProfileId;
+	private long traineeCandidateProfileId;
 
 	// TraineeID
 	@OneToOne
-	@JoinColumn(name = "trainee_candidate_id", nullable = false, unique = true)
+	@JoinColumn(name = "trainee_candidate_id", nullable = true, unique = true)
 	private Trainee trainee;
 
 	@OneToOne(mappedBy = "traineeCandidateProfile", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Candidate candidate;
-
 
 	@Column(name = "full_name", length = 255, nullable = false)
 	private String fullName;
@@ -37,40 +42,47 @@ public class TraineeCandidateProfile {
 	@Column(name = "date_of_birth", nullable = false)
 	private LocalDate dateOfBirth;
 
-	@Column(name = "gender", nullable = false)
+	@Column(name = "gender", length = 255, nullable = false)
 	private String gender;
 
-	@OneToOne
-	@JoinColumn(name = "university_id", nullable = false)
+	@ManyToOne
+	@JoinColumn(name = "university_id", nullable = true)
 	private University university;
 
-	@OneToOne
-	@JoinColumn(name = "faculty_id", nullable = false)
+	@ManyToOne
+	@JoinColumn(name = "skill_id", nullable = true)
+	private Skill skill;
+
+	@ManyToOne
+	@JoinColumn(name = "location_id", nullable = true)
+	private Location location;
+
+	@ManyToOne
+	@JoinColumn(name = "faculty_id", nullable = true)
 	private Faculty faculty;
 
-	@Column(name = "graduation_year", nullable = false)
+	@DateTimeFormat(pattern = "MM/YYYY")
+	@Column(name = "graduation_year", nullable = true)
 	private LocalDate graduationYear;
 
-	@Column(name = "phone", nullable = false,length = 255, unique = true)
+	@Column(name = "phone", nullable = false, length = 255, unique = true)
 	private String phone;
 
-	@Column(name = "email", nullable = false, length = 255, unique = true)
+	@Column(name = "email", nullable = true, length = 255, unique = true)
 	private String email;
 
-	@Column(name = "type", length = 255, nullable = false)
-	private String type;
+	@ManyToOne
+	@JoinColumn(name = "type", nullable = true)
+	private TraineeCandidateProfileType type;
 
-	@Column(name = "skill", length = 255, nullable = false)
-	private String skill;
-
-	@Column(name = "foreign_language", length = 255, nullable = false)
+	@Column(name = "foreign_language", length = 255, nullable = true)
 	private String foreignLanguage;
 
-	@Column(name = "level", length = 255, nullable = false)
+	@Column(name = "level", length = 255, nullable = true)
 	private String level;
 
-	@OneToOne
-	@JoinColumn(name = "cv_id", nullable = false)
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "cv_id", nullable = true)
 	private CV cv;
 
 	@Column(name = "allocation_status", length = 255, nullable = true)
@@ -83,38 +95,11 @@ public class TraineeCandidateProfile {
 		super();
 	}
 
-	
-	public TraineeCandidateProfile(int traineeCandidateProfileId, Trainee trainee, Candidate candidate, String fullName,
-			LocalDate dateOfBirth, String gender, University university, Faculty faculty, LocalDate graduationYear,
-			String phone, String email, String type, String skill, String foreignLanguage, String level, CV cv,
-			String allocationStatus, String remarks) {
-		super();
-		this.traineeCandidateProfileId = traineeCandidateProfileId;
-		this.trainee = trainee;
-		this.candidate = candidate;
-		this.fullName = fullName;
-		this.dateOfBirth = dateOfBirth;
-		this.gender = gender;
-		this.university = university;
-		this.faculty = faculty;
-		this.graduationYear = graduationYear;
-		this.phone = phone;
-		this.email = email;
-		this.type = type;
-		this.skill = skill;
-		this.foreignLanguage = foreignLanguage;
-		this.level = level;
-		this.cv = cv;
-		this.allocationStatus = allocationStatus;
-		this.remarks = remarks;
-	}
-
-
-	public int getTraineeCandidateProfileId() {
+	public long getTraineeCandidateProfileId() {
 		return traineeCandidateProfileId;
 	}
 
-	public void setTraineeCandidateProfileId(int traineeCandidateProfileId) {
+	public void setTraineeCandidateProfileId(long traineeCandidateProfileId) {
 		this.traineeCandidateProfileId = traineeCandidateProfileId;
 	}
 
@@ -158,22 +143,6 @@ public class TraineeCandidateProfile {
 		this.gender = gender;
 	}
 
-	public University getUniversity() {
-		return university;
-	}
-
-	public void setUniversity(University university) {
-		this.university = university;
-	}
-
-	public Faculty getFaculty() {
-		return faculty;
-	}
-
-	public void setFaculty(Faculty faculty) {
-		this.faculty = faculty;
-	}
-
 	public LocalDate getGraduationYear() {
 		return graduationYear;
 	}
@@ -198,20 +167,12 @@ public class TraineeCandidateProfile {
 		this.email = email;
 	}
 
-	public String getType() {
+	public TraineeCandidateProfileType getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(TraineeCandidateProfileType type) {
 		this.type = type;
-	}
-
-	public String getSkill() {
-		return skill;
-	}
-
-	public void setSkill(String skill) {
-		this.skill = skill;
 	}
 
 	public String getForeignLanguage() {
@@ -252,6 +213,88 @@ public class TraineeCandidateProfile {
 
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
+	}
+
+	public University getUniversity() {
+		return university;
+	}
+
+	public void setUniversity(University university) {
+		this.university = university;
+	}
+
+	public Skill getSkill() {
+		return skill;
+	}
+
+	public void setSkill(Skill skill) {
+		this.skill = skill;
+	}
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
+	public Faculty getFaculty() {
+		return faculty;
+	}
+
+	public void setFaculty(Faculty faculty) {
+		this.faculty = faculty;
+	}
+
+	public TraineeCandidateProfile(TraineeCandidateProfileModel model) {
+		super();
+		this.traineeCandidateProfileId = model.getTraineeCandidateProfileId();
+		this.trainee = model.getTrainee();
+		this.candidate = model.getCandidate();
+		this.fullName = model.getFullName();
+		Date dateDOB = model.getDateOfBirth();
+		LocalDate localDateDOB = dateDOB.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		this.dateOfBirth = localDateDOB;
+		this.gender = model.getGender();
+		Date dateGraduationYear = model.getDateOfBirth();
+		LocalDate localDateGraduationYear = dateGraduationYear.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		this.graduationYear = localDateGraduationYear;
+		this.phone = model.getPhone();
+		this.email = model.getEmail();
+		this.foreignLanguage = model.getForeignLanguage();
+		this.level = model.getLevel();
+		CV cvModel = new CV(model);
+		this.cv = cvModel;
+		this.allocationStatus = model.getAllocationStatus();
+		this.remarks = model.getRemarks();
+	}
+
+	public TraineeCandidateProfile(TraineeCandidateProfileModel model, Location location2, University university2,
+			Faculty faculty2, Skill skill2, CV cv2, TraineeCandidateProfileType type2) {
+		this.traineeCandidateProfileId = model.getTraineeCandidateProfileId();
+		this.trainee = model.getTrainee();
+		this.candidate = model.getCandidate();
+		this.fullName = model.getFullName();
+		Date dateDOB = model.getDateOfBirth();
+		LocalDate localDateDOB = dateDOB.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		this.dateOfBirth = localDateDOB;
+		this.gender = model.getGender();
+		String stringGraduationYear = model.getGraduationYear() + "-01";
+		LocalDate localDateGraduationYear = LocalDate.parse(stringGraduationYear);
+		this.graduationYear = localDateGraduationYear;
+		this.phone = model.getPhone();
+		this.email = model.getEmail();
+		this.type = type2;
+		this.foreignLanguage = model.getForeignLanguage();
+		this.level = model.getLevel();
+		this.cv = cv2;
+		this.allocationStatus = model.getAllocationStatus();
+		this.remarks = model.getRemarks();
+		this.location = location2;
+		this.university = university2;
+		this.faculty = faculty2;
+		this.skill = skill2;
 	}
 
 	@Override

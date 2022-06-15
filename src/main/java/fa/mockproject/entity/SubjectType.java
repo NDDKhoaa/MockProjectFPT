@@ -3,36 +3,33 @@ package fa.mockproject.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Subject_Type")
+@Table(name = "SubjectType")
 @Cacheable
 public class SubjectType {
 	@Id
-	@Column(name="Subject_Type_ID",unique=true)
+	@Column(name="subject_type_id")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long subjectTypeId;
 	
-	@Column(name="Class_ID")
-    private long classId;
-    
-    @Column(name="Remarks",nullable=true)
+	@Column(name="subject_type_name", length = 255, nullable = true)
+	private String subjectTypeName;
+	
+    @Column(name="remarks", length = 255, nullable = true)
     private String remarks;
     
-    @Column(name="Subject_Type_Name")
-    private String subjectTypeName;
-    
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="Class_ID") 
-    private ClassBatch classBatchClassId;
-    
-    public SubjectType() {
-		// TODO Auto-generated constructor stub
+    @OneToOne(mappedBy = "subjectType")
+    private ClassBatch classBatch;
+
+	public SubjectType() {
+		super();
 	}
 
-	public SubjectType(long classId, String remarks, String subjectTypeName) {
+	public SubjectType(long subjectTypeId, String subjectTypeName, String remarks, ClassBatch classBatch) {
 		super();
-		this.classId = classId;
-		this.remarks = remarks;
+		this.subjectTypeId = subjectTypeId;
 		this.subjectTypeName = subjectTypeName;
+		this.remarks = remarks;
+		this.classBatch = classBatch;
 	}
 
 	public long getSubjectTypeId() {
@@ -43,12 +40,12 @@ public class SubjectType {
 		this.subjectTypeId = subjectTypeId;
 	}
 
-	public long getClassId() {
-		return classId;
+	public String getSubjectTypeName() {
+		return subjectTypeName;
 	}
 
-	public void setClassId(long classId) {
-		this.classId = classId;
+	public void setSubjectTypeName(String subjectTypeName) {
+		this.subjectTypeName = subjectTypeName;
 	}
 
 	public String getRemarks() {
@@ -59,27 +56,18 @@ public class SubjectType {
 		this.remarks = remarks;
 	}
 
-	public String getSubjectTypeName() {
-		return subjectTypeName;
+	public ClassBatch getClassBatch() {
+		return classBatch;
 	}
 
-	public void setSubjectTypeName(String subjectTypeName) {
-		this.subjectTypeName = subjectTypeName;
-	}
-
-	public ClassBatch getClassBatchClassId() {
-		return classBatchClassId;
-	}
-
-	public void setClassBatchClassId(ClassBatch classBatchClassId) {
-		this.classBatchClassId = classBatchClassId;
+	public void setClassBatch(ClassBatch classBatch) {
+		this.classBatch = classBatch;
 	}
 
 	@Override
 	public String toString() {
-		return "SubjectType [subjectTypeId=" + subjectTypeId + ", classId=" + classId + ", remarks=" + remarks
-				+ ", subjectTypeName=" + subjectTypeName + "]";
+		return "SubjectType [subjectTypeId=" + subjectTypeId + ", subjectTypeName=" + subjectTypeName + ", remarks="
+				+ remarks + ", classBatch=" + classBatch + "]";
 	}
-    
     
 }

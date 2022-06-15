@@ -16,72 +16,93 @@ import javax.persistence.Table;
 @Table(name = "TrainerProfile")
 @Cacheable
 public class TrainerProfile {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private int trainerprofile_id;
+	@Column(name = "trainer_profile_id")
+	private long trainerProfileId;
 	
 	@OneToOne
 	@JoinColumn(name = "trainer_id", nullable = false)
-	private Trainer trainer_id;
+	private Trainer trainer;
 	
-	@Column(name= "fullname")
-	private String fullname;
+	@Column(name = "full_name", length = 255, nullable = false)
+	private String fullName;
 	
-	@Column(name="date_of_birth")
-	private LocalDate date_of_birth;
+	@Column(name = "date_of_birth", nullable = false)
+	private LocalDate dateOfBirth;
 	
-	@Column(name= "gender")
+	@Column(name = "gender", nullable = false)
 	private int gender;
 	
-	@Column(name= "unit")
-	private int unit;
+	@Column(name = "unit", length = 255, nullable = false)
+	private String unit;
 	
-	@Column(name= "major")
-	private int major;
+	@Column(name= "major", length = 255, nullable = false)
+	private String major;
 	
-	@Column(name= "phone")
-	private int phone;
+	@Column(name = "phone", length = 255, nullable = false)
+	private String phone;
 	
-	@Column(name= "email")
+	@Column(name= "email", length = 255, nullable = false)
 	private String email;
-	
 
-	@Column(name= "experience")
+	@Column(name = "experience", nullable = false)
 	private int experience;
 	
-	@Column(name= "remarks")
-	private int remarks;
+	@Column(name= "remarks", length = 255, nullable = false)
+	private String remarks;
 
-	public int getTrainerprofile_id() {
-		return trainerprofile_id;
+	public TrainerProfile() {
+		super();
 	}
 
-	public void setTrainerprofile_id(int trainerprofile_id) {
-		this.trainerprofile_id = trainerprofile_id;
+	public TrainerProfile(long trainerProfileId, Trainer trainer, String fullName, LocalDate dateOfBirth, int gender,
+			String unit, String major, String phone, String email, int experience, String remarks) {
+		super();
+		this.trainerProfileId = trainerProfileId;
+		this.trainer = trainer;
+		this.fullName = fullName;
+		this.dateOfBirth = dateOfBirth;
+		this.gender = gender;
+		this.unit = unit;
+		this.major = major;
+		this.phone = phone;
+		this.email = email;
+		this.experience = experience;
+		this.remarks = remarks;
 	}
 
-	public Trainer getTrainer_id() {
-		return trainer_id;
+	public long getTrainerProfileId() {
+		return trainerProfileId;
 	}
 
-	public void setTrainer_id(Trainer trainer_id) {
-		this.trainer_id = trainer_id;
+	public void setTrainerProfileId(long trainerProfileId) {
+		this.trainerProfileId = trainerProfileId;
 	}
 
-	public String getFullname() {
-		return fullname;
+	public Trainer getTrainer() {
+		return trainer;
 	}
 
-	public void setFullname(String fullname) {
-		this.fullname = fullname;
+	public void setTrainer(Trainer trainer) {
+		this.trainer = trainer;
 	}
 
-	public LocalDate getDate_of_birth() {
-		return date_of_birth;
+	public String getFullName() {
+		return fullName;
 	}
 
-	public void setDate_of_birth(LocalDate date_of_birth) {
-		this.date_of_birth = date_of_birth;
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	public LocalDate getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+	public void setDateOfBirth(LocalDate dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
 	}
 
 	public int getGender() {
@@ -92,27 +113,27 @@ public class TrainerProfile {
 		this.gender = gender;
 	}
 
-	public int getUnit() {
+	public String getUnit() {
 		return unit;
 	}
 
-	public void setUnit(int unit) {
+	public void setUnit(String unit) {
 		this.unit = unit;
 	}
 
-	public int getMajor() {
+	public String getMajor() {
 		return major;
 	}
 
-	public void setMajor(int major) {
+	public void setMajor(String major) {
 		this.major = major;
 	}
 
-	public int getPhone() {
+	public String getPhone() {
 		return phone;
 	}
 
-	public void setPhone(int phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 
@@ -132,37 +153,19 @@ public class TrainerProfile {
 		this.experience = experience;
 	}
 
-	public int getRemarks() {
+	public String getRemarks() {
 		return remarks;
 	}
 
-	public void setRemarks(int remarks) {
+	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
 
 	@Override
 	public String toString() {
-		return "TrainerProfile [trainerprofile_id=" + trainerprofile_id + ", trainer_id=" + trainer_id + ", fullname="
-				+ fullname + ", gender=" + gender + ", unit=" + unit + ", major=" + major + ", phone=" + phone
+		return "TrainerProfile [trainerProfileId=" + trainerProfileId + ", fullName=" + fullName + ", dateOfBirth="
+				+ dateOfBirth + ", gender=" + gender + ", unit=" + unit + ", major=" + major + ", phone=" + phone
 				+ ", email=" + email + ", experience=" + experience + ", remarks=" + remarks + "]";
 	}
-
-	public TrainerProfile(int trainerprofile_id, Trainer trainer_id, String fullname, LocalDate date_of_birth,
-			int gender, int unit, int major, int phone, String email, int experience, int remarks) {
-		super();
-		this.trainerprofile_id = trainerprofile_id;
-		this.trainer_id = trainer_id;
-		this.fullname = fullname;
-		this.date_of_birth = date_of_birth;
-		this.gender = gender;
-		this.unit = unit;
-		this.major = major;
-		this.phone = phone;
-		this.email = email;
-		this.experience = experience;
-		this.remarks = remarks;
-	}
-	
-	
 	
 }

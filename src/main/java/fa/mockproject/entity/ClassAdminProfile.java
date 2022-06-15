@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -16,6 +17,7 @@ import javax.persistence.Table;
 @Cacheable
 public class ClassAdminProfile {
 	
+	@SuppressWarnings("unused")
 	private static final String DATE_FORMAT = "dd/MM/yyyy";
 	
 	@Id
@@ -23,8 +25,12 @@ public class ClassAdminProfile {
 	@Column(name = "class_admin_profile_id")
 	private long classAdminProfileId;
 	
-	@OneToOne(mappedBy = "classAdminProfile")
+	@OneToOne
+	@JoinColumn(name = "class_admin_id", nullable = false)
 	private ClassAdmin classAdmin;
+	
+	@Column(name = "account", length = 255, unique = true, nullable = false)
+	private String account;
 	
 	@Column(name = "full_name", length = 255, nullable = false)
 	private String fullName;
@@ -35,8 +41,8 @@ public class ClassAdminProfile {
 	@Column(name = "gender", nullable = false)
 	private int gender;
 	
-	@Column(name = "phone", unique = true, nullable = false)
-	private long phone;
+	@Column(name = "phone", length = 255, unique = true, nullable = false)
+	private String phone;
 	
 	@Column(name = "email", length = 255, unique = true, nullable = false)
 	private String email;
@@ -48,10 +54,11 @@ public class ClassAdminProfile {
 		super();
 	}
 
-	public ClassAdminProfile(ClassAdmin classAdmin, String fullName, LocalDate dateOfBirth,
-			int gender, long phone, String email, String remarks) {
+	public ClassAdminProfile(ClassAdmin classAdmin, String account, String fullName, LocalDate dateOfBirth, int gender,
+			String phone, String email, String remarks) {
 		super();
 		this.classAdmin = classAdmin;
+		this.account = account;
 		this.fullName = fullName;
 		this.dateOfBirth = dateOfBirth;
 		this.gender = gender;
@@ -74,6 +81,14 @@ public class ClassAdminProfile {
 
 	public void setClassAdmin(ClassAdmin classAdmin) {
 		this.classAdmin = classAdmin;
+	}
+
+	public String getAccount() {
+		return account;
+	}
+
+	public void setAccount(String account) {
+		this.account = account;
 	}
 
 	public String getFullName() {
@@ -100,11 +115,11 @@ public class ClassAdminProfile {
 		this.gender = gender;
 	}
 
-	public long getPhone() {
+	public String getPhone() {
 		return phone;
 	}
 
-	public void setPhone(long phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 

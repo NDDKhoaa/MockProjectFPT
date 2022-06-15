@@ -36,7 +36,7 @@ public class RewardPenalty {
 		super();
 	}
 
-	public RewardPenalty(int rewardPenaltyId, int milestones, int point, String comments) {
+	public RewardPenalty(long rewardPenaltyId, int milestones, int point, String comments) {
 		super();
 		this.rewardPenaltyId = rewardPenaltyId;
 		this.milestones = milestones;
@@ -44,7 +44,7 @@ public class RewardPenalty {
 		this.comments = comments;
 	}
 
-	public RewardPenalty(int rewardPenaltyId, Trainee trainee, int milestones, int point, String comments) {
+	public RewardPenalty(long rewardPenaltyId, Trainee trainee, int milestones, int point, String comments) {
 		super();
 		this.rewardPenaltyId = rewardPenaltyId;
 		this.trainee = trainee;
@@ -57,7 +57,7 @@ public class RewardPenalty {
 		return rewardPenaltyId;
 	}
 
-	public void setRewardPenaltyId(int rewardPenaltyId) {
+	public void setRewardPenaltyId(long rewardPenaltyId) {
 		this.rewardPenaltyId = rewardPenaltyId;
 	}
 

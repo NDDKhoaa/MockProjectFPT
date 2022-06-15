@@ -7,32 +7,46 @@ import javax.persistence.*;
 @Cacheable
 public class Budget {
     @Id
-    @Column(name="Budget_ID",unique=true)
-    @GeneratedValue(strategy=GenerationType.SEQUENCE)
+    @Column(name="budget_id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long budgetId;
     
-    @Column(name="Class_ID")
-    private long classId;
+    @Column(name = "item", length = 255, nullable = false)
+    private String item;
     
-    @Column(name="Remarks",nullable=true)
-    private String remarks;
+    @Column(name = "unit", length = 255, nullable = false)
+    private String unit;
     
-    @Column(name="Budget_Name")
-    private String budgetName;
+    @Column(name = "unit_expense", nullable = false)
+    private int unitExpense;
     
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="Class_ID") 
-    private ClassBatch classBatchClassId;
+    @Column(name = "quantity", nullable = false)
+    private int quantity;
     
-    public Budget() {
-		// TODO Auto-generated constructor stub
+    @Column(name = "tax", nullable = false)
+    private int tax;
+    
+    @Column(name = "note", length = 255, nullable = true)
+    private String note;
+    
+    @ManyToOne
+    @JoinColumn(name="class_id", nullable = false) 
+    private ClassBatch classBatch;
+
+	public Budget() {
+		super();
 	}
 
-	public Budget(long classId, String remarks, String budgetName) {
+	public Budget(String item, String unit, int unitExpense, int quantity, int tax, String note,
+			ClassBatch classBatch) {
 		super();
-		this.classId = classId;
-		this.remarks = remarks;
-		this.budgetName = budgetName;
+		this.item = item;
+		this.unit = unit;
+		this.unitExpense = unitExpense;
+		this.quantity = quantity;
+		this.tax = tax;
+		this.note = note;
+		this.classBatch = classBatch;
 	}
 
 	public long getBudgetId() {
@@ -43,42 +57,66 @@ public class Budget {
 		this.budgetId = budgetId;
 	}
 
-	public long getClassId() {
-		return classId;
+	public String getItem() {
+		return item;
 	}
 
-	public void setClassId(long classId) {
-		this.classId = classId;
+	public void setItem(String item) {
+		this.item = item;
 	}
 
-	public String getRemarks() {
-		return remarks;
+	public String getUnit() {
+		return unit;
 	}
 
-	public void setRemarks(String remarks) {
-		this.remarks = remarks;
+	public void setUnit(String unit) {
+		this.unit = unit;
 	}
 
-	public String getBudgetName() {
-		return budgetName;
+	public int getUnitExpense() {
+		return unitExpense;
 	}
 
-	public void setBudgetName(String budgetName) {
-		this.budgetName = budgetName;
+	public void setUnitExpense(int unitExpense) {
+		this.unitExpense = unitExpense;
 	}
 
-	public ClassBatch getClassBatchClassId() {
-		return classBatchClassId;
+	public int getQuantity() {
+		return quantity;
 	}
 
-	public void setClassBatchClassId(ClassBatch classBatchClassId) {
-		this.classBatchClassId = classBatchClassId;
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public int getTax() {
+		return tax;
+	}
+
+	public void setTax(int tax) {
+		this.tax = tax;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
+	public ClassBatch getClassBatch() {
+		return classBatch;
+	}
+
+	public void setClassBatch(ClassBatch classBatch) {
+		this.classBatch = classBatch;
 	}
 
 	@Override
 	public String toString() {
-		return "Budget [budgetId=" + budgetId + ", classId=" + classId + ", remarks=" + remarks + ", budgetName="
-				+ budgetName + "]";
+		return "Budget [budgetId=" + budgetId + ", item=" + item + ", unit=" + unit + ", unitExpense=" + unitExpense
+				+ ", quantity=" + quantity + ", tax=" + tax + ", note=" + note + ", classBatch=" + classBatch + "]";
 	}
     
 }

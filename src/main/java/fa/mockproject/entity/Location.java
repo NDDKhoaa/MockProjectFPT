@@ -1,6 +1,15 @@
 package fa.mockproject.entity;
 
-import javax.persistence.*;
+import java.util.Set;
+
+import javax.persistence.Cacheable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "Location")
@@ -12,15 +21,17 @@ public class Location {
 	@Column(name = "location_id", length = 20, unique = true, nullable = false)
 	private String locationId;
 
-	@Column(name = "location_name", nullable = false)
+	@Column(name = "location_name", length = 255, nullable = false)
 	private String locationName;
 
-	@Column(name = "remarks", length = 250, nullable = true)
+	@Column(name = "remarks", length = 255, nullable = true)
 	private String remarks;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "class_id", nullable = false)
-	private ClassBatch classBatch;
+	@OneToMany(mappedBy = "location")
+	private Set<Candidate> candidate;
+
+	@OneToMany(mappedBy = "location")
+	private Set<TraineeCandidateProfile> traineeCandidateProfile;
 
 	public Location() {
 		super();
@@ -30,6 +41,13 @@ public class Location {
 		super();
 		this.locationName = locationName;
 		this.remarks = remarks;
+	}
+
+	public Location(Location location) {
+		super();
+		this.locationId = location.getLocationId();
+		this.locationName = location.getLocationName();
+		this.remarks = location.getRemarks();
 	}
 
 	public String getLocationId() {
@@ -56,12 +74,20 @@ public class Location {
 		this.remarks = remarks;
 	}
 
-	public ClassBatch getClassBatch() {
-		return classBatch;
+	public Set<Candidate> getCandidate() {
+		return candidate;
 	}
 
-	public void setClassBatch(ClassBatch classBatch) {
-		this.classBatch = classBatch;
+	public void setCandidate(Set<Candidate> candidate) {
+		this.candidate = candidate;
+	}
+
+	public Set<TraineeCandidateProfile> getTraineeCandidateProfile() {
+		return traineeCandidateProfile;
+	}
+
+	public void setTraineeCandidateProfile(Set<TraineeCandidateProfile> traineeCandidateProfile) {
+		this.traineeCandidateProfile = traineeCandidateProfile;
 	}
 
 	@Override

@@ -1,13 +1,20 @@
 package fa.mockproject.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-import fa.mockproject.repository.CandidateRepository;
+import fa.mockproject.entity.Candidate;
 
-@Service
-public class CandidateService {
-	@Autowired
-	private CandidateRepository repo;
+public interface CandidateService {
+
+	public List<Candidate> listAll();
 	
+
+	public void save(Candidate candidate);
+
+	public Candidate findById(long candidateId);
+
+	public void delete(Candidate candidate);
+
+	public void deleteById(long candidateId);
+
 }

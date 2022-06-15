@@ -7,28 +7,22 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-enum AuditEventCategory {
-	Trainer,
-	Trainee,
-	Courseware,
-	Organization,
-	Logistics,
-	Management,
-	Calendar,
-	Others
-}
+import fa.mockproject.entity.enumtype.AuditEventCategoryEnum;
 
 @Entity
 @Table(name = "Audit")
 @Cacheable
 public class Audit {
 	
+	@SuppressWarnings("unused")
 	private static final String DATE_FORMAT = "dd/MM/yyyy";
 	
 	@Id
@@ -36,7 +30,8 @@ public class Audit {
 	@Column(name = "audit_id")
 	private long auditId;
 	
-	@OneToOne(mappedBy = "audit")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "class_batch_id", nullable = false)
 	private ClassBatch classBatch;
 	
 	@Column(name = "date", nullable = false)
@@ -44,7 +39,7 @@ public class Audit {
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "event_category", length = 255, nullable = false)
-	private AuditEventCategory eventCategory;
+	private AuditEventCategoryEnum eventCategory;
 	
 	@Column(name = "related_party_or_people", length = 255, nullable = false)
 	private String relatedPartyOrPeople;
@@ -65,7 +60,7 @@ public class Audit {
 		super();
 	}
 
-	public Audit(ClassBatch classBatch, LocalDate date, AuditEventCategory eventCategory, String relatedPartyOrPeople,
+	public Audit(ClassBatch classBatch, LocalDate date, AuditEventCategoryEnum eventCategory, String relatedPartyOrPeople,
 			String action, String pic, LocalDate deadline, String note) {
 		super();
 		this.classBatch = classBatch;
@@ -102,11 +97,11 @@ public class Audit {
 		this.date = date;
 	}
 
-	public AuditEventCategory getEventCategory() {
+	public AuditEventCategoryEnum getEventCategory() {
 		return eventCategory;
 	}
 
-	public void setEventCategory(AuditEventCategory eventCategory) {
+	public void setEventCategory(AuditEventCategoryEnum eventCategory) {
 		this.eventCategory = eventCategory;
 	}
 

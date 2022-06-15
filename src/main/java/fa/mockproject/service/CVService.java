@@ -1,19 +1,21 @@
 package fa.mockproject.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import java.util.List;
 
 import fa.mockproject.entity.CV;
 import fa.mockproject.model.TraineeCandidateProfileModel;
-import fa.mockproject.repository.CVRepository;
 
-@Service
-public class CVService {
-	@Autowired
-	private CVRepository repo;
+public interface CVService {
 	
-	public void save(TraineeCandidateProfileModel model) {
-		CV cv = new CV(model);
-		repo.save(cv);
-	}
+	public void save(CV cv);
+
+	public void save(TraineeCandidateProfileModel model);
+
+	public CV getFile(long fileId);
+
+	public List<CV> getFiles();
+
+	public void deleteById(long cvId);
+
+	public void delete(CV cv);
 }

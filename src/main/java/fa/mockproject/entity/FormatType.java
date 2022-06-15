@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -14,25 +13,55 @@ import javax.persistence.Table;
 @Table(name = "FormatType")
 @Cacheable
 public class FormatType {
+	
 	@Id
+	@Column(name = "format_type_id")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private int formattype_id;
+	private long formatTypeId;
 
-	@OneToOne
-	@JoinColumn(name = "class_id", nullable = false)
+	@Column(name= "format_type_name", length = 255, nullable = false)
+	private String formatTypeName;
+	
+	@Column(name= "remarks", length = 255, nullable = true)
+	private String remarks;
+	
+	@OneToOne(mappedBy = "formatType")
 	private ClassBatch classBatch;
-	
-	@Column(name= "remarks")
-	private int remarks;
-	
 
-
-	public int getFormattype_id() {
-		return formattype_id;
+	public FormatType() {
+		super();
 	}
 
-	public void setFormattype_id(int formattype_id) {
-		this.formattype_id = formattype_id;
+	public FormatType(long formatTypeId, String formatTypeName, String remarks, ClassBatch classBatch) {
+		super();
+		this.formatTypeId = formatTypeId;
+		this.formatTypeName = formatTypeName;
+		this.remarks = remarks;
+		this.classBatch = classBatch;
+	}
+
+	public long getFormatTypeId() {
+		return formatTypeId;
+	}
+
+	public void setFormatTypeId(long formatTypeId) {
+		this.formatTypeId = formatTypeId;
+	}
+
+	public String getFormatTypeName() {
+		return formatTypeName;
+	}
+
+	public void setFormatTypeName(String formatTypeName) {
+		this.formatTypeName = formatTypeName;
+	}
+
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
 	}
 
 	public ClassBatch getClassBatch() {
@@ -43,28 +72,10 @@ public class FormatType {
 		this.classBatch = classBatch;
 	}
 
-	public int getRemarks() {
-		return remarks;
-	}
-
-	public void setRemarks(int remarks) {
-		this.remarks = remarks;
-	}
-
-
-
 	@Override
 	public String toString() {
-		return "FormatType [formattype_id=" + formattype_id + ", classBatch=" + classBatch + ", remarks=" + remarks
-				+ "]";
+		return "FormatType [formatTypeId=" + formatTypeId + ", formatTypeName=" + formatTypeName + ", remarks="
+				+ remarks + ", classBatch=" + classBatch + "]";
 	}
-
-	public FormatType(int formattype_id, ClassBatch classBatch, int remarks) {
-		super();
-		this.formattype_id = formattype_id;
-		this.classBatch = classBatch;
-		this.remarks = remarks;
-	}
-	
 	
 }
