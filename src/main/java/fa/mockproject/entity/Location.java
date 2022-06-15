@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import fa.mockproject.model.LocationModel;
+
 @Entity
 @Table(name = "Location")
 @Cacheable
@@ -48,6 +50,14 @@ public class Location {
 		this.locationId = location.getLocationId();
 		this.locationName = location.getLocationName();
 		this.remarks = location.getRemarks();
+	}
+
+	public Location(LocationModel locationModel) {
+		super();
+		this.locationId = locationModel.getLocationId();
+		this.locationName = locationModel.getLocationName();
+		this.remarks = locationModel.getRemarks();
+
 	}
 
 	public String getLocationId() {

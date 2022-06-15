@@ -1,5 +1,7 @@
 package fa.mockproject.entity;
 
+import java.util.List;
+
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -20,8 +23,8 @@ public class ClassAdmin {
 	@Column(name = "class_admin_id")
 	private long classAdminId;
 	
-	@OneToOne(mappedBy = "classAdmin")
-	private ClassBatch classBatch;
+	@OneToMany(mappedBy = "location", fetch = FetchType.LAZY)
+	private List<ClassBatch> classBatchs;
 	
 	@OneToOne(mappedBy = "class_admin", fetch = FetchType.LAZY)
 	private ClassAdminProfile classAdminProfile;
@@ -32,10 +35,17 @@ public class ClassAdmin {
 	public ClassAdmin() {
 		super();
 	}
-
-	public ClassAdmin(ClassBatch classBatch, ClassAdminProfile classAdminProfile, String remarks) {
+	
+	public ClassAdmin(long classAdminId) {
 		super();
-		this.classBatch = classBatch;
+		this.classAdminId = classAdminId;
+	}
+
+	public ClassAdmin(long classAdminId, List<ClassBatch> classBatchs, ClassAdminProfile classAdminProfile,
+			String remarks) {
+		super();
+		this.classAdminId = classAdminId;
+		this.classBatchs = classBatchs;
 		this.classAdminProfile = classAdminProfile;
 		this.remarks = remarks;
 	}
@@ -48,12 +58,12 @@ public class ClassAdmin {
 		this.classAdminId = classAdminId;
 	}
 
-	public ClassBatch getClassBatch() {
-		return classBatch;
+	public List<ClassBatch> getClassBatchs() {
+		return classBatchs;
 	}
 
-	public void setClassBatch(ClassBatch classBatch) {
-		this.classBatch = classBatch;
+	public void setClassBatchs(List<ClassBatch> classBatchs) {
+		this.classBatchs = classBatchs;
 	}
 
 	public ClassAdminProfile getClassAdminProfile() {
@@ -70,12 +80,6 @@ public class ClassAdmin {
 
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
-	}
-
-	@Override
-	public String toString() {
-		return "ClassAdmin [classAdminId=" + classAdminId + ", classBatch=" + classBatch + ", classAdminProfile="
-				+ classAdminProfile + ", remarks=" + remarks + "]";
 	}
 	
 }

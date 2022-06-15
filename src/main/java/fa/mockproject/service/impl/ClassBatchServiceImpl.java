@@ -71,31 +71,54 @@ public class ClassBatchServiceImpl implements ClassBatchService {
 	@Override
 	public ClassBatchModel getClass(Long classBatchId) {
 		
-		ClassBatchModel classBatchModel = new ClassBatchModel();;
+		ClassBatchModel classBatchModel = null;
 		ClassBatch classBatch = null;
 		
 		try {
-			classBatch = classBatchRepository.getOne(classBatchId);			
+			
+			classBatch = classBatchRepository.getOne(classBatchId);
+			classBatchModel = new ClassBatchModel(classBatch);
+			
 		} catch (EntityNotFoundException e) {
 			e.printStackTrace();
-			return classBatchModel;
 		}
 		
-		classBatchModel.setGeneralInfor(classBatch);
-
 		return classBatchModel;
 	}
 
 	@Override
 	public ClassBatchModel addClass(ClassBatchModel classBatchModel) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		classBatchModel.setStatus(ClassBatchStatusEnum.Draft);
+		ClassBatch classBatch = new ClassBatch(classBatchModel);
+		
+		try {
+			classBatchRepository.save(classBatch);			
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		return classBatchModel;
 	}
 
 	@Override
-	public ClassBatchModel updateClass(ClassBatchModel classBatchModel) {
-		// TODO Auto-generated method stub
-		return null;
+	public ClassBatchModel updateDraftClass(ClassBatchModel classBatchModel) {
+		ClassBatch classBatch = new ClassBatch(classBatchModel);
+		
+		try {
+			classBatchRepository.save(classBatch);			
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		return classBatchModel;
+	}
+	
+	@Override
+	public ClassBatchModel updateInprogressClass(ClassBatchModel classBatchModel) {
+		//...
 	}
 
 	@Override

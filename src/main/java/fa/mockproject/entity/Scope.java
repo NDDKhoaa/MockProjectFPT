@@ -1,13 +1,18 @@
 package fa.mockproject.entity;
 
+import java.util.List;
+
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import fa.mockproject.model.ScopeModel;
 
 @Entity
 @Table(name = "Scope")
@@ -20,8 +25,8 @@ public class Scope {
 	@Column(name = "scope_name", length = 255, nullable = false)
 	private String scopeName;
 	
-	@OneToOne(mappedBy = "scope")
-	private ClassBatch classBatch;
+	@OneToMany(mappedBy = "scope", fetch = FetchType.LAZY)
+	private List<ClassBatch> classBatchs;
 	
 	@Column(name="remarks", length = 255, nullable = true)
 	private String remarks;
@@ -30,12 +35,19 @@ public class Scope {
 		super();
 	}
 
-	public Scope(long scopeId, String scopeName, ClassBatch classBatch, String remarks) {
+	public Scope(long scopeId, String scopeName, List<ClassBatch> classBatchs, String remarks) {
 		super();
 		this.scopeId = scopeId;
 		this.scopeName = scopeName;
-		this.classBatch = classBatch;
+		this.classBatchs = classBatchs;
 		this.remarks = remarks;
+	}
+
+	public Scope(ScopeModel scopeModel) {
+		super();
+		this.scopeId = scopeModel.getScopeId();
+		this.scopeName = scopeModel.getScopeName();
+		this.remarks = scopeModel.getRemarks();
 	}
 
 	public long getScopeId() {
@@ -54,12 +66,12 @@ public class Scope {
 		this.scopeName = scopeName;
 	}
 
-	public ClassBatch getClassBatch() {
-		return classBatch;
+	public List<ClassBatch> getClassBatchs() {
+		return classBatchs;
 	}
 
-	public void setClassBatch(ClassBatch classBatch) {
-		this.classBatch = classBatch;
+	public void setClassBatchs(List<ClassBatch> classBatchs) {
+		this.classBatchs = classBatchs;
 	}
 
 	public String getRemarks() {
