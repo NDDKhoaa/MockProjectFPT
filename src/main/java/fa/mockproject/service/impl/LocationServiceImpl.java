@@ -10,7 +10,6 @@ import fa.mockproject.entity.Location;
 import fa.mockproject.repository.LocationRepository;
 import fa.mockproject.service.LocationService;
 
-
 @Service
 public class LocationServiceImpl implements LocationService {
 	

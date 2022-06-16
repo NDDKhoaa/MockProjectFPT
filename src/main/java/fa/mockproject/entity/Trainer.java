@@ -49,6 +49,15 @@ public class Trainer {
 		this.remarks = remarks;
 	}
 
+	public Trainer(TrainerModel trainerModel, ClassBatch classBatch) {
+		super();
+		this.trainerId = trainerModel.getTrainerId();
+		this.type = trainerModel.getType();
+		this.trainerProfile = trainerModel.getTrainerProfileModel();
+		this.classBatch = classBatch;
+		this.remarks = trainerModel.getRemarks();
+	}
+
 	public long getTrainerId() {
 		return trainerId;
 	}

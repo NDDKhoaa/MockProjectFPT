@@ -2,6 +2,8 @@ package fa.mockproject.entity;
 
 import javax.persistence.*;
 
+import fa.mockproject.model.BudgetModel;
+
 @Entity
 @Table(name="Budget")
 @Cacheable
@@ -46,6 +48,27 @@ public class Budget {
 		this.quantity = quantity;
 		this.tax = tax;
 		this.note = note;
+		this.classBatch = classBatch;
+	}
+	
+	public Budget(BudgetModel budgetModel) {
+		super();
+		this.item = budgetModel.getItem();
+		this.unit = budgetModel.getUnit();
+		this.unitExpense = budgetModel.getUnitExpense();
+		this.quantity = budgetModel.getQuantity();
+		this.tax = budgetModel.getTax();
+		this.note = budgetModel.getNote();
+	}
+	
+	public Budget(BudgetModel budgetModel, ClassBatch classBatch) {
+		super();
+		this.item = budgetModel.getItem();
+		this.unit = budgetModel.getUnit();
+		this.unitExpense = budgetModel.getUnitExpense();
+		this.quantity = budgetModel.getQuantity();
+		this.tax = budgetModel.getTax();
+		this.note = budgetModel.getNote();
 		this.classBatch = classBatch;
 	}
 

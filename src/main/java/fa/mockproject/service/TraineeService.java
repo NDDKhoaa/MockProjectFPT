@@ -2,12 +2,14 @@ package fa.mockproject.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import fa.mockproject.entity.Trainee;
 import fa.mockproject.model.TraineeModel;
+import fa.mockproject.repository.TraineeCandidateProfileRepository;
 import fa.mockproject.repository.TraineeRepository;
 
 @Service
@@ -16,6 +18,8 @@ public class TraineeService {
 	@Autowired
 	TraineeRepository traineeRepository;
 	
+	@Autowired
+	TraineeCandidateProfileRepository traineeCandidateProfileRepository;
 	
 	public List<TraineeModel> getTraineeModelList() {
 		List<TraineeModel> traineeModels = new ArrayList<>();
@@ -47,5 +51,17 @@ public class TraineeService {
 		traineeModel.setEmail(trainee.getTraineeCandidateProfile().getEmail());
 		
 		return traineeModel;
+	}
+
+
+	public void update(TraineeModel traineeModelForm) {
+		Optional<Trainee> trainees = traineeRepository.findById(traineeModelForm.getId());
+		Trainee trainee = trainees.get();
+		traineeCandidateProfileRepository.update(trainee.getTraineeCandidateProfile().getTraineeCandidateProfileId(), 
+				traineeModelForm.getFullName(), traineeModelForm.getPhone(), traineeModelForm.getEmail(), 
+				traineeModelForm.getGender());
+		traineeRepository.save(trainee);
+		
+		
 	}
 }

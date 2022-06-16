@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import fa.mockproject.model.LocationModel;
+
 @Entity
 @Table(name = "Location")
 @Cacheable
@@ -28,7 +30,7 @@ public class Location {
 	private String remarks;
 
 	@OneToMany(mappedBy = "location")
-	private Set<ClassBatch> classBatch;
+	private Set<Candidate> candidate;
 
 	@OneToMany(mappedBy = "location")
 	private Set<TraineeCandidateProfile> traineeCandidateProfile;
@@ -48,6 +50,14 @@ public class Location {
 		this.locationId = location.getLocationId();
 		this.locationName = location.getLocationName();
 		this.remarks = location.getRemarks();
+	}
+
+	public Location(LocationModel locationModel) {
+		super();
+		this.locationId = locationModel.getLocationId();
+		this.locationName = locationModel.getLocationName();
+		this.remarks = locationModel.getRemarks();
+
 	}
 
 	public String getLocationId() {
@@ -74,12 +84,12 @@ public class Location {
 		this.remarks = remarks;
 	}
 
-	public Set<ClassBatch> getClassBatch() {
-		return classBatch;
+	public Set<Candidate> getCandidate() {
+		return candidate;
 	}
 
-	public void setClassBatch(Set<ClassBatch> classBatch) {
-		this.classBatch = classBatch;
+	public void setCandidate(Set<Candidate> candidate) {
+		this.candidate = candidate;
 	}
 
 	public Set<TraineeCandidateProfile> getTraineeCandidateProfile() {

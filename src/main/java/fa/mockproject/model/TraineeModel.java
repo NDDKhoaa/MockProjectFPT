@@ -1,6 +1,5 @@
 package fa.mockproject.model;
 
-import fa.mockproject.entity.Trainer;
 
 public class TraineeModel {
 	private long id;
@@ -11,22 +10,22 @@ public class TraineeModel {
 	private String gender;
 	private String universityName;
 	private String falcutyName;
-	private long phone;
+	private String phone;
 	private String email;
 	private boolean salaryPaid;
 	private String allowanceGroup;
 	private String history;
 	private String TPBAccount;
 	private String commitment;
-	private Trainer trainer;
+//	private Trainer trainer;
 	
 	public TraineeModel() {
 		super();
 	}
 	
 	public TraineeModel(long id, String account, String fullName, String status, String allocationStatus, String gender,
-			String universityName, String falcutyName, long phone, String email, boolean salaryPaid,
-			String allowanceGroup, String history, String tPBAccount, String commitment, Trainer trainer) {
+			String universityName, String falcutyName, String phone, String email, boolean salaryPaid,
+			String allowanceGroup, String history, String tPBAccount, String commitment/* , Trainer trainer */) {
 		super();
 		this.id = id;
 		this.account = account;
@@ -43,16 +42,16 @@ public class TraineeModel {
 		this.history = history;
 		TPBAccount = tPBAccount;
 		this.commitment = commitment;
-		this.trainer = trainer;
+//		this.trainer = trainer;
 	}
 
-	public Trainer getTrainer() {
-		return trainer;
-	}
-
-	public void setTrainer(Trainer trainer) {
-		this.trainer = trainer;
-	}
+//	public Trainer getTrainer() {
+//		return trainer;
+//	}
+//
+//	public void setTrainer(Trainer trainer) {
+//		this.trainer = trainer;
+//	}
 
 	public long getId() {
 		return id;
@@ -150,14 +149,14 @@ public class TraineeModel {
 
 
 
-	public long getPhone() {
+	public String getPhone() {
 		return phone;
 	}
 
 
 
-	public void setPhone(long phone) {
-		this.phone = phone;
+	public void setPhone(String string) {
+		this.phone = string;
 	}
 
 

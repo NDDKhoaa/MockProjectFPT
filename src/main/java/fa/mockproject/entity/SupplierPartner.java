@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import fa.mockproject.model.SupplierPartnerModel;
+
 
 @Entity
 @Table(name = "Supplier/Partner")
@@ -41,6 +43,21 @@ public class SupplierPartner {
 		this.supplierPartnerName = supplierPartnerName;
 		this.classBatch = classBatch;
 		this.remarks = remarks;
+	}
+
+	public SupplierPartner(SupplierPartnerModel supplierPartnerModel) {
+		super();
+		this.supplierPartnerId = supplierPartnerModel.getSupplierPartnerId();
+		this.supplierPartnerName = supplierPartnerModel.getSupplierPartnerName();
+		this.remarks = supplierPartnerModel.getRemarks();
+	}
+	
+	public SupplierPartner(SupplierPartnerModel supplierPartnerModel, ClassBatch classBatch) {
+		super();
+		this.supplierPartnerId = supplierPartnerModel.getSupplierPartnerId();
+		this.supplierPartnerName = supplierPartnerModel.getSupplierPartnerName();
+		this.remarks = supplierPartnerModel.getRemarks();
+		this.classBatch = classBatch;
 	}
 
 	public int getSupplierPartnerId() {

@@ -264,6 +264,8 @@ public class TraineeCandidateProfile {
 		this.email = model.getEmail();
 		this.foreignLanguage = model.getForeignLanguage();
 		this.level = model.getLevel();
+		CV cvModel = new CV(model);
+		this.cv = cvModel;
 		this.allocationStatus = model.getAllocationStatus();
 		this.remarks = model.getRemarks();
 	}

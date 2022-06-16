@@ -4,21 +4,21 @@ import fa.mockproject.entity.Location;
 
 public class LocationModel {
 
-	private long locationId;
+	private String locationId;
 	private String locationName;
 	private String remarks;
 	
 	public LocationModel() {
 		super();
 	}
-
-	public LocationModel(long locationId, String locationName, String remarks) {
+	
+	public LocationModel(String locationId, String locationName, String remarks) {
 		super();
 		this.locationId = locationId;
 		this.locationName = locationName;
 		this.remarks = remarks;
 	}
-	
+
 	public LocationModel(Location location) {
 		super();
 		this.locationId = location.getLocationId();
@@ -26,11 +26,11 @@ public class LocationModel {
 		this.remarks = location.getRemarks();
 	}
 
-	public long getLocationId() {
+	public String getLocationId() {
 		return locationId;
 	}
 
-	public void setLocationId(long locationId) {
+	public void setLocationId(String locationId) {
 		this.locationId = locationId;
 	}
 

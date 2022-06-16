@@ -1,6 +1,16 @@
 package fa.mockproject.entity;
 
-import javax.persistence.*;
+import java.util.List;
+
+import javax.persistence.Cacheable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "SubjectType")
@@ -17,19 +27,19 @@ public class SubjectType {
     @Column(name="remarks", length = 255, nullable = true)
     private String remarks;
     
-    @OneToOne(mappedBy = "subjectType")
-    private ClassBatch classBatch;
+    @OneToMany(mappedBy = "subjectType", fetch = FetchType.LAZY)
+    private List<ClassBatch> classBatchs;
 
 	public SubjectType() {
 		super();
 	}
 
-	public SubjectType(long subjectTypeId, String subjectTypeName, String remarks, ClassBatch classBatch) {
+	public SubjectType(long subjectTypeId, String subjectTypeName, String remarks, List<ClassBatch> classBatchs) {
 		super();
 		this.subjectTypeId = subjectTypeId;
 		this.subjectTypeName = subjectTypeName;
 		this.remarks = remarks;
-		this.classBatch = classBatch;
+		this.classBatchs = classBatchs;
 	}
 
 	public long getSubjectTypeId() {
@@ -56,18 +66,12 @@ public class SubjectType {
 		this.remarks = remarks;
 	}
 
-	public ClassBatch getClassBatch() {
-		return classBatch;
+	public List<ClassBatch> getClassBatchs() {
+		return classBatchs;
 	}
 
-	public void setClassBatch(ClassBatch classBatch) {
-		this.classBatch = classBatch;
-	}
-
-	@Override
-	public String toString() {
-		return "SubjectType [subjectTypeId=" + subjectTypeId + ", subjectTypeName=" + subjectTypeName + ", remarks="
-				+ remarks + ", classBatch=" + classBatch + "]";
+	public void setClassBatchs(List<ClassBatch> classBatchs) {
+		this.classBatchs = classBatchs;
 	}
     
 }
