@@ -114,7 +114,9 @@ public class ClassBatchModel {
 		this.plannedTraineeNumber = classBatch.getPlannedTraineeNumber();
 		this.budgetCode = classBatch.getBudgetCode();
 		this.budgetModels = new ArrayList<BudgetModel>();
-		classBatch.getBudgets().forEach(budget -> {this.budgetModels.add(new BudgetModel(budget));});
+		classBatch.getBudgets().forEach(budget -> {
+			this.budgetModels.add(new BudgetModel(budget));
+		});
 		this.estimatedBudget = classBatch.getEstimatedBudget();
 		this.subSubjectTypeModel = new SubSubjectTypeModel(classBatch.getSubSubjectType());
 		this.deliveryTypeModel = new DeliveryTypeModel(classBatch.getDeliveryType());
@@ -126,13 +128,19 @@ public class ClassBatchModel {
 		this.acceptedTraineeNumber = classBatch.getAcceptedTraineeNumber();
 		this.actualTraineeNumber = classBatch.getActualTraineeNumber();
 		this.trainerModels = new ArrayList<TrainerModel>();
-		classBatch.getTrainers().forEach(trainer -> {this.trainerModels.add(new TrainerModel(trainer));});
+		classBatch.getTrainers().forEach(trainer -> {
+			this.trainerModels.add(new TrainerModel(trainer));
+		});
 		this.milestones = classBatch.getMilestones();
 		this.curriculum = classBatch.getCurriculum();
 		this.auditModels = new ArrayList<AuditModel>();
-		classBatch.getAudits().forEach(audit -> {this.auditModels.add(new AuditModel(audit));});
+		classBatch.getAudits().forEach(audit -> {
+			this.auditModels.add(new AuditModel(audit));
+		});
 		this.traineeModels = new ArrayList<TraineeModel>();
-		classBatch.getTrainees().forEach(trainee -> {this.traineeModels.add(new TraineeModel(trainee));});
+		classBatch.getTrainees().forEach(trainee -> {
+			this.traineeModels.add(new TraineeModel(trainee));
+		});
 		this.subjectTypeModel = new SubjectTypeModel(classBatch.getSubjectType());
 		this.weightedNumber = classBatch.getWeightedNumber();
 		this.history = classBatch.getHistory();

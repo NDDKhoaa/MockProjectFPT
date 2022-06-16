@@ -53,7 +53,7 @@ public class Trainer {
 		super();
 		this.trainerId = trainerModel.getTrainerId();
 		this.type = trainerModel.getType();
-		this.trainerProfile = trainerModel.getTrainerProfileModel();
+		this.trainerProfile = new TrainerProfile(trainerModel.getTrainerProfileModel(), this);
 		this.classBatch = classBatch;
 		this.remarks = trainerModel.getRemarks();
 	}

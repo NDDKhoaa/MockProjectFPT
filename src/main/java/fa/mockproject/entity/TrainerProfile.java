@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import fa.mockproject.model.TrainerProfileModel;
+
 @Entity
 @Table(name = "TrainerProfile")
 @Cacheable
@@ -71,6 +73,21 @@ public class TrainerProfile {
 		this.email = email;
 		this.experience = experience;
 		this.remarks = remarks;
+	}
+
+	public TrainerProfile(TrainerProfileModel trainerProfileModel, Trainer trainer) {
+		super();
+		this.trainerProfileId = trainerProfileModel.getTrainerProfileId();
+		this.trainer = trainer;
+		this.fullName = trainerProfileModel.getFullName();
+		this.dateOfBirth = trainerProfileModel.getDateOfBirth();
+		this.gender = trainerProfileModel.getGender();
+		this.unit = trainerProfileModel.getUnit();
+		this.major = trainerProfileModel.getMajor();
+		this.phone = trainerProfileModel.getPhone();
+		this.email = trainerProfileModel.getEmail();
+		this.experience = trainerProfileModel.getExperience();
+		this.remarks = trainerProfileModel.getRemarks();
 	}
 
 	public long getTrainerProfileId() {

@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import fa.mockproject.model.TraineeModel;
+
 @Entity
 @Table(name = "Trainee")
 public class Trainee {
@@ -91,25 +93,9 @@ public class Trainee {
 		this.remarks = remarks;
 	}
 
-	public Trainee(long traineeCandidateID, TraineeCandidateProfile traineeCandidate, ClassBatch classBatch,
-			TraineeCandidateProfile traineeCandidateProfile, List<AttendantStatus> listAttendantStatus,
-			List<Allowance> listAllowances, List<GPA> listGPA, List<RewardPenalty> listRewardPenalties,
-			List<LearningPath> listLearningPaths, List<Guarantee> listGuarantees,
-			List<InterviewValuation> listinterviewValuations, List<Status> listStatus, int remarks) {
+	public Trainee(TraineeModel traineeModel, ClassBatch classBatch) {
 		super();
-		this.traineeCandidateID = traineeCandidateID;
-		this.traineeCandidateProfile = traineeCandidate;
-		this.classBatch = classBatch;
-		this.traineeCandidateProfile = traineeCandidateProfile;
-		this.listAttendantStatus = listAttendantStatus;
-		this.listAllowances = listAllowances;
-		this.listGPA = listGPA;
-		this.listRewardPenalties = listRewardPenalties;
-		this.listLearningPaths = listLearningPaths;
-		this.listGuarantees = listGuarantees;
-		this.listinterviewValuations = listinterviewValuations;
-		this.listStatus = listStatus;
-		this.remarks = remarks;
+		//.......
 	}
 
 	public long getTraineeCandidateID() {

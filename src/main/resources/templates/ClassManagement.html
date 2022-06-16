@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Management</title>
+    <script src="https://kit.fontawesome.com/eb5105679e.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{/main.css}">
+</head>
+<body>
+    <div class="app">
+        <header>
+            <span class="header-title">FSOFT HR UTILITY</span>
+        </header>
+        <div class="app-content">
+            <nav>
+                <button class="collapse-btn">&lt&lt</button>
+                <p class="role-option-lable">Your role now is:</p>
+                <select value="" class="role-option">
+                    <option name="" id="" class="role-option-item">Delivery maoption/option/select>
+                </select>
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Candidate Management</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Trainer Management</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Trainee Management</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Class Management</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">General Setting</a>
+                    </li>
+                </ul>
+            </nav>
+            <main>
+                <div class="header">
+                    Create Class          
+                </div>
+                <div class="content">
+                    <form th:action="@{/addClass}" th:object="${classBatchModel}" method="post">
+                        <ul class="nav-tab">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">Information</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">Trainee</a>
+                            </li>
+                        </ul>
+                        <div class="content-main">
+                            <section class="content-main-section class-general">
+                                <div class="section-header">
+                                    <button class="collapse-btn">
+                                        <i class="fa-solid fa-caret-down"></i>
+                                    </button>
+                                    <span>General<span>
+                                </div>
+                                <div class="section-content">
+                                    <table class="content-table">
+                                        <tr>
+                                            <th>Class Code</th>
+                                            <td>
+                                                <input th:field="*{classCode}" type="text" name="" id="">
+                                            </td>
+                                            <th>Class Name</th>
+                                            <td>
+                                                <input th:field="*{className}" type="text" name="" id="">
+                                            </td>
+                                            <th>Status</th>
+                                            <td>
+                                                <input th:field="*{status}" type="text" name="" id="">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Planned Trainee No</th>
+                                            <td>
+                                                <input th:field="*{plannedTraineeNumber}" type="number" name="" id="">
+                                            </td>
+                                            <th>Accepted Trainee No</th>
+                                            <td>
+                                                <input th:field="*{acceptedTraineeNumber}" type="number" name="" id="">
+                                            </td>
+                                            <th>Actual Trainee No</th>
+                                            <td>
+                                                <input th:field="*{actualTraineeNumber}" type="number" name="" id="">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table class="content-table">
+                                        <tr>
+                                            <th class="col-4">Expected Start Date</th>
+                                            <td class="col-4">
+                                                <input th:field="*{expectedStartDate}" type="date" name="" id="">
+                                            </td>
+                                            <th class="col-4">Expected End Date</th>
+                                            <td class="col-4">
+                                                <input th:field="*{expectedEndDate}" type="date" name="" id="">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Location</th>
+                                            <td>
+                                                <select th:field="*{locationModel.locationName}" name="" id="">
+                                                	<option value=""></option>                                    
+                                                    <option th:each="location : ${locationModels}" th:value="${location.locationName}" th:text="${location.locationName}"></option>
+                                                </select>
+                                            </td>
+                                            <th>Detailed Location</th>
+                                            <td>
+                                                <input th:field="*{detailLocation}" type="text" name="" id="">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Budget Code</th>
+                                            <td>
+                                                <select th:field="*{budgetCode}" name="" id="">
+                                                	<option value=""></option> 
+                                                    <option th:each="bud: ${budgetCodeEnums}" th:value="${bud}" th:text="${bud}"></option>
+                                                </select>
+                                            </td>
+                                            <th>Estimated Budget</th>
+                                            <td>
+                                                <input th:field="*{estimatedBudget}" type="number" name="" id="">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Class Admin</th>
+                                            <td>
+                                                <select th:field="*{classAdminModel.account}" name="" id="">
+                                                	<option value=""></option> 
+                                                    <option th:each="classAdmin: ${classAdmins}" th:value="${classAdmin.account}" th:text="${classAdmin.account}"></option>
+                                                </select>
+                                            </td>
+                                            <th>Weighted Number</th>
+                                            <td>
+                                                <input th:field="*{weightedNumber}" type="text" name="" id="">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>History</th>
+                                            <td colspan="3">
+                                                <input th:field="*{history}" type="text" name="" id="">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </section>
+                            <section class="content-main-section class-detail">
+                                <div class="section-header">
+                                    <button class="collapse-btn">
+                                        <i class="fa-solid fa-caret-down"></i>
+                                    </button>
+                                    <span>Detail<span>
+                                </div>
+                                <div class="section-content">
+                                    <table class="content-table">
+                                        <tr>
+                                            <th>Subject Type</th>
+                                            <td class="col-5">
+                                                <select value="">
+                                                    <option name="" id=""></option>
+                                                </select>
+                                            </td>
+                                            <th>Sub-Subject Type</th>
+                                            <td class="col-5">
+                                                <select value="">
+                                                    <option name="" id=""></option>
+                                                </select>
+                                            </td>
+                                            <th>Delivery Type</th>
+                                            <td class="col-5">
+                                                <select value="">
+                                                    <option name="" id=""></option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Format Type</th>
+                                            <td>
+                                                <select value="">
+                                                    <option name="" id=""></option>
+                                                </select>
+                                            </td>
+                                            <th>Scope</th>
+                                            <td>
+                                                <select value="">
+                                                    <option name="" id=""></option>
+                                                </select>
+                                            </td>
+                                            <th>Supplier / Partner</th>
+                                            <td>
+                                                <input type="text" name="" id="">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table class="content-table">
+                                        <tr>
+                                            <th class="col-4">Actual Start Date</th>
+                                            <td class="col-4">
+                                                <input type="date" name="" id="">
+                                            </td>
+                                            <th class="col-4">Actual End Date</th>
+                                            <td class="col-4">
+                                                <input type="date" name="" id="">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Master Trainer</th>
+                                            <td>
+                                                <select value="">
+                                                    <option name="" id=""></option>
+                                                </select>
+                                            </td>
+                                            <th>Trainer</th>
+                                            <td>
+                                                <select value="">
+                                                    <option name="" id=""></option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Curriculumn</th>
+                                            <td>
+                                                <input type="file" name="" id="">
+                                            </td>
+                                            <th>Remarks</th>
+                                            <td>
+                                                <input type="text" name="" id="">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </section>
+                            <section class="content-main-section class-budget">
+                                <div class="section-header">
+                                    <button class="collapse-btn">
+                                        <i class="fa-solid fa-caret-down"></i>
+                                    </button>
+                                    <span>Budget<span>
+                                </div>
+                                <div class="section-content">
+                                    <table class="content-table">
+                                        <tr>
+                                            <th colspan="3">Total</th>
+                                            <td colspan="2">
+                                                <input type="text" name="" id="">
+                                            </td>
+                                            <th colspan="2">Over Budget</th>
+                                            <td colspan="2">
+                                                <input type="text" name="" id="">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>
+                                                <button class="content-table-add-btn">
+                                                    <i class="fa-solid fa-plus"></i>
+                                                </button>
+                                            </th>
+                                            <th>Item</th>
+                                            <th>Unit</th>
+                                            <th>Unit Expense</th>
+                                            <th>Quantity</th>
+                                            <th>Amount</th>
+                                            <th>Tax</th>
+                                            <th>Sum</th>
+                                            <th>Note</th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <button class="content-table-remove-btn">
+                                                    <i class="fa-solid fa-trash-can"></i>
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <input type="text" name="" id="">
+                                            </td>
+                                            <td>
+                                                <input type="text" name="" id="">
+                                            </td>
+                                            <td>
+                                                <input type="text" name="" id="">
+                                            </td>
+                                            <td>
+                                                <input type="text" name="" id="">
+                                            </td>
+                                            <td>
+                                                <input type="text" name="" id="">
+                                            </td>
+                                            <td>
+                                                <input type="text" name="" id="">
+                                            </td>
+                                            <td>
+                                                <input type="text" name="" id="">
+                                            </td>
+                                            <td>
+                                                <input type="text" name="" id="">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </section>
+                            <section class="content-main-section class-audit">
+                                <div class="section-header">
+                                    <button class="collapse-btn">
+                                        <i class="fa-solid fa-caret-down"></i>
+                                    </button>
+                                    <span>Audit<span>
+                                </div>
+                                <div class="section-content audit">
+                                    <table class="content-table">
+                                        <tr>
+                                            <th>
+                                                <button class="content-table-add-btn">
+                                                    <i class="fa-solid fa-plus"></i>
+                                                </button>
+                                            </th>
+                                            <th>Date</th>
+                                            <th>Event Category</th>
+                                            <th>Related People</th>
+                                            <th>Action</th>
+                                            <th>PIC</th>
+                                            <th>Deadline</th>
+                                            <th>Note</th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <button class="content-table-remove-btn">
+                                                    <i class="fa-solid fa-trash-can"></i>
+                                                </button>
+                                            </td>
+                                            <td class="col-7">
+                                                <input type="date" name="" id="">
+                                            </td>
+                                            <td class="col-7">
+                                                <select value="">
+                                                    <option name="" id=""></option>
+                                                </select>
+                                            </td>
+                                            <td class="col-7">
+                                                <input type="text" name="" id="">
+                                            </td>
+                                            <td class="col-7">
+                                                <input type="text" name="" id="">
+                                            </td>
+                                            <td class="col-7">
+                                                <input type="text" name="" id="">
+                                            </td>
+                                            <td class="col-7">
+                                                <input type="date" name="" id="">
+                                            </td>
+                                            <td class="col-7">
+                                                <input type="text" name="" id="">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="control-btn">
+                            <input type="submit" value="Submit" class="btn submit-btn">
+                            <button class="btn close-btn">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </main>
+        </div>
+        <footer>
+            <span>FOOTER</span>
+        </footer>
+    </div>
+</body>
+</html>

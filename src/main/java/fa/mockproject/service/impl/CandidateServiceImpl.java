@@ -13,7 +13,7 @@ import fa.mockproject.service.CandidateService;
 @Service
 public class CandidateServiceImpl implements CandidateService {
 
-	@Autowired
+//	@Autowired
 	private CandidateRepository repo;
 
 	public List<Candidate> listAll() {

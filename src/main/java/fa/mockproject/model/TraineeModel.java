@@ -1,5 +1,6 @@
 package fa.mockproject.model;
 
+import fa.mockproject.entity.Trainee;
 
 public class TraineeModel {
 	private long id;
@@ -43,6 +44,13 @@ public class TraineeModel {
 		TPBAccount = tPBAccount;
 		this.commitment = commitment;
 //		this.trainer = trainer;
+	}
+	
+	
+
+	public TraineeModel(Trainee trainee) {
+		super();
+		//..
 	}
 
 //	public Trainer getTrainer() {

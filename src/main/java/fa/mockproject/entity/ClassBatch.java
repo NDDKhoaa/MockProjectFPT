@@ -216,9 +216,15 @@ public class ClassBatch {
     	});
         this.milestones = classBatchModel.getMilestones();
         this.curriculum = classBatchModel.getCurriculum();
-        this.audits = classBatchModel.getAudits();
-        this.trainees = classBatchModel.getTrainees();
-        this.subjectType = classBatchModel.getSubjectType();
+        this.audits = new ArrayList<Audit>();
+        classBatchModel.getAuditModels().forEach(auditModel -> {
+        	this.audits.add(new Audit(auditModel, this));
+        });
+        this.trainees = new ArrayList<Trainee>();
+        classBatchModel.getTraineeModels().forEach(traineeModel -> {
+        	this.trainees.add(new Trainee(traineeModel, this));
+        });
+        this.subjectType = new SubjectType(classBatchModel.getSubjectTypeModel());
         this.status = classBatchModel.getStatus();
         this.weightedNumber = classBatchModel.getWeightedNumber();
         this.history = classBatchModel.getHistory();

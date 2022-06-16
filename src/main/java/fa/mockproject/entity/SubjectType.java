@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import fa.mockproject.model.SubjectTypeModel;
+
 @Entity
 @Table(name = "SubjectType")
 @Cacheable
@@ -40,6 +42,13 @@ public class SubjectType {
 		this.subjectTypeName = subjectTypeName;
 		this.remarks = remarks;
 		this.classBatchs = classBatchs;
+	}
+
+	public SubjectType(SubjectTypeModel subjectTypeModel) {
+		super();
+		this.subjectTypeId = subjectTypeModel.getSubjectTypeId();
+		this.subjectTypeName = subjectTypeModel.getSubjectTypeName();
+		this.remarks = subjectTypeModel.getRemarks();
 	}
 
 	public long getSubjectTypeId() {

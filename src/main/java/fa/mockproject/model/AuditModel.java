@@ -3,7 +3,6 @@ package fa.mockproject.model;
 import java.time.LocalDate;
 
 import fa.mockproject.entity.Audit;
-import fa.mockproject.entity.ClassBatch;
 import fa.mockproject.entity.enumtype.AuditEventCategoryEnum;
 
 public class AuditModel {
@@ -11,7 +10,6 @@ public class AuditModel {
 	@SuppressWarnings("unused")
 	private static final String DATE_FORMAT = "dd/MM/yyyy";
 	private long auditId;
-	private ClassBatch classBatch;
 	private LocalDate date;
 	private AuditEventCategoryEnum eventCategory;
 	private String relatedPartyOrPeople;
@@ -24,11 +22,10 @@ public class AuditModel {
 		super();
 	}
 	
-	public AuditModel(long auditId, ClassBatch classBatch, LocalDate date, AuditEventCategoryEnum eventCategory,
+	public AuditModel(long auditId, LocalDate date, AuditEventCategoryEnum eventCategory,
 			String relatedPartyOrPeople, String action, String pic, LocalDate deadline, String note) {
 		super();
 		this.auditId = auditId;
-		this.classBatch = classBatch;
 		this.date = date;
 		this.eventCategory = eventCategory;
 		this.relatedPartyOrPeople = relatedPartyOrPeople;
@@ -41,7 +38,6 @@ public class AuditModel {
 	public AuditModel(Audit audit) {
 		super();
 		this.auditId = audit.getAuditId();
-		this.classBatch = audit.getClassBatch();
 		this.date = audit.getDate();
 		this.eventCategory = audit.getEventCategory();
 		this.relatedPartyOrPeople = audit.getRelatedPartyOrPeople();
@@ -57,14 +53,6 @@ public class AuditModel {
 
 	public void setAuditId(long auditId) {
 		this.auditId = auditId;
-	}
-
-	public ClassBatch getClassBatch() {
-		return classBatch;
-	}
-
-	public void setClassBatch(ClassBatch classBatch) {
-		this.classBatch = classBatch;
 	}
 
 	public LocalDate getDate() {
@@ -125,9 +113,9 @@ public class AuditModel {
 
 	@Override
 	public String toString() {
-		return "AuditModel [auditId=" + auditId + ", classBatch=" + classBatch + ", date=" + date + ", eventCategory="
-				+ eventCategory + ", relatedPartyOrPeople=" + relatedPartyOrPeople + ", action=" + action + ", pic="
-				+ pic + ", deadline=" + deadline + ", note=" + note + "]";
+		return "AuditModel [auditId=" + auditId + ", date=" + date + ", eventCategory=" + eventCategory
+				+ ", relatedPartyOrPeople=" + relatedPartyOrPeople + ", action=" + action + ", pic=" + pic
+				+ ", deadline=" + deadline + ", note=" + note + "]";
 	}
 	
 }
