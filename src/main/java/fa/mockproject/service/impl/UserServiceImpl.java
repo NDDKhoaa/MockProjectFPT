@@ -20,8 +20,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public User addUser(User user) {
         this.validator.validate(user, null);
-//       String pwdEncrypt = bCryptPasswordEncoder.encode(user.getPassword());
-//       user.setPassword(pwdEncrypt);
+       String pwdEncrypt = bCryptPasswordEncoder.encode(user.getPassword());
+       user.setPassword(pwdEncrypt);
         return userRepository.save(user);
     }
 }

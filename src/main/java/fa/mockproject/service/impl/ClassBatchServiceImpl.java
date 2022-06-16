@@ -118,7 +118,6 @@ public class ClassBatchServiceImpl implements ClassBatchService {
 	
 	@Override
 	public ClassBatchModel updateInprogressClass(ClassBatchModel classBatchModel) {
-		return classBatchModel;
 		//...
 	}
 
