@@ -104,4 +104,8 @@ public class Trainer {
 				+ ", classBatch=" + classBatch + ", remarks=" + remarks + "]";
 	}
 	
+	public Trainer(TrainerModel trainerModel) {
+		trainerId = trainerModel.getTrainerId();
+		type = trainerModel.getType();
+	}
 }
