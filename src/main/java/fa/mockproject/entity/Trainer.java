@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import fa.mockproject.model.TrainerModel;
+
 @Entity
 @Table(name = "Trainer")
 @Cacheable
@@ -93,4 +95,8 @@ public class Trainer {
 				+ ", classBatch=" + classBatch + ", remarks=" + remarks + "]";
 	}
 	
+	public Trainer(TrainerModel trainerModel) {
+		trainerId = trainerModel.getTrainerId();
+		type = trainerModel.getType();
+	}
 }
