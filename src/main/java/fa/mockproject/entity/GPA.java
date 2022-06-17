@@ -1,6 +1,14 @@
 package fa.mockproject.entity;
 
-import javax.persistence.*;
+import javax.persistence.Cacheable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "GPA")
@@ -13,10 +21,7 @@ public class GPA {
 
     @ManyToOne
     @JoinColumn(name = "trainee_candidate id", nullable = false)
-    private Trainee traineeId;
-
-    @Column(name = "class_id")
-    private Integer classId;
+    private Trainee trainee;
 
     @Column(name = "attendant_id")
     private Integer attendantId;
@@ -36,18 +41,19 @@ public class GPA {
     public GPA() {
     }
 
-    public GPA(int gpaId, Trainee traineeId, Integer classId, Integer attendantId, Integer allowanceId, Integer gpaResult, Integer remarks, int gpaGpaId) {
-        this.gpaId = gpaId;
-        this.traineeId = traineeId;
-        this.classId = classId;
-        this.attendantId = attendantId;
-        this.allowanceId = allowanceId;
-        this.gpaResult = gpaResult;
-        this.remarks = remarks;
-        this.gpaGpaId = gpaGpaId;
-    }
+    public GPA(long gpaId, Trainee trainee, Integer attendantId, Integer allowanceId,
+			Integer gpaResult, Integer remarks, int gpaGpaId) {
+		super();
+		this.gpaId = gpaId;
+		this.trainee = trainee;
+		this.attendantId = attendantId;
+		this.allowanceId = allowanceId;
+		this.gpaResult = gpaResult;
+		this.remarks = remarks;
+		this.gpaGpaId = gpaGpaId;
+	}
 
-    public long getGpaId() {
+	public long getGpaId() {
         return gpaId;
     }
 
@@ -55,21 +61,13 @@ public class GPA {
         this.gpaId = gpaId;
     }
 
-    public Trainee getTraineeId() {
-        return traineeId;
-    }
+    public Trainee getTrainee() {
+		return trainee;
+	}
 
-    public void setTraineeId(Trainee traineeId) {
-        this.traineeId = traineeId;
-    }
-
-    public Integer getClassId() {
-        return classId;
-    }
-
-    public void setClassId(Integer classId) {
-        this.classId = classId;
-    }
+	public void setTrainee(Trainee trainee) {
+		this.trainee = trainee;
+	}
 
     public Integer getAttendantId() {
         return attendantId;

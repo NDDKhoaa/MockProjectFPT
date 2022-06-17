@@ -20,9 +20,6 @@ public class Allowance {
     @JoinColumn(name = "allowance_group", nullable = false)
     private AllowanceGroup allowanceGroup;
 
-    @Column(name = "class_id")
-    private Integer classId;
-
     @Column(name = "allowance_result")
     private int allowanceResult;
 
@@ -32,11 +29,10 @@ public class Allowance {
     public Allowance() {
     }
 
-    public Allowance(long group, Trainee traineeId, AllowanceGroup allowanceGroup, Integer classId, int allowanceResult, Integer remarks) {
+    public Allowance(long group, Trainee traineeId, AllowanceGroup allowanceGroup, int allowanceResult, Integer remarks) {
         this.allowanceId = group;
         this.trainee = traineeId;
         this.allowanceGroup = allowanceGroup;
-        this.classId = classId;
         this.allowanceResult = allowanceResult;
         this.remarks = remarks;
     }
@@ -63,14 +59,6 @@ public class Allowance {
 
     public void setAllowanceGroup(AllowanceGroup allowanceGroup) {
         this.allowanceGroup = allowanceGroup;
-    }
-
-    public Integer getClassId() {
-        return classId;
-    }
-
-    public void setClassId(Integer classId) {
-        this.classId = classId;
     }
 
     public int getAllowanceResult() {
