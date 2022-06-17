@@ -54,13 +54,13 @@ public class TraineeService {
 	}
 
 
-	public void update(TraineeModel traineeModelForm) {
-		Optional<Trainee> trainees = traineeRepository.findById(traineeModelForm.getId());
-		Trainee trainee = trainees.get();
-		traineeCandidateProfileRepository.update(trainee.getTraineeCandidateProfile().getTraineeCandidateProfileId(), 
-				traineeModelForm.getFullName(), traineeModelForm.getPhone(), traineeModelForm.getEmail(), 
-				traineeModelForm.getGender());
-		traineeRepository.save(trainee);
+// 	public void update(TraineeModel traineeModelForm) {
+// 		Optional<Trainee> trainees = traineeRepository.findById(traineeModelForm.getId());
+// 		Trainee trainee = trainees.get();
+// 		traineeCandidateProfileRepository.update(trainee.getTraineeCandidateProfile().getTraineeCandidateProfileId(), 
+// 				traineeModelForm.getFullName(), traineeModelForm.getPhone(), traineeModelForm.getEmail(), 
+// 				traineeModelForm.getGender());
+// 		traineeRepository.save(trainee);
 		
 		
 	}
