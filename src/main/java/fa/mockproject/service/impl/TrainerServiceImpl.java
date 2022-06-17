@@ -22,8 +22,8 @@ public class TrainerServiceImpl implements TrainerService{
 
 	@Override
 	public void save(TrainerModel trainerModel) {
-		Trainer trainer = Trainer(trainerModel);
-		trainerRepository.save(trainer);
+//		Trainer trainer = Trainer(trainerModel);
+//		trainerRepository.save(trainer);
 	}
 
 	@Override
