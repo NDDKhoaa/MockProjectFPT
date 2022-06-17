@@ -35,28 +35,28 @@ public class Trainee {
 	private TraineeCandidateProfile traineeCandidateProfile;
 
 	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<AttendantStatus> listAttendantStatus;
+	private List<AttendantStatus> attendantStatuses;
 
 	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Allowance> listAllowances;
+	private List<Allowance> allowances;
 
 	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<GPA> listGPA;
+	private List<GPA> gpas;
 
 	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<RewardPenalty> listRewardPenalties;
+	private List<RewardPenalty> rewardPenalties;
 
 	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<LearningPath> listLearningPaths;
+	private List<LearningPath> learningPaths;
 
 	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Guarantee> listGuarantees;
+	private List<Guarantee> guarantees;
 
 	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<InterviewValuation> listinterviewValuations;
+	private List<InterviewValuation>	interviewValuations;
 
 	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Status> listStatus;
+	private List<Status> statuses;
 
 	@Column(name = "remarks", nullable = true)
 	private int remarks;
@@ -71,25 +71,22 @@ public class Trainee {
 		this.remarks = remarks;
 	}
 
-	public Trainee(TraineeCandidateProfile traineeCandidate, /* ClassBatch classBatch, */
-			TraineeCandidateProfile traineeCandidateProfile,
-			/*
-			 * List<AttendantStatus> listAttendantStatus, List<Allowance> listAllowances,
-			 */ /* List<GPA> listGPA, */ List<RewardPenalty> listRewardPenalties,
-			/* List<LearningPath> listLearningPaths, */ List<Guarantee> listGuarantees,
-			List<InterviewValuation> listinterviewValuations, List<Status> listStatus, int remarks) {
+	public Trainee(long traineeCandidateID, ClassBatch classBatch, TraineeCandidateProfile traineeCandidateProfile,
+			List<AttendantStatus> attendantStatuses, List<Allowance> allowances, List<GPA> gPAs,
+			List<RewardPenalty> rewardPenalties, List<LearningPath> learningPaths, List<Guarantee> guarantees,
+			List<InterviewValuation> interviewValuations, List<Status> statuses, int remarks) {
 		super();
-		this.traineeCandidateProfile = traineeCandidate;
+		this.traineeCandidateID = traineeCandidateID;
 		this.classBatch = classBatch;
 		this.traineeCandidateProfile = traineeCandidateProfile;
-		this.listAttendantStatus = listAttendantStatus;
-		this.listAllowances = listAllowances;
-		this.listGPA = listGPA;
-		this.listRewardPenalties = listRewardPenalties;
-		this.listLearningPaths = listLearningPaths;
-		this.listGuarantees = listGuarantees;
-		this.listinterviewValuations = listinterviewValuations;
-		this.listStatus = listStatus;
+		this.attendantStatuses = attendantStatuses;
+		this.allowances = allowances;
+		gpas = gPAs;
+		this.rewardPenalties = rewardPenalties;
+		this.learningPaths = learningPaths;
+		this.guarantees = guarantees;
+		this.interviewValuations = interviewValuations;
+		this.statuses = statuses;
 		this.remarks = remarks;
 	}
 
@@ -129,68 +126,69 @@ public class Trainee {
 		this.traineeCandidateProfile = traineeCandidateProfile;
 	}
 
-	public List<AttendantStatus> getListAttendantStatus() {
-		return listAttendantStatus;
+
+	public List<AttendantStatus> getAttendantStatuses() {
+		return attendantStatuses;
 	}
 
-	public void setListAttendantStatus(List<AttendantStatus> listAttendantStatus) {
-		this.listAttendantStatus = listAttendantStatus;
+	public void setAttendantStatuses(List<AttendantStatus> attendantStatuses) {
+		this.attendantStatuses = attendantStatuses;
 	}
 
-	public List<Allowance> getListAllowances() {
-		return listAllowances;
+	public List<Allowance> getAllowances() {
+		return allowances;
 	}
 
-	public void setListAllowances(List<Allowance> listAllowances) {
-		this.listAllowances = listAllowances;
+	public void setAllowances(List<Allowance> allowances) {
+		this.allowances = allowances;
 	}
 
-	public List<GPA> getListGPA() {
-		return listGPA;
+	public List<GPA> getGPAs() {
+		return gpas;
 	}
 
-	public void setListGPA(List<GPA> listGPA) {
-		this.listGPA = listGPA;
+	public void setGPAs(List<GPA> gPAs) {
+		gpas = gPAs;
 	}
 
-	public List<RewardPenalty> getListRewardPenalties() {
-		return listRewardPenalties;
+	public List<RewardPenalty> getRewardPenalties() {
+		return rewardPenalties;
 	}
 
-	public void setListRewardPenalties(List<RewardPenalty> listRewardPenalties) {
-		this.listRewardPenalties = listRewardPenalties;
+	public void setRewardPenalties(List<RewardPenalty> rewardPenalties) {
+		this.rewardPenalties = rewardPenalties;
 	}
 
-	public List<LearningPath> getListLearningPaths() {
-		return listLearningPaths;
+	public List<LearningPath> getLearningPaths() {
+		return learningPaths;
 	}
 
-	public void setListLearningPaths(List<LearningPath> listLearningPaths) {
-		this.listLearningPaths = listLearningPaths;
+	public void setLearningPaths(List<LearningPath> learningPaths) {
+		this.learningPaths = learningPaths;
 	}
 
-	public List<Guarantee> getListGuarantees() {
-		return listGuarantees;
+	public List<Guarantee> getGuarantees() {
+		return guarantees;
 	}
 
-	public void setListGuarantees(List<Guarantee> listGuarantees) {
-		this.listGuarantees = listGuarantees;
+	public void setGuarantees(List<Guarantee> guarantees) {
+		this.guarantees = guarantees;
 	}
 
-	public List<InterviewValuation> getListinterviewValuations() {
-		return listinterviewValuations;
+	public List<InterviewValuation> getInterviewValuations() {
+		return interviewValuations;
 	}
 
-	public void setListinterviewValuations(List<InterviewValuation> listinterviewValuations) {
-		this.listinterviewValuations = listinterviewValuations;
+	public void setInterviewValuations(List<InterviewValuation> interviewValuations) {
+		this.interviewValuations = interviewValuations;
 	}
 
-	public List<Status> getListStatus() {
-		return listStatus;
+	public List<Status> getStatuses() {
+		return statuses;
 	}
 
-	public void setListStatus(List<Status> listStatus) {
-		this.listStatus = listStatus;
+	public void setStatuses(List<Status> statuses) {
+		this.statuses = statuses;
 	}
 
 	public int getRemarks() {
