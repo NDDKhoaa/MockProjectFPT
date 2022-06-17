@@ -105,7 +105,9 @@ public class Trainer {
 	}
 	
 	public Trainer(TrainerModel trainerModel) {
-		trainerId = trainerModel.getTrainerId();
-		type = trainerModel.getType();
+		this.trainerId = trainerModel.getTrainerId();
+		this.type = trainerModel.getType();
+		this.trainerProfile = new TrainerProfile(trainerModel.getTrainerProfileModel(),this);
+		this.remarks = trainerModel.getRemarks();
 	}
 }

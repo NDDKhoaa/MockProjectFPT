@@ -26,7 +26,7 @@ public class ClassAdmin {
 	@OneToMany(mappedBy = "location", fetch = FetchType.LAZY)
 	private List<ClassBatch> classBatchs;
 	
-	@OneToOne(mappedBy = "class_admin", fetch = FetchType.LAZY)
+	@OneToOne(mappedBy = "classAdmin", fetch = FetchType.LAZY)
 	private ClassAdminProfile classAdminProfile;
 	
 	@Column(name = "remark", length = 255, nullable = true)

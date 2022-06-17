@@ -19,22 +19,22 @@ public class ClassManagementController {
 	
 	@GetMapping("/")
 	public String getClassList(Model model) {
-		ClassBatchModel classBatchModel = new ClassBatchModel();
-		classBatchModel.setLocationModel(new LocationModel());
-		classBatchModel.setBudgetCode(BudgetCodeEnum.CTC_Fresher_Allowance);
-		classBatchModel.setClassAdminModel(new ClassAdminModel());
-		
-		BudgetCodeEnum[] budgetCodeEnums = BudgetCodeEnum.values();
-		List<LocationModel> locationModels = new ArrayList<LocationModel>();
-		locationModels.add(new LocationModel(0, "Ha Noi", ""));
-		locationModels.add(new LocationModel(1, "Cau Giay", ""));
-		locationModels.add(new LocationModel(2, "HCM", ""));
-		locationModels.add(new LocationModel(3, "Da Nang", ""));
-
-		model.addAttribute("classBatchModel", classBatchModel);
-		model.addAttribute("budgetCodeEnums", budgetCodeEnums);
-		model.addAttribute("locationModels", locationModels);
-		model.addAttribute("locationTest", locationModels.get(0));
+//		ClassBatchModel classBatchModel = new ClassBatchModel();
+//		classBatchModel.setLocationModel(new LocationModel());
+//		classBatchModel.setBudgetCode(BudgetCodeEnum.CTC_Fresher_Allowance);
+//		classBatchModel.setClassAdminModel(new ClassAdminModel());
+//		
+//		BudgetCodeEnum[] budgetCodeEnums = BudgetCodeEnum.values();
+//		List<LocationModel> locationModels = new ArrayList<LocationModel>();
+//		locationModels.add(new LocationModel(0, "Ha Noi", ""));
+//		locationModels.add(new LocationModel(1, "Cau Giay", ""));
+//		locationModels.add(new LocationModel(2, "HCM", ""));
+//		locationModels.add(new LocationModel(3, "Da Nang", ""));
+//
+//		model.addAttribute("classBatchModel", classBatchModel);
+//		model.addAttribute("budgetCodeEnums", budgetCodeEnums);
+//		model.addAttribute("locationModels", locationModels);
+//		model.addAttribute("locationTest", locationModels.get(0));
 		
 		return "ClassManagement";
 	}

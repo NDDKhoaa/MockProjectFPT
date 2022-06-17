@@ -9,5 +9,5 @@ public interface TrainerService {
 	List<Trainer> getAllTrainers();
 	void save(TrainerModel trainerModel);
 
-	Trainer findByTrainer_id(int trainer_id);
+	Trainer findByTrainerId(long trainerId);
 }

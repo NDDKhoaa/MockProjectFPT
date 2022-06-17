@@ -17,7 +17,7 @@ public class Allowance {
     private Trainee trainee;
 
     @OneToOne
-    @JoinColumn(name = "group", nullable = false)
+    @JoinColumn(name = "allowance_group", nullable = false)
     private AllowanceGroup allowanceGroup;
 
     @Column(name = "class_id")
