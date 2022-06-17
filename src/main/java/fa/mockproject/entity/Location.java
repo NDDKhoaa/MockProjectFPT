@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -30,10 +31,11 @@ public class Location {
 	private String remarks;
 
 	@OneToMany(mappedBy = "location")
-	private Set<Candidate> candidate;
+	@JoinColumn(name="class_id", nullable = true)
+	private Set<ClassBatch> classBatch;
 
 	@OneToMany(mappedBy = "location")
-	private Set<TraineeCandidateProfile> traineeCandidateProfile;
+	private Set<TraineeCandidateProfile> traineeCandidateProfiles;
 
 	public Location() {
 		super();
@@ -84,20 +86,22 @@ public class Location {
 		this.remarks = remarks;
 	}
 
-	public Set<Candidate> getCandidate() {
-		return candidate;
+	
+
+	public Set<ClassBatch> getClassBatch() {
+		return classBatch;
 	}
 
-	public void setCandidate(Set<Candidate> candidate) {
-		this.candidate = candidate;
+	public void setClassBatch(Set<ClassBatch> classBatch) {
+		this.classBatch = classBatch;
 	}
 
-	public Set<TraineeCandidateProfile> getTraineeCandidateProfile() {
-		return traineeCandidateProfile;
+	public Set<TraineeCandidateProfile> getTraineeCandidateProfiles() {
+		return traineeCandidateProfiles;
 	}
 
-	public void setTraineeCandidateProfile(Set<TraineeCandidateProfile> traineeCandidateProfile) {
-		this.traineeCandidateProfile = traineeCandidateProfile;
+	public void setTraineeCandidateProfiles(Set<TraineeCandidateProfile> traineeCandidateProfiles) {
+		this.traineeCandidateProfiles= traineeCandidateProfiles;
 	}
 
 	@Override
