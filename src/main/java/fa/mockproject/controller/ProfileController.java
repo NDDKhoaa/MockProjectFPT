@@ -108,9 +108,9 @@ public class ProfileController {
 		TraineeCandidateProfileStatus status = traineeCandidateProfileStatusService.findById(model.getStatusId());
 		TraineeCandidateProfileType type = traineeCandidateProfileTypeService.findById(model.getTypeId());
 		CV cv = new CV(model);
-		TraineeCandidateProfile profile = new TraineeCandidateProfile(model, location, university, faculty, skill, cv,
+		TraineeCandidateProfile profile = new TraineeCandidateProfile(model, university, faculty, skill, cv,
 				type);
-		Candidate candidate = new Candidate(model, channel, location, profile, status);
+		Candidate candidate = new Candidate(model, channel,location, profile, status);
 		cvService.save(cv);
 		candidateService.save(candidate);
 		traineeCandidateProfileService.save(profile);

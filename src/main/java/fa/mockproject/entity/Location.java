@@ -30,10 +30,10 @@ public class Location {
 	private String remarks;
 
 	@OneToMany(mappedBy = "location")
-	private Set<Candidate> candidate;
+	private Set<ClassBatch> classBatchs;
 
 	@OneToMany(mappedBy = "location")
-	private Set<TraineeCandidateProfile> traineeCandidateProfile;
+	private Set<Candidate> candidates;
 
 	public Location() {
 		super();
@@ -84,20 +84,22 @@ public class Location {
 		this.remarks = remarks;
 	}
 
-	public Set<Candidate> getCandidate() {
-		return candidate;
+	
+
+	public Set<ClassBatch> getClassBatchs() {
+		return classBatchs;
 	}
 
-	public void setCandidate(Set<Candidate> candidate) {
-		this.candidate = candidate;
+	public void setClassBatchs(Set<ClassBatch> classBatchs) {
+		this.classBatchs = classBatchs;
 	}
 
-	public Set<TraineeCandidateProfile> getTraineeCandidateProfile() {
-		return traineeCandidateProfile;
+	public Set<Candidate> getCandidates() {
+		return candidates;
 	}
 
-	public void setTraineeCandidateProfile(Set<TraineeCandidateProfile> traineeCandidateProfile) {
-		this.traineeCandidateProfile = traineeCandidateProfile;
+	public void setCandidates(Set<Candidate> candidates) {
+		this.candidates = candidates;
 	}
 
 	@Override

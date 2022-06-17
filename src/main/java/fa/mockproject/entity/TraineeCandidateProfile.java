@@ -54,10 +54,6 @@ public class TraineeCandidateProfile {
 	private Skill skill;
 
 	@ManyToOne
-	@JoinColumn(name = "location_id", nullable = true)
-	private Location location;
-
-	@ManyToOne
 	@JoinColumn(name = "faculty_id", nullable = true)
 	private Faculty faculty;
 
@@ -231,14 +227,6 @@ public class TraineeCandidateProfile {
 		this.skill = skill;
 	}
 
-	public Location getLocation() {
-		return location;
-	}
-
-	public void setLocation(Location location) {
-		this.location = location;
-	}
-
 	public Faculty getFaculty() {
 		return faculty;
 	}
@@ -270,7 +258,7 @@ public class TraineeCandidateProfile {
 		this.remarks = model.getRemarks();
 	}
 
-	public TraineeCandidateProfile(TraineeCandidateProfileModel model, Location location2, University university2,
+	public TraineeCandidateProfile(TraineeCandidateProfileModel model, University university2,
 			Faculty faculty2, Skill skill2, CV cv2, TraineeCandidateProfileType type2) {
 		this.traineeCandidateProfileId = model.getTraineeCandidateProfileId();
 		this.trainee = model.getTrainee();
@@ -291,7 +279,6 @@ public class TraineeCandidateProfile {
 		this.cv = cv2;
 		this.allocationStatus = model.getAllocationStatus();
 		this.remarks = model.getRemarks();
-		this.location = location2;
 		this.university = university2;
 		this.faculty = faculty2;
 		this.skill = skill2;
