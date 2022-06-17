@@ -14,7 +14,7 @@ public class Allowance {
 
     @ManyToOne
     @JoinColumn(name = "trainee_candidate id", nullable = false)
-    private Trainee traineeId;
+    private Trainee trainee;
 
     @OneToOne
     @JoinColumn(name = "allowance_group", nullable = false)
@@ -34,7 +34,7 @@ public class Allowance {
 
     public Allowance(long group, Trainee traineeId, AllowanceGroup allowanceGroup, Integer classId, int allowanceResult, Integer remarks) {
         this.allowanceId = group;
-        this.traineeId = traineeId;
+        this.trainee = traineeId;
         this.allowanceGroup = allowanceGroup;
         this.classId = classId;
         this.allowanceResult = allowanceResult;
@@ -50,11 +50,11 @@ public class Allowance {
     }
 
     public Trainee getTraineeId() {
-        return traineeId;
+        return trainee;
     }
 
     public void setTraineeId(Trainee traineeId) {
-        this.traineeId = traineeId;
+        this.trainee = traineeId;
     }
 
     public AllowanceGroup getAllowanceGroup() {
