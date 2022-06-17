@@ -45,7 +45,7 @@ public class TraineeController {
 //		TraineeModel traineeModel = (TraineeModel) session.getAttribute("traineeModel");
 //		model.addAttribute("traineeModel", traineeModel);
 		
-		traineeService.update(traineeModelForm);
+//		traineeService.update(traineeModelForm);
 
 		
 		return "redirect:/showTraineeList";
