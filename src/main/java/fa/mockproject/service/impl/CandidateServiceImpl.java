@@ -14,27 +14,27 @@ import fa.mockproject.service.CandidateService;
 public class CandidateServiceImpl implements CandidateService {
 
 	@Autowired
-	private CandidateRepository repo;
+	private CandidateRepository candidateRepository;
 
 	public List<Candidate> listAll() {
-		return (List<Candidate>) repo.findAll();
+		return (List<Candidate>) candidateRepository.findAll();
 	}
 
 	public void save(Candidate candidate) {
-		repo.save(candidate);
+		candidateRepository.save(candidate);
 	}
 
 	public Candidate findById(long candidateId) {
-		Optional<Candidate> rs = repo.findById(candidateId);
+		Optional<Candidate> rs = candidateRepository.findById(candidateId);
 		return rs.get();
 	}
 
 	public void delete(Candidate candidate) {
-		repo.delete(candidate);
+		candidateRepository.delete(candidate);
 	}
 
 	public void deleteById(long candidateId) {
-		repo.deleteById(candidateId);
+		candidateRepository.deleteById(candidateId);
 	}
 
 }
