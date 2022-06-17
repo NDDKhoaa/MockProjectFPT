@@ -27,6 +27,11 @@ public class TrainerServiceImpl implements TrainerService{
 		trainerRepository.save(trainer);
 	}
 
+	private Trainer Trainer(TrainerModel trainerModel) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	@Override
 	public Trainer findByTrainerId(long trainerId) {
 		Optional<Trainer> optional = trainerRepository.findById(trainerId);
