@@ -4,6 +4,8 @@ import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import fa.mockproject.entity.enumtype.TrainerType;
 import fa.mockproject.model.TrainerModel;
 
 @Entity
@@ -22,28 +25,31 @@ public class Trainer {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "trainer_id")
 	private long trainerId;
-	
-	@Column(name= "type", length = 255, nullable =  false)
-	private String type;
-	
-	@OneToOne(mappedBy = "trainer", cascade = CascadeType.ALL)
+
+	@Column(name = "type", length = 255, nullable = false)
+	@Enumerated(EnumType.STRING)
+	private TrainerType trainerType;
+
+	@ManyToOne
+	@JoinColumn(name = "trainer_profile_id")
 	private TrainerProfile trainerProfile;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "class_id")
 	private ClassBatch classBatch;
-	
-	@Column(name = "remarks", length = 255, nullable =  true)
+
+	@Column(name = "remarks", length = 255, nullable = true)
 	private String remarks;
 
 	public Trainer() {
 		super();
 	}
 
-	public Trainer(long trainerId, String type, TrainerProfile trainerProfile, ClassBatch classBatch, String remarks) {
+	public Trainer(long trainerId, TrainerType trainerType, TrainerProfile trainerProfile, ClassBatch classBatch,
+			String remarks) {
 		super();
 		this.trainerId = trainerId;
-		this.type = type;
+		this.trainerType = trainerType;
 		this.trainerProfile = trainerProfile;
 		this.classBatch = classBatch;
 		this.remarks = remarks;
@@ -52,8 +58,11 @@ public class Trainer {
 	public Trainer(TrainerModel trainerModel, ClassBatch classBatch) {
 		super();
 		this.trainerId = trainerModel.getTrainerId();
-		this.type = trainerModel.getType();
-		this.trainerProfile = new TrainerProfile(trainerModel.getTrainerProfileModel(), this);
+		this.trainerType = trainerModel.getTrainerType();
+		this.trainerProfile = new TrainerProfile(trainerModel.getTrainerProfileId(), trainerModel.getFullName(),
+				trainerModel.getDateOfBirth(), trainerModel.getGender(), trainerModel.getUnit(),
+				trainerModel.getMajor(), trainerModel.getPhone(), trainerModel.getEmail(), trainerModel.getExperience(),
+				trainerModel.getAccount(), trainerModel.getRemarks());
 		this.classBatch = classBatch;
 		this.remarks = trainerModel.getRemarks();
 	}
@@ -66,12 +75,12 @@ public class Trainer {
 		this.trainerId = trainerId;
 	}
 
-	public String getType() {
-		return type;
+	public TrainerType getTrainerType() {
+		return trainerType;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setTrainerType(TrainerType trainerType) {
+		this.trainerType = trainerType;
 	}
 
 	public TrainerProfile getTrainerProfile() {
@@ -100,14 +109,8 @@ public class Trainer {
 
 	@Override
 	public String toString() {
-		return "Trainer [trainerId=" + trainerId + ", type=" + type + ", trainerProfile=" + trainerProfile
+		return "Trainer [trainerId=" + trainerId + ", trainerType=" + trainerType + ", trainerProfile=" + trainerProfile
 				+ ", classBatch=" + classBatch + ", remarks=" + remarks + "]";
 	}
-	
-	public Trainer(TrainerModel trainerModel) {
-		this.trainerId = trainerModel.getTrainerId();
-		this.type = trainerModel.getType();
-		this.trainerProfile = new TrainerProfile(trainerModel.getTrainerProfileModel(),this);
-		this.remarks = trainerModel.getRemarks();
-	}
+
 }

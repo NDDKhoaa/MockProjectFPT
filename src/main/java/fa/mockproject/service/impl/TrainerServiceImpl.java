@@ -23,8 +23,8 @@ public class TrainerServiceImpl implements TrainerService{
 
 	@Override
 	public void save(TrainerModel trainerModel) {
-		Trainer trainer = new Trainer(trainerModel);
-		trainerRepository.save(trainer);
+//		Trainer trainer = new Trainer(trainerModel);
+//		trainerRepository.save(trainer);
 	}
 
 	private Trainer Trainer(TrainerModel trainerModel) {
