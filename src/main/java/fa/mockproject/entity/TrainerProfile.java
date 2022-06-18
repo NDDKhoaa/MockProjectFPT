@@ -1,18 +1,19 @@
 package fa.mockproject.entity;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import fa.mockproject.model.TrainerProfileModel;
+import fa.mockproject.model.TrainerModel;
 
 @Entity
 @Table(name = "TrainerProfile")
@@ -24,9 +25,11 @@ public class TrainerProfile {
 	@Column(name = "trainer_profile_id")
 	private long trainerProfileId;
 	
-	@OneToOne
-	@JoinColumn(name = "trainer_id", nullable = false)
-	private Trainer trainer;
+	@OneToMany(mappedBy = "trainerProfile", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+	private List<Trainer> trainers;
+	
+	@Column(name = "account", length = 255, nullable = false)
+	private String account;
 	
 	@Column(name = "full_name", length = 255, nullable = false)
 	private String fullName;
@@ -59,11 +62,13 @@ public class TrainerProfile {
 		super();
 	}
 
-	public TrainerProfile(long trainerProfileId, Trainer trainer, String fullName, LocalDate dateOfBirth, int gender,
-			String unit, String major, String phone, String email, int experience, String remarks) {
+	public TrainerProfile(long trainerProfileId, List<Trainer> trainers, String account, String fullName,
+			LocalDate dateOfBirth, int gender, String unit, String major, String phone, String email, int experience,
+			String remarks) {
 		super();
 		this.trainerProfileId = trainerProfileId;
-		this.trainer = trainer;
+		this.trainers = trainers;
+		this.account = account;
 		this.fullName = fullName;
 		this.dateOfBirth = dateOfBirth;
 		this.gender = gender;
@@ -75,19 +80,19 @@ public class TrainerProfile {
 		this.remarks = remarks;
 	}
 
-	public TrainerProfile(TrainerProfileModel trainerProfileModel, Trainer trainer) {
+	public TrainerProfile(TrainerModel trainerModel) {
 		super();
-		this.trainerProfileId = trainerProfileModel.getTrainerProfileId();
-		this.trainer = trainer;
-		this.fullName = trainerProfileModel.getFullName();
-		this.dateOfBirth = trainerProfileModel.getDateOfBirth();
-		this.gender = trainerProfileModel.getGender();
-		this.unit = trainerProfileModel.getUnit();
-		this.major = trainerProfileModel.getMajor();
-		this.phone = trainerProfileModel.getPhone();
-		this.email = trainerProfileModel.getEmail();
-		this.experience = trainerProfileModel.getExperience();
-		this.remarks = trainerProfileModel.getRemarks();
+		this.trainerProfileId = trainerModel.getTrainerProfileId();
+		this.account = trainerModel.getAccount();
+		this.fullName = trainerModel.getFullName();
+		this.dateOfBirth = trainerModel.getDateOfBirth();
+		this.gender = trainerModel.getGender();
+		this.unit = trainerModel.getUnit();
+		this.major = trainerModel.getMajor();
+		this.phone = trainerModel.getPhone();
+		this.email = trainerModel.getEmail();
+		this.experience = trainerModel.getExperience();
+		this.remarks = trainerModel.getRemarks();
 	}
 
 	public long getTrainerProfileId() {
@@ -98,12 +103,20 @@ public class TrainerProfile {
 		this.trainerProfileId = trainerProfileId;
 	}
 
-	public Trainer getTrainer() {
-		return trainer;
+	public List<Trainer> getTrainers() {
+		return trainers;
 	}
 
-	public void setTrainer(Trainer trainer) {
-		this.trainer = trainer;
+	public void setTrainers(List<Trainer> trainers) {
+		this.trainers = trainers;
+	}
+
+	public String getAccount() {
+		return account;
+	}
+
+	public void setAccount(String account) {
+		this.account = account;
 	}
 
 	public String getFullName() {
@@ -176,13 +189,6 @@ public class TrainerProfile {
 
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
-	}
-
-	@Override
-	public String toString() {
-		return "TrainerProfile [trainerProfileId=" + trainerProfileId + ", fullName=" + fullName + ", dateOfBirth="
-				+ dateOfBirth + ", gender=" + gender + ", unit=" + unit + ", major=" + major + ", phone=" + phone
-				+ ", email=" + email + ", experience=" + experience + ", remarks=" + remarks + "]";
 	}
 	
 }
