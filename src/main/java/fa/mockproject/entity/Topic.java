@@ -13,7 +13,7 @@ public class Topic {
     @Column(name = "topic_id", nullable = false)
     private long topicId;
 
-    @OneToMany(mappedBy="topic", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="topic",cascade = CascadeType.ALL)
     private Set<LearningPath> learningPaths;
 
     @Column(name = "remarks")

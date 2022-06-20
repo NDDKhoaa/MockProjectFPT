@@ -17,7 +17,7 @@ public class LearningPath {
     private Topic topic;
 
     @ManyToOne
-    @JoinColumn(name = "trainee_candidate id", nullable = false)
+    @JoinColumn(name = "trainee_candidate_id", nullable = false)
     private Trainee trainee;
 
     public LearningPath() {

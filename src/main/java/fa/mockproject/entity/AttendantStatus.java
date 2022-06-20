@@ -7,30 +7,34 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "AttendantStatus")
 public class AttendantStatus {
-	
+
 	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "attendant_status_id")
-    private int attendantStatusId;
-	
-	//TraineeID
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column(name = "attendant_status_id")
+	private int attendantStatusId;
+
+	// TraineeID
 	@ManyToOne
 	@JoinColumn(name = "trainee_candidate_id", nullable = false)
 	private Trainee trainee;
-	
+
 	@Column(name = "discipline_point", nullable = false)
 	private int disciplinePoint;
-	
+
 	@Column(name = "mileStones", nullable = false)
 	private int mileStones;
-	
+
 	@Column(name = "remarks", nullable = true, length = 255)
 	private String remarks;
+
+	@OneToOne(mappedBy = "attendantStatus")
+	private GPA gpa;
 
 	public AttendantStatus() {
 		super();
@@ -44,13 +48,22 @@ public class AttendantStatus {
 		this.remarks = remarks;
 	}
 
-	public AttendantStatus(int attendantStatusId, Trainee trainee, int disciplinePoint, int mileStones, String remarks) {
+	public AttendantStatus(int attendantStatusId, Trainee trainee, int disciplinePoint, int mileStones,
+			String remarks) {
 		super();
 		this.attendantStatusId = attendantStatusId;
 		this.trainee = trainee;
 		this.disciplinePoint = disciplinePoint;
 		this.mileStones = mileStones;
 		this.remarks = remarks;
+	}
+
+	public GPA getGpa() {
+		return gpa;
+	}
+
+	public void setGpa(GPA gpa) {
+		this.gpa = gpa;
 	}
 
 	public int getAttendantStatusId() {

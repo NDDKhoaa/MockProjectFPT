@@ -90,9 +90,6 @@ public class ClassBatch {
 	@JoinColumn(name = "scope_id", nullable = false)
 	private Scope scope;
 	
-	@OneToOne(mappedBy = "classBatch", cascade = CascadeType.ALL)
-	private SupplierPartner supplierPartner;
-	
 	@Column(name = "actual_start_date", nullable = false)
 	private LocalDate actualStartDate;
 	
@@ -137,6 +134,9 @@ public class ClassBatch {
 	
 	@Column(name = "remarks", length = 255, nullable = true)
 	private String remarks;
+	
+	@OneToOne(mappedBy = "classBatch")
+	private SupplierPartner supplierPartner;
 
 	public ClassBatch() {
 		super();

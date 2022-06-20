@@ -1,3 +1,4 @@
+
 package fa.mockproject.entity;
 
 import javax.persistence.*;
@@ -8,10 +9,10 @@ import javax.persistence.*;
 public class AllowanceGroup {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "group", nullable = false)
+    @Column(name = "group_id", nullable = false)
     private long group;
 
-    @OneToOne(mappedBy = "allowanceGroup", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "allowanceGroup",cascade = CascadeType.ALL)
     private Allowance allowance;
 
     @Column(name = "remarks")

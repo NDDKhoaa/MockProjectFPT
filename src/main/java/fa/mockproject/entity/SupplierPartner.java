@@ -14,7 +14,7 @@ import fa.mockproject.model.SupplierPartnerModel;
 
 
 @Entity
-@Table(name = "Supplier/Partner")
+@Table(name = "SupplierPartner")
 @Cacheable
 public class SupplierPartner {
 

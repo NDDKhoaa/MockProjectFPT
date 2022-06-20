@@ -23,7 +23,7 @@ public class Trainee {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "trainee_candiDate_id")
+	@Column(name = "trainee_candidate_id")
 	private long traineeCandidateID;
 
 	// Foreign key cua table Class Batch
