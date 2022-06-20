@@ -136,8 +136,8 @@
                                             <th>Class Admin</th>
                                             <td>
                                                 <select th:field="*{classAdminModel.classAdminId}" name="" id="">
-                                                	<option value=""></option> 
-                                                    <option th:each="classAdmin: ${classAdmins}" th:value="${classAdmin.classAdminId}" th:text="${classAdmin.account}"></option>
+                                                	<option value="0"></option> 
+                                                    <option th:each="classAdmin: ${classAdminModels}" th:value="${classAdmin.classAdminId}" th:text="${classAdmin.account}"></option>
                                                 </select>
                                             </td>
                                             <th>Weighted Number</th>
@@ -167,19 +167,22 @@
                                             <th>Subject Type</th>
                                             <td class="col-5">
                                                 <select th:field="*{subjectTypeModel.subjectTypeId}">
-                                                    <option th:each="subjectType: ${subjectTypeModels}" th:value="subjectType.subjectTypeId" th:text="${subjectType.subjectTypeName}"></option>
+                                                	<option value="0"></option>
+                                                    <option th:each="subjectType: ${subjectTypeModels}" th:value="${subjectType.subjectTypeId}" th:text="${subjectType.subjectTypeName}"></option>
                                                 </select>
                                             </td>
                                             <th>Sub-Subject Type</th>
                                             <td class="col-5">
                                                 <select th:field="*{subSubjectTypeModel.subSubjectTypeId}">
-                                                    <option th:each="subSubjectType: ${subSubjectTypeModels}" th:value="subSubjectType.subSubjectTypeId" th:text="${subSubjectType.subSubjectTypeName}"></option>
+                                                	<option value="0"></option>
+                                                    <option th:each="subSubjectType: ${subSubjectTypeModels}" th:value="${subSubjectType.subSubjectTypeId}" th:text="${subSubjectType.subSubjectTypeName}"></option>
                                                 </select>
                                             </td>
                                             <th>Delivery Type</th>
                                             <td class="col-5">
                                                 <select th:field="*{deliveryTypeModel.deliveryTypeId}">
-                                                    <option th:each="deliveryType: ${deliveryTypeModels}" th:value="deliveryType.deliveryTypeId" th:text="${deliveryType.deliveryTypeName}"></option>
+                                                	<option value="0"></option>
+                                                    <option th:each="deliveryType: ${deliveryTypeModels}" th:value="${deliveryType.deliveryTypeId}" th:text="${deliveryType.deliveryTypeName}"></option>
                                                 </select>
                                             </td>
                                         </tr>
@@ -187,19 +190,21 @@
                                             <th>Format Type</th>
                                             <td>
                                                 <select th:field="*{formatTypeModel.formatTypeId}">
-                                                    <option th:each="formatType: ${formatTypeModels}" th:value="formatType.formatTypeId" th:text="${formatType.formatTypeName}"></option>
+                                                	<option value="0"></option>
+                                                    <option th:each="formatType: ${formatTypeModels}" th:value="${formatType.formatTypeId}" th:text="${formatType.formatTypeName}"></option>
                                                 </select>
                                             </td>
                                             <th>Scope</th>
                                             <td>
                                                 <select th:field="*{scopeModel.scopeId}">
-                                                    <option th:each="scope: ${scopeModels}" th:value="scope.scopeId" th:text="${scope.scopeName}"></option>
+                                                	<option value="0"></option>
+                                                    <option th:each="scope: ${scopeModels}" th:value="${scope.scopeId}" th:text="${scope.scopeName}"></option>
                                                 </select>
                                             </td>
                                             <th>Supplier / Partner</th>
                                             <td>
-                                            	<input type="text" hidden="true" th:field="*{supplierPartner.supplierPartnerId}">
-                                                <input type="text" th:field="*{supplierPartner.supplierPartnerName}">
+                                            	<input type="text" hidden="true" th:field="*{supplierPartnerModel.supplierPartnerId}">
+                                                <input type="text" th:field="*{supplierPartnerModel.supplierPartnerName}">
                                             </td>
                                         </tr>
                                     </table>
@@ -218,7 +223,8 @@
                                             <th>Master Trainer</th>
                                             <td>
                                                 <select th:field="*{masterTrainerModel.trainerId}">
-                                                    <option th:each="trainer: ${trainers}" th:value="trainer.trainerId" th:text="trainer.account"></option>
+                                                	<option value="0"></option>
+                                                    <option th:each="trainer: ${trainerModels}" th:value="${trainer.trainerId}" th:text="${trainer.account}"></option>
                                                 </select>
                                             </td>
                                             <th>Trainer</th>
@@ -231,11 +237,11 @@
                                         <tr>
                                             <th>Curriculumn</th>
                                             <td>
-                                                <input type="file" name="" id="">
+                                                <input type="file" th:field="*{curriculumnModel.file}" name="" id="">
                                             </td>
                                             <th>Remarks</th>
                                             <td>
-                                                <input type="text" name="" id="">
+                                                <input type="text" th:field="*{remarks}" name="" id="">
                                             </td>
                                         </tr>
                                     </table>

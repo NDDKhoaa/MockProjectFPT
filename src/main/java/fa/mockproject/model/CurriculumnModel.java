@@ -1,6 +1,7 @@
 package fa.mockproject.model;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -74,6 +75,24 @@ public class CurriculumnModel {
 
 	public void setContent(byte[] content) {
 		this.content = content;
+	}
+	
+	public void setFile(MultipartFile file) throws IOException {
+		if (file == null) 
+			return;
+		this.name = file.getOriginalFilename();
+		this.type = file.getContentType();
+		this.content = file.getBytes();
+	}
+	
+	public MultipartFile getFile() {
+		return null;
+	}
+
+	@Override
+	public String toString() {
+		return "CurriculumnModel [curriculumnId=" + curriculumnId + ", name=" + name + ", type=" + type + ", content="
+				+ Arrays.toString(content) + "]";
 	}
 
 }

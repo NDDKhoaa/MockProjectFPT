@@ -8,8 +8,8 @@ import javax.persistence.*;
 public class AllowanceGroup {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "group", nullable = false)
-    private long group;
+    @Column(name = "group_id", nullable = false)
+    private long groupId;
 
     @OneToOne(mappedBy = "allowanceGroup", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Allowance allowance;
@@ -20,33 +20,35 @@ public class AllowanceGroup {
     public AllowanceGroup() {
     }
 
-    public AllowanceGroup(long group, Allowance allowance, Integer remarks) {
-        this.group = group;
-        this.allowance = allowance;
-        this.remarks = remarks;
-    }
+    public AllowanceGroup(long groupId, Allowance allowance, Integer remarks) {
+		super();
+		this.groupId = groupId;
+		this.allowance = allowance;
+		this.remarks = remarks;
+	}
 
-    public long getGroup() {
-        return group;
-    }
+	public long getGroupId() {
+		return groupId;
+	}
 
-    public void setGroup(long group) {
-        this.group = group;
-    }
+	public void setGroupId(long groupId) {
+		this.groupId = groupId;
+	}
 
-    public Allowance getAllowance() {
-        return allowance;
-    }
+	public Allowance getAllowance() {
+		return allowance;
+	}
 
-    public void setAllowance(Allowance allowance) {
-        this.allowance = allowance;
-    }
+	public void setAllowance(Allowance allowance) {
+		this.allowance = allowance;
+	}
 
-    public Integer getRemarks() {
-        return remarks;
-    }
+	public Integer getRemarks() {
+		return remarks;
+	}
 
-    public void setRemarks(Integer remarks) {
-        this.remarks = remarks;
-    }
+	public void setRemarks(Integer remarks) {
+		this.remarks = remarks;
+	}
+
 }

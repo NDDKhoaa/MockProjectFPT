@@ -29,7 +29,7 @@ public class TraineeService {
 			traineeModel.setId(trainee.getTraineeCandidateID());
 //			traineeModel.setAccount(trainee.getTraineeAccount());
 			traineeModel.setFullName(trainee.getTraineeCandidateProfile().getFullName());
-			traineeModel.setStatus(trainee.getListStatus().get(0).getRemarks());
+			traineeModel.setStatus(trainee.getStatus().get(0).getRemarks());
 			traineeModels.add(traineeModel);
 		}
 		return traineeModels;
@@ -40,7 +40,7 @@ public class TraineeService {
 		Trainee trainee = traineeRepository.findById(id).get();
 		TraineeModel traineeModel = new TraineeModel();
 		traineeModel.setId(trainee.getTraineeCandidateID());
-		traineeModel.setStatus(trainee.getListStatus().get(0).getRemarks());
+		traineeModel.setStatus(trainee.getStatus().get(0).getRemarks());
 //		traineeModel.setAllocationStatus(trainee.get);
 		traineeModel.setGender(trainee.getTraineeCandidateProfile().getGender());
 		traineeModel.setFullName(trainee.getTraineeCandidateProfile().getFullName());

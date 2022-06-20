@@ -13,11 +13,11 @@ public class Allowance {
     private long allowanceId;
 
     @ManyToOne
-    @JoinColumn(name = "trainee_candidate id", nullable = false)
+    @JoinColumn(name = "trainee_candidate_id", nullable = false)
     private Trainee trainee;
 
     @OneToOne
-    @JoinColumn(name = "allowance_group", nullable = false)
+    @JoinColumn(name = "allowance_group_id", nullable = false)
     private AllowanceGroup allowanceGroup;
 
     @Column(name = "allowance_result")

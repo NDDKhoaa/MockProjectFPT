@@ -34,7 +34,7 @@ public class Curriculumn {
 	private byte[] content;
 	
 	@OneToOne
-	@JoinColumn(name = "class_batch_id")
+	@JoinColumn(name = "class_id")
 	private ClassBatch classBatch;
 	
 	public Curriculumn() {

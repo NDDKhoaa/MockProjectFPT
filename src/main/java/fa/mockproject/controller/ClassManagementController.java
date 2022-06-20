@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import fa.mockproject.entity.enumtype.BudgetCodeEnum;
 import fa.mockproject.model.AuditModel;
@@ -38,12 +39,12 @@ public class ClassManagementController {
 		BudgetCodeEnum[] budgetCodeEnums = BudgetCodeEnum.values();
 		
 		List<ClassAdminModel> classAdminModels = new ArrayList<ClassAdminModel>();
-		classAdminModels.add(new ClassAdminModel(1, 1, "Nguyen Nhu Ngoc", LocalDate.of(13, 10, 1995), 1, "0937652189", "NgocNN@email.com", "ngocnn", ""));
-		classAdminModels.add(new ClassAdminModel(2, 2, "Le Nguyen Ai Nhi", LocalDate.of(16, 6, 1996), 1, "0937254689", "NhiLNA@email.com", "NhiLNA", ""));
-		classAdminModels.add(new ClassAdminModel(3, 3, "Tran Ngoc Nhu Quynh", LocalDate.of(21, 11, 1997), 1, "09637636189", "QuynhTNN@email.com", "QuynhTNN", ""));
-		classAdminModels.add(new ClassAdminModel(4, 4, "Le Hong Tham", LocalDate.of(25, 9, 1994), 1, "0934766589", "ThamLH@email.com", "ThamLH", ""));
-		classAdminModels.add(new ClassAdminModel(5, 5, "Duong Vu Quynh Anh", LocalDate.of(12, 4, 1994), 1, "0974554779", "AnhDVQ@email.com", "AnhDVQ", ""));
-		classAdminModels.add(new ClassAdminModel(6, 6, "Nguyen Tran Kim Ngan", LocalDate.of(8, 7, 1995), 1, "0936346768", "NganNTK@email.com", "NganNTK", ""));
+		classAdminModels.add(new ClassAdminModel(1, 1, "Nguyen Nhu Ngoc", LocalDate.of(1995, 10, 13), 1, "0937652189", "NgocNN@email.com", "ngocnn", ""));
+		classAdminModels.add(new ClassAdminModel(2, 2, "Le Nguyen Ai Nhi", LocalDate.of(1996, 6, 16), 1, "0937254689", "NhiLNA@email.com", "NhiLNA", ""));
+		classAdminModels.add(new ClassAdminModel(3, 3, "Tran Ngoc Nhu Quynh", LocalDate.of(1997, 11, 21), 1, "09637636189", "QuynhTNN@email.com", "QuynhTNN", ""));
+		classAdminModels.add(new ClassAdminModel(4, 4, "Le Hong Tham", LocalDate.of(1994, 9, 25), 1, "0934766589", "ThamLH@email.com", "ThamLH", ""));
+		classAdminModels.add(new ClassAdminModel(5, 5, "Duong Vu Quynh Anh", LocalDate.of(1994, 4, 12), 1, "0974554779", "AnhDVQ@email.com", "AnhDVQ", ""));
+		classAdminModels.add(new ClassAdminModel(6, 6, "Nguyen Tran Kim Ngan", LocalDate.of(1995, 7, 8), 1, "0936346768", "NganNTK@email.com", "NganNTK", ""));
 		
 		List<SubjectTypeModel> subjectTypeModels = new ArrayList<SubjectTypeModel>();
 		subjectTypeModels.add(new SubjectTypeModel(1, "Organizational Overview & Culture", ""));
@@ -100,21 +101,22 @@ public class ClassManagementController {
 		classBatchModel.setBudgetModels(budgetModels);
 		classBatchModel.setAuditModels(auditModels);
 
-		model.addAttribute("classBatchModel", locationModels);
+		model.addAttribute("locationModels", locationModels);
 		model.addAttribute("budgetCodeEnums", budgetCodeEnums);
-		model.addAttribute("locationModels", classAdminModels);
-		model.addAttribute("locationTest", subjectTypeModels);
-		model.addAttribute("locationTest", subSubjectTypeModels);
-		model.addAttribute("locationTest", deliveryTypeModels);
-		model.addAttribute("locationTest", formatTypeModels);
-		model.addAttribute("locationTest", scopeModels);
-		model.addAttribute("locationTest", trainerModels);
-		model.addAttribute("locationTest", classBatchModel);
+		model.addAttribute("classAdminModels", classAdminModels);
+		model.addAttribute("subjectTypeModels", subjectTypeModels);
+		model.addAttribute("subSubjectTypeModels", subSubjectTypeModels);
+		model.addAttribute("deliveryTypeModels", deliveryTypeModels);
+		model.addAttribute("formatTypeModels", formatTypeModels);
+		model.addAttribute("scopeModels", scopeModels);
+		model.addAttribute("trainerModels", trainerModels);
+		model.addAttribute("classBatchModel", classBatchModel);
 		
 		return "ClassManagement";
 	}
 	
 	@PostMapping("/addClass")
+	@ResponseBody
 	public String creatNewClass(Model model, @ModelAttribute("classBatchModel") ClassBatchModel classBatchModel) {
 		List<LocationModel> locationModels = new ArrayList<LocationModel>();
 		locationModels.add(new LocationModel("CG", "Cau Giay", ""));
@@ -126,12 +128,12 @@ public class ClassManagementController {
 		BudgetCodeEnum[] budgetCodeEnums = BudgetCodeEnum.values();
 		
 		List<ClassAdminModel> classAdminModels = new ArrayList<ClassAdminModel>();
-		classAdminModels.add(new ClassAdminModel(1, 1, "Nguyen Nhu Ngoc", LocalDate.of(13, 10, 1995), 1, "0937652189", "NgocNN@email.com", "ngocnn", ""));
-		classAdminModels.add(new ClassAdminModel(2, 2, "Le Nguyen Ai Nhi", LocalDate.of(16, 6, 1996), 1, "0937254689", "NhiLNA@email.com", "NhiLNA", ""));
-		classAdminModels.add(new ClassAdminModel(3, 3, "Tran Ngoc Nhu Quynh", LocalDate.of(21, 11, 1997), 1, "09637636189", "QuynhTNN@email.com", "QuynhTNN", ""));
-		classAdminModels.add(new ClassAdminModel(4, 4, "Le Hong Tham", LocalDate.of(25, 9, 1994), 1, "0934766589", "ThamLH@email.com", "ThamLH", ""));
-		classAdminModels.add(new ClassAdminModel(5, 5, "Duong Vu Quynh Anh", LocalDate.of(12, 4, 1994), 1, "0974554779", "AnhDVQ@email.com", "AnhDVQ", ""));
-		classAdminModels.add(new ClassAdminModel(6, 6, "Nguyen Tran Kim Ngan", LocalDate.of(8, 7, 1995), 1, "0936346768", "NganNTK@email.com", "NganNTK", ""));
+		classAdminModels.add(new ClassAdminModel(1, 1, "Nguyen Nhu Ngoc", LocalDate.of(1995, 10, 13), 1, "0937652189", "NgocNN@email.com", "ngocnn", ""));
+		classAdminModels.add(new ClassAdminModel(2, 2, "Le Nguyen Ai Nhi", LocalDate.of(1996, 6, 16), 1, "0937254689", "NhiLNA@email.com", "NhiLNA", ""));
+		classAdminModels.add(new ClassAdminModel(3, 3, "Tran Ngoc Nhu Quynh", LocalDate.of(1997, 11, 21), 1, "09637636189", "QuynhTNN@email.com", "QuynhTNN", ""));
+		classAdminModels.add(new ClassAdminModel(4, 4, "Le Hong Tham", LocalDate.of(1994, 9, 25), 1, "0934766589", "ThamLH@email.com", "ThamLH", ""));
+		classAdminModels.add(new ClassAdminModel(5, 5, "Duong Vu Quynh Anh", LocalDate.of(1994, 4, 12), 1, "0974554779", "AnhDVQ@email.com", "AnhDVQ", ""));
+		classAdminModels.add(new ClassAdminModel(6, 6, "Nguyen Tran Kim Ngan", LocalDate.of(1995, 7, 8), 1, "0936346768", "NganNTK@email.com", "NganNTK", ""));
 		
 		List<SubjectTypeModel> subjectTypeModels = new ArrayList<SubjectTypeModel>();
 		subjectTypeModels.add(new SubjectTypeModel(1, "Organizational Overview & Culture", ""));
@@ -182,15 +184,15 @@ public class ClassManagementController {
 		
 		System.out.println(classBatchModel);
 		
-		model.addAttribute("classBatchModel", locationModels);
+		model.addAttribute("locationModels", locationModels);
 		model.addAttribute("budgetCodeEnums", budgetCodeEnums);
-		model.addAttribute("locationModels", classAdminModels);
-		model.addAttribute("locationTest", subjectTypeModels);
-		model.addAttribute("locationTest", subSubjectTypeModels);
-		model.addAttribute("locationTest", deliveryTypeModels);
-		model.addAttribute("locationTest", formatTypeModels);
-		model.addAttribute("locationTest", scopeModels);
-		model.addAttribute("locationTest", trainerModels);
+		model.addAttribute("classAdminModels", classAdminModels);
+		model.addAttribute("subjectTypeModels", subjectTypeModels);
+		model.addAttribute("subSubjectTypeModels", subSubjectTypeModels);
+		model.addAttribute("deliveryTypeModels", deliveryTypeModels);
+		model.addAttribute("formatTypeModels", formatTypeModels);
+		model.addAttribute("scopeModels", scopeModels);
+		model.addAttribute("trainerModels", trainerModels);
 		
 		return "ClassManagement";
 	}

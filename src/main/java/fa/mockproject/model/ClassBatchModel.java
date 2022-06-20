@@ -1,10 +1,12 @@
 package fa.mockproject.model;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import fa.mockproject.entity.ClassBatch;
 import fa.mockproject.entity.enumtype.BudgetCodeEnum;
@@ -361,6 +363,15 @@ public class ClassBatchModel {
 	public void setCurriculumnModel(CurriculumnModel curriculumnModel) {
 		this.curriculumnModel = curriculumnModel;
 	}
+	
+	public void setCurriculumnModel(MultipartFile multipartFile) throws IOException {
+		if (curriculumnModel == null) {
+			this.curriculumnModel = new CurriculumnModel(multipartFile);
+		}
+		else {
+			this.curriculumnModel.setFile(multipartFile);;			
+		}
+	}
 
 	public List<AuditModel> getAudit() {
 		return auditModels;
@@ -420,20 +431,39 @@ public class ClassBatchModel {
 
 	@Override
 	public String toString() {
-		return "ClassBatchModel [classId=" + classId + ", className=" + className + ", classCode=" + classCode
-				+ ", expectedStartDate=" + expectedStartDate + ", expectedEndDate=" + expectedEndDate
-				+ ", plannedTraineeNumber=" + plannedTraineeNumber + ", estimatedBudget=" + estimatedBudget
-				+ ", actualStartDate=" + actualStartDate + ", actualEndDate=" + actualEndDate
-				+ ", acceptedTraineeNumber=" + acceptedTraineeNumber + ", actualTraineeNumber=" + actualTraineeNumber
-				+ ", milestones=" + milestones + ", weightedNumber=" + weightedNumber + ", history=" + history
-				+ ", detailLocation=" + detailLocation + ", budgetCode=" + budgetCode + ", status=" + status
-				+ ", curriculumnModel=" + curriculumnModel + ", locationModel=" + locationModel + ", subjectTypeModel="
-				+ subjectTypeModel + ", subSubjectTypeModel=" + subSubjectTypeModel + ", deliveryTypeModel="
-				+ deliveryTypeModel + ", scopeModel=" + scopeModel + ", formatTypeModel=" + formatTypeModel
-				+ ", supplierPartnerModel=" + supplierPartnerModel + ", classAdminModel=" + classAdminModel
-				+ ", budgetModels=" + budgetModels + ", masterTrainerModel=" + masterTrainerModel + ", trainerModels="
-				+ trainerModels + ", auditModels=" + auditModels + ", traineeModels=" + traineeModels + ", remarks="
-				+ remarks + "]";
+		return "ClassBatchModel"
+				+ "classId: " + classId + "\n"
+				+ "className: " + className + "\n"
+				+ "classCode: " + classCode + "\n"
+				+ "expectedStartDate: " + expectedStartDate + "\n"
+				+ "expectedEndDate: " + expectedEndDate + "\n"
+				+ "plannedTraineeNumber: " + plannedTraineeNumber + "\n"
+				+ "estimatedBudget: " + estimatedBudget + "\n"
+				+ "actualStartDate: " + actualStartDate + "\n"
+				+ "actualEndDate: " + actualEndDate + "\n"
+				+ "acceptedTraineeNumber: " + acceptedTraineeNumber + "\n"
+				+ "actualTraineeNumber: " + actualTraineeNumber + "\n"
+				+ "milestones: " + milestones + "\n"
+				+ "weightedNumber: " + weightedNumber + "\n"
+				+ "history: " + history + "\n"
+				+ "detailLocation: " + detailLocation + "\n"
+				+ "budgetCode: " + budgetCode + "\n"
+				+ "status: " + status + "\n"
+				+ "curriculumnModel: " + curriculumnModel + "\n"
+				+ "locationModel: " + locationModel + "\n"
+				+ "subjectTypeModel: " + subjectTypeModel + "\n"
+				+ "subSubjectTypeModel: " + subSubjectTypeModel + "\n"
+				+ "deliveryTypeModel: " + deliveryTypeModel + "\n"
+				+ "scopeModel: " + scopeModel + "\n"
+				+ "formatTypeModel: " + formatTypeModel + "\n"
+				+ "supplierPartnerModel: " + supplierPartnerModel + "\n"
+				+ "classAdminModel: " + classAdminModel + "\n"
+				+ "budgetModels: " + budgetModels + "\n"
+				+ "masterTrainerModel: " + masterTrainerModel + "\n"
+				+ "trainerModels: " + trainerModels + "\n"
+				+ "auditModels: " + auditModels + "\n"
+				+ "traineeModels: " + traineeModels + "\n"
+				+ "remarks: " + remarks + "\n";
 	}
 	
 }

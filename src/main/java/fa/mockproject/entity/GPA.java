@@ -11,16 +11,16 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "GPA")
+@Table(name = "Gpa")
 @Cacheable
 public class GPA {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "GPA_id", nullable = false)
+    @Column(name = "gpa_id", nullable = false)
     private long gpaId;
 
     @ManyToOne
-    @JoinColumn(name = "trainee_candidate id", nullable = false)
+    @JoinColumn(name = "trainee_candidate_id", nullable = false)
     private Trainee trainee;
 
     @Column(name = "attendant_id")
@@ -29,7 +29,7 @@ public class GPA {
     @Column(name = "allowance_id")
     private Integer allowanceId;
 
-    @Column(name = "GPA_result")
+    @Column(name = "gpa_result")
     private Integer gpaResult;
 
     @Column(name = "remarks")
