@@ -60,6 +60,7 @@ public class TraineeService {
 // 				traineeModelForm.getFullName(), traineeModelForm.getPhone(), traineeModelForm.getEmail(), 
 // 				traineeModelForm.getGender());
 // 		traineeRepository.save(trainee);
+
 		
 		
 }

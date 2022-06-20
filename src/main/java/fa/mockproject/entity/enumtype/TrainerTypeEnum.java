@@ -1,6 +1,6 @@
 package fa.mockproject.entity.enumtype;
 
-public enum TrainerType {
+public enum TrainerTypeEnum {
 	MasterTrainer,
 	Trainer
 }

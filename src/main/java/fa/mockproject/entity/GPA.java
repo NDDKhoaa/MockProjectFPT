@@ -12,27 +12,27 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "GPA")
+@Table(name = "Gpa")
 @Cacheable
 public class GPA {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "GPA_id", nullable = false)
+    @Column(name = "gpa_id", nullable = false)
     private long gpaId;
-
-    @ManyToOne
-    @JoinColumn(name = "trainee_candidate_id", nullable = true)
-    private Trainee trainee;
 
     @OneToOne
     @JoinColumn(name = "attendant_status_id",nullable = true)
     private AttendantStatus attendantStatus;
 
+    @ManyToOne
+    @JoinColumn(name = "trainee_candidate_id", nullable = false)
+    private Trainee trainee;
+
     @OneToOne
     @JoinColumn(name = "allowance_id",nullable = true)
     private Allowance allowance;
 
-    @Column(name = "GPA_result",length = 255,nullable = true)
+    @Column(name = "gpa_result",length = 255,nullable = true)
     private String gpaResult;
 
     @Column(name = "remarks",length = 255,nullable = true)
@@ -43,6 +43,7 @@ public class GPA {
 
     public GPA() {
     }
+
 
 	public GPA(long gpaId, Trainee trainee, AttendantStatus attendantStatus, Allowance allowance, String gpaResult,
 			String remarks, long gpaGpaId) {

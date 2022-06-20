@@ -26,7 +26,6 @@ public class Trainee {
 	@Column(name = "trainee_candidate_id")
 	private long traineeCandidateID;
 
-	// Foreign key cua table Class Batch
 	@ManyToOne
 	@JoinColumn(name = "class_id", nullable = false)
 	private ClassBatch classBatch;
@@ -72,7 +71,7 @@ public class Trainee {
 	}
 
 	public Trainee(long traineeCandidateID, ClassBatch classBatch, TraineeCandidateProfile traineeCandidateProfile,
-			List<AttendantStatus> attendantStatuses, List<Allowance> allowances, List<GPA> gPAs,
+			List<AttendantStatus> attendantStatuses, List<Allowance> allowances, List<GPA> gpas,
 			List<RewardPenalty> rewardPenalties, List<LearningPath> learningPaths, List<Guarantee> guarantees,
 			List<InterviewValuation> interviewValuations, List<Status> statuses, int remarks) {
 		super();
@@ -81,7 +80,7 @@ public class Trainee {
 		this.traineeCandidateProfile = traineeCandidateProfile;
 		this.attendantStatuses = attendantStatuses;
 		this.allowances = allowances;
-		gpas = gPAs;
+		this.gpas = gpas;
 		this.rewardPenalties = rewardPenalties;
 		this.learningPaths = learningPaths;
 		this.guarantees = guarantees;
@@ -103,20 +102,13 @@ public class Trainee {
 		this.traineeCandidateID = traineeCandidateID;
 	}
 
-	public TraineeCandidateProfile getTraineeCandidate() {
-		return traineeCandidateProfile;
+	public ClassBatch getClassBatch() {
+		return classBatch;
 	}
 
-	public void setTraineeCandidate(TraineeCandidateProfile traineeCandidate) {
-		this.traineeCandidateProfile = traineeCandidate;
+	public void setClassBatch(ClassBatch classBatch) {
+		this.classBatch = classBatch;
 	}
-
-	public ClassBatch getClassBatch() { 
-		return classBatch; 
-		}
-
-		public void setClassBatch(ClassBatch classBatch) { this.classBatch =
-		classBatch; }
 
 	public TraineeCandidateProfile getTraineeCandidateProfile() {
 		return traineeCandidateProfile;
@@ -125,7 +117,6 @@ public class Trainee {
 	public void setTraineeCandidateProfile(TraineeCandidateProfile traineeCandidateProfile) {
 		this.traineeCandidateProfile = traineeCandidateProfile;
 	}
-
 
 	public List<AttendantStatus> getAttendantStatuses() {
 		return attendantStatuses;
@@ -143,12 +134,12 @@ public class Trainee {
 		this.allowances = allowances;
 	}
 
-	public List<GPA> getGPAs() {
+	public List<GPA> getGpas() {
 		return gpas;
 	}
 
-	public void setGPAs(List<GPA> gPAs) {
-		gpas = gPAs;
+	public void setGpas(List<GPA> gpas) {
+		this.gpas = gpas;
 	}
 
 	public List<RewardPenalty> getRewardPenalties() {

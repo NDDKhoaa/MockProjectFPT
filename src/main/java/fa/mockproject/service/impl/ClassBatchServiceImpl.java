@@ -1,5 +1,6 @@
 package fa.mockproject.service.impl;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -92,10 +93,12 @@ public class ClassBatchServiceImpl implements ClassBatchService {
 	public ClassBatchModel addClass(ClassBatchModel classBatchModel) {
 		
 		classBatchModel.setStatus(ClassBatchStatusEnum.Draft);
-		ClassBatch classBatch = new ClassBatch(classBatchModel);
-		
+		ClassBatch classBatch;
 		try {
+			classBatch = new ClassBatch(classBatchModel);
 			classBatchRepository.save(classBatch);			
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 			return null;
@@ -106,15 +109,17 @@ public class ClassBatchServiceImpl implements ClassBatchService {
 
 	@Override
 	public ClassBatchModel updateDraftClass(ClassBatchModel classBatchModel) {
-		ClassBatch classBatch = new ClassBatch(classBatchModel);
-		
+		ClassBatch classBatch;
 		try {
+			classBatch = new ClassBatch(classBatchModel);
 			classBatchRepository.save(classBatch);			
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 			return null;
 		}
-		
+			
 		return classBatchModel;
 	}
 	
