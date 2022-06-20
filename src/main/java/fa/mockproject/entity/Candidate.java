@@ -60,7 +60,7 @@ public class Candidate {
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "offer_id", nullable = true)
 	private Set<Offer> offers;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "status", nullable = true)
 	private TraineeCandidateProfileStatus status;
@@ -112,8 +112,6 @@ public class Candidate {
 		this.location = location;
 	}
 
-	
-
 	public Set<EntryTest> getEntryTests() {
 		return entryTests;
 	}
@@ -154,7 +152,8 @@ public class Candidate {
 		this.remarks = remarks;
 	}
 
-	public Candidate(TraineeCandidateProfileModel model, Channel channel2, Location location2, TraineeCandidateProfile profile2,TraineeCandidateProfileStatus status2) {
+	public Candidate(TraineeCandidateProfileModel model, Channel channel2, Location location2,
+			TraineeCandidateProfile profile2, TraineeCandidateProfileStatus status2) {
 		Date dateApplicationDate = model.getApplicationDate();
 		LocalDate localDateApplicationDate = dateApplicationDate.toInstant().atZone(ZoneId.systemDefault())
 				.toLocalDate();
@@ -163,7 +162,7 @@ public class Candidate {
 		this.location = location2;
 		this.status = status2;
 		this.remarks = model.getRemarks();
-		this.traineeCandidateProfile= profile2;
+		this.traineeCandidateProfile = profile2;
 	}
 
 	public Candidate(Candidate findbyId) {
@@ -179,7 +178,5 @@ public class Candidate {
 		this.status = findbyId.getStatus();
 		this.remarks = findbyId.getRemarks();
 	}
-
-	
 
 }
