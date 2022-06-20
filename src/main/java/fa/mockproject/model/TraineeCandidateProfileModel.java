@@ -1,5 +1,8 @@
 package fa.mockproject.model;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Set;
@@ -11,12 +14,14 @@ import fa.mockproject.entity.Faculty;
 import fa.mockproject.entity.Location;
 import fa.mockproject.entity.Skill;
 import fa.mockproject.entity.Trainee;
+import fa.mockproject.entity.TraineeCandidateProfile;
+import fa.mockproject.entity.TraineeCandidateProfileStatus;
+import fa.mockproject.entity.TraineeCandidateProfileType;
 import fa.mockproject.entity.University;
 
 public class TraineeCandidateProfileModel {
 	private long traineeCandidateProfileId;
 	private Trainee trainee;
-	private Candidate candidate;
 	private String fullName;
 	private Date applicationDate = new Date(System.currentTimeMillis());
 	private Date dateOfBirth;
@@ -24,45 +29,104 @@ public class TraineeCandidateProfileModel {
 	private String graduationYear;
 	private String phone;
 	private String email;
-	private String typeId = "Candidate";
-	private String statusId = "New";
 	private String foreignLanguage;
 	private String level;
 	private String allocationStatus;
 	private String remarks;
 
+	private Candidate candidate;
+
+	private String statusId = "TP";
+	private String statusName;
+	private TraineeCandidateProfileStatus status;
+
+	private String typeId = "Candidate";
+	private String typeName;
+	private TraineeCandidateProfileType type;
+
 	private String channelId;
 	private Channel channel;
+	private String channelName;
 	private Set<Channel> channellist;
 
 	private String universityId;
+	private String universityName;
 	private University university;
 
 	private String locationId;
+	private String locationName;
 	private Location location;
 	private Set<Location> locationlist;
 
 	private String facultyId;
+	private String facultyName;
 	private Faculty faculty;
 
 	private String skillId;
+	private String skillName;
 	private Skill skill;
 
 	private String CVname;
 	private long size;
 	private byte[] content;
-	private Set<CV> cv;
+	private CV cv;
 
 	public TraineeCandidateProfileModel() {
 		super();
 	}
 
+	public TraineeCandidateProfileModel(TraineeCandidateProfile profile, Candidate candidate,
+			TraineeCandidateProfileStatus status2, TraineeCandidateProfileType type2, University university2,
+			Faculty faculty2, Location location2, Skill skill2, Channel channel2, CV cv2) {
+		super();
+		this.traineeCandidateProfileId = profile.getTraineeCandidateProfileId();
+		this.fullName = profile.getFullName();
+		LocalDate localDateApplicationDate = candidate.getApplicationDate();
+		Date dateApplicationDate = Date.from(localDateApplicationDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		this.applicationDate = dateApplicationDate;
+		LocalDate localDateDateOfBirth = candidate.getApplicationDate();
+		Date dateDateOfBirth = Date.from(localDateDateOfBirth.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		this.dateOfBirth = dateDateOfBirth;
+		this.gender = profile.getGender();
+		LocalDate localDateGraduationYear = candidate.getApplicationDate();
+		Date dateGraduationYear = Date.from(localDateGraduationYear.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+		String stringGraduationYear = formatter.format(dateGraduationYear);
+		this.graduationYear = stringGraduationYear;
+		this.phone = profile.getPhone();
+		this.email = profile.getEmail();
+		this.foreignLanguage = profile.getForeignLanguage();
+		this.level = profile.getLevel();
+		this.allocationStatus = profile.getAllocationStatus();
+		this.remarks = profile.getRemarks();
+		this.candidate = candidate;
+		this.status = status2;
+		this.statusName=status2.getStatus();
+		this.channelName=channel2.getChannelName();
+		this.type = type2;
+		this.typeName=type2.getType();
+		this.channel = channel2;
+		this.university = university2;
+		this.universityName=university2.getUniversityName();
+		this.location = location2;
+		this.locationName=location2.getLocationName();
+		this.faculty = faculty2;
+		this.facultyName=faculty2.getFacultyName();
+		this.skill = skill2;
+		this.skillName=skill2.getSkillName();
+		this.cv = cv2;
+		this.CVname=cv2.getName();
+		this.content=cv2.getContent();
+		this.size=cv2.getSize();
+	}
+
 	public TraineeCandidateProfileModel(long traineeCandidateProfileId, Trainee trainee, Candidate candidate,
 			String fullName, Date applicationDate, Date dateOfBirth, String gender, String graduationYear, String phone,
-			String email, String typeId, String statusId, String foreignLanguage, String level, String allocationStatus,
-			String remarks, String channelId, Channel channel, Set<Channel> channellist, String universityId,
-			University university, String locationId, Location location, Set<Location> locationlist, String facultyId,
-			Faculty faculty, String skillId, Skill skill, String cVname, long size, byte[] content, Set<CV> cv) {
+			String email, String foreignLanguage, String level, String allocationStatus, String remarks,
+			String statusId, TraineeCandidateProfileStatus status, String typeId, TraineeCandidateProfileType type,
+			String channelId, Channel channel, Set<Channel> channellist, String universityId, University university,
+			String locationId, Location location, Set<Location> locationlist, String facultyId, Faculty faculty,
+			String skillId, Skill skill, String cVname, long size, byte[] content, CV cv) {
 		super();
 		this.traineeCandidateProfileId = traineeCandidateProfileId;
 		this.trainee = trainee;
@@ -74,12 +138,14 @@ public class TraineeCandidateProfileModel {
 		this.graduationYear = graduationYear;
 		this.phone = phone;
 		this.email = email;
-		this.typeId = typeId;
-		this.statusId = statusId;
 		this.foreignLanguage = foreignLanguage;
 		this.level = level;
 		this.allocationStatus = allocationStatus;
 		this.remarks = remarks;
+		this.statusId = statusId;
+		this.status = status;
+		this.typeId = typeId;
+		this.type = type;
 		this.channelId = channelId;
 		this.channel = channel;
 		this.channellist = channellist;
@@ -96,6 +162,80 @@ public class TraineeCandidateProfileModel {
 		this.size = size;
 		this.content = content;
 		this.cv = cv;
+	}
+	
+	
+
+	public String getLocationName() {
+		return locationName;
+	}
+
+	public void setLocationName(String locationName) {
+		this.locationName = locationName;
+	}
+
+	public String getStatusName() {
+		return statusName;
+	}
+
+	public void setStatusName(String statusName) {
+		this.statusName = statusName;
+	}
+
+	public String getTypeName() {
+		return typeName;
+	}
+
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
+	}
+
+	public String getChannelName() {
+		return channelName;
+	}
+
+	public void setChannelName(String channelName) {
+		this.channelName = channelName;
+	}
+
+	public String getUniversityName() {
+		return universityName;
+	}
+
+	public void setUniversityName(String universityName) {
+		this.universityName = universityName;
+	}
+
+	public String getFacultyName() {
+		return facultyName;
+	}
+
+	public void setFacultyName(String facultyName) {
+		this.facultyName = facultyName;
+	}
+
+	public String getSkillName() {
+		return skillName;
+	}
+
+	public void setSkillName(String skillName) {
+		this.skillName = skillName;
+	}
+
+	public TraineeCandidateProfileStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(TraineeCandidateProfileStatus status) {
+		this.status = status;
+	}
+
+	public TraineeCandidateProfileType getType() {
+		return type;
+	}
+
+	public void setType(TraineeCandidateProfileType type) {
+		this.type = type;
 	}
 
 	public long getTraineeCandidateProfileId() {
@@ -346,11 +486,11 @@ public class TraineeCandidateProfileModel {
 		this.content = content;
 	}
 
-	public Set<CV> getCv() {
+	public CV getCv() {
 		return cv;
 	}
 
-	public void setCv(Set<CV> cv) {
+	public void setCv(CV cv) {
 		this.cv = cv;
 	}
 
