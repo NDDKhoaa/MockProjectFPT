@@ -88,7 +88,7 @@ public class ProfileController {
 		model.addAttribute("skillList", skillList);
 		CV cv = new CV();
 		model.addAttribute("cv", cv);
-		return "createCandidate";
+		return "CreateCandidate";
 	}
 
 	@RequestMapping(value = "/saveProfile", method = RequestMethod.POST)
@@ -114,7 +114,7 @@ public class ProfileController {
 		cvService.save(cv);
 		candidateService.save(candidate);
 		traineeCandidateProfileService.save(profile);
-		return "redirect:/createCandidate";
+		return "CreateCandidate";
 	}
 
 	@InitBinder
