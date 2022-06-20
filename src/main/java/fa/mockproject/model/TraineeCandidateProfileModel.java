@@ -36,7 +36,7 @@ public class TraineeCandidateProfileModel {
 
 	private Candidate candidate;
 
-	private String statusId = "TP";
+	private String statusId = "New";
 	private String statusName;
 	private TraineeCandidateProfileStatus status;
 

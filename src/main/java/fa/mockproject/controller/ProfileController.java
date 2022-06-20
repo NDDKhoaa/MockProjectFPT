@@ -137,7 +137,7 @@ public class ProfileController {
 		cvService.save(cv);
 		candidateService.save(candidate);
 		traineeCandidateProfileService.save(profile);
-		return "createCandidate";
+		return "redirect:/viewCandidate";
 	}
 
 	@InitBinder
