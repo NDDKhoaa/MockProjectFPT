@@ -13,14 +13,14 @@ public class Allowance {
     private long allowanceId;
 
     @ManyToOne
-    @JoinColumn(name = "trainee_candidate_id", nullable = true)
+    @JoinColumn(name = "trainee_candidate_id", nullable = false)
     private Trainee trainee;
 
     @OneToOne
-    @JoinColumn(name = "group_id", nullable = true)
+    @JoinColumn(name = "group_id", nullable = false)
     private AllowanceGroup allowanceGroup;
 
-    @Column(name = "allowance_result",nullable = true)
+    @Column(name = "allowance_result", nullable = false)
     private int allowanceResult;
 
     @Column(name = "remarks",length = 255,nullable = true)
@@ -31,7 +31,7 @@ public class Allowance {
 
     public Allowance() {
     }
-
+    
     public Allowance(long group, Trainee traineeId, AllowanceGroup allowanceGroup, int allowanceResult, String remarks) {
         this.allowanceId = group;
         this.trainee = traineeId;

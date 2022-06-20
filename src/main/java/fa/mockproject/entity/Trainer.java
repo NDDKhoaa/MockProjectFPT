@@ -1,7 +1,6 @@
 package fa.mockproject.entity;
 
 import javax.persistence.Cacheable;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -11,10 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import fa.mockproject.entity.enumtype.TrainerType;
+import fa.mockproject.entity.enumtype.TrainerTypeEnum;
 import fa.mockproject.model.TrainerModel;
 
 @Entity
@@ -26,10 +24,10 @@ public class Trainer {
 	@Column(name = "trainer_id")
 	private long trainerId;
 
-	@Column(name = "type", length = 255, nullable = false)
 	@Enumerated(EnumType.STRING)
-	private TrainerType trainerType;
-
+	@Column(name= "type", length = 255, nullable =  false)
+	private TrainerTypeEnum type;
+	
 	@ManyToOne
 	@JoinColumn(name = "trainer_profile_id")
 	private TrainerProfile trainerProfile;
@@ -45,11 +43,10 @@ public class Trainer {
 		super();
 	}
 
-	public Trainer(long trainerId, TrainerType trainerType, TrainerProfile trainerProfile, ClassBatch classBatch,
-			String remarks) {
+	public Trainer(long trainerId, TrainerTypeEnum type, TrainerProfile trainerProfile, ClassBatch classBatch, String remarks) {
 		super();
 		this.trainerId = trainerId;
-		this.trainerType = trainerType;
+		this.type = type;
 		this.trainerProfile = trainerProfile;
 		this.classBatch = classBatch;
 		this.remarks = remarks;
@@ -58,11 +55,8 @@ public class Trainer {
 	public Trainer(TrainerModel trainerModel, ClassBatch classBatch) {
 		super();
 		this.trainerId = trainerModel.getTrainerId();
-		this.trainerType = trainerModel.getTrainerType();
-		this.trainerProfile = new TrainerProfile(trainerModel.getTrainerProfileId(), trainerModel.getFullName(),
-				trainerModel.getDateOfBirth(), trainerModel.getGender(), trainerModel.getUnit(),
-				trainerModel.getMajor(), trainerModel.getPhone(), trainerModel.getEmail(), trainerModel.getExperience(),
-				trainerModel.getAccount(), trainerModel.getRemarks());
+		this.type = trainerModel.getType();
+		this.trainerProfile = new TrainerProfile(trainerModel);
 		this.classBatch = classBatch;
 		this.remarks = trainerModel.getRemarks();
 	}
@@ -75,12 +69,12 @@ public class Trainer {
 		this.trainerId = trainerId;
 	}
 
-	public TrainerType getTrainerType() {
-		return trainerType;
+	public TrainerTypeEnum getType() {
+		return type;
 	}
 
-	public void setTrainerType(TrainerType trainerType) {
-		this.trainerType = trainerType;
+	public void setType(TrainerTypeEnum type) {
+		this.type = type;
 	}
 
 	public TrainerProfile getTrainerProfile() {
@@ -105,12 +99,6 @@ public class Trainer {
 
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
-	}
-
-	@Override
-	public String toString() {
-		return "Trainer [trainerId=" + trainerId + ", trainerType=" + trainerType + ", trainerProfile=" + trainerProfile
-				+ ", classBatch=" + classBatch + ", remarks=" + remarks + "]";
 	}
 
 }
