@@ -73,7 +73,7 @@ public class ProfileController {
 	@Autowired
 	private TraineeCandidateProfileStatusServiceImpl traineeCandidateProfileStatusService;
 
-	@RequestMapping("/createCandidate")
+	@RequestMapping("/createNewCandidate")
 	public String createCandidate(Model model) {
 		model.addAttribute("traineeCandidateForm", new TraineeCandidateProfileModel());
 		List<Channel> channelList = channelService.listAll();
@@ -88,7 +88,7 @@ public class ProfileController {
 		model.addAttribute("skillList", skillList);
 		CV cv = new CV();
 		model.addAttribute("cv", cv);
-		return "CreateCandidate";
+		return "createCandidate";
 	}
 
 	@RequestMapping(value = "/saveProfile", method = RequestMethod.POST)
@@ -114,7 +114,7 @@ public class ProfileController {
 		cvService.save(cv);
 		candidateService.save(candidate);
 		traineeCandidateProfileService.save(profile);
-		return "CreateCandidate";
+		return "createCandidate";
 	}
 
 	@InitBinder
