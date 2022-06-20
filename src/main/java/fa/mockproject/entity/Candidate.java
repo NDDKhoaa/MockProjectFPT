@@ -34,6 +34,7 @@ public class Candidate {
 	private long candidateId;
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "trainee_candidate_profile_id", unique = true, nullable = false)
 	private TraineeCandidateProfile traineeCandidateProfile;
 
 	@DateTimeFormat
@@ -50,15 +51,15 @@ public class Candidate {
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "entry_test_id", nullable = true)
-	private Set<EntryTest> entryTest;
+	private Set<EntryTest> entryTests;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "interview_id", nullable = true)
-	private Set<Interview> interview;
+	private Set<Interview> interviews;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "offer_id", nullable = true)
-	private Set<Offer> offer;
+	private Set<Offer> offers;
 	
 	@ManyToOne
 	@JoinColumn(name = "status", nullable = true)
@@ -111,28 +112,30 @@ public class Candidate {
 		this.location = location;
 	}
 
-	public Set<EntryTest> getEntryTest() {
-		return entryTest;
+	
+
+	public Set<EntryTest> getEntryTests() {
+		return entryTests;
 	}
 
-	public void setEntryTest(Set<EntryTest> entryTest) {
-		this.entryTest = entryTest;
+	public void setEntryTests(Set<EntryTest> entryTests) {
+		this.entryTests = entryTests;
 	}
 
-	public Set<Interview> getInterview() {
-		return interview;
+	public Set<Interview> getInterviews() {
+		return interviews;
 	}
 
-	public void setInterview(Set<Interview> interview) {
-		this.interview = interview;
+	public void setInterviews(Set<Interview> interviews) {
+		this.interviews = interviews;
 	}
 
-	public Set<Offer> getOffer() {
-		return offer;
+	public Set<Offer> getOffers() {
+		return offers;
 	}
 
-	public void setOffer(Set<Offer> offer) {
-		this.offer = offer;
+	public void setOffers(Set<Offer> offers) {
+		this.offers = offers;
 	}
 
 	public TraineeCandidateProfileStatus getStatus() {
@@ -162,5 +165,21 @@ public class Candidate {
 		this.remarks = model.getRemarks();
 		this.traineeCandidateProfile= profile2;
 	}
+
+	public Candidate(Candidate findbyId) {
+		super();
+		this.candidateId = findbyId.getCandidateId();
+		this.traineeCandidateProfile = findbyId.getTraineeCandidateProfile();
+		this.applicationDate = findbyId.getApplicationDate();
+		this.channel = findbyId.getChannel();
+		this.location = findbyId.getLocation();
+		this.entryTests = findbyId.getEntryTests();
+		this.interviews = findbyId.getInterviews();
+		this.offers = findbyId.getOffers();
+		this.status = findbyId.getStatus();
+		this.remarks = findbyId.getRemarks();
+	}
+
+	
 
 }

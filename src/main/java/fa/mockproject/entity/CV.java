@@ -101,6 +101,12 @@ public class CV {
 		this.content = model.getContent();
 	}
 
+	public CV(CV cv) {
+		this.name = cv.getName();
+		this.size = cv.getSize();
+		this.content = cv.getContent();
+	}
+
 	@Override
 	public String toString() {
 		return "CV [cvId=" + cvId + ", name=" + name + ", size=" + size + "]";
