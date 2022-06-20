@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Create Candidate</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+table, tr, th, td {
+	border: 1px solid black;
+}
+
+.tablesetting {
+	padding: 10px;
+	border: 1px solid black;
+}
+
+.inputsetting {
+	padding: 9px;
+	border: 1px solid black;
+}
+
+.selectsetting {
+	padding: 11px;
+	border: 1px solid black;
+}
+
+.radiosetting {
+	padding: 6.5px;
+}
+</style>
+</head>
+<body>
+	<div class="container-fluid">
+		<div>
+			<h2>Candidate Listing</h2>
+			<div class="row">
+				<div class="col-lg-2"></div>
+				<div class="col-lg-2">#</div>
+				<div class="col-lg-2">Empl ID</div>
+				<div class="col-lg-2">Account</div>
+				<div class="col-lg-2">Name</div>
+				<div class="col-lg-2">Status</div>
+			</div>
+			<div class="row" th:each="profile,custStat:${profileList}">
+
+				<div class="col-lg-2"></div>
+				<div class="col-lg-2" th:text="${custStat.count}"></div>
+				<div class="col-lg-2"
+					th:text="${profile.traineeCandidateProfileId }"></div>
+				<div class="col-lg-2"
+					th:text="${profile.traineeCandidateProfileId }"></div>
+				<div class="col-lg-2" th:text="${profile.fullName }"></div>
+
+				<div class="col-lg-2" th:text="${profile.statusName}"></div>
+			</div>
+		</div>
+	</div>
+
+
+</body>
+</html>
