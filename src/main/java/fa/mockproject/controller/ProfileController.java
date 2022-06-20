@@ -2,6 +2,7 @@ package fa.mockproject.controller;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -72,6 +73,28 @@ public class ProfileController {
 
 	@Autowired
 	private TraineeCandidateProfileStatusServiceImpl traineeCandidateProfileStatusService;
+	
+	@RequestMapping("/viewCandidate")
+	public String viewCandidate(Model model) {
+		List<TraineeCandidateProfile> profileList = traineeCandidateProfileService.listAll();
+		List<TraineeCandidateProfileModel> modelList = new ArrayList<TraineeCandidateProfileModel>();
+		for (TraineeCandidateProfile profile : profileList) {
+			Candidate candidate = new Candidate(profile.getCandidate());
+			TraineeCandidateProfileStatus status = candidate.getStatus();
+			TraineeCandidateProfileType type = profile.getType();
+			University university = profile.getUniversity();
+			Faculty faculty = profile.getFaculty();
+			Location location = candidate.getLocation();
+			Skill skill = profile.getSkill();
+			Channel channel = candidate.getChannel();
+			CV cv = new CV(profile.getCv());
+			TraineeCandidateProfileModel profileModel = new TraineeCandidateProfileModel(profile, candidate, status,
+					type, university, faculty, location, skill, channel, cv);
+			modelList.add(profileModel);
+		}
+		model.addAttribute("profileList", modelList);
+		return "viewCandidate";
+	}
 
 	@RequestMapping("/createNewCandidate")
 	public String createCandidate(Model model) {
