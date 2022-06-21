@@ -18,64 +18,91 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Trainee")
 public class Trainee {
-	
+
 	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "trainee_candiDate_id")
-    private int traineeCandidateID;
-	
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column(name = "trainee_candiDate_id")
+	private int traineeCandidateID;
+
 	// Foreign key cua table Class Batch
 	@ManyToOne
-	@JoinColumn(name="class_id", nullable=false)
+	@JoinColumn(name = "class_id", nullable = false)
+	@JoinColumn(name = "class_id", nullable = true)
 	private ClassBatch classBatch;
-	
-	@OneToOne(mappedBy="trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+	@OneToOne(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private TraineeCandidateProfile traineeCandidateProfile;
-	
-	@OneToMany(mappedBy="trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<AttendantStatus> listAttendantStatus;
-	
-	@OneToMany(mappedBy="trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Allowance> listAllowances;
-	
-	@OneToMany(mappedBy="trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<GPA> listGPA;
-	
-	@OneToMany(mappedBy="trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<RewardPenalty> listRewardPenalties;
-	
-	@OneToMany(mappedBy="trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<LearningPath> listLearningPaths;
-	
-	@OneToMany(mappedBy="trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Guarantee> listGuarantees;
-	
-	@OneToMany(mappedBy="trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<InterviewValuation> listinterviewValuations;
-	
-	@OneToMany(mappedBy="trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Status> listStatus;
-	
+	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<AttendantStatus> attendantStatuses;
+
+	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Allowance> allowances;
+
+	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<GPA> gpas;
+
+	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<RewardPenalty> rewardPenalties;
+
+	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<LearningPath> learningPaths;
+
+	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Guarantee> guarantees;
+
+	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<InterviewValuation> interviewValuations;
+
+	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Status> statuses;
+
+	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Milestone> milestones;
+
 	@Column(name = "remarks", nullable = true)
 	private int remarks;
 
 	public Trainee() {
 		super();
 	}
-	
+
 	public Trainee(int traineeCandidateID, int remarks) {
 		super();
 		this.traineeCandidateID = traineeCandidateID;
 		this.remarks = remarks;
 	}
 
-	public Trainee(TraineeCandidateProfile traineeCandidate, ClassBatch classBatch,
-			TraineeCandidateProfile traineeCandidateProfile, List<AttendantStatus> listAttendantStatus,
-			List<Allowance> listAllowances, List<GPA> listGPA, List<RewardPenalty> listRewardPenalties,
-			List<LearningPath> listLearningPaths, List<Guarantee> listGuarantees,
-			List<InterviewValuation> listinterviewValuations, List<Status> listStatus, int remarks) {
+	public Trainee(long traineeCandidateID, ClassBatch classBatch, TraineeCandidateProfile traineeCandidateProfile,
+			List<AttendantStatus> attendantStatuses, List<Allowance> allowances, List<GPA> gpas,
+			List<RewardPenalty> rewardPenalties, List<LearningPath> learningPaths, List<Guarantee> guarantees,
+			List<InterviewValuation> interviewValuations, List<Status> statuses, List<Milestone> milestones,
+			int remarks) {
 		super();
-		this.traineeCandidateProfile = traineeCandidate;
+		this.traineeCandidateProfile = traineeCandidateProfile;
 		this.classBatch = classBatch;
 		this.traineeCandidateProfile = traineeCandidateProfile;
 		this.listAttendantStatus = listAttendantStatus;
@@ -86,6 +113,15 @@ public class Trainee {
 		this.listGuarantees = listGuarantees;
 		this.listinterviewValuations = listinterviewValuations;
 		this.listStatus = listStatus;
+		this.attendantStatuses = attendantStatuses;
+		this.allowances = allowances;
+		this.gpas = gpas;
+		this.rewardPenalties = rewardPenalties;
+		this.learningPaths = learningPaths;
+		this.guarantees = guarantees;
+		this.interviewValuations = interviewValuations;
+		this.statuses = statuses;
+		this.milestones = milestones;
 		this.remarks = remarks;
 	}
 
@@ -212,6 +248,22 @@ public class Trainee {
 
 	public void setRemarks(int remarks) {
 		this.remarks = remarks;
+	}
+
+	public List<GPA> getGpas() {
+		return gpas;
+	}
+
+	public void setGpas(List<GPA> gpas) {
+		this.gpas = gpas;
+	}
+
+	public List<Milestone> getMilestones() {
+		return milestones;
+	}
+
+	public void setMilestones(List<Milestone> milestones) {
+		this.milestones = milestones;
 	}
 
 	@Override
