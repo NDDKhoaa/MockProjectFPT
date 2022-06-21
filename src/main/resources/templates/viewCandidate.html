@@ -11,12 +11,24 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 <style>
-table, tr, th, td {
-	border: 1px solid black;
+table {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
 }
 
-th, td {
-	padding: 5px;
+td, th {
+	border: 1px solid #dddddd;
+	text-align: left;
+	padding: 8px;
+}
+
+th {
+	background-color: #CCCCCC
+}
+
+tr:nth-child(even) {
+	background-color: #EEEEEE;
 }
 
 .menusetting {
@@ -71,6 +83,18 @@ th, td {
 	border-style: solid solid solid solid;
 	border: 1px solid black;
 }
+
+.fa-plus-circle {
+	color: green;
+}
+
+.fa-arrow-alt-circle-up {
+	color: blue;
+}
+
+.fa-times-circle {
+	color: red;
+}
 </style>
 </head>
 
@@ -97,7 +121,7 @@ th, td {
 					<a href=""><i class="fa fa-circle"></i> Dashboard</a>
 				</div>
 				<div class="hrefsetting">
-					<a href=""><i class="fa fa-circle"></i> Class Management</a>
+					<a href="/"><i class="fa fa-circle"></i> Class Management</a>
 				</div>
 				<div class="hrefsetting">
 					<a href="viewCandidate"><i class="fa fa-circle"></i> Candidate
@@ -134,10 +158,30 @@ th, td {
 						<td th:text="${profile.statusName}"></td>
 					</tr>
 				</table>
+				<div class="row" style="margin-top: 20px; margin-bottom: 20px;">
+					<div class="col-lg-2">
+						<a th:href="createNewCandidate" style="color: black;"><button>
+								<i class="fas fa-plus-circle"></i> New Candidate
+							</button></a>
+					</div>
+					<div class="col-lg-2" style="margin-right: 25px;">
+						<a th:href="updateCandidate" style="color: black;"><button
+								style="width: 160px;">
+								<i class="fas fa-arrow-alt-circle-up"></i> Update Candidate
+							</button></a>
+					</div>
+					<div class="col-lg-2">
+						<a th:href="createNewCandidate" style="color: black;"><button
+								style="width: 160px;">
+								<i class="fas fa-times-circle"></i> Delete Candidate
+							</button></a>
+					</div>
+				</div>
 			</div>
 		</div>
+
 	</div>
-	<div class="row"></div>
+
 
 
 
