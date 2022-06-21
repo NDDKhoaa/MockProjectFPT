@@ -24,46 +24,16 @@ public class Trainee {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "trainee_candidate_id")
-	private int traineeCandidateID;
+	private long traineeCandidateId;
 
 	// Foreign key cua table Class Batch
 	@ManyToOne
 	@JoinColumn(name = "class_id", nullable = false)
-	@Column(name = "trainee_candidate_id")
-	private long traineeCandidateID;
-
-	@ManyToOne
-	@JoinColumn(name = "class_id", nullable = false)
-
 	private ClassBatch classBatch;
 
 	@OneToOne(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private TraineeCandidateProfile traineeCandidateProfile;
 
-	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<AttendantStatus> listAttendantStatus;
-
-	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Allowance> listAllowances;
-
-	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<GPA> listGPA;
-
-	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<RewardPenalty> listRewardPenalties;
-
-	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<LearningPath> listLearningPaths;
-
-	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Guarantee> listGuarantees;
-
-	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<InterviewValuation> listinterviewValuations;
-
-	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Status> listStatus;
-	
 	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<AttendantStatus> attendantStatuses;
 
@@ -85,50 +55,34 @@ public class Trainee {
 	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<InterviewValuation> interviewValuations;
 
-
-	@OneToMany(mappedBy="trainee",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Status> statuses;
 
-	@OneToMany(mappedBy="trainee",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Milestone> milestones;
-	
-	@Column(name="remarks",nullable=true)
+
+	@Column(name = "remarks", nullable = true)
 	private int remarks;
 
 	public Trainee() {
 		super();
 	}
 
-	<<<<<<<HEAD
-
-	public Trainee(int traineeCandidateID, int remarks) {
-=======
-
 	public Trainee(long traineeCandidateID, int remarks) {
->>>>>>> main
 		super();
-		this.traineeCandidateID = traineeCandidateID;
+		this.traineeCandidateId = traineeCandidateID;
 		this.remarks = remarks;
 	}
 
-	public Trainee(long traineeCandidateID, ClassBatch classBatch, TraineeCandidateProfile traineeCandidateProfile,
+	public Trainee(long traineeCandidateId, ClassBatch classBatch, TraineeCandidateProfile traineeCandidateProfile,
 			List<AttendantStatus> attendantStatuses, List<Allowance> allowances, List<GPA> gpas,
 			List<RewardPenalty> rewardPenalties, List<LearningPath> learningPaths, List<Guarantee> guarantees,
-<<<<<<< HEAD
 			List<InterviewValuation> interviewValuations, List<Status> statuses, List<Milestone> milestones,
 			int remarks) {
 		super();
-		this.traineeCandidateProfile = traineeCandidateProfile;
+		this.traineeCandidateId = traineeCandidateId;
 		this.classBatch = classBatch;
 		this.traineeCandidateProfile = traineeCandidateProfile;
-		this.listAttendantStatus = listAttendantStatus;
-		this.listAllowances = listAllowances;
-		this.listGPA = listGPA;
-		this.listRewardPenalties = listRewardPenalties;
-		this.listLearningPaths = listLearningPaths;
-		this.listGuarantees = listGuarantees;
-		this.listinterviewValuations = listinterviewValuations;
-		this.listStatus = listStatus;
 		this.attendantStatuses = attendantStatuses;
 		this.allowances = allowances;
 		this.gpas = gpas;
@@ -141,40 +95,17 @@ public class Trainee {
 		this.remarks = remarks;
 	}
 
-	public Trainee(int traineeCandidateID, TraineeCandidateProfile traineeCandidate, ClassBatch classBatch,
-			TraineeCandidateProfile traineeCandidateProfile, List<AttendantStatus> listAttendantStatus,
-			List<Allowance> listAllowances, List<GPA> listGPA, List<RewardPenalty> listRewardPenalties,
-			List<LearningPath> listLearningPaths, List<Guarantee> listGuarantees,
-			List<InterviewValuation> listinterviewValuations, List<Status> listStatus, int remarks) {
-=======
-			List<InterviewValuation> interviewValuations, List<Status> statuses, int remarks) {
->>>>>>> main
-		super();
-		this.traineeCandidateID = traineeCandidateID;
-		this.classBatch = classBatch;
-		this.traineeCandidateProfile = traineeCandidateProfile;
-		this.attendantStatuses = attendantStatuses;
-		this.allowances = allowances;
-		this.gpas = gpas;
-		this.rewardPenalties = rewardPenalties;
-		this.learningPaths = learningPaths;
-		this.guarantees = guarantees;
-		this.interviewValuations = interviewValuations;
-		this.statuses = statuses;
-		this.remarks = remarks;
-	}
-
 	public Trainee(TraineeModel traineeModel, ClassBatch classBatch) {
 		super();
 		// .......
 	}
 
 	public long getTraineeCandidateID() {
-		return traineeCandidateID;
+		return traineeCandidateId;
 	}
 
 	public void setTraineeCandidateID(long traineeCandidateID) {
-		this.traineeCandidateID = traineeCandidateID;
+		this.traineeCandidateId = traineeCandidateID;
 	}
 
 	public ClassBatch getClassBatch() {
@@ -265,14 +196,6 @@ public class Trainee {
 		this.remarks = remarks;
 	}
 
-	public List<GPA> getGpas() {
-		return gpas;
-	}
-
-	public void setGpas(List<GPA> gpas) {
-		this.gpas = gpas;
-	}
-
 	public List<Milestone> getMilestones() {
 		return milestones;
 	}
@@ -283,6 +206,6 @@ public class Trainee {
 
 	@Override
 	public String toString() {
-		return "Trainee [traineeCandidateID=" + traineeCandidateID + ", remarks=" + remarks + "]";
+		return "Trainee [traineeCandidateID=" + traineeCandidateId + ", remarks=" + remarks + "]";
 	}
 }
