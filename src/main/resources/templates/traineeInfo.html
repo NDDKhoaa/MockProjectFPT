@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8">
+<title>Employee Infomation</title>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css"
+	rel="stylesheet" type="text/css" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+ <link th:href="@{css/viewEmployee.css}" rel="stylesheet" />
+</head>
+
+<body>
+	
+		<table th:object="${trainee}" class="table table-bordered">
+			<h4>Employee Infomation</h4>
+			<hr>
+			<tr>
+				<th>
+					<p>Empl ID</p>
+				</th>
+				<td>
+					<p th:text="${trainee.id}"></p>
+				</td>
+				<th>
+					<p>Type</p>
+				</th>
+				<td>
+					<p></p>
+				</td>
+				<th>
+					<p>Status</p>
+				</th>
+				<td>
+					<p th:text="${trainee.status}"></p>
+				</td>
+				<th>
+					<p>Allocation Status</p>
+				</th>
+				<td>
+					<p></p>
+				</td>
+			</tr>
+			<tr>
+				<th colspan="1">
+					<p>Account</p>
+				</th>
+				<td  colspan="3">
+					<p></p>
+				</td>
+				<th colspan="1">
+					<p>Name *</p>
+				</th>
+				<td colspan="3">
+					<p th:text="${trainee.fullName}"></p>
+				</td>
+			</tr>
+			<tr>
+				<th colspan="1">
+					<p>Gender *</p>
+				</th>
+				<td colspan="3">
+					<input type="radio" th:field="*{gender}" th:value="Male" /> <label
+						th:text="Male"/> <input type="radio" th:field="*{gender}"
+						th:value="Female" /> <label th:text="Female" />
+						<div th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"
+							th:errorclass="error"></div>
+				</td>
+				<th colspan="1">
+					<p>DOB *</p>
+				</th>
+				<td colspan="3">
+					<span th:text="${trainee.dayOfBirth}"></span>
+					<!-- <input type="date" th:field="*{dateOfBirth}"
+						/> -->
+				</td>
+			</tr>
+			
+			<tr>
+				<th colspan="1">
+					<p>University</p>
+				</th>
+				<td colspan="3">
+					<p></p>
+				</td>
+				<th colspan="1">
+					<p>Faculty</p>
+				</th>
+				<td colspan="3">
+					<p></p>
+				</td>
+			</tr>
+			<tr>
+				<th colspan="1">
+					<p>Phone *</p>
+				</th>
+				<td colspan="3">
+					<p th:text="${trainee.phone}"></p>
+				</td>
+				<th colspan="1">
+					<p>Email *</p>
+				</th>
+				<td colspan="3">
+					<p th:text="${trainee.email}"></p>
+				</td>
+			</tr>
+			<tr>
+				<th colspan="1">
+					<p>Salary Paid *</p>
+				</th>
+				<td colspan="3">
+					<p></p>
+				</td>
+				<th colspan="1">
+					<p>TPB Account</p>
+				</th>
+				<td colspan="3">
+					<p></p>
+				</td>
+			</tr>
+			<tr>
+				<th colspan="1">
+					<p>Allowance Group</p>
+				</th>
+				<td colspan="3">
+					<p></p>
+				</td>
+				<th colspan="1">
+					<p>Commitment</p>
+				</th>
+				<td colspan="3">
+					<p></p>
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<p>History</p>
+				</th>
+				<td colspan="7">
+					<p></p>
+				</td>
+			</tr>
+		</table>
+		<div>
+			<a href="showTraineeList/1" class="btn btn-info"><i
+				class="fa fa-arrow-left" aria-hidden="true"></i> Back</a> <a
+				th:href="@{updateTrainee?id={id}(id=${trainee.id})}"
+				class="btn btn-warning text-light"><i class="fa fa-refresh"
+				aria-hidden="true"></i> Save</a>
+		</div>
+
+
+</body>
+</html>
