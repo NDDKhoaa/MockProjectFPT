@@ -81,8 +81,7 @@ public class University {
 
 	@Override
 	public String toString() {
-		return "University [universityId=" + universityId + ", universityName=" + universityName + ", remarks="
-				+ remarks + "]";
+		return universityName;
 	}
 
 }

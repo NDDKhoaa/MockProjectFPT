@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import fa.mockproject.entity.CV;
 import fa.mockproject.entity.Candidate;
@@ -73,7 +74,7 @@ public class ProfileController {
 
 	@Autowired
 	private TraineeCandidateProfileStatusServiceImpl traineeCandidateProfileStatusService;
-	
+
 	@RequestMapping("/viewCandidate")
 	public String viewCandidate(Model model) {
 		List<TraineeCandidateProfile> profileList = traineeCandidateProfileService.listAll();
@@ -94,6 +95,26 @@ public class ProfileController {
 		}
 		model.addAttribute("profileList", modelList);
 		return "viewCandidate";
+	}
+
+	@RequestMapping(value = "/viewCandidateDetails", method = RequestMethod.GET)
+	public ModelAndView viewCandidateDetails(
+			@RequestParam(value = "traineeCandidateProfileId") long traineeCandidateProfileId) {
+		ModelAndView mav = new ModelAndView("viewCandidateDetails");
+		TraineeCandidateProfile profile = traineeCandidateProfileService.findById(traineeCandidateProfileId);
+		Candidate candidate = new Candidate(profile.getCandidate());
+		TraineeCandidateProfileStatus status = candidate.getStatus();
+		TraineeCandidateProfileType type = profile.getType();
+		University university = profile.getUniversity();
+		Faculty faculty = profile.getFaculty();
+		Location location = candidate.getLocation();
+		Skill skill = profile.getSkill();
+		Channel channel = candidate.getChannel();
+		CV cv = new CV(profile.getCv());
+		TraineeCandidateProfileModel profileModel = new TraineeCandidateProfileModel(profile, candidate, status, type,
+				university, faculty, location, skill, channel, cv);
+		mav.addObject("profile",profileModel);
+		return mav;
 	}
 
 	@RequestMapping("/createNewCandidate")
@@ -131,9 +152,8 @@ public class ProfileController {
 		TraineeCandidateProfileStatus status = traineeCandidateProfileStatusService.findById(model.getStatusId());
 		TraineeCandidateProfileType type = traineeCandidateProfileTypeService.findById(model.getTypeId());
 		CV cv = new CV(model);
-		TraineeCandidateProfile profile = new TraineeCandidateProfile(model, university, faculty, skill, cv,
-				type);
-		Candidate candidate = new Candidate(model, channel,location, profile, status);
+		TraineeCandidateProfile profile = new TraineeCandidateProfile(model, university, faculty, skill, cv, type);
+		Candidate candidate = new Candidate(model, channel, location, profile, status);
 		cvService.save(cv);
 		candidateService.save(candidate);
 		traineeCandidateProfileService.save(profile);

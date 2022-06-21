@@ -53,4 +53,9 @@ public class TraineeCandidateProfileStatus {
 		this.status = find.getStatus();
 	}
 
+	@Override
+	public String toString() {
+		return status;
+	}
+
 }

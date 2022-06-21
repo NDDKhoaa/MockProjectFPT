@@ -1,8 +1,6 @@
 package fa.mockproject.entity;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -241,12 +239,10 @@ public class TraineeCandidateProfile {
 		this.trainee = model.getTrainee();
 		this.candidate = model.getCandidate();
 		this.fullName = model.getFullName();
-		Date dateDOB = model.getDateOfBirth();
-		LocalDate localDateDOB = dateDOB.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		this.dateOfBirth = localDateDOB;
+		this.dateOfBirth = model.getDateOfBirth();
 		this.gender = model.getGender();
-		Date dateGraduationYear = model.getDateOfBirth();
-		LocalDate localDateGraduationYear = dateGraduationYear.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		String stringGraduationYear = model.getGraduationYear() + "-01";
+		LocalDate localDateGraduationYear= LocalDate.parse(stringGraduationYear);
 		this.graduationYear = localDateGraduationYear;
 		this.phone = model.getPhone();
 		this.email = model.getEmail();
@@ -264,9 +260,7 @@ public class TraineeCandidateProfile {
 		this.trainee = model.getTrainee();
 		this.candidate = model.getCandidate();
 		this.fullName = model.getFullName();
-		Date dateDOB = model.getDateOfBirth();
-		LocalDate localDateDOB = dateDOB.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		this.dateOfBirth = localDateDOB;
+		this.dateOfBirth = model.getDateOfBirth();
 		this.gender = model.getGender();
 		String stringGraduationYear = model.getGraduationYear() + "-01";
 		LocalDate localDateGraduationYear = LocalDate.parse(stringGraduationYear);

@@ -81,4 +81,9 @@ public class Faculty {
 		this.traineeCandidateProfile = traineeCandidateProfile;
 	}
 
+	@Override
+	public String toString() {
+		return facultyName;
+	}
+
 }

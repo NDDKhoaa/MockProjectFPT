@@ -61,4 +61,9 @@ public class TraineeCandidateProfileType {
 		this.type = find.getType();
 	}
 
+	@Override
+	public String toString() {
+		return type;
+	}
+
 }

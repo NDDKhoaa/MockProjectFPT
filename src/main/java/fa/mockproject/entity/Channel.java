@@ -73,4 +73,9 @@ public class Channel {
 		this.candidate = candidate;
 	}
 
+	@Override
+	public String toString() {
+		return channelName;
+	}
+
 }

@@ -84,8 +84,7 @@ public class Skill {
 
 	@Override
 	public String toString() {
-		return "Skill [skillId=" + skillId + ", skillName=" + skillName + ", remarks=" + remarks
-				+ ", traineeCanditaCandidateProfile=" + traineeCanditaCandidateProfile + "]";
+		return skillName;
 	}
 
 }

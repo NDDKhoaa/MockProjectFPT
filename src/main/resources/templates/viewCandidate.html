@@ -1,21 +1,36 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
 <meta charset="UTF-8">
 <title>Create Candidate</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 <style>
 table, tr, th, td {
 	border: 1px solid black;
 }
 
+th, td {
+	padding: 5px;
+}
+
+.menusetting {
+	background-color: #CCCCCC;
+}
+
+.hrefsetting {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
 .tablesetting {
 	padding: 10px;
+	height: 40px;
 	border: 1px solid black;
 }
 
@@ -32,36 +47,100 @@ table, tr, th, td {
 .radiosetting {
 	padding: 6.5px;
 }
+
+.tablebackground {
+	background-color: #CCCCCC;
+}
+
+.inputedbackground {
+	background-color: #DDDDDD;
+}
+
+.pagesetting {
+	border-style: solid solid solid solid;
+	padding: 5px;
+	border-color: black;
+	border-bottom-color: #FFFFFF;
+}
+
+.pagesettingfordiv {
+	margin-top: 10px;
+}
+
+.tabsetting {
+	border-style: solid solid solid solid;
+	border: 1px solid black;
+}
 </style>
 </head>
+
 <body>
 	<div class="container-fluid">
-	<a href="createNewCandidate">New Candidate</a>
-		<div>
-			<h2>Candidate Listing</h2>
-			<div class="row">
-				<div class="col-lg-2"></div>
-				<div class="col-lg-2">#</div>
-				<div class="col-lg-2">Empl ID</div>
-				<div class="col-lg-2">Account</div>
-				<div class="col-lg-2">Name</div>
-				<div class="col-lg-2">Status</div>
+		<div class="row"
+			style="height: 50px; background-color: #205081; vertical-align: middle;">
+			<div class="col-lg-2">
+				<img src="https://i.postimg.cc/7Y2Hrb9q/Logo.png" alt=""
+					style="height: 47px; width: 90px;">
 			</div>
-			<div class="row" th:each="profile,custStat:${profileList}">
-
-				<div class="col-lg-2"></div>
-				<div class="col-lg-2" th:text="${custStat.count}"></div>
-				<div class="col-lg-2"
-					th:text="${profile.traineeCandidateProfileId }"></div>
-				<div class="col-lg-2"
-					th:text="${profile.traineeCandidateProfileId }"></div>
-				<div class="col-lg-2" th:text="${profile.fullName }"></div>
-
-				<div class="col-lg-2" th:text="${profile.statusName}"></div>
+			<div class="col">
+				<h2 style="font-size: 19px; color: white; font-weight: 550;">FSOFT
+					HR ULTILITY</h2>
+			</div>
+		</div>
+		<div class="row" style="font-weight: 550;">
+			<div class="col-lg-2 menusetting" style="height: 900px;">
+				<label>Your role now is:</label> <select
+					style="width: 170px; height: 30px; margin-bottom: 20px;">
+					<option>Select Role</option>
+				</select>
+				<div class="hrefsetting">
+					<a href=""><i class="fa fa-circle"></i> Dashboard</a>
+				</div>
+				<div class="hrefsetting">
+					<a href=""><i class="fa fa-circle"></i> Class Management</a>
+				</div>
+				<div class="hrefsetting">
+					<a href="viewCandidate"><i class="fa fa-circle"></i> Candidate
+						Management</a>
+				</div>
+				<div class="hrefsetting">
+					<a href=""><i class="fa fa-circle"></i> Trainer Management</a>
+				</div>
+				<div class="hrefsetting">
+					<a href=""><i class="fa fa-circle"></i> Trainee Management</a>
+				</div>
+				<div class="hrefsetting">
+					<a href=""><i class="fa fa-circle"></i> General Setting</a>
+				</div>
+			</div>
+			<div class="col-lg-9">
+				<table class="text-center">
+					<tr>
+						<th style="width: 50px;"></th>
+						<th style="width: 100px;">#</th>
+						<th style="width: 100px;">Empl ID</th>
+						<th style="width: 150px;">Account</th>
+						<th style="width: 300px;">Name</th>
+						<th style="width: 200px;">Status</th>
+					</tr>
+					<tr th:each="profile,custStat:${profileList}">
+						<td></td>
+						<td th:text="${custStat.count}"></td>
+						<td><a
+							th:href="@{/viewCandidateDetails(traineeCandidateProfileId=*{profile.traineeCandidateProfileId})}"
+							th:text="${profile.traineeCandidateProfileId }"></a></td>
+						<td th:text="${profile.traineeCandidateProfileId }"></td>
+						<td th:text="${profile.fullName }"></td>
+						<td th:text="${profile.statusName}"></td>
+					</tr>
+				</table>
 			</div>
 		</div>
 	</div>
+	<div class="row"></div>
+
 
 
 </body>
+
 </html>

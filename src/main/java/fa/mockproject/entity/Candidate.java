@@ -1,8 +1,6 @@
 package fa.mockproject.entity;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.Cacheable;
@@ -154,10 +152,7 @@ public class Candidate {
 
 	public Candidate(TraineeCandidateProfileModel model, Channel channel2, Location location2,
 			TraineeCandidateProfile profile2, TraineeCandidateProfileStatus status2) {
-		Date dateApplicationDate = model.getApplicationDate();
-		LocalDate localDateApplicationDate = dateApplicationDate.toInstant().atZone(ZoneId.systemDefault())
-				.toLocalDate();
-		this.applicationDate = localDateApplicationDate;
+		this.applicationDate = model.getApplicationDate();
 		this.channel = channel2;
 		this.location = location2;
 		this.status = status2;
