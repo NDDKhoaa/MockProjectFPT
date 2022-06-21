@@ -31,13 +31,18 @@
 	border: 1px solid black;
 }
 
+.datesetting {
+	padding: 8px;
+	border: 1px solid black;
+}
+
 .selectsetting {
-	padding: 11px;
+	padding: 10px;
 	border: 1px solid black;
 }
 
 .radiosetting {
-	padding: 6.5px;
+	padding: 5.5px;
 }
 
 .tablebackground {
@@ -147,7 +152,7 @@
 										<div class="col-lg-2 tablesetting tablebackground">Application
 											Date</div>
 										<div>
-											<input class="col-lg-4 inputsetting" type="date"
+											<input class="col-lg-4 datesetting" type="date"
 												th:field="*{applicationDate}" />
 										</div>
 										<div class="col-lg-2 tablesetting tablebackground">Channel
@@ -208,12 +213,12 @@
 									<div class="row">
 										<div class="col-lg-2 tablesetting tablebackground">DOB *</div>
 										<div>
-											<input type="date" class="col-lg-4 inputsetting"
+											<input type="date" class="col-lg-4 datesetting"
 												th:field="*{dateOfBirth}" />
 										</div>
 										<div class="col-lg-2 tablesetting tablebackground">CV</div>
 										<div>
-											<input class="col-lg-4 inputsetting" type="file" name="file"
+											<input class="col-lg-4 datesetting" type="file" name="file"
 												accept="file/pdf, file/doc,file/docx" />
 										</div>
 									</div>
@@ -274,7 +279,7 @@
 										<div class="col-lg-2 tablesetting tablebackground">Graduation
 											Year</div>
 										<div>
-											<input type="month" class="col-lg-4 inputsetting"
+											<input type="month" class="col-lg-4 datesetting"
 												th:field="*{graduationYear}" />
 										</div>
 									</div>
