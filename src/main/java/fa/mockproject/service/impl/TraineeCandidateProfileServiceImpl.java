@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import fa.mockproject.entity.TraineeCandidateProfile;
-import fa.mockproject.model.TraineeCandidateProfileModel;
 import fa.mockproject.repository.TraineeCandidateProfileRepository;
 import fa.mockproject.service.TraineeCandidateProfileService;
 
@@ -21,11 +20,6 @@ public class TraineeCandidateProfileServiceImpl implements TraineeCandidateProfi
 	}
 
 	public void save(TraineeCandidateProfile profile) {
-		repo.save(profile);
-	}
-
-	public void save(TraineeCandidateProfileModel model) {
-		TraineeCandidateProfile profile = new TraineeCandidateProfile(model);
 		repo.save(profile);
 	}
 

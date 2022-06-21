@@ -2,6 +2,7 @@ package fa.mockproject.model;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Date;
@@ -70,6 +71,7 @@ public class TraineeCandidateProfileModel {
 	private String skillName;
 	private Skill skill;
 
+	private long cvId;
 	private String CVname;
 	private long size;
 	private byte[] content;
@@ -85,10 +87,12 @@ public class TraineeCandidateProfileModel {
 		super();
 		this.traineeCandidateProfileId = profile.getTraineeCandidateProfileId();
 		this.fullName = profile.getFullName();
-		this.applicationDate = candidate.getApplicationDate();
+		LocalDateTime localDateTimeApplicationDate= candidate.getApplicationDate();
+		LocalDate localDateApplicationDate = localDateTimeApplicationDate.toLocalDate();
+		this.applicationDate = localDateApplicationDate;
 		this.dateOfBirth = profile.getDateOfBirth();
 		this.gender = profile.getGender();
-		LocalDate localDateGraduationYear = candidate.getApplicationDate();
+		LocalDate localDateGraduationYear = profile.getGraduationYear();
 		Date dateGraduationYear = Date.from(localDateGraduationYear.atStartOfDay(ZoneId.systemDefault()).toInstant());
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
 		String stringGraduationYear = formatter.format(dateGraduationYear);
@@ -115,6 +119,7 @@ public class TraineeCandidateProfileModel {
 		this.skill = skill2;
 		this.skillName=skill2.getSkillName();
 		this.cv = cv2;
+		this.cvId=cv2.getCvId();
 		this.CVname=cv2.getName();
 		this.content=cv2.getContent();
 		this.size=cv2.getSize();
@@ -131,7 +136,7 @@ public class TraineeCandidateProfileModel {
 			String channelName, Set<Channel> channellist, String universityId, String universityName,
 			University university, String locationId, String locationName, Location location,
 			Set<Location> locationlist, String facultyId, String facultyName, Faculty faculty, String skillId,
-			String skillName, Skill skill, String cVname, long size, byte[] content, CV cv) {
+			String skillName, Skill skill, String cVname,long cvId, long size, byte[] content, CV cv) {
 		super();
 		this.traineeCandidateProfileId = traineeCandidateProfileId;
 		this.trainee = trainee;
@@ -171,9 +176,27 @@ public class TraineeCandidateProfileModel {
 		this.skillName = skillName;
 		this.skill = skill;
 		CVname = cVname;
+		this.cvId =cvId;
 		this.size = size;
 		this.content = content;
 		this.cv = cv;
+	}
+
+	
+	
+	public TraineeCandidateProfileModel(TraineeCandidateProfile profile, Candidate candidate2,
+			TraineeCandidateProfileStatus status2) {
+		this.traineeCandidateProfileId=profile.getTraineeCandidateProfileId();
+		this.fullName=profile.getFullName();
+		this.status=status2;
+	}
+
+	public long getCvId() {
+		return cvId;
+	}
+
+	public void setCvId(long cvId) {
+		this.cvId = cvId;
 	}
 
 	public String getLocationName() {

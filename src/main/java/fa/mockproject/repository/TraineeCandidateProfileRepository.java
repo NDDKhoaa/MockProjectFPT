@@ -7,5 +7,5 @@ import fa.mockproject.entity.TraineeCandidateProfile;
 
 @Repository
 public interface TraineeCandidateProfileRepository extends JpaRepository<TraineeCandidateProfile, Long>{
-
+	
 }

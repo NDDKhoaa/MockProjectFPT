@@ -187,7 +187,7 @@
 							</div>
 							<div class="col-lg-2 tablesetting tablebackground">CV</div>
 							<div class="col-lg-4 tablesetting inputedbackground">
-								<a><span th:text="*{CVname}"></span></a>
+								<a th:href="@{/downloadCV(cvId=*{cvId})}"><span th:text="*{CVname}"></span></a>
 							</div>
 						</div>
 
@@ -275,7 +275,7 @@
 							</button></a>
 					</div>
 					<div class="col-lg-2" style="margin-left:-40px;margin-right: -10px;">
-						<a th:href="updateCandidate" style="color: black;"><button
+						<a th:href="@{/updateCandidate(traineeCandidateProfileId=*{profile.traineeCandidateProfileId})}" style="color: black;"><button
 								style="width: 160px;">
 								<i class="fas fa-arrow-alt-circle-up"></i> Update Candidate
 							</button></a>
