@@ -242,6 +242,18 @@ public class ProfileController {
 
 		return "redirect:/viewCandidate";
 	}
+	
+	@RequestMapping("/deleteCandidate")
+	public String DeleteProfile(@RequestParam("traineeCandidateProfileId") long traineeCandidateProfileId) {
+		TraineeCandidateProfile profile = traineeCandidateProfileService.findById(traineeCandidateProfileId);
+		Candidate candidate = profile.getCandidate();
+		CV cv = profile.getCv();
+		traineeCandidateProfileService.delete(profile);
+		candidateService.delete(candidate);
+		cvService.delete(cv);
+		return "redirect:/";
+	}
+
 
 	@GetMapping("/downloadCV")
 	public void downloadCV(@Param("cvId") long cvId, HttpServletResponse response) throws IOException {

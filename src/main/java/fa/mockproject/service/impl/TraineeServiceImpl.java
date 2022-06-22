@@ -38,7 +38,7 @@ public class TraineeServiceImpl implements TraineeService {
  		
 		for(Trainee trainee : trainees) {
 			TraineeModel traineeModel = new TraineeModel();
-			traineeModel.setId(trainee.getTraineeCandidateID());
+			traineeModel.setId(trainee.getTraineeCandidateId());
 //			traineeModel.setAccount(trainee.getTraineeAccount());
 			traineeModel.setFullName(trainee.getTraineeCandidateProfile().getFullName());
 //			traineeModel.setStatus(trainee.getStatuses().get(0).getRemarks());
@@ -57,7 +57,7 @@ public class TraineeServiceImpl implements TraineeService {
 		
 		TraineeModel traineeModel = new TraineeModel();
 		
-		traineeModel.setId(trainee.getTraineeCandidateID());
+		traineeModel.setId(trainee.getTraineeCandidateId());
 //		traineeModel.setStatus(trainee.getListStatus().get(0).getRemarks());
 //		traineeModel.setAllocationStatus(trainee.get);
 		traineeModel.setGender(trainee.getTraineeCandidateProfile().getGender());

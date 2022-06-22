@@ -34,7 +34,7 @@ public class MilestoneServiceImpl implements MilestoneService {
 	
 	public MilestonesModel getMilestonesModel(long traineeId) {
 		Trainee trainee = traineeRepository.findByTraineeCandidateId(traineeId);
-		System.out.println(trainee.getTraineeCandidateID());
+		
 		List<Milestone> milestones = trainee.getMilestones();
 		
 		MilestonesModel milestonesModel = new MilestonesModel();
