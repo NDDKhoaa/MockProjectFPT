@@ -12,8 +12,6 @@ import fa.mockproject.model.TraineePage;
 public interface TraineeService {
 	
 
-	public List<TraineeModel> getTraineeModelList();
-
 
 	public TraineeModel getTraineeModel(long id);
 

@@ -79,7 +79,6 @@ public class Trainee {
 			List<RewardPenalty> rewardPenalties, List<LearningPath> learningPaths, List<Guarantee> guarantees,
 			List<InterviewValuation> interviewValuations, List<Status> statuses, List<Milestone> milestones,
 			int remarks) {
-		super();
 		this.traineeCandidateId = traineeCandidateId;
 		this.classBatch = classBatch;
 		this.traineeCandidateProfile = traineeCandidateProfile;

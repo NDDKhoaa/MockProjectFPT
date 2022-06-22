@@ -8,7 +8,7 @@ import fa.mockproject.entity.Trainee;
 
 public interface TraineeRepository extends JpaRepository<Trainee, Long> {
 	
-	Trainee findByTraineeCandidateID(long id);
+	Trainee findByTraineeCandidateId(long id);
 	
 	
 	Page<Trainee> findAll(Pageable pageable);
