@@ -1,66 +1,27 @@
 package fa.mockproject.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Pageable;
 
-import fa.mockproject.entity.Trainee;
 import fa.mockproject.model.TraineeModel;
-import fa.mockproject.repository.TraineeCandidateProfileRepository;
-import fa.mockproject.repository.TraineeRepository;
+import fa.mockproject.model.TraineePage;
 
-@Service
-public class TraineeService {
+
+
+public interface TraineeService {
 	
-	@Autowired
-	TraineeRepository traineeRepository;
-	
-	@Autowired
-	TraineeCandidateProfileRepository traineeCandidateProfileRepository;
-	
-	public List<TraineeModel> getTraineeModelList() {
-		List<TraineeModel> traineeModels = new ArrayList<>();
- 		ArrayList<Trainee> trainees = (ArrayList<Trainee>) traineeRepository.findAll();
-		for(Trainee trainee : trainees) {
-			TraineeModel traineeModel = new TraineeModel();
-			traineeModel.setId(trainee.getTraineeCandidateID());
-//			traineeModel.setAccount(trainee.getTraineeAccount());
-			traineeModel.setFullName(trainee.getTraineeCandidateProfile().getFullName());
-//			traineeModel.setStatus(trainee.getListStatus().get(0).getRemarks());
-			traineeModels.add(traineeModel);
-		}
-		return traineeModels;
-	}
+
+	public List<TraineeModel> getTraineeModelList();
 
 
-	public TraineeModel getTraineeModel(long id) {
-		Trainee trainee = traineeRepository.findById(id).get();
-		TraineeModel traineeModel = new TraineeModel();
-		traineeModel.setId(trainee.getTraineeCandidateID());
-//		traineeModel.setStatus(trainee.getListStatus().get(0).getRemarks());
-//		traineeModel.setAllocationStatus(trainee.get);
-		traineeModel.setGender(trainee.getTraineeCandidateProfile().getGender());
-		traineeModel.setFullName(trainee.getTraineeCandidateProfile().getFullName());
-//		traineeModel.setDOB
-//		traineeModel.setUniversityName(trainee.get);
-//		traineeModel.setFalcutyName(null);
-		traineeModel.setPhone(trainee.getTraineeCandidateProfile().getPhone());
-		traineeModel.setEmail(trainee.getTraineeCandidateProfile().getEmail());
-		
-		return traineeModel;
-	}
+	public TraineeModel getTraineeModel(long id);
+
+	public TraineePage getTraineeModels(Pageable pageable);
 
 
-// 	public void update(TraineeModel traineeModelForm) {
-// 		Optional<Trainee> trainees = traineeRepository.findById(traineeModelForm.getId());
-// 		Trainee trainee = trainees.get();
-// 		traineeCandidateProfileRepository.update(trainee.getTraineeCandidateProfile().getTraineeCandidateProfileId(), 
-// 				traineeModelForm.getFullName(), traineeModelForm.getPhone(), traineeModelForm.getEmail(), 
-// 				traineeModelForm.getGender());
-// 		traineeRepository.save(trainee);
-
+// 	public void update(TraineeModel traineeModelForm);
 		
 		
+
 }

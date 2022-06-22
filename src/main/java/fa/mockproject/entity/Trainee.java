@@ -24,8 +24,9 @@ public class Trainee {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "trainee_candidate_id")
-	private long traineeCandidateID;
+	private long traineeCandidateId;
 
+	// Foreign key cua table Class Batch
 	@ManyToOne
 	@JoinColumn(name = "class_id", nullable = false)
 	private ClassBatch classBatch;
@@ -52,10 +53,13 @@ public class Trainee {
 	private List<Guarantee> guarantees;
 
 	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<InterviewValuation>	interviewValuations;
+	private List<InterviewValuation> interviewValuations;
 
 	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Status> statuses;
+
+	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Milestone> milestones;
 
 	@Column(name = "remarks", nullable = true)
 	private int remarks;
@@ -66,16 +70,17 @@ public class Trainee {
 
 	public Trainee(long traineeCandidateID, int remarks) {
 		super();
-		this.traineeCandidateID = traineeCandidateID;
+		this.traineeCandidateId = traineeCandidateID;
 		this.remarks = remarks;
 	}
 
-	public Trainee(long traineeCandidateID, ClassBatch classBatch, TraineeCandidateProfile traineeCandidateProfile,
+	public Trainee(long traineeCandidateId, ClassBatch classBatch, TraineeCandidateProfile traineeCandidateProfile,
 			List<AttendantStatus> attendantStatuses, List<Allowance> allowances, List<GPA> gpas,
 			List<RewardPenalty> rewardPenalties, List<LearningPath> learningPaths, List<Guarantee> guarantees,
-			List<InterviewValuation> interviewValuations, List<Status> statuses, int remarks) {
+			List<InterviewValuation> interviewValuations, List<Status> statuses, List<Milestone> milestones,
+			int remarks) {
 		super();
-		this.traineeCandidateID = traineeCandidateID;
+		this.traineeCandidateId = traineeCandidateId;
 		this.classBatch = classBatch;
 		this.traineeCandidateProfile = traineeCandidateProfile;
 		this.attendantStatuses = attendantStatuses;
@@ -86,20 +91,21 @@ public class Trainee {
 		this.guarantees = guarantees;
 		this.interviewValuations = interviewValuations;
 		this.statuses = statuses;
+		this.milestones = milestones;
 		this.remarks = remarks;
 	}
 
 	public Trainee(TraineeModel traineeModel, ClassBatch classBatch) {
 		super();
-		//.......
+		// .......
 	}
 
 	public long getTraineeCandidateID() {
-		return traineeCandidateID;
+		return traineeCandidateId;
 	}
 
 	public void setTraineeCandidateID(long traineeCandidateID) {
-		this.traineeCandidateID = traineeCandidateID;
+		this.traineeCandidateId = traineeCandidateID;
 	}
 
 	public ClassBatch getClassBatch() {
@@ -190,8 +196,16 @@ public class Trainee {
 		this.remarks = remarks;
 	}
 
+	public List<Milestone> getMilestones() {
+		return milestones;
+	}
+
+	public void setMilestones(List<Milestone> milestones) {
+		this.milestones = milestones;
+	}
+
 	@Override
 	public String toString() {
-		return "Trainee [traineeCandidateID=" + traineeCandidateID + ", remarks=" + remarks + "]";
+		return "Trainee [traineeCandidateID=" + traineeCandidateId + ", remarks=" + remarks + "]";
 	}
 }

@@ -1,0 +1,195 @@
+<!DOCTYPE htmlxmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css"
+	rel="stylesheet" type="text/css" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>Configure Milestone</title>
+</head>
+<body>
+	<p name = "traineeId" th:text="${#request.getParameter('id')}">Text</p>
+	<table th:object="${milestone}" class="table table-bordered">
+		<!-- <a th:text="Config Milestone" 
+					th:href="@{/configeMilestone}"></a> -->
+			
+			<span>
+				<h4>Configure Milestone</h4>
+			</span>
+			<hr>
+			<tr>
+				<th>
+					<p>Total Max Score</p>
+				</th>
+				<td><p th:text="${milestone.totalMaxScore}"></p>
+					<p></p></td>
+				<th>
+					<p>Total Passing Score</p>
+				</th>
+				<td>
+					<p th:text="${milestone.totalPassingScore}"></p>
+				</td>
+				<th>
+					<p>Total Weighted Number</p>
+				</th>
+				<td>
+					<p th:text="${milestone.totalWeightedNumber}"></p>
+				</td>
+			</tr>
+			<!-- ?id={id}(id=${milestoneModel.milestoneId}) -->
+			<th:block th:object="${milestones}">
+			<form th:each="milestoneModel, stat : ${milestonesModel}" th:action = "@{/trainingResult/updateMilestone}" method="post" >
+				
+				<table class="table table-bordered">
+						<tr>
+							<th>
+								<button type="submit" name ="action" value = "updateTrainee">Edit</button>
+							</th>
+							<th colspan="">
+								<p>Milestone Name</p>
+							</th>
+							<th colspan="">
+								<p>Salary Paid</p>
+							</th>
+							<th colspan="">
+								<p>Start Date</p>
+							</th>
+							<th colspan="">
+								<p>End Date</p>
+							</th>
+						</tr>
+	
+						<tr>
+							<th>
+								<button name ="action" value = "deleteMilestone">
+									<a th:href = "@{/trainingResult/deleteMilestone/{id}/{traineeid}/(id=${milestoneModel.milestoneId},traineeid=${#request.getParameter('id')})}" th:text = "Delete"></a>
+								</button>
+								<input th:name="${milestonesModel[__${stat.index}__].milestoneId}" th:value="${milestoneModel.milestoneId}" style="display: none;"/>
+							</th>
+							<td colspan="">
+								<input
+									th:name="${milestonesModel[__${stat.index}__].milestoneName}" th:value="${milestoneModel.milestoneName}" ></input>
+							</td>
+							<td colspan="" th:if="${milestoneModel.salaryPaid == 'Yes'}">
+								<input th:name="${milestonesModel[__${stat.index}__].salaryPaid}" type="radio" th:value="${milestoneModel.salaryPaid}" checked = "true"/> <label th:text="Yes" />
+								<input th:name="${milestonesModel[__${stat.index}__].salaryPaid}" type="radio" th:value="${milestoneModel.salaryPaid}"/>  <label th:text="No" />
+							</td>
+							<td colspan="" th:if="${milestoneModel.salaryPaid == 'No'}">
+								<input th:name="${milestonesModel[__${stat.index}__].salaryPaid}" type="radio" th:value="${milestoneModel.salaryPaid}" /> <label th:text="Yes" />
+								<input th:name="${milestonesModel[__${stat.index}__].salaryPaid}" type="radio" th:value="${milestoneModel.salaryPaid}" checked = "true"></input>  <label th:text="No" />
+							</td>
+							
+							
+							<td colspan="">
+								<input th:name="${milestonesModel[__${stat.index}__].startDate}" type="date" th:value="${milestoneModel.startDate}"></p>
+							</td>
+							<td colspan="">
+								<input th:name="${milestonesModel[__${stat.index}__].endDate}" type="date" th:value="${milestoneModel.endDate}"></p>
+							</td>
+						</tr>
+					</table>
+					</form>
+					</th:block>
+					
+					<!-- <tr>
+						<td><a href="" class="btn btn-info"><i
+								class="fa fa-arrow-left" aria-hidden="true"></i> Back</a> 
+							<button class="btn btn-success" type="submit" value="Submit">
+								<i class="fa fa-plus" aria-hidden="true"></i> Save
+							</button></td>
+					</tr> -->
+			
+			
+			<form th:object=${newMilestoneModel} th:action = "@{/trainingResult/createMilestone?id={id}(id=${#request.getParameter('id')})}" method="post">
+				<table class="table table-bordered" >
+						<tr>
+							<th>
+								<button name ="action" value = "addMilestone">Add</button>
+							</th>
+							<th colspan="">
+								<p>Milestone Name</p>
+							</th>
+							<th colspan="">
+								<p>Salary Paid</p>
+							</th>
+							<th colspan="">
+								<p>Start Date</p>
+							</th>
+							<th colspan="">
+								<p>End Date</p>
+							</th>
+						</tr>
+	
+						<tr>
+							<th>
+								<button >Delete</button>
+							</th>
+							<td colspan="">
+								
+							</td>
+							<td colspan="">
+								<input type="radio" th:field = "*{salaryPaid}" th:value = "Yes"/>  <label th:text="Yes" />
+								<input type="radio" th:field = "*{salaryPaid}" th:value = "No"/>	<label th:text= "No" />
+							</td>
+							
+							<td colspan="">
+								<input type="date" th:field = "*{startDate}"></p>
+							</td>
+							<td colspan="">
+								<input type="date" th:field = "*{endDate}"></p>
+							</td>
+						</tr>
+					</table>
+				</form>
+
+
+
+
+		<!-- <tr>
+							<th colspan="1">
+								<button>Add Topic</button>
+							</th>
+							<th colspan="">
+								<p>Topic</p>
+							</th>
+							<th colspan="">
+								<p>Max Score</p>
+							</th>
+							<th colspan="">
+								<p>Passing Score</p>
+							</th>
+							<th  colspan="">
+								<p>Weighted Number</p>
+							</th>
+						</tr>
+					<tr th:each="topic : ${milestone.topics}">
+						<td colspan="1">
+								
+						</tD>
+						<td>
+							<p th:text="${topic.topicName}"></p>
+						</td>
+						<td>
+							<p th:text="${topic.maxScore}"></p>
+						</td>
+						<td>
+							<p th:text="${topic.passingScore}"></p>
+						</td>
+						<td>
+							<p th:text="${topic.weightedNumber}"></p>
+						</td>
+					</tr>
+				</tr> -->
+
+	<div>
+		<!-- <a href="showTraineeList/1" class="btn btn-info"><i
+				class="fa fa-arrow-left" aria-hidden="true"></i> Back</a> <a
+				th:href="@{updateTrainee?id={id}(id=${trainee.id})}"
+				class="btn btn-warning text-light"><i class="fa fa-refresh"
+				aria-hidden="true"></i> Save</a> -->
+	</div>
+</body>
+</html>
