@@ -87,8 +87,15 @@ public class ProfileController {
 		for (TraineeCandidateProfile profile : profileList) {
 			Candidate candidate = new Candidate(profile.getCandidate());
 			TraineeCandidateProfileStatus status = candidate.getStatus();
-
-			TraineeCandidateProfileModel profileModel = new TraineeCandidateProfileModel(profile, candidate, status);
+			TraineeCandidateProfileType type = profile.getType();
+			University university = profile.getUniversity();
+			Faculty faculty = profile.getFaculty();
+			Location location = candidate.getLocation();
+			Skill skill = profile.getSkill();
+			Channel channel = candidate.getChannel();
+			CV cv = new CV(profile.getCv());
+			TraineeCandidateProfileModel profileModel = new TraineeCandidateProfileModel(profile, candidate, status,
+					type, university, faculty, location, skill, channel, cv);
 			modelList.add(profileModel);
 		}
 		model.addAttribute("profileList", modelList);
