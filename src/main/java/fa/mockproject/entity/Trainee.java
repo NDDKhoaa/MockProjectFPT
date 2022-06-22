@@ -100,12 +100,14 @@ public class Trainee {
 		// .......
 	}
 
-	public long getTraineeCandidateID() {
+	
+
+	public long getTraineeCandidateId() {
 		return traineeCandidateId;
 	}
 
-	public void setTraineeCandidateID(long traineeCandidateID) {
-		this.traineeCandidateId = traineeCandidateID;
+	public void setTraineeCandidateId(long traineeCandidateId) {
+		this.traineeCandidateId = traineeCandidateId;
 	}
 
 	public ClassBatch getClassBatch() {
