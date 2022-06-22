@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import fa.mockproject.entity.AttendantDayCheck;
 import fa.mockproject.entity.Milestone;
@@ -12,6 +13,7 @@ import fa.mockproject.model.AttendanceStatusModel;
 import fa.mockproject.repository.AttendantDayCheckRepository;
 import fa.mockproject.service.AttendaceStatusService;
 
+@Service
 public class AttendaceStatusServiceImpl implements AttendaceStatusService {
 
 	@Autowired
