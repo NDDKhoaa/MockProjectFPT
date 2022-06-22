@@ -251,7 +251,7 @@ public class ProfileController {
 		traineeCandidateProfileService.delete(profile);
 		candidateService.delete(candidate);
 		cvService.delete(cv);
-		return "redirect:/";
+		return "redirect:/viewCandidate";
 	}
 
 
