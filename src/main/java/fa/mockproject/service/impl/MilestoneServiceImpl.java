@@ -33,8 +33,8 @@ public class MilestoneServiceImpl implements MilestoneService {
 	
 	
 	public MilestonesModel getMilestonesModel(long traineeId) {
-		Trainee trainee = traineeRepository.findByTraineeCandidateID(traineeId);
-		
+		Trainee trainee = traineeRepository.findByTraineeCandidateId(traineeId);
+		System.out.println(trainee.getTraineeCandidateID());
 		List<Milestone> milestones = trainee.getMilestones();
 		
 		MilestonesModel milestonesModel = new MilestonesModel();
@@ -65,7 +65,7 @@ public class MilestoneServiceImpl implements MilestoneService {
 
 
 	public String createMilestone(long traineeId, Milestone mileStone) {
-		Trainee trainee = traineeRepository.findByTraineeCandidateID(traineeId);
+		Trainee trainee = traineeRepository.findByTraineeCandidateId(traineeId);
 		mileStone.setTrainee(trainee);
 		
 		List<LocalDate> dates = mileStone.getStartDate().datesUntil(mileStone.getEndDate()).collect(Collectors.toList());
