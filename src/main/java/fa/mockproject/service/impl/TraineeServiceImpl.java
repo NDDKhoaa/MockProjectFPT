@@ -24,6 +24,7 @@ public class TraineeServiceImpl implements TraineeService {
 	@Autowired
 	TraineeCandidateProfileRepository traineeCandidateProfileRepository;
 	
+	
 	public TraineePage getTraineeModels(Pageable pageable) {
 		TraineePage traineePage = new TraineePage();
 		List<TraineeModel> traineeModels = new ArrayList<>();
@@ -32,6 +33,9 @@ public class TraineeServiceImpl implements TraineeService {
  		
  		List<Trainee> trainees = page.getContent();
  		System.out.println(trainees.get(0));
+ 		
+// 		System.out.println(trainees.get(0).getTraineeCandidateProfile().getFullName());
+ 		
 		for(Trainee trainee : trainees) {
 			TraineeModel traineeModel = new TraineeModel();
 			traineeModel.setId(trainee.getTraineeCandidateID());
@@ -49,7 +53,7 @@ public class TraineeServiceImpl implements TraineeService {
 
 	public TraineeModel getTraineeModel(long id) {
 		
-		Trainee trainee = traineeRepository.findByTraineeCandidateID(id);
+		Trainee trainee = traineeRepository.findByTraineeCandidateId(id);
 		
 		TraineeModel traineeModel = new TraineeModel();
 		
@@ -66,6 +70,7 @@ public class TraineeServiceImpl implements TraineeService {
 		
 		return traineeModel;
 	}
+
 
 
 // 	public void update(TraineeModel traineeModelForm) {
