@@ -188,28 +188,62 @@ public class ProfileController {
 			@ModelAttribute("updateProfile") TraineeCandidateProfile traineeCandidateProfile,
 			@RequestParam("file") MultipartFile multipartFile,
 			@RequestParam("traineeCandidateProfileId") long traineeCandidateProfileId) throws IOException {
-		TraineeCandidateProfile profileID = traineeCandidateProfileService.findById(traineeCandidateProfileId);
-		University university1 = universityService.get(university.getUniversityId());
-		Faculty faculty1 = facultyService.findById(faculty.getFacultyId());
-		Location location1 = locationService.findById(location.getLocationId());
-		Skill skill1 = skillService.get(skill.getSkillId());
-		Channel channel1 = channelService.get(channel.getChannelId());
-		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-		long fileSize = multipartFile.getSize();
-		byte[] content = multipartFile.getBytes();
-		CV cv1 = new CV(fileName, fileSize, content);
-		String typeId = "Candidate";
-		String StatusID = "New";
-		TraineeCandidateProfileStatus status1 = traineeCandidateProfileStatusService.findById(StatusID);
-		TraineeCandidateProfileType type1 = traineeCandidateProfileTypeService.findById(typeId);
-		Candidate candidate2 = new Candidate(candidate1);
-		Candidate candidate = new Candidate(candidate2, channel1, location1, status1);
-		TraineeCandidateProfile profile = new TraineeCandidateProfile(traineeCandidateProfile, candidate, university1,
-				faculty1, skill1, cv1, type1);
-		profile.setTraineeCandidateProfileId(profileID.getTraineeCandidateProfileId());
-		cvService.save(cv1);
-		candidateService.save(candidate);
-		traineeCandidateProfileService.save(profile);
+
+		if (multipartFile.getSize() != 0) {
+			TraineeCandidateProfile profileID = traineeCandidateProfileService.findById(traineeCandidateProfileId);
+			Candidate candidateID = profileID.getCandidate();
+			CV cvId = profileID.getCv();
+			University university1 = universityService.get(university.getUniversityId());
+			Faculty faculty1 = facultyService.findById(faculty.getFacultyId());
+			Location location1 = locationService.findById(location.getLocationId());
+			Skill skill1 = skillService.get(skill.getSkillId());
+			Channel channel1 = channelService.get(channel.getChannelId());
+			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+			long fileSize = multipartFile.getSize();
+			byte[] content = multipartFile.getBytes();
+			CV cv1 = new CV(fileName, fileSize, content);
+			String typeId = "Candidate";
+			String StatusID = "New";
+			TraineeCandidateProfileStatus status1 = traineeCandidateProfileStatusService.findById(StatusID);
+			TraineeCandidateProfileType type1 = traineeCandidateProfileTypeService.findById(typeId);
+			Candidate candidate2 = new Candidate(candidate1);
+			Candidate candidate = new Candidate(candidate2, channel1, location1, status1);
+			TraineeCandidateProfile profile = new TraineeCandidateProfile(traineeCandidateProfile, candidate,
+					university1, faculty1, skill1, cv1, type1);
+			profile.setTraineeCandidateProfileId(profileID.getTraineeCandidateProfileId());
+			candidate.setCandidateId(candidateID.getCandidateId());
+			cv1.setCvId(cvId.getCvId());
+			cvService.save(cv1);
+			candidateService.save(candidate);
+			traineeCandidateProfileService.save(profile);
+		} else {
+			TraineeCandidateProfile profileID = traineeCandidateProfileService.findById(traineeCandidateProfileId);
+			Candidate candidateID = profileID.getCandidate();
+			CV cvId = profileID.getCv();
+			University university1 = universityService.get(university.getUniversityId());
+			Faculty faculty1 = facultyService.findById(faculty.getFacultyId());
+			Location location1 = locationService.findById(location.getLocationId());
+			Skill skill1 = skillService.get(skill.getSkillId());
+			Channel channel1 = channelService.get(channel.getChannelId());
+			String fileName = cvId.getName();
+			long fileSize = cvId.getSize();
+			byte[] content = cvId.getContent();
+			CV cv1 = new CV(fileName, fileSize, content);
+			String typeId = "Candidate";
+			String StatusID = "New";
+			TraineeCandidateProfileStatus status1 = traineeCandidateProfileStatusService.findById(StatusID);
+			TraineeCandidateProfileType type1 = traineeCandidateProfileTypeService.findById(typeId);
+			Candidate candidate2 = new Candidate(candidate1);
+			Candidate candidate = new Candidate(candidate2, channel1, location1, status1);
+			TraineeCandidateProfile profile = new TraineeCandidateProfile(traineeCandidateProfile, candidate,
+					university1, faculty1, skill1, cv1, type1);
+			profile.setTraineeCandidateProfileId(profileID.getTraineeCandidateProfileId());
+			candidate.setCandidateId(candidateID.getCandidateId());
+			cv1.setCvId(cvId.getCvId());
+			cvService.save(cv1);
+			candidateService.save(candidate);
+			traineeCandidateProfileService.save(profile);
+		}
 
 		return "redirect:/viewCandidate";
 	}
@@ -242,7 +276,7 @@ public class ProfileController {
 
 		return "redirect:/viewCandidate";
 	}
-	
+
 	@RequestMapping("/deleteCandidate")
 	public String DeleteProfile(@RequestParam("traineeCandidateProfileId") long traineeCandidateProfileId) {
 		TraineeCandidateProfile profile = traineeCandidateProfileService.findById(traineeCandidateProfileId);
@@ -253,7 +287,6 @@ public class ProfileController {
 		cvService.delete(cv);
 		return "redirect:/viewCandidate";
 	}
-
 
 	@GetMapping("/downloadCV")
 	public void downloadCV(@Param("cvId") long cvId, HttpServletResponse response) throws IOException {

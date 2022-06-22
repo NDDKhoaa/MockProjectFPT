@@ -168,8 +168,8 @@
 										</div>
 										<div class="col-lg-2 tablesetting tablebackground">Type</div>
 										<div class="col-lg-2 tablesetting inputedbackground">
-											<span th:text="${updateType.type}"></span> 
-											<input	type="hidden" th:value="${updateType.profileStatusId}"
+											<span th:text="${updateType.type}"></span> <input
+												type="hidden" th:value="${updateType.profileStatusId}"
 												name='profileStatusId' />
 										</div>
 
@@ -255,9 +255,11 @@
 												th:field="${updateProfile.dateOfBirth}" />
 										</div>
 										<div class="col-lg-2 tablesetting tablebackground">CV</div>
-										<div>
-											<input class="col-lg-4 datesetting " type="file" name="file"
-												accept="file/pdf, file/doc,file/docx" />
+										<div class="col-lg-4 tablesetting">
+											<input class="hidden" type="file" name="file" id="file"
+												accept="file/pdf, file/doc,file/docx" /><label for="file">Upload
+												New CV </label> <a th:href="@{/downloadCV(cvId=${updateCv.cvId})}"
+												th:text="${updateCv.name}"></a>
 										</div>
 									</div>
 
