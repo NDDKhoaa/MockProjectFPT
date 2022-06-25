@@ -10,7 +10,7 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-	<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
 <style>
 table {
 	font-family: arial, sans-serif;
@@ -96,6 +96,16 @@ tr:nth-child(even) {
 .fa-times-circle {
 	color: #CC0000;
 }
+
+.deleteButton{
+position: relative;
+margin-left:500px;}
+.newButton{
+position: relative;
+margin-left: -150px;}
+.updateButton{
+position: relative;
+margin-left: -125px;}
 </style>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -105,6 +115,10 @@ tr:nth-child(even) {
 			else
 				$('.chkCheckBoxId').prop('checked', false);
 		});
+	});
+	var checkboxValues = [];
+	$('input[name=chkCheckBoxId]:checked').map(function() {
+		checkboxValues.push($(this).val());
 	});
 </script>
 </head>
@@ -150,47 +164,48 @@ tr:nth-child(even) {
 			</div>
 			<div class="col-lg-9">
 				<h2 style="margin-bottom: 10px;">Candidate Listing</h2>
-				<table class="text-center" style="margin-top: 25px;">
-					<tr>
-						<th style="width: 50px;"><input type="checkbox"
-							id="chkCheckBoxAll"></th>
-						<th style="width: 100px;">#</th>
-						<th style="width: 100px;">Empl ID</th>
-						<th style="width: 150px;">Account</th>
-						<th style="width: 300px;">Name</th>
-						<th style="width: 200px;">Status</th>
-					</tr>
-					<tr th:each="profile,custStat:${profileList}">
-						<td><input type="checkbox" class="chkCheckBoxId"
-							th:value="${profile.traineeCandidateProfileId }"
-							name="traineeCandidateProfileId" /></td>
-						<td th:text="${custStat.count}"></td>
-						<td><a
-							th:href="@{/viewCandidateDetails(traineeCandidateProfileId=*{profile.traineeCandidateProfileId})}"
-							th:text="${profile.traineeCandidateProfileId }"></a></td>
-						<td th:text="${profile.traineeCandidateProfileId }"></td>
-						<td th:text="${profile.fullName }"></td>
-						<td th:text="${profile.statusName}"></td>
-					</tr>
-				</table>
-				<div class="row" style="margin-top: 20px; margin-bottom: 20px;">
-					<div class="col-lg-2">
-						<a th:href="createNewCandidate" style="color: black;"><button>
-								<i class="fas fa-plus-circle"></i> New Candidate
-							</button></a>
-					</div>
-					<div class="col-lg-2" style="margin-right: 25px;">
-						<a th:href="updateCandidate" style="color: black;"><button
-								style="width: 160px;">
-								<i class="fas fa-arrow-alt-circle-up"></i> Update Candidate
-							</button></a>
-					</div>
-					<div class="col-lg-2">
-						<a th:href="createNewCandidate" style="color: black;"><button
-								style="width: 160px;">
-								<i class="fas fa-times-circle"></i> Delete Candidate
-							</button></a>
-					</div>
+				<form th:action="deleteCandidates" method="post">
+					<table class="text-center" style="margin-top: 25px; margin-bottom: 30px;">
+						<tr>
+							<th style="width: 50px;"><input type="checkbox"
+								id="chkCheckBoxAll"></th>
+							<th style="width: 100px;">#</th>
+							<th style="width: 100px;">Empl ID</th>
+							<th style="width: 150px;">Account</th>
+							<th style="width: 300px;">Name</th>
+							<th style="width: 200px;">Status</th>
+						</tr>
+						<tr th:each="profile,custStat:${profileList}">
+							<td><input type="checkbox" class="chkCheckBoxId"
+								th:value="${profile.traineeCandidateProfileId }"
+								name="chkCheckBoxId" /></td>
+							<td th:text="${custStat.count}"></td>
+							<td><a
+								th:href="@{/viewCandidateDetails(traineeCandidateProfileId=*{profile.traineeCandidateProfileId})}"
+								th:text="${profile.traineeCandidateProfileId }"></a></td>
+							<td th:text="${profile.traineeCandidateProfileId }"></td>
+							<td th:text="${profile.fullName }"></td>
+							<td th:text="${profile.statusName}"></td>
+						</tr>
+					</table>
+						<div class="col-lg-2">
+							<a th:href="@{/deleteCandidates(chkCheckBoxId=*{chkCheckBoxId})}"
+								style="color: black;"><button class="deleteButton" style="width: 160px;">
+									<i class="fas fa-times-circle"></i> Delete Candidate
+								</button></a>
+
+				</div>
+				</form>
+				<div class="col-lg-2">
+					<a th:href="createNewCandidate" style="color: black;"><button class="newButton">
+							<i class="fas fa-plus-circle"></i> New Candidate
+						</button></a>
+				</div>
+				<div class="col-lg-2" style="margin-right: 25px;">
+					<a th:href="updateCandidate" style="color: black;"><button
+							style="width: 160px;" class="updateButton">
+							<i class="fas fa-arrow-alt-circle-up"></i> Update Candidate
+						</button></a>
 				</div>
 			</div>
 		</div>

@@ -3,10 +3,12 @@ package fa.mockproject.controller;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,7 +100,9 @@ public class ProfileController {
 					type, university, faculty, location, skill, channel, cv);
 			modelList.add(profileModel);
 		}
+		List<Long> listId = new ArrayList<>();
 		model.addAttribute("profileList", modelList);
+		model.addAttribute("listId", listId);
 		return "viewCandidate";
 	}
 
@@ -138,6 +142,12 @@ public class ProfileController {
 		CV cv = new CV();
 		model.addAttribute("cv", cv);
 		return "createCandidate";
+	}
+
+	@RequestMapping("/createCandidateResults")
+	public String updateCandidateResult(Model model) {
+
+		return "updateCandidateResult";
 	}
 
 	@RequestMapping("/updateCandidate")
@@ -288,6 +298,25 @@ public class ProfileController {
 		return "redirect:/viewCandidate";
 	}
 
+	@RequestMapping(value = "/deleteCandidates", method = RequestMethod.POST)
+	public String DeleteProfiles(HttpServletRequest request) {
+		String[] list = request.getParameterValues("chkCheckBoxId");
+		if (list != null) {
+			for (String id : request.getParameterValues("chkCheckBoxId")) {
+				long longId = Long.parseLong(id);
+				TraineeCandidateProfile profile = traineeCandidateProfileService.findById(longId);
+				Candidate candidate = profile.getCandidate();
+				CV cv = profile.getCv();
+				traineeCandidateProfileService.delete(profile);
+				candidateService.delete(candidate);
+				cvService.delete(cv);
+			}
+			return "redirect:/viewCandidate";
+		} else {
+			return "redirect:/viewCandidate";
+		}
+	}
+
 	@GetMapping("/downloadCV")
 	public void downloadCV(@Param("cvId") long cvId, HttpServletResponse response) throws IOException {
 		CV cv = cvService.getFile(cvId);
@@ -298,6 +327,13 @@ public class ProfileController {
 		ServletOutputStream outputStream = response.getOutputStream();
 		outputStream.write(cv.getContent());
 		outputStream.close();
+	}
+
+	@RequestMapping("/getListId")
+	public String getListId(@RequestParam("listId") Collection<? extends Long> listId) {
+		List<Long> listIds = new ArrayList<>();
+		listIds.addAll(listId);
+		return ("redirect:/viewCandidate");
 	}
 
 	@InitBinder
