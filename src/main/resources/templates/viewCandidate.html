@@ -3,13 +3,14 @@
 
 <head>
 <meta charset="UTF-8">
-<title>Create Candidate</title>
+<title>Candidate Management</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+	<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
 <style>
 table {
 	font-family: arial, sans-serif;
@@ -96,6 +97,16 @@ tr:nth-child(even) {
 	color: #CC0000;
 }
 </style>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#chkCheckBoxAll').click(function() {
+			if ($(this).is(":checked"))
+				$('.chkCheckBoxId').prop('checked', true);
+			else
+				$('.chkCheckBoxId').prop('checked', false);
+		});
+	});
+</script>
 </head>
 
 <body>
@@ -138,10 +149,11 @@ tr:nth-child(even) {
 				</div>
 			</div>
 			<div class="col-lg-9">
-			<h2 style="margin-bottom: 10px;">Candidate Listing</h2>
+				<h2 style="margin-bottom: 10px;">Candidate Listing</h2>
 				<table class="text-center" style="margin-top: 25px;">
 					<tr>
-						<th style="width: 50px;"></th>
+						<th style="width: 50px;"><input type="checkbox"
+							id="chkCheckBoxAll"></th>
 						<th style="width: 100px;">#</th>
 						<th style="width: 100px;">Empl ID</th>
 						<th style="width: 150px;">Account</th>
@@ -149,7 +161,9 @@ tr:nth-child(even) {
 						<th style="width: 200px;">Status</th>
 					</tr>
 					<tr th:each="profile,custStat:${profileList}">
-						<td></td>
+						<td><input type="checkbox" class="chkCheckBoxId"
+							th:value="${profile.traineeCandidateProfileId }"
+							name="traineeCandidateProfileId" /></td>
 						<td th:text="${custStat.count}"></td>
 						<td><a
 							th:href="@{/viewCandidateDetails(traineeCandidateProfileId=*{profile.traineeCandidateProfileId})}"
