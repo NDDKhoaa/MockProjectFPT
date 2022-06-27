@@ -181,13 +181,13 @@ tr:nth-child(even) {
 						<div class="col-lg-1"></div>
 						<div class="col-lg-3 pagesettingfordiv">
 							<a class="pagesetting nontabsetting tablebackground"
-								th:href="@{/updateCandidate(traineeCandidateProfileId=*{interviewTestModel.traineeCandidateProfileId})}"
+								th:href="@{/updateCandidate(traineeCandidateProfileId=*{model.traineeCandidateProfileId})}"
 								style="color: black;">Candidate Information</a>
 						</div>
 						<div class="col-lg-1 pagesettingfordiv"
 							style="margin-left: -50px;">
 							<a class="pagesetting"
-								th:href="@{/updateCandidateResults(traineeCandidateProfileId=*{interviewTestModel.traineeCandidateProfileId})}"
+								th:href="@{/updateCandidateResults(traineeCandidateProfileId=*{model.traineeCandidateProfileId})}"
 								style="color: black;">Result</a>
 						</div>
 					</div>
@@ -195,8 +195,8 @@ tr:nth-child(even) {
 						style="margin-left: 20px; padding: 20px; margin-top: 5px; min-width: 1020px;">
 						<div class="col-lg-9 " style="font-weight: 550;">
 							<form
-								th:action="@{/saveUpdateResults(traineeCandidateProfileId=${interviewTestModel.traineeCandidateProfileId})}"
-								th:object="${interviewTestModel}" method="POST">
+								th:action="@{/saveUpdateResults(traineeCandidateProfileId=${model.traineeCandidateProfileId})}"
+								th:object="${model}" method="POST">
 								<table>
 									<tr>
 										<td><i class="fas fa-chevron-down"></i></td>

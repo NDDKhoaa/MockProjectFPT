@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -89,6 +90,7 @@ public class TraineeCandidateProfileModel {
 	private String interviewComments;
 	private String interviewResult;
 	private String interviewRemarks;
+	private List<Interview> interviews;
 
 	private long testId;
 	private BigDecimal testTime;
@@ -100,6 +102,7 @@ public class TraineeCandidateProfileModel {
 	private String testTechnicalResult;
 	private String testResult;
 	private String testRemarks;
+	private List<EntryTest> entryTests;
 
 	private long accountId;
 	private String account;
@@ -111,7 +114,7 @@ public class TraineeCandidateProfileModel {
 
 	public TraineeCandidateProfileModel(TraineeCandidateProfile profile, Candidate candidate,
 			TraineeCandidateProfileStatus status2, TraineeCandidateProfileType type2, University university2,
-			Faculty faculty2, Location location2, Skill skill2, Channel channel2, CV cv2,Account account2) {
+			Faculty faculty2, Location location2, Skill skill2, Channel channel2, CV cv2, Account account2) {
 		super();
 		this.traineeCandidateProfileId = profile.getTraineeCandidateProfileId();
 		this.fullName = profile.getFullName();
@@ -151,9 +154,9 @@ public class TraineeCandidateProfileModel {
 		this.CVname = cv2.getName();
 		this.content = cv2.getContent();
 		this.size = cv2.getSize();
-		this.account=account2.getAccount();
-		this.accountId=account2.getAccountId();
-		this.password=account2.getPassword();
+		this.account = account2.getAccount();
+		this.accountId = account2.getAccountId();
+		this.password = account2.getPassword();
 	}
 
 	public TraineeCandidateProfileModel(long traineeCandidateProfileId, Trainee trainee, String fullName,
@@ -215,6 +218,22 @@ public class TraineeCandidateProfileModel {
 		this.fullName = profile.getFullName();
 		this.status = status2;
 		this.statusName = status2.getStatus();
+	}
+
+	public List<Interview> getInterviews() {
+		return interviews;
+	}
+
+	public void setInterviews(List<Interview> interviews) {
+		this.interviews = interviews;
+	}
+
+	public List<EntryTest> getEntryTests() {
+		return entryTests;
+	}
+
+	public void setEntryTests(List<EntryTest> entryTests) {
+		this.entryTests = entryTests;
 	}
 
 	public long getAccountId() {
