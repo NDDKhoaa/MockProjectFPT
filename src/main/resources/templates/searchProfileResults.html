@@ -3,7 +3,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>Candidate Management</title>
+<title>Profile Search Results</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script
@@ -169,59 +169,29 @@ tr:nth-child(even) {
 			</div>
 			<div class="col-lg-9">
 				<h2 style="margin-bottom: 10px;">Candidate Listing</h2>
-				<form method="get" th:action="searchProfile">
-					<input type="text" name="word" />
-					<button class="btn button-search" type="submit">Search</button>
-				</form>
-				<form th:action="deleteCandidates" method="post">
-					<table class="text-center"
-						style="margin-top: 25px; margin-bottom: 30px;">
-						<tr>
-							<th style="width: 50px;"><input type="checkbox"
-								id="chkCheckBoxAll"></th>
-							<th style="width: 100px;">#</th>
-							<th style="width: 100px;">Empl ID</th>
-							<th style="width: 150px;">Account</th>
-							<th style="width: 300px;">Name</th>
-							<th style="width: 200px;">Status</th>
-						</tr>
-						<tr th:each="profile,custStat:${profileList}">
-							<td><input type="checkbox" class="chkCheckBoxId"
-								th:value="${profile.traineeCandidateProfileId }"
-								name="chkCheckBoxId" /></td>
-							<td th:text="${custStat.count}"></td>
-							<td><a
-								th:href="@{/viewCandidateDetails(traineeCandidateProfileId=*{profile.traineeCandidateProfileId})}"
-								th:text="${profile.traineeCandidateProfileId }"></a></td>
-							<td th:text="${profile.traineeCandidateProfileId }"></td>
-							<td th:text="${profile.fullName }"></td>
-							<td th:text="${profile.statusName}"></td>
-						</tr>
-					</table>
-					<div class="col-lg-2">
-						<a th:href="@{/deleteCandidates(chkCheckBoxId=*{chkCheckBoxId})}"
-							style="color: black;"><button class="deleteButton"
-								style="width: 160px;">
-								<i class="fas fa-times-circle"></i> Delete Candidate
-							</button></a>
+				<table class="text-center"
+					style="margin-top: 25px; margin-bottom: 30px;">
+					<tr>
+						<th style="width: 100px;">#</th>
+						<th style="width: 100px;">Empl ID</th>
+						<th style="width: 150px;">Account</th>
+						<th style="width: 300px;">Name</th>
+						<th style="width: 200px;">Status</th>
+					</tr>
+					<tr th:each="profile,custStat:${modelList}">
 
-					</div>
-				</form>
-				<div class="col-lg-2">
-					<a th:href="createNewCandidate" style="color: black;"><button
-							class="newButton">
-							<i class="fas fa-plus-circle"></i> New Candidate
-						</button></a>
-				</div>
-				<div class="col-lg-2" style="margin-right: 25px;">
-					<a th:href="updateCandidate" style="color: black;"><button
-							style="width: 160px;" class="updateButton">
-							<i class="fas fa-arrow-alt-circle-up"></i> Update Candidate
-						</button></a>
-				</div>
+						<td th:text="${custStat.count}"></td>
+						<td><a
+							th:href="@{/viewCandidateDetails(traineeCandidateProfileId=*{profile.traineeCandidateProfileId})}"
+							th:text="${profile.traineeCandidateProfileId }"></a></td>
+						<td th:text="${profile.traineeCandidateProfileId }"></td>
+						<td th:text="${profile.fullName }"></td>
+						<td th:text="${profile.statusName}"></td>
+					</tr>
+				</table>
+
 			</div>
 		</div>
-
 	</div>
 
 

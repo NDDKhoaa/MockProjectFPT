@@ -1,5 +1,6 @@
 package fa.mockproject.model;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -10,10 +11,13 @@ import java.util.Set;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import fa.mockproject.entity.Account;
 import fa.mockproject.entity.CV;
 import fa.mockproject.entity.Candidate;
 import fa.mockproject.entity.Channel;
+import fa.mockproject.entity.EntryTest;
 import fa.mockproject.entity.Faculty;
+import fa.mockproject.entity.Interview;
 import fa.mockproject.entity.Location;
 import fa.mockproject.entity.Skill;
 import fa.mockproject.entity.Trainee;
@@ -77,17 +81,41 @@ public class TraineeCandidateProfileModel {
 	private byte[] content;
 	private CV cv;
 
+	private long interviewId;
+	private BigDecimal interviewTime;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate interviewDate;
+	private String interviewer;
+	private String interviewComments;
+	private String interviewResult;
+	private String interviewRemarks;
+
+	private long testId;
+	private BigDecimal testTime;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate testDate;
+	private String testLanguageValuator;
+	private String testLanguageResult;
+	private String testTechnicalValuator;
+	private String testTechnicalResult;
+	private String testResult;
+	private String testRemarks;
+
+	private long accountId;
+	private String account;
+	private String password;
+
 	public TraineeCandidateProfileModel() {
 		super();
 	}
 
 	public TraineeCandidateProfileModel(TraineeCandidateProfile profile, Candidate candidate,
 			TraineeCandidateProfileStatus status2, TraineeCandidateProfileType type2, University university2,
-			Faculty faculty2, Location location2, Skill skill2, Channel channel2, CV cv2) {
+			Faculty faculty2, Location location2, Skill skill2, Channel channel2, CV cv2,Account account2) {
 		super();
 		this.traineeCandidateProfileId = profile.getTraineeCandidateProfileId();
 		this.fullName = profile.getFullName();
-		LocalDateTime localDateTimeApplicationDate= candidate.getApplicationDate();
+		LocalDateTime localDateTimeApplicationDate = candidate.getApplicationDate();
 		LocalDate localDateApplicationDate = localDateTimeApplicationDate.toLocalDate();
 		this.applicationDate = localDateApplicationDate;
 		this.dateOfBirth = profile.getDateOfBirth();
@@ -105,28 +133,28 @@ public class TraineeCandidateProfileModel {
 		this.remarks = profile.getRemarks();
 		this.candidate = candidate;
 		this.status = status2;
-		this.statusName=status2.getStatus();
-		this.channelName=channel2.getChannelName();
+		this.statusName = status2.getStatus();
+		this.channelName = channel2.getChannelName();
 		this.type = type2;
-		this.typeName=type2.getType();
+		this.typeName = type2.getType();
 		this.channel = channel2;
 		this.university = university2;
-		this.universityName=university2.getUniversityName();
+		this.universityName = university2.getUniversityName();
 		this.location = location2;
-		this.locationName=location2.getLocationName();
+		this.locationName = location2.getLocationName();
 		this.faculty = faculty2;
-		this.facultyName=faculty2.getFacultyName();
+		this.facultyName = faculty2.getFacultyName();
 		this.skill = skill2;
-		this.skillName=skill2.getSkillName();
+		this.skillName = skill2.getSkillName();
 		this.cv = cv2;
-		this.cvId=cv2.getCvId();
-		this.CVname=cv2.getName();
-		this.content=cv2.getContent();
-		this.size=cv2.getSize();
+		this.cvId = cv2.getCvId();
+		this.CVname = cv2.getName();
+		this.content = cv2.getContent();
+		this.size = cv2.getSize();
+		this.account=account2.getAccount();
+		this.accountId=account2.getAccountId();
+		this.password=account2.getPassword();
 	}
-
-	
-	
 
 	public TraineeCandidateProfileModel(long traineeCandidateProfileId, Trainee trainee, String fullName,
 			LocalDate applicationDate, LocalDate dateOfBirth, String gender, String graduationYear, String phone,
@@ -136,7 +164,7 @@ public class TraineeCandidateProfileModel {
 			String channelName, Set<Channel> channellist, String universityId, String universityName,
 			University university, String locationId, String locationName, Location location,
 			Set<Location> locationlist, String facultyId, String facultyName, Faculty faculty, String skillId,
-			String skillName, Skill skill, String cVname,long cvId, long size, byte[] content, CV cv) {
+			String skillName, Skill skill, String cVname, long cvId, long size, byte[] content, CV cv) {
 		super();
 		this.traineeCandidateProfileId = traineeCandidateProfileId;
 		this.trainee = trainee;
@@ -176,19 +204,41 @@ public class TraineeCandidateProfileModel {
 		this.skillName = skillName;
 		this.skill = skill;
 		CVname = cVname;
-		this.cvId =cvId;
+		this.cvId = cvId;
 		this.size = size;
 		this.content = content;
 		this.cv = cv;
 	}
 
-	
-	
-	public TraineeCandidateProfileModel(TraineeCandidateProfile profile, Candidate candidate2,
-			TraineeCandidateProfileStatus status2) {
-		this.traineeCandidateProfileId=profile.getTraineeCandidateProfileId();
-		this.fullName=profile.getFullName();
-		this.status=status2;
+	public TraineeCandidateProfileModel(TraineeCandidateProfile profile, TraineeCandidateProfileStatus status2) {
+		this.traineeCandidateProfileId = profile.getTraineeCandidateProfileId();
+		this.fullName = profile.getFullName();
+		this.status = status2;
+		this.statusName = status2.getStatus();
+	}
+
+	public long getAccountId() {
+		return accountId;
+	}
+
+	public void setAccountId(long accountId) {
+		this.accountId = accountId;
+	}
+
+	public String getAccount() {
+		return account;
+	}
+
+	public void setAccount(String account) {
+		this.account = account;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public long getCvId() {
@@ -525,6 +575,161 @@ public class TraineeCandidateProfileModel {
 
 	public void setCv(CV cv) {
 		this.cv = cv;
+	}
+
+	public TraineeCandidateProfileModel(Interview interview) {
+		this.interviewId = interview.getInterviewId();
+		this.interviewTime = interview.getTime();
+		this.interviewDate = interview.getDate();
+		this.interviewer = interview.getInterviewer();
+		this.interviewComments = interview.getComments();
+		this.interviewResult = interview.getResult();
+		this.interviewRemarks = interview.getRemarks();
+	}
+
+	public TraineeCandidateProfileModel(EntryTest test) {
+		this.testId = test.getTestId();
+		this.testTime = test.getTime();
+		this.testDate = test.getDate();
+		this.testLanguageValuator = test.getLanguageValuator();
+		this.testLanguageResult = test.getLanguageResult();
+		this.testTechnicalValuator = test.getTechnicalValuator();
+		this.testTechnicalResult = test.getTechnicalResult();
+		this.testResult = test.getResult();
+		this.testRemarks = test.getRemarks();
+	}
+
+	public TraineeCandidateProfileModel(TraineeCandidateProfile profile, Candidate candidate2) {
+		this.traineeCandidateProfileId = profile.getTraineeCandidateProfileId();
+		this.candidate = candidate2;
+	}
+
+	public long getInterviewId() {
+		return interviewId;
+	}
+
+	public void setInterviewId(long interviewId) {
+		this.interviewId = interviewId;
+	}
+
+	public BigDecimal getInterviewTime() {
+		return interviewTime;
+	}
+
+	public void setInterviewTime(BigDecimal interviewTime) {
+		this.interviewTime = interviewTime;
+	}
+
+	public LocalDate getInterviewDate() {
+		return interviewDate;
+	}
+
+	public void setInterviewDate(LocalDate interviewDate) {
+		this.interviewDate = interviewDate;
+	}
+
+	public String getInterviewer() {
+		return interviewer;
+	}
+
+	public void setInterviewer(String interviewer) {
+		this.interviewer = interviewer;
+	}
+
+	public String getInterviewComments() {
+		return interviewComments;
+	}
+
+	public void setInterviewComments(String interviewComments) {
+		this.interviewComments = interviewComments;
+	}
+
+	public String getInterviewResult() {
+		return interviewResult;
+	}
+
+	public void setInterviewResult(String inteviewResult) {
+		this.interviewResult = inteviewResult;
+	}
+
+	public String getInterviewRemarks() {
+		return interviewRemarks;
+	}
+
+	public void setInterviewRemarks(String interviewRemarks) {
+		this.interviewRemarks = interviewRemarks;
+	}
+
+	public long getTestId() {
+		return testId;
+	}
+
+	public void setTestId(long testId) {
+		this.testId = testId;
+	}
+
+	public BigDecimal getTestTime() {
+		return testTime;
+	}
+
+	public void setTestTime(BigDecimal testTime) {
+		this.testTime = testTime;
+	}
+
+	public LocalDate getTestDate() {
+		return testDate;
+	}
+
+	public void setTestDate(LocalDate testDate) {
+		this.testDate = testDate;
+	}
+
+	public String getTestLanguageValuator() {
+		return testLanguageValuator;
+	}
+
+	public void setTestLanguageValuator(String testLanguageValuator) {
+		this.testLanguageValuator = testLanguageValuator;
+	}
+
+	public String getTestLanguageResult() {
+		return testLanguageResult;
+	}
+
+	public void setTestLanguageResult(String testLanguageResult) {
+		this.testLanguageResult = testLanguageResult;
+	}
+
+	public String getTestTechnicalValuator() {
+		return testTechnicalValuator;
+	}
+
+	public void setTestTechnicalValuator(String testTechnicalValuator) {
+		this.testTechnicalValuator = testTechnicalValuator;
+	}
+
+	public String getTestTechnicalResult() {
+		return testTechnicalResult;
+	}
+
+	public void setTestTechnicalResult(String testTechnicalResult) {
+		this.testTechnicalResult = testTechnicalResult;
+	}
+
+	public String getTestResult() {
+		return testResult;
+	}
+
+	public void setTestResult(String testResult) {
+		this.testResult = testResult;
+	}
+
+	public String getTestRemarks() {
+		return testRemarks;
+	}
+
+	public void setTestRemarks(String testRemarks) {
+		this.testRemarks = testRemarks;
 	}
 
 	@Override

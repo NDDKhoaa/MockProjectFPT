@@ -31,7 +31,6 @@
 	padding: 6.5px;
 }
 
-
 .tablebackground {
 	background-color: #CCCCCC;
 }
@@ -55,6 +54,7 @@
 	border-style: solid solid solid solid;
 	border: 1px solid black;
 }
+
 .menusetting {
 	background-color: #CCCCCC;
 }
@@ -63,6 +63,7 @@
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
+
 .fa-plus-circle {
 	color: green;
 }
@@ -116,7 +117,8 @@
 					<a href=""><i class="fa fa-circle"></i> General Setting</a>
 				</div>
 			</div>
-			<div class="col-lg-9" style="margin-left: 20px; padding: 20px; margin-top: 5px;font-weight: 550;">
+			<div class="col-lg-9"
+				style="margin-left: 20px; padding: 20px; margin-top: 5px; font-weight: 550;">
 				<form th:object="${profile}" enctype="multipart/form-data"
 					method="Get">
 					<div>
@@ -161,7 +163,7 @@
 							</div>
 							<div class="col-lg-2 tablesetting tablebackground">Account</div>
 							<div class="col-lg-4 tablesetting inputedbackground">
-								<span>.</span>
+								<span th:text="*{account}"></span>
 							</div>
 						</div>
 
@@ -187,7 +189,8 @@
 							</div>
 							<div class="col-lg-2 tablesetting tablebackground">CV</div>
 							<div class="col-lg-4 tablesetting inputedbackground">
-								<a th:href="@{/downloadCV(cvId=*{cvId})}"><span th:text="*{CVname}"></span></a>
+								<a th:href="@{/downloadCV(cvId=*{cvId})}"><span
+									th:text="*{CVname}"></span></a>
 							</div>
 						</div>
 
@@ -269,24 +272,27 @@
 
 			</div>
 			<div class="row" style="margin-top: 20px; margin-bottom: 20px;">
-					<div class="col-lg-2">
-						<a th:href="createNewCandidate" style="color: black;"><button>
-								<i class="fas fa-plus-circle"></i> New Candidate
-							</button></a>
-					</div>
-					<div class="col-lg-2" style="margin-left:-40px;margin-right: -10px;">
-						<a th:href="@{/updateCandidate(traineeCandidateProfileId=*{profile.traineeCandidateProfileId})}" style="color: black;"><button
-								style="width: 160px;">
-								<i class="fas fa-arrow-alt-circle-up"></i> Update Candidate
-							</button></a>
-					</div>
-					<div class="col-lg-2">
-						<a th:href="@{/deleteCandidate(traineeCandidateProfileId=*{profile.traineeCandidateProfileId})}" style="color: black;"><button
-								style="width: 160px;">
-								<i class="fas fa-times-circle"></i> Delete Candidate
-							</button></a>
-					</div>
+				<div class="col-lg-2">
+					<a th:href="createNewCandidate" style="color: black;"><button>
+							<i class="fas fa-plus-circle"></i> New Candidate
+						</button></a>
 				</div>
+				<div class="col-lg-2"
+					style="margin-left: -40px; margin-right: -10px;">
+					<a
+						th:href="@{/updateCandidate(traineeCandidateProfileId=*{profile.traineeCandidateProfileId})}"
+						style="color: black;"><button style="width: 160px;">
+							<i class="fas fa-arrow-alt-circle-up"></i> Update Candidate
+						</button></a>
+				</div>
+				<div class="col-lg-2">
+					<a
+						th:href="@{/deleteCandidate(traineeCandidateProfileId=*{profile.traineeCandidateProfileId})}"
+						style="color: black;"><button style="width: 160px;">
+							<i class="fas fa-times-circle"></i> Delete Candidate
+						</button></a>
+				</div>
+			</div>
 		</div>
 		<div class="row"></div>
 	</div>

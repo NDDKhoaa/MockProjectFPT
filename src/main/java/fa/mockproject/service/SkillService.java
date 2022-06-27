@@ -2,6 +2,8 @@ package fa.mockproject.service;
 
 import java.util.List;
 
+import org.springframework.data.repository.query.Param;
+
 import fa.mockproject.entity.Skill;
 
 public interface SkillService {
@@ -16,4 +18,5 @@ public interface SkillService {
 
 	public void deleteById(String skillId);
 
+	public List<Skill> search(@Param("word") String word);
 }

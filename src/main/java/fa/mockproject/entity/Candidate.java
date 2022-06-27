@@ -2,7 +2,7 @@ package fa.mockproject.entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
@@ -47,17 +47,17 @@ public class Candidate {
 	@JoinColumn(name = "location_id", nullable = true)
 	private Location location;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "entry_test_id", nullable = true)
-	private Set<EntryTest> entryTests;
+	private List<EntryTest> entryTests;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "interview_id", nullable = true)
-	private Set<Interview> interviews;
+	private List<Interview> interviews;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "offer_id", nullable = true)
-	private Set<Offer> offers;
+	private List<Offer> offers;
 
 	@ManyToOne
 	@JoinColumn(name = "status", nullable = true)
@@ -110,27 +110,27 @@ public class Candidate {
 		this.location = location;
 	}
 
-	public Set<EntryTest> getEntryTests() {
+	public List<EntryTest> getEntryTests() {
 		return entryTests;
 	}
 
-	public void setEntryTests(Set<EntryTest> entryTests) {
+	public void setEntryTests(List<EntryTest> entryTests) {
 		this.entryTests = entryTests;
 	}
 
-	public Set<Interview> getInterviews() {
+	public List<Interview> getInterviews() {
 		return interviews;
 	}
 
-	public void setInterviews(Set<Interview> interviews) {
+	public void setInterviews(List<Interview> interviews) {
 		this.interviews = interviews;
 	}
 
-	public Set<Offer> getOffers() {
+	public List<Offer> getOffers() {
 		return offers;
 	}
 
-	public void setOffers(Set<Offer> offers) {
+	public void setOffers(List<Offer> offers) {
 		this.offers = offers;
 	}
 
@@ -180,6 +180,19 @@ public class Candidate {
 		this.status = status2;
 		this.remarks = candidate2.getRemarks();
 		this.traineeCandidateProfile = candidate2.getTraineeCandidateProfile();
+	}
+
+	public Candidate(Candidate candidateID2, TraineeCandidateProfileStatus status2) {
+		this.candidateId = candidateID2.getCandidateId();
+		this.traineeCandidateProfile = candidateID2.getTraineeCandidateProfile();
+		this.applicationDate = candidateID2.getApplicationDate();
+		this.channel = candidateID2.getChannel();
+		this.location = candidateID2.getLocation();
+		this.entryTests = candidateID2.getEntryTests();
+		this.interviews = candidateID2.getInterviews();
+		this.offers = candidateID2.getOffers();
+		this.status = status2;
+		this.remarks = candidateID2.getRemarks();
 	}
 
 }

@@ -3,7 +3,6 @@ package fa.mockproject.controller;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -27,21 +26,28 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import fa.mockproject.entity.Account;
 import fa.mockproject.entity.CV;
 import fa.mockproject.entity.Candidate;
 import fa.mockproject.entity.Channel;
+import fa.mockproject.entity.EntryTest;
 import fa.mockproject.entity.Faculty;
+import fa.mockproject.entity.Interview;
 import fa.mockproject.entity.Location;
 import fa.mockproject.entity.Skill;
 import fa.mockproject.entity.TraineeCandidateProfile;
 import fa.mockproject.entity.TraineeCandidateProfileStatus;
 import fa.mockproject.entity.TraineeCandidateProfileType;
 import fa.mockproject.entity.University;
+import fa.mockproject.model.InterviewTestResultModel;
 import fa.mockproject.model.TraineeCandidateProfileModel;
+import fa.mockproject.service.impl.AccountServiceImpl;
 import fa.mockproject.service.impl.CVServiceImpl;
 import fa.mockproject.service.impl.CandidateServiceImpl;
 import fa.mockproject.service.impl.ChannelServiceImpl;
+import fa.mockproject.service.impl.EntryTestServiceImpl;
 import fa.mockproject.service.impl.FacultyServiceImpl;
+import fa.mockproject.service.impl.InterviewServiceImpl;
 import fa.mockproject.service.impl.LocationServiceImpl;
 import fa.mockproject.service.impl.SkillServiceImpl;
 import fa.mockproject.service.impl.TraineeCandidateProfileServiceImpl;
@@ -74,6 +80,15 @@ public class ProfileController {
 	private CVServiceImpl cvService;
 
 	@Autowired
+	private EntryTestServiceImpl entryTestServiceImpl;
+
+	@Autowired
+	private InterviewServiceImpl interviewServiceImpl;
+
+	@Autowired
+	private AccountServiceImpl accountServiceImpl;
+
+	@Autowired
 	private TraineeCandidateProfileServiceImpl traineeCandidateProfileService;
 
 	@Autowired
@@ -96,13 +111,12 @@ public class ProfileController {
 			Skill skill = profile.getSkill();
 			Channel channel = candidate.getChannel();
 			CV cv = new CV(profile.getCv());
+			Account account = profile.getAccount();
 			TraineeCandidateProfileModel profileModel = new TraineeCandidateProfileModel(profile, candidate, status,
-					type, university, faculty, location, skill, channel, cv);
+					type, university, faculty, location, skill, channel, cv, account);
 			modelList.add(profileModel);
 		}
-		List<Long> listId = new ArrayList<>();
 		model.addAttribute("profileList", modelList);
-		model.addAttribute("listId", listId);
 		return "viewCandidate";
 	}
 
@@ -120,8 +134,9 @@ public class ProfileController {
 		Skill skill = profile.getSkill();
 		Channel channel = candidate.getChannel();
 		CV cv = new CV(profile.getCv());
+		Account account = profile.getAccount();
 		TraineeCandidateProfileModel profileModel = new TraineeCandidateProfileModel(profile, candidate, status, type,
-				university, faculty, location, skill, channel, cv);
+				university, faculty, location, skill, channel, cv, account);
 		mav.addObject("profile", profileModel);
 		return mav;
 	}
@@ -144,10 +159,22 @@ public class ProfileController {
 		return "createCandidate";
 	}
 
-	@RequestMapping("/createCandidateResults")
-	public String updateCandidateResult(Model model) {
+	@RequestMapping("/updateCandidateResults")
+	public ModelAndView updateCandidateResult(
+			@RequestParam("traineeCandidateProfileId") long traineeCandidateProfileId) {
+		ModelAndView mav = new ModelAndView("updateCandidateResult");
+		TraineeCandidateProfile profile = traineeCandidateProfileService.findById(traineeCandidateProfileId);
+		Candidate candidate = profile.getCandidate();
+		List<InterviewTestResultModel> resultList = new ArrayList<>();
+		InterviewTestResultModel resultP = new InterviewTestResultModel("Pass");
+		InterviewTestResultModel resultF = new InterviewTestResultModel("Failed");
+		resultList.add(resultP);
+		resultList.add(resultF);
+		TraineeCandidateProfileModel model = new TraineeCandidateProfileModel(profile, candidate);
+		mav.addObject("interviewTestModel", model);
+		mav.addObject("resultList", resultList);
 
-		return "updateCandidateResult";
+		return mav;
 	}
 
 	@RequestMapping("/updateCandidate")
@@ -183,6 +210,8 @@ public class ProfileController {
 		mav.addObject("locationList", locationList);
 		List<Skill> skillList = skillService.listAll();
 		mav.addObject("skillList", skillList);
+		Account account = profile.getAccount();
+		mav.addObject("updateAccount", account);
 		CV cv1 = new CV();
 		mav.addObject("cv1", cv1);
 		return mav;
@@ -212,14 +241,15 @@ public class ProfileController {
 			long fileSize = multipartFile.getSize();
 			byte[] content = multipartFile.getBytes();
 			CV cv1 = new CV(fileName, fileSize, content);
-			String typeId = "Candidate";
-			String StatusID = "New";
+			String typeId = profileID.getType().getProfileStatusId();
+			String StatusID = candidateID.getStatus().getProfileStatusId();
+			Account account1 = profileID.getAccount();
 			TraineeCandidateProfileStatus status1 = traineeCandidateProfileStatusService.findById(StatusID);
 			TraineeCandidateProfileType type1 = traineeCandidateProfileTypeService.findById(typeId);
 			Candidate candidate2 = new Candidate(candidate1);
 			Candidate candidate = new Candidate(candidate2, channel1, location1, status1);
 			TraineeCandidateProfile profile = new TraineeCandidateProfile(traineeCandidateProfile, candidate,
-					university1, faculty1, skill1, cv1, type1);
+					university1, faculty1, skill1, cv1, type1, account1);
 			profile.setTraineeCandidateProfileId(profileID.getTraineeCandidateProfileId());
 			candidate.setCandidateId(candidateID.getCandidateId());
 			cv1.setCvId(cvId.getCvId());
@@ -239,14 +269,15 @@ public class ProfileController {
 			long fileSize = cvId.getSize();
 			byte[] content = cvId.getContent();
 			CV cv1 = new CV(fileName, fileSize, content);
-			String typeId = "Candidate";
-			String StatusID = "New";
+			String typeId = profileID.getType().getProfileStatusId();
+			String StatusID = candidateID.getStatus().getProfileStatusId();
+			Account account1 = profileID.getAccount();
 			TraineeCandidateProfileStatus status1 = traineeCandidateProfileStatusService.findById(StatusID);
 			TraineeCandidateProfileType type1 = traineeCandidateProfileTypeService.findById(typeId);
 			Candidate candidate2 = new Candidate(candidate1);
 			Candidate candidate = new Candidate(candidate2, channel1, location1, status1);
 			TraineeCandidateProfile profile = new TraineeCandidateProfile(traineeCandidateProfile, candidate,
-					university1, faculty1, skill1, cv1, type1);
+					university1, faculty1, skill1, cv1, type1, account1);
 			profile.setTraineeCandidateProfileId(profileID.getTraineeCandidateProfileId());
 			candidate.setCandidateId(candidateID.getCandidateId());
 			cv1.setCvId(cvId.getCvId());
@@ -272,18 +303,129 @@ public class ProfileController {
 		model.setCVname(fileName);
 		model.setSize(fileSize);
 		model.setContent(content);
+		String fullname = model.getFullName();
+		int countspace = 0;
+		for (char c : fullname.toCharArray()) {
+			if (c == ' ') {
+				countspace++;
+			}
+		}
+		String[] parts = fullname.split("\\s", countspace + 1);
+		String name = parts[countspace];
+		String username = "";
+		username += name;
+		for (int i = 0; i < countspace; i++) {
+			username += parts[i].charAt(0);
+		}
+		List<Account> accountList = accountServiceImpl.listAll();
+		for (Account account : accountList) {
+			if (account.getAccount().equals(username)) {
+				char c = username.charAt(username.length() - 1);
+				if (!Character.isDigit(c)) {
+					username = username + "1";
+				}
+			}
+		}
+		for (Account accounts : accountList) {
+			if (accounts.getAccount().equals(username)) {
+				char c = username.charAt(username.length() - 1);
+				if (Character.isDigit(c)) {
+					int intc = c;
+					intc = intc + 1;
+					char charc = (char) intc;
+					StringBuilder usernameStringBuilder = new StringBuilder(username);
+					usernameStringBuilder.setCharAt(usernameStringBuilder.length() - 1, charc);
+					username = new String(usernameStringBuilder);
+				}
+			}
+		}
+		model.setAccount(username);
+		model.setPassword(username);
+		Account account1 = new Account(model);
 		TraineeCandidateProfileStatus status = traineeCandidateProfileStatusService.findById(model.getStatusId());
 		TraineeCandidateProfileType type = traineeCandidateProfileTypeService.findById(model.getTypeId());
 		CV cv = new CV(model);
 		Candidate candidate = new Candidate(model, channel, location, status);
 		TraineeCandidateProfile profile = new TraineeCandidateProfile(model, candidate, university, faculty, skill, cv,
-				type);
-
+				type, account1);
+		List<Candidate> candidates = new ArrayList<>();
+		candidates.add(candidate);
+		status.setCandidate(candidates);
+		traineeCandidateProfileStatusService.save(status);
 		cvService.save(cv);
 		candidateService.save(candidate);
 		profile.setCandidate(candidate);
 		traineeCandidateProfileService.save(profile);
+		account1.setTraineeCandidateProfile(profile);
+		accountServiceImpl.save(account1);
+		return "redirect:/viewCandidate";
+	}
 
+	@RequestMapping(value = "/saveUpdateResults", method = RequestMethod.POST)
+	public String saveResults(@ModelAttribute("interviewTestModel") TraineeCandidateProfileModel model,
+			@RequestParam("traineeCandidateProfileId") long traineeCandidateProfileId) {
+		TraineeCandidateProfile profile = traineeCandidateProfileService.findById(traineeCandidateProfileId);
+		Candidate candidateId = profile.getCandidate();
+		Interview interview = new Interview(model);
+		EntryTest entryTest = new EntryTest(model);
+		interview.setCandidate(candidateId);
+		entryTest.setCandidate(candidateId);
+		interviewServiceImpl.save(interview);
+		entryTestServiceImpl.save(entryTest);
+		if (interview.getResult().equals("Pass") && entryTest.getResult().equals("Pass")) {
+			String statusId = "IP";
+			TraineeCandidateProfileStatus status = traineeCandidateProfileStatusService.findById(statusId);
+			candidateId.setStatus(status);
+			candidateService.save(candidateId);
+		}
+		if (entryTest.getResult().equals("Failed") && interview.getResult().equals("Pass")) {
+			String statusId = "TF";
+			TraineeCandidateProfileStatus status = traineeCandidateProfileStatusService.findById(statusId);
+			candidateId.setStatus(status);
+			candidateService.save(candidateId);
+		}
+		if (interview.getResult().equals("Failed") && entryTest.getResult().equals("Pass")) {
+			String statusId = "IF";
+			TraineeCandidateProfileStatus status = traineeCandidateProfileStatusService.findById(statusId);
+			candidateId.setStatus(status);
+			candidateService.save(candidateId);
+		}
+		if (interview.getResult().equals("Failed") && entryTest.getResult().equals("Failed")) {
+			String statusId = "IF";
+			TraineeCandidateProfileStatus status = traineeCandidateProfileStatusService.findById(statusId);
+			candidateId.setStatus(status);
+			candidateService.save(candidateId);
+		}
+		if (interview.getResult().equals("0") && entryTest.getResult().equals("Pass")) {
+			String statusId = "TP";
+			TraineeCandidateProfileStatus status = traineeCandidateProfileStatusService.findById(statusId);
+			candidateId.setStatus(status);
+			candidateService.save(candidateId);
+		}
+		if (interview.getResult().equals("0") && entryTest.getResult().equals("Failed")) {
+			String statusId = "TF";
+			TraineeCandidateProfileStatus status = traineeCandidateProfileStatusService.findById(statusId);
+			candidateId.setStatus(status);
+			candidateService.save(candidateId);
+		}
+		if (entryTest.getResult().equals("0") && interview.getResult().equals("Pass")) {
+			String statusId = "IP";
+			TraineeCandidateProfileStatus status = traineeCandidateProfileStatusService.findById(statusId);
+			candidateId.setStatus(status);
+			candidateService.save(candidateId);
+		}
+		if (entryTest.getResult().equals("0") && interview.getResult().equals("Failed")) {
+			String statusId = "IF";
+			TraineeCandidateProfileStatus status = traineeCandidateProfileStatusService.findById(statusId);
+			candidateId.setStatus(status);
+			candidateService.save(candidateId);
+		}
+		if (interview.getResult().equals("0") && entryTest.getResult().equals("0")) {
+			String statusId = "New";
+			TraineeCandidateProfileStatus status = traineeCandidateProfileStatusService.findById(statusId);
+			candidateId.setStatus(status);
+			candidateService.save(candidateId);
+		}
 		return "redirect:/viewCandidate";
 	}
 
@@ -292,6 +434,16 @@ public class ProfileController {
 		TraineeCandidateProfile profile = traineeCandidateProfileService.findById(traineeCandidateProfileId);
 		Candidate candidate = profile.getCandidate();
 		CV cv = profile.getCv();
+		List<EntryTest> tests = entryTestServiceImpl.findByCandidate(candidate);
+		List<Interview> interviews = interviewServiceImpl.findByCandidate(candidate);
+		Account account = profile.getAccount();
+		for (EntryTest test : tests) {
+			entryTestServiceImpl.delete(test);
+		}
+		for (Interview interview : interviews) {
+			interviewServiceImpl.delete(interview);
+		}
+		accountServiceImpl.delete(account);
 		traineeCandidateProfileService.delete(profile);
 		candidateService.delete(candidate);
 		cvService.delete(cv);
@@ -307,6 +459,16 @@ public class ProfileController {
 				TraineeCandidateProfile profile = traineeCandidateProfileService.findById(longId);
 				Candidate candidate = profile.getCandidate();
 				CV cv = profile.getCv();
+				List<EntryTest> tests = entryTestServiceImpl.findByCandidate(candidate);
+				List<Interview> interviews = interviewServiceImpl.findByCandidate(candidate);
+				Account account = profile.getAccount();
+				for (EntryTest test : tests) {
+					entryTestServiceImpl.delete(test);
+				}
+				for (Interview interview : interviews) {
+					interviewServiceImpl.delete(interview);
+				}
+				accountServiceImpl.delete(account);
 				traineeCandidateProfileService.delete(profile);
 				candidateService.delete(candidate);
 				cvService.delete(cv);
@@ -329,11 +491,32 @@ public class ProfileController {
 		outputStream.close();
 	}
 
-	@RequestMapping("/getListId")
-	public String getListId(@RequestParam("listId") Collection<? extends Long> listId) {
-		List<Long> listIds = new ArrayList<>();
-		listIds.addAll(listId);
-		return ("redirect:/viewCandidate");
+	@RequestMapping("/searchProfile")
+	public ModelAndView searchProfile(@RequestParam String word) {
+		ModelAndView mav = new ModelAndView("searchProfileResults");
+		List<TraineeCandidateProfileModel> modelList = new ArrayList<TraineeCandidateProfileModel>();
+		List<TraineeCandidateProfile> profileList = traineeCandidateProfileService.search(word);
+		if (profileList.isEmpty()) {
+			List<TraineeCandidateProfileStatus> statusList = traineeCandidateProfileStatusService.search(word);
+			for (TraineeCandidateProfileStatus status : statusList) {
+				List<Candidate> candidates = status.getCandidate();
+				for (Candidate candidate : candidates) {
+					TraineeCandidateProfileStatus status1 = candidate.getStatus();
+					TraineeCandidateProfile profile1 = traineeCandidateProfileService.findByCandidate(candidate);
+					TraineeCandidateProfileModel profileModel = new TraineeCandidateProfileModel(profile1, status1);
+					modelList.add(profileModel);
+				}
+			}
+		} else {
+			for (TraineeCandidateProfile profile : profileList) {
+				Candidate candidate = new Candidate(profile.getCandidate());
+				TraineeCandidateProfileStatus status = candidate.getStatus();
+				TraineeCandidateProfileModel profileModel = new TraineeCandidateProfileModel(profile, status);
+				modelList.add(profileModel);
+			}
+		}
+		mav.addObject("modelList", modelList);
+		return mav;
 	}
 
 	@InitBinder

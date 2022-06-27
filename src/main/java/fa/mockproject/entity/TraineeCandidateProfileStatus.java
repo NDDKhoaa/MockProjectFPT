@@ -1,6 +1,6 @@
 package fa.mockproject.entity;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -25,8 +25,15 @@ public class TraineeCandidateProfileStatus {
 	private String status;
 	
 	@OneToMany(mappedBy = "status")
-	private Set<Candidate> candidate;
+	private List<Candidate> candidate;
 	
+	public List<Candidate> getCandidate() {
+		return candidate;
+	}
+
+	public void setCandidate(List<Candidate> candidate) {
+		this.candidate = candidate;
+	}
 
 	public String getProfileStatusId() {
 		return profileStatusId;

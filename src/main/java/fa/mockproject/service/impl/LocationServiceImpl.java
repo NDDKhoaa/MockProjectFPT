@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import fa.mockproject.entity.Location;
@@ -12,7 +13,7 @@ import fa.mockproject.service.LocationService;
 
 @Service
 public class LocationServiceImpl implements LocationService {
-	
+
 	@Autowired
 	private LocationRepository repo;
 
@@ -35,5 +36,9 @@ public class LocationServiceImpl implements LocationService {
 
 	public void deleteById(String locationId) {
 		repo.deleteById(locationId);
+	}
+
+	public List<Location> search(@Param("word") String word) {
+		return (List<Location>) repo.search(word);
 	}
 }

@@ -84,6 +84,10 @@ public class TraineeCandidateProfile {
 	@Column(name = "remarks", length = 255, nullable = true)
 	private String remarks;
 
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "account_id", nullable = true)
+	private Account account;
+
 	public TraineeCandidateProfile() {
 		super();
 	}
@@ -94,6 +98,14 @@ public class TraineeCandidateProfile {
 
 	public void setTraineeCandidateProfileId(long traineeCandidateProfileId) {
 		this.traineeCandidateProfileId = traineeCandidateProfileId;
+	}
+
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
 	}
 
 	public Trainee getTrainee() {
@@ -241,7 +253,7 @@ public class TraineeCandidateProfile {
 		this.dateOfBirth = model.getDateOfBirth();
 		this.gender = model.getGender();
 		String stringGraduationYear = model.getGraduationYear() + "-01";
-		LocalDate localDateGraduationYear= LocalDate.parse(stringGraduationYear);
+		LocalDate localDateGraduationYear = LocalDate.parse(stringGraduationYear);
 		this.graduationYear = localDateGraduationYear;
 		this.phone = model.getPhone();
 		this.email = model.getEmail();
@@ -253,8 +265,8 @@ public class TraineeCandidateProfile {
 		this.remarks = model.getRemarks();
 	}
 
-	public TraineeCandidateProfile(TraineeCandidateProfileModel model,Candidate candidate, University university2,
-			Faculty faculty2, Skill skill2, CV cv2, TraineeCandidateProfileType type2) {
+	public TraineeCandidateProfile(TraineeCandidateProfileModel model, Candidate candidate, University university2,
+			Faculty faculty2, Skill skill2, CV cv2, TraineeCandidateProfileType type2, Account account2) {
 		this.traineeCandidateProfileId = model.getTraineeCandidateProfileId();
 		this.trainee = model.getTrainee();
 		this.candidate = candidate;
@@ -275,6 +287,7 @@ public class TraineeCandidateProfile {
 		this.university = university2;
 		this.faculty = faculty2;
 		this.skill = skill2;
+		this.account = account2;
 	}
 
 	public TraineeCandidateProfile(TraineeCandidateProfile traineeCandidateProfile) {
@@ -292,8 +305,8 @@ public class TraineeCandidateProfile {
 		this.remarks = traineeCandidateProfile.getRemarks();
 	}
 
-	public TraineeCandidateProfile(TraineeCandidateProfile profile1,Candidate candidate, University university1, Faculty faculty1,
-			Skill skill1, CV cv1,TraineeCandidateProfileType type1) {
+	public TraineeCandidateProfile(TraineeCandidateProfile profile1, Candidate candidate, University university1,
+			Faculty faculty1, Skill skill1, CV cv1, TraineeCandidateProfileType type1, Account account1) {
 		this.traineeCandidateProfileId = profile1.getTraineeCandidateProfileId();
 		this.trainee = profile1.getTrainee();
 		this.candidate = candidate;
@@ -312,6 +325,7 @@ public class TraineeCandidateProfile {
 		this.university = university1;
 		this.faculty = faculty1;
 		this.skill = skill1;
+		this.account = account1;
 	}
 
 	@Override

@@ -1,6 +1,6 @@
 package fa.mockproject.entity;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -28,7 +28,7 @@ public class Skill {
 	private String remarks;
 
 	@OneToMany(mappedBy = "skill")
-	private Set<TraineeCandidateProfile> traineeCanditaCandidateProfile;
+	private List<TraineeCandidateProfile> traineeCanditaCandidateProfile;
 
 	public String getSkillId() {
 		return skillId;
@@ -54,11 +54,11 @@ public class Skill {
 		this.remarks = remarks;
 	}
 
-	public Set<TraineeCandidateProfile> getTraineeCanditaCandidateProfile() {
+	public List<TraineeCandidateProfile> getTraineeCanditaCandidateProfile() {
 		return traineeCanditaCandidateProfile;
 	}
 
-	public void setTraineeCanditaCandidateProfile(Set<TraineeCandidateProfile> traineeCanditaCandidateProfile) {
+	public void setTraineeCanditaCandidateProfile(List<TraineeCandidateProfile> traineeCanditaCandidateProfile) {
 		this.traineeCanditaCandidateProfile = traineeCanditaCandidateProfile;
 	}
 
@@ -67,7 +67,7 @@ public class Skill {
 	}
 
 	public Skill(String skillId, String skillName, String remarks,
-			Set<TraineeCandidateProfile> traineeCanditaCandidateProfile) {
+			List<TraineeCandidateProfile> traineeCanditaCandidateProfile) {
 		super();
 		this.skillId = skillId;
 		this.skillName = skillName;
