@@ -1,6 +1,8 @@
 package fa.mockproject.entity;
 
+import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Cacheable;
@@ -14,13 +16,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import fa.mockproject.entity.enumtype.BudgetCodeEnum;
 import fa.mockproject.entity.enumtype.ClassBatchStatusEnum;
+import fa.mockproject.model.ClassBatchModel;
 
 @Entity
 @Table(name = "ClassBatch")
@@ -47,14 +50,14 @@ public class ClassBatch {
 	@Column(name = "expected_end_date", nullable = false)
 	private LocalDate expectedEndDate;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "location_id", nullable = false)
 	private Location location;
 	
 	@Column(name = "detail_location", length = 255, nullable = false)
 	private String detailLocation;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "class_admin_id", nullable = false)
 	private ClassAdmin classAdmin;
 	
@@ -65,32 +68,31 @@ public class ClassBatch {
 	@Column(name = "budget_code", nullable = false)
 	private BudgetCodeEnum budgetCode;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "budget_id", nullable = false)
-	private Budget budget;
+	@OneToMany(mappedBy = "classBatch", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+	private List<Budget> budgets;
 	
 	@Column(name = "estimated_budget", nullable = false)
 	private long estimatedBudget;
 	
-	@OneToOne
+	@ManyToOne
+	@JoinColumn(name = "subject_type_id", nullable = false)
+	private SubjectType subjectType;
+	
+	@ManyToOne
 	@JoinColumn(name = "sub_subject_type_id", nullable = false)
 	private SubSubjectType subSubjectType;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "delivery_type_id", nullable = false)
 	private DeliveryType deliveryType;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "format_type_id", nullable = false)
 	private FormatType formatType;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "scope_id", nullable = false)
 	private Scope scope;
-	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "supplier_partner_id", nullable = false)
-	private SupplierPartner supplierPartner;
 	
 	@Column(name = "actual_start_date", nullable = false)
 	private LocalDate actualStartDate;
@@ -110,29 +112,30 @@ public class ClassBatch {
 	@Column(name = "milestones", nullable = false)
 	private int milestones;
 	
-	@Lob
-	@Column(name = "curriculum", nullable = false)
-	private byte[] curriculum;
+	@OneToOne(mappedBy = "classBatch")
+	private Curriculumn curriculumn;
 	
-	@OneToMany(mappedBy = "classBatch", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "classBatch", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private List<Audit> audits;
 	
 	@OneToMany(mappedBy = "classBatch", fetch = FetchType.LAZY)
 	private List<Trainee> trainees;
 	
-	@OneToOne
-	@JoinColumn(name = "subject_type_id", nullable = false)
-	private SubjectType subjectType;
-	
 	@Enumerated
 	@Column(name = "status", length = 255, nullable = false)
 	private ClassBatchStatusEnum status;
+	
+	@Column(name = "weighted_number", length = 255, nullable = true)
+	private String weightedNumber;
 	
 	@Column(name = "history", length = 255, nullable = true)
 	private String history;
 	
 	@Column(name = "remarks", length = 255, nullable = true)
 	private String remarks;
+	
+	@OneToOne(mappedBy = "classBatch")
+	private SupplierPartner supplierPartner;
 
 	public ClassBatch() {
 		super();
@@ -140,16 +143,16 @@ public class ClassBatch {
 
 	public ClassBatch(long classId, String className, String classCode, LocalDate expectedStartDate,
 			LocalDate expectedEndDate, Location location, String detailLocation, ClassAdmin classAdmin,
-			int plannedTraineeNumber, BudgetCodeEnum budgetCode, Budget budget, long estimatedBudget,
+			int plannedTraineeNumber, BudgetCodeEnum budgetCode, List<Budget> budgets, long estimatedBudget,
 			SubSubjectType subSubjectType, DeliveryType deliveryType, FormatType formatType, Scope scope,
 			SupplierPartner supplierPartner, LocalDate actualStartDate, LocalDate actualEndDate,
 			int acceptedTraineeNumber, int actualTraineeNumber, List<Trainer> trainers, int milestones,
-			byte[] curriculum, List<Audit> audits, List<Trainee> trainees, SubjectType subjectType,
-			ClassBatchStatusEnum status, String history, String remarks) {
+			Curriculumn curriculumn, List<Audit> audits, List<Trainee> trainees, SubjectType subjectType,
+			ClassBatchStatusEnum status, String weightedNumber, String history, String remarks) {
 		super();
 		this.classId = classId;
-		this.className = className;
 		this.classCode = classCode;
+		this.className = className;
 		this.expectedStartDate = expectedStartDate;
 		this.expectedEndDate = expectedEndDate;
 		this.location = location;
@@ -157,7 +160,7 @@ public class ClassBatch {
 		this.classAdmin = classAdmin;
 		this.plannedTraineeNumber = plannedTraineeNumber;
 		this.budgetCode = budgetCode;
-		this.budget = budget;
+		this.budgets = budgets;
 		this.estimatedBudget = estimatedBudget;
 		this.subSubjectType = subSubjectType;
 		this.deliveryType = deliveryType;
@@ -170,14 +173,63 @@ public class ClassBatch {
 		this.actualTraineeNumber = actualTraineeNumber;
 		this.trainers = trainers;
 		this.milestones = milestones;
-		this.curriculum = curriculum;
+		this.curriculumn = curriculumn;
 		this.audits = audits;
 		this.trainees = trainees;
 		this.subjectType = subjectType;
 		this.status = status;
+		this.weightedNumber = weightedNumber;
 		this.history = history;
 		this.remarks = remarks;
 	}
+
+	public ClassBatch(ClassBatchModel classBatchModel) throws IOException {
+		super();
+		this.classId = classBatchModel.getClassId();
+        this.className = classBatchModel.getClassName();
+        this.classCode = classBatchModel.getClassCode();
+        this.expectedStartDate = classBatchModel.getExpectedStartDate();
+        this.expectedEndDate = classBatchModel.getExpectedEndDate();
+        this.location = new Location(classBatchModel.getLocationModel());
+        this.detailLocation = classBatchModel.getDetailLocation();
+        this.classAdmin = new ClassAdmin(classBatchModel.getClassAdminModel().getClassAdminId());
+        this.plannedTraineeNumber = classBatchModel.getPlannedTraineeNumber();
+        this.budgetCode = classBatchModel.getBudgetCode();
+        this.budgets = new ArrayList<Budget>();
+        classBatchModel.getBudgetModels().forEach(budgetModel -> {
+        	this.budgets.add(new Budget(budgetModel, this));
+    	});
+        this.estimatedBudget = classBatchModel.getEstimatedBudget();
+        this.subSubjectType = new SubSubjectType(classBatchModel.getSubSubjectTypeModel());
+        this.deliveryType = new DeliveryType(classBatchModel.getDeliveryTypeModel());
+        this.formatType = new FormatType(classBatchModel.getFormatTypeModel());
+        this.scope = new Scope(classBatchModel.getScopeModel());
+        this.supplierPartner = new SupplierPartner(classBatchModel.getSupplierPartnerModel(), this);
+        this.actualStartDate = classBatchModel.getActualStartDate();
+        this.actualEndDate = classBatchModel.getActualEndDate();
+        this.acceptedTraineeNumber = classBatchModel.getAcceptedTraineeNumber();
+        this.actualTraineeNumber = classBatchModel.getActualTraineeNumber();
+        this.trainers = new ArrayList<Trainer>();
+        this.trainers.add(new Trainer(classBatchModel.getMasterTrainerModel(), this));
+        classBatchModel.getTrainerModels().forEach(trainerModel -> {
+        	this.trainers.add(new Trainer(trainerModel, this));
+    	});
+        this.milestones = classBatchModel.getMilestones();
+        this.curriculumn = new Curriculumn(classBatchModel.getCurriculumnModel(), this);
+        this.audits = new ArrayList<Audit>();
+        classBatchModel.getAuditModels().forEach(auditModel -> {
+        	this.audits.add(new Audit(auditModel, this));
+        });
+        this.trainees = new ArrayList<Trainee>();
+        classBatchModel.getTraineeModels().forEach(traineeModel -> {
+        	this.trainees.add(new Trainee(traineeModel, this));
+        });
+        this.subjectType = new SubjectType(classBatchModel.getSubjectTypeModel());
+        this.status = classBatchModel.getStatus();
+        this.weightedNumber = classBatchModel.getWeightedNumber();
+        this.history = classBatchModel.getHistory();
+        this.remarks = classBatchModel.getRemarks();
+}
 
 	public long getClassId() {
 		return classId;
@@ -259,12 +311,12 @@ public class ClassBatch {
 		this.budgetCode = budgetCode;
 	}
 
-	public Budget getBudget() {
-		return budget;
+	public List<Budget> getBudgets() {
+		return budgets;
 	}
 
-	public void setBudget(Budget budget) {
-		this.budget = budget;
+	public void setBudgets(List<Budget> budgets) {
+		this.budgets = budgets;
 	}
 
 	public long getEstimatedBudget() {
@@ -363,12 +415,12 @@ public class ClassBatch {
 		this.milestones = milestones;
 	}
 
-	public byte[] getCurriculum() {
-		return curriculum;
+	public Curriculumn getCurriculumn() {
+		return curriculumn;
 	}
 
-	public void setCurriculum(byte[] curriculum) {
-		this.curriculum = curriculum;
+	public void setCurriculumn(Curriculumn curriculumn) {
+		this.curriculumn = curriculumn;
 	}
 
 	public List<Audit> getAudits() {
@@ -401,6 +453,14 @@ public class ClassBatch {
 
 	public void setStatus(ClassBatchStatusEnum status) {
 		this.status = status;
+	}
+
+	public String getWeightedNumber() {
+		return weightedNumber;
+	}
+
+	public void setWeightedNumber(String weightedNumber) {
+		this.weightedNumber = weightedNumber;
 	}
 
 	public String getHistory() {

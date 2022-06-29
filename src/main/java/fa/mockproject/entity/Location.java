@@ -1,6 +1,17 @@
 package fa.mockproject.entity;
 
-import javax.persistence.*;
+import java.util.List;
+
+import javax.persistence.Cacheable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import fa.mockproject.model.LocationModel;
 
 @Entity
 @Table(name = "Location")
@@ -10,17 +21,19 @@ public class Location {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "location_id", length = 20, unique = true, nullable = false)
-	private long locationId;
+	private String locationId;
 
-	@Column(name = "location_name", nullable = false)
+	@Column(name = "location_name", length = 255, nullable = false)
 	private String locationName;
 
-	@Column(name = "remarks", length = 250, nullable = true)
+	@Column(name = "remarks", length = 255, nullable = true)
 	private String remarks;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "class_id", nullable = false)
-	private ClassBatch classBatch;
+	@OneToMany(mappedBy = "location")
+	private List<ClassBatch> classBatchs;
+
+	@OneToMany(mappedBy = "location")
+	private List<Candidate> candidates;
 
 	public Location() {
 		super();
@@ -32,11 +45,26 @@ public class Location {
 		this.remarks = remarks;
 	}
 
-	public long getLocationId() {
+	public Location(Location location) {
+		super();
+		this.locationId = location.getLocationId();
+		this.locationName = location.getLocationName();
+		this.remarks = location.getRemarks();
+	}
+
+	public Location(LocationModel locationModel) {
+		super();
+		this.locationId = locationModel.getLocationId();
+		this.locationName = locationModel.getLocationName();
+		this.remarks = locationModel.getRemarks();
+
+	}
+
+	public String getLocationId() {
 		return locationId;
 	}
 
-	public void setLocationId(long locationId) {
+	public void setLocationId(String locationId) {
 		this.locationId = locationId;
 	}
 
@@ -56,17 +84,27 @@ public class Location {
 		this.remarks = remarks;
 	}
 
-	public ClassBatch getClassBatch() {
-		return classBatch;
+	
+
+	public List<ClassBatch> getClassBatchs() {
+		return classBatchs;
 	}
 
-	public void setClassBatch(ClassBatch classBatch) {
-		this.classBatch = classBatch;
+	public void setClassBatchs(List<ClassBatch> classBatchs) {
+		this.classBatchs = classBatchs;
+	}
+
+	public List<Candidate> getCandidates() {
+		return candidates;
+	}
+
+	public void setCandidates(List<Candidate> candidates) {
+		this.candidates = candidates;
 	}
 
 	@Override
 	public String toString() {
-		return "Location [locationId=" + locationId + ", locationName=" + locationName + ", remarks=" + remarks + "]";
+		return locationName;
 	}
 
 }

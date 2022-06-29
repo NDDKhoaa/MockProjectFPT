@@ -1,14 +1,18 @@
 package fa.mockproject.entity;
 
+import java.util.List;
+
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import fa.mockproject.model.ScopeModel;
 
 @Entity
 @Table(name = "Scope")
@@ -16,53 +20,66 @@ import javax.persistence.Table;
 public class Scope {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private int scope_id;
+	private long scopeId;
 	
-	@OneToOne
-	@JoinColumn(name = "class_id", nullable = false)
-	private ClassBatch classBatch;
+	@Column(name = "scope_name", length = 255, nullable = false)
+	private String scopeName;
 	
-	@Column(name="remarks")
-	private int remarks;
+	@OneToMany(mappedBy = "scope", fetch = FetchType.LAZY)
+	private List<ClassBatch> classBatchs;
 	
+	@Column(name="remarks", length = 255, nullable = true)
+	private String remarks;
 
-
-	public int getScope_id() {
-		return scope_id;
+	public Scope() {
+		super();
 	}
 
-	public void setScope_id(int scope_id) {
-		this.scope_id = scope_id;
+	public Scope(long scopeId, String scopeName, List<ClassBatch> classBatchs, String remarks) {
+		super();
+		this.scopeId = scopeId;
+		this.scopeName = scopeName;
+		this.classBatchs = classBatchs;
+		this.remarks = remarks;
 	}
 
-	public ClassBatch getClassBatch() {
-		return classBatch;
+	public Scope(ScopeModel scopeModel) {
+		super();
+		this.scopeId = scopeModel.getScopeId();
+		this.scopeName = scopeModel.getScopeName();
+		this.remarks = scopeModel.getRemarks();
 	}
 
-	public void setClassBatch(ClassBatch classBatch) {
-		this.classBatch = classBatch;
+	public long getScopeId() {
+		return scopeId;
 	}
 
-	public int getRemarks() {
+	public void setScopeId(long scopeId) {
+		this.scopeId = scopeId;
+	}
+
+	public String getScopeName() {
+		return scopeName;
+	}
+
+	public void setScopeName(String scopeName) {
+		this.scopeName = scopeName;
+	}
+
+	public List<ClassBatch> getClassBatchs() {
+		return classBatchs;
+	}
+
+	public void setClassBatchs(List<ClassBatch> classBatchs) {
+		this.classBatchs = classBatchs;
+	}
+
+	public String getRemarks() {
 		return remarks;
 	}
 
-	public void setRemarks(int remarks) {
+	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
-
-
-	@Override
-	public String toString() {
-		return "Scope [scope_id=" + scope_id + ", classBatch=" + classBatch + ", remarks=" + remarks + "]";
-	}
-
-	public Scope(int scope_id, ClassBatch classBatch, int remarks) {
-		super();
-		this.scope_id = scope_id;
-		this.classBatch = classBatch;
-		this.remarks = remarks;
-	}
-	
 	
 }

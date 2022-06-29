@@ -1,6 +1,18 @@
 package fa.mockproject.entity;
 
-import javax.persistence.*;
+import java.util.List;
+
+import javax.persistence.Cacheable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import fa.mockproject.model.DeliveryTypeModel;
 
 @Entity
 @Table(name = "DeliveryType")
@@ -10,37 +22,33 @@ public class DeliveryType {
 	@Column(name="delivery_type_id",unique=true)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long deliveryTypeId;
-	
-	@Column(name="class_id")
-    private long classId;
-    
-    @Column(name="remarks",nullable=true)
-    private String remarks;
     
     @Column(name="delivery_type_name")
     private String deliveryTypeName;
     
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="class_id") 
-    private ClassBatch classBatchClassId;
+    @Column(name="remarks",nullable=true)
+    private String remarks;
     
-    public DeliveryType() {
-		// TODO Auto-generated constructor stub
-	}
+    @OneToMany(mappedBy = "deliveryType", fetch = FetchType.LAZY)
+    private List<ClassBatch> classBatchs;
 
-	public DeliveryType(long classId, String remarks, String deliveryTypeName) {
+	public DeliveryType() {
 		super();
-		this.classId = classId;
+	}
+
+	public DeliveryType(long deliveryTypeId, String deliveryTypeName, String remarks, List<ClassBatch> classBatchs) {
+		super();
+		this.deliveryTypeId = deliveryTypeId;
+		this.deliveryTypeName = deliveryTypeName;
 		this.remarks = remarks;
-		this.deliveryTypeName = deliveryTypeName;
+		this.classBatchs = classBatchs;
 	}
-
-	public String getDeliveryTypeName() {
-		return deliveryTypeName;
-	}
-
-	public void setDeliveryTypeName(String deliveryTypeName) {
-		this.deliveryTypeName = deliveryTypeName;
+	
+	public DeliveryType(DeliveryTypeModel deliveryTypeModel) {
+		super();
+		this.deliveryTypeId = deliveryTypeModel.getDeliveryTypeId();
+		this.deliveryTypeName = deliveryTypeModel.getDeliveryTypeName();
+		this.remarks = deliveryTypeModel.getRemarks();
 	}
 
 	public long getDeliveryTypeId() {
@@ -51,12 +59,12 @@ public class DeliveryType {
 		this.deliveryTypeId = deliveryTypeId;
 	}
 
-	public long getClassId() {
-		return classId;
+	public String getDeliveryTypeName() {
+		return deliveryTypeName;
 	}
 
-	public void setClassId(long classId) {
-		this.classId = classId;
+	public void setDeliveryTypeName(String deliveryTypeName) {
+		this.deliveryTypeName = deliveryTypeName;
 	}
 
 	public String getRemarks() {
@@ -67,19 +75,13 @@ public class DeliveryType {
 		this.remarks = remarks;
 	}
 
-	public ClassBatch getClassBatchClassId() {
-		return classBatchClassId;
+	public List<ClassBatch> getClassBatchs() {
+		return classBatchs;
 	}
 
-	public void setClassBatchClassId(ClassBatch classBatchClassId) {
-		this.classBatchClassId = classBatchClassId;
+	public void setClassBatchs(List<ClassBatch> classBatchs) {
+		this.classBatchs = classBatchs;
 	}
 
-	@Override
-	public String toString() {
-		return "DeliveryType [deliveryTypeId=" + deliveryTypeId + ", classId=" + classId + ", remarks=" + remarks
-				+ ", deliveryTypeName=" + deliveryTypeName + "]";
-	}
-
-
+    
 }

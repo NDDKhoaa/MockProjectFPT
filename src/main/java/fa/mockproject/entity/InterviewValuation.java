@@ -16,8 +16,8 @@ import javax.persistence.Table;
 public class InterviewValuation {
 	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "interview_valuation_id", nullable = false, unique=true)
-    private int interviewValuationId;
+    @Column(name = "interview_valuation_id")
+    private long interviewValuationId;
 	
 	//TraineeID
 	@ManyToOne
@@ -45,7 +45,7 @@ public class InterviewValuation {
 		this.remarks = remarks;
 	}
 
-	public InterviewValuation(int interviewValuationId, Trainee trainee, LocalDate date, String interviewer, String remarks) {
+	public InterviewValuation(long interviewValuationId, Trainee trainee, LocalDate date, String interviewer, String remarks) {
 		super();
 		this.interviewValuationId = interviewValuationId;
 		this.trainee = trainee;
@@ -54,11 +54,11 @@ public class InterviewValuation {
 		this.remarks = remarks;
 	}
 
-	public int getInterviewValuationId() {
+	public long getInterviewValuationId() {
 		return interviewValuationId;
 	}
 
-	public void setInterviewValuationId(int interviewValuationId) {
+	public void setInterviewValuationId(long interviewValuationId) {
 		this.interviewValuationId = interviewValuationId;
 	}
 

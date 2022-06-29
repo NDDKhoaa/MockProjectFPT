@@ -10,7 +10,8 @@ public interface ClassBatchService {
 	public abstract List<ClassBatchModel> getClassListGeneral(Map<String, String> filters);
 	public abstract ClassBatchModel getClass(Long classBatchId);
 	public abstract ClassBatchModel addClass(ClassBatchModel classBatchModel);
-	public abstract ClassBatchModel updateClass(ClassBatchModel classBatchModel);
+	public abstract ClassBatchModel updateDraftClass(ClassBatchModel classBatchModel);
+	public abstract ClassBatchModel updateInprogressClass(ClassBatchModel classBatchModel);
 	public abstract boolean SubmitClass(Long classBatchId);
 	public abstract boolean StartClass(Long classBatchId);
 	public abstract boolean FinishClass(Long classBatchId);

@@ -1,70 +1,87 @@
 package fa.mockproject.entity;
 
+import java.util.List;
+
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import fa.mockproject.model.FormatTypeModel;
 
 @Entity
 @Table(name = "FormatType")
 @Cacheable
 public class FormatType {
+	
 	@Id
+	@Column(name = "format_type_id")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	private int formattype_id;
+	private long formatTypeId;
 
-	@OneToOne
-	@JoinColumn(name = "class_id", nullable = false)
-	private ClassBatch classBatch;
+	@Column(name= "format_type_name", length = 255, nullable = false)
+	private String formatTypeName;
 	
-	@Column(name= "remarks")
-	private int remarks;
+	@Column(name= "remarks", length = 255, nullable = true)
+	private String remarks;
 	
+	@OneToMany(mappedBy = "formatType", fetch = FetchType.LAZY)
+	private List<ClassBatch> classBatchs;
 
-
-	public int getFormattype_id() {
-		return formattype_id;
+	public FormatType() {
+		super();
 	}
 
-	public void setFormattype_id(int formattype_id) {
-		this.formattype_id = formattype_id;
+	public FormatType(long formatTypeId, String formatTypeName, String remarks, List<ClassBatch> classBatchs) {
+		super();
+		this.formatTypeId = formatTypeId;
+		this.formatTypeName = formatTypeName;
+		this.remarks = remarks;
+		this.classBatchs = classBatchs;
 	}
 
-	public ClassBatch getClassBatch() {
-		return classBatch;
+	public FormatType(FormatTypeModel formatTypeModel) {
+		super();
+		this.formatTypeId = formatTypeModel.getFormatTypeId();
+		this.formatTypeName = formatTypeModel.getFormatTypeName();
+		this.remarks = formatTypeModel.getRemarks();
 	}
 
-	public void setClassBatch(ClassBatch classBatch) {
-		this.classBatch = classBatch;
+	public long getFormatTypeId() {
+		return formatTypeId;
 	}
 
-	public int getRemarks() {
+	public void setFormatTypeId(long formatTypeId) {
+		this.formatTypeId = formatTypeId;
+	}
+
+	public String getFormatTypeName() {
+		return formatTypeName;
+	}
+
+	public void setFormatTypeName(String formatTypeName) {
+		this.formatTypeName = formatTypeName;
+	}
+
+	public String getRemarks() {
 		return remarks;
 	}
 
-	public void setRemarks(int remarks) {
+	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
 
-
-
-	@Override
-	public String toString() {
-		return "FormatType [formattype_id=" + formattype_id + ", classBatch=" + classBatch + ", remarks=" + remarks
-				+ "]";
+	public List<ClassBatch> getClassBatchs() {
+		return classBatchs;
 	}
 
-	public FormatType(int formattype_id, ClassBatch classBatch, int remarks) {
-		super();
-		this.formattype_id = formattype_id;
-		this.classBatch = classBatch;
-		this.remarks = remarks;
+	public void setClassBatchs(List<ClassBatch> classBatchs) {
+		this.classBatchs = classBatchs;
 	}
-	
 	
 }

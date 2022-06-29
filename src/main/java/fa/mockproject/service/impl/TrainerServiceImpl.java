@@ -1,6 +1,7 @@
 package fa.mockproject.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,14 +23,25 @@ public class TrainerServiceImpl implements TrainerService{
 
 	@Override
 	public void save(TrainerModel trainerModel) {
-		Trainer trainer = Trainer(trainerModel);
-		trainerRepository.save(trainer);
+//		Trainer trainer = new Trainer(trainerModel);
+//		trainerRepository.save(trainer);
+	}
+
+	private Trainer Trainer(TrainerModel trainerModel) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public Trainer findByTrainer_id(int trainer_id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Trainer findByTrainerId(long trainerId) {
+		Optional<Trainer> optional = trainerRepository.findById(trainerId);
+		Trainer trainer = null;
+		if(optional.isPresent()) {
+			trainer = optional.get();
+		}else {
+			throw new RuntimeException("Trainer not found for id"+trainerId);
+		}
+		return trainer;
 	}
 
 }

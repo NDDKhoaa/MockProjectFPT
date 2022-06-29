@@ -13,35 +13,52 @@ public class Allowance {
     private long allowanceId;
 
     @ManyToOne
-    @JoinColumn(name = "trainee_candidate id", nullable = false)
-    private Trainee traineeId;
+    @JoinColumn(name = "trainee_candidate_id", nullable = false)
+    private Trainee trainee;
 
     @OneToOne
-    @JoinColumn(name = "group", nullable = false)
+    @JoinColumn(name = "group_id", nullable = false)
     private AllowanceGroup allowanceGroup;
 
-    @Column(name = "class_id")
-    private Integer classId;
-
-    @Column(name = "allowance_result")
+    @Column(name = "allowance_result", nullable = false)
     private int allowanceResult;
 
-    @Column(name = "remarks")
-    private Integer remarks;
+    @Column(name = "remarks",length = 255,nullable = true)
+    private String remarks;
+    
+    @OneToOne(mappedBy = "allowance")
+    private GPA gpa;
 
     public Allowance() {
     }
-
-    public Allowance(long group, Trainee traineeId, AllowanceGroup allowanceGroup, Integer classId, int allowanceResult, Integer remarks) {
+    
+    public Allowance(long group, Trainee traineeId, AllowanceGroup allowanceGroup, int allowanceResult, String remarks) {
         this.allowanceId = group;
-        this.traineeId = traineeId;
+        this.trainee = traineeId;
         this.allowanceGroup = allowanceGroup;
-        this.classId = classId;
         this.allowanceResult = allowanceResult;
         this.remarks = remarks;
     }
+    
+    
 
-    public long getAllowanceId() {
+    public Trainee getTrainee() {
+		return trainee;
+	}
+
+	public void setTrainee(Trainee trainee) {
+		this.trainee = trainee;
+	}
+
+	public GPA getGpa() {
+		return gpa;
+	}
+
+	public void setGpa(GPA gpa) {
+		this.gpa = gpa;
+	}
+
+	public long getAllowanceId() {
         return allowanceId;
     }
 
@@ -50,11 +67,11 @@ public class Allowance {
     }
 
     public Trainee getTraineeId() {
-        return traineeId;
+        return trainee;
     }
 
     public void setTraineeId(Trainee traineeId) {
-        this.traineeId = traineeId;
+        this.trainee = traineeId;
     }
 
     public AllowanceGroup getAllowanceGroup() {
@@ -65,14 +82,6 @@ public class Allowance {
         this.allowanceGroup = allowanceGroup;
     }
 
-    public Integer getClassId() {
-        return classId;
-    }
-
-    public void setClassId(Integer classId) {
-        this.classId = classId;
-    }
-
     public int getAllowanceResult() {
         return allowanceResult;
     }
@@ -81,11 +90,11 @@ public class Allowance {
         this.allowanceResult = allowanceResult;
     }
 
-    public Integer getRemarks() {
+    public String getRemarks() {
         return remarks;
     }
 
-    public void setRemarks(Integer remarks) {
+    public void setRemarks(String remarks) {
         this.remarks = remarks;
     }
 }

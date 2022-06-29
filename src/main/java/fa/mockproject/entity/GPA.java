@@ -1,113 +1,117 @@
 package fa.mockproject.entity;
 
-import javax.persistence.*;
+import javax.persistence.Cacheable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
-@Table(name = "GPA")
+@Table(name = "Gpa")
 @Cacheable
 public class GPA {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "GPA_id", nullable = false)
+    @Column(name = "gpa_id", nullable = false)
     private long gpaId;
 
+    @OneToOne
+    @JoinColumn(name = "attendant_status_id",nullable = true)
+    private AttendantStatus attendantStatus;
+
     @ManyToOne
-    @JoinColumn(name = "trainee_candidate id", nullable = false)
-    private Trainee traineeId;
+    @JoinColumn(name = "trainee_candidate_id", nullable = false)
+    private Trainee trainee;
 
-    @Column(name = "class_id")
-    private Integer classId;
+    @OneToOne
+    @JoinColumn(name = "allowance_id",nullable = true)
+    private Allowance allowance;
 
-    @Column(name = "attendant_id")
-    private Integer attendantId;
+    @Column(name = "gpa_result",length = 255,nullable = true)
+    private String gpaResult;
 
-    @Column(name = "allowance_id")
-    private Integer allowanceId;
+    @Column(name = "remarks",length = 255,nullable = true)
+    private String remarks;
 
-    @Column(name = "GPA_result")
-    private Integer gpaResult;
-
-    @Column(name = "remarks")
-    private Integer remarks;
-
-    @Column(name = "GPAGPA_id")
-    private int gpaGpaId;
+    @Column(name = "GPAGPA_id",length = 255,nullable = true)
+    private long gpaGpaId;
 
     public GPA() {
     }
 
-    public GPA(int gpaId, Trainee traineeId, Integer classId, Integer attendantId, Integer allowanceId, Integer gpaResult, Integer remarks, int gpaGpaId) {
-        this.gpaId = gpaId;
-        this.traineeId = traineeId;
-        this.classId = classId;
-        this.attendantId = attendantId;
-        this.allowanceId = allowanceId;
-        this.gpaResult = gpaResult;
-        this.remarks = remarks;
-        this.gpaGpaId = gpaGpaId;
-    }
 
-    public long getGpaId() {
-        return gpaId;
-    }
+	public GPA(long gpaId, Trainee trainee, AttendantStatus attendantStatus, Allowance allowance, String gpaResult,
+			String remarks, long gpaGpaId) {
+		super();
+		this.gpaId = gpaId;
+		this.trainee = trainee;
+		this.attendantStatus = attendantStatus;
+		this.allowance = allowance;
+		this.gpaResult = gpaResult;
+		this.remarks = remarks;
+		this.gpaGpaId = gpaGpaId;
+	}
 
-    public void setGpaId(long gpaId) {
-        this.gpaId = gpaId;
-    }
+	public long getGpaId() {
+		return gpaId;
+	}
 
-    public Trainee getTraineeId() {
-        return traineeId;
-    }
+	public void setGpaId(long gpaId) {
+		this.gpaId = gpaId;
+	}
 
-    public void setTraineeId(Trainee traineeId) {
-        this.traineeId = traineeId;
-    }
+	public Trainee getTrainee() {
+		return trainee;
+	}
 
-    public Integer getClassId() {
-        return classId;
-    }
+	public void setTrainee(Trainee trainee) {
+		this.trainee = trainee;
+	}
 
-    public void setClassId(Integer classId) {
-        this.classId = classId;
-    }
+	public AttendantStatus getAttendantStatus() {
+		return attendantStatus;
+	}
 
-    public Integer getAttendantId() {
-        return attendantId;
-    }
+	public void setAttendantStatus(AttendantStatus attendantStatus) {
+		this.attendantStatus = attendantStatus;
+	}
 
-    public void setAttendantId(Integer attendantId) {
-        this.attendantId = attendantId;
-    }
+	public Allowance getAllowance() {
+		return allowance;
+	}
 
-    public Integer getAllowanceId() {
-        return allowanceId;
-    }
+	public void setAllowance(Allowance allowance) {
+		this.allowance = allowance;
+	}
 
-    public void setAllowanceId(Integer allowanceId) {
-        this.allowanceId = allowanceId;
-    }
+	public String getGpaResult() {
+		return gpaResult;
+	}
 
-    public Integer getGpaResult() {
-        return gpaResult;
-    }
+	public void setGpaResult(String gpaResult) {
+		this.gpaResult = gpaResult;
+	}
 
-    public void setGpaResult(Integer gpaResult) {
-        this.gpaResult = gpaResult;
-    }
+	public String getRemarks() {
+		return remarks;
+	}
 
-    public Integer getRemarks() {
-        return remarks;
-    }
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
 
-    public void setRemarks(Integer remarks) {
-        this.remarks = remarks;
-    }
+	public long getGpaGpaId() {
+		return gpaGpaId;
+	}
 
-    public int getGpaGpaId() {
-        return gpaGpaId;
-    }
+	public void setGpaGpaId(long gpaGpaId) {
+		this.gpaGpaId = gpaGpaId;
+	}
 
-    public void setGpaGpaId(int gpaGpaId) {
-        this.gpaGpaId = gpaGpaId;
-    }
+   
 }

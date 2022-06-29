@@ -12,10 +12,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import fa.mockproject.entity.enumtype.AuditEventCategoryEnum;
+import fa.mockproject.model.AuditModel;
 
 @Entity
 @Table(name = "Audit")
@@ -30,7 +31,7 @@ public class Audit {
 	@Column(name = "audit_id")
 	private long auditId;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "class_batch_id", nullable = false)
 	private ClassBatch classBatch;
 	
@@ -71,6 +72,19 @@ public class Audit {
 		this.pic = pic;
 		this.deadline = deadline;
 		this.note = note;
+	}
+
+	public Audit(AuditModel auditModel, ClassBatch classBatch) {
+		super();
+		this.auditId = auditModel.getAuditId();
+		this.classBatch = classBatch;
+		this.date = auditModel.getDate();
+		this.eventCategory = auditModel.getEventCategory();
+		this.relatedPartyOrPeople = auditModel.getRelatedPartyOrPeople();
+		this.action = auditModel.getAction();
+		this.pic = auditModel.getPic();
+		this.deadline = auditModel.getDeadline();
+		this.note = auditModel.getNote();
 	}
 
 	public long getAuditId() {

@@ -1,7 +1,19 @@
 package fa.mockproject.entity;
 
-import javax.persistence.*;
 import java.util.Set;
+
+import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "Topic")
@@ -20,19 +32,45 @@ public class Topic {
     private Integer remarks;
 
     @Column(name = "topic_name")
-    private Integer topicName;
-
+    private String topicName;
+    
+    @Column(name = "max_score")
+    private int maxScore;
+    
+    @Column(name = "passing_score")
+    private int passingScore;
+    
+    @Column(name = "weighted_number")
+    private int weightedNumber;
+    
+    @Column(name = "trainee_score")
+    private Integer traineeScore;
+    
+    @ManyToOne
+    @JoinColumn(name = "milestone_id")
+    private Milestone milestone;
     public Topic() {
     }
 
-    public Topic(Integer topicId, Set<LearningPath> learningPathId, Integer remarks, Integer topicName) {
-        this.topicId = topicId;
-        this.learningPaths = learningPathId;
-        this.remarks = remarks;
-        this.topicName = topicName;
-    }
+   
 
-    public long getTopicId() {
+	public Topic(long topicId, Set<LearningPath> learningPaths, Integer remarks, String topicName, int maxScore,
+			int passingScore, int weightedNumber, int traineeScore, Milestone milestone) {
+		super();
+		this.topicId = topicId;
+		this.learningPaths = learningPaths;
+		this.remarks = remarks;
+		this.topicName = topicName;
+		this.maxScore = maxScore;
+		this.passingScore = passingScore;
+		this.weightedNumber = weightedNumber;
+		this.traineeScore = traineeScore;
+		this.milestone = milestone;
+	}
+
+
+
+	public long getTopicId() {
         return topicId;
     }
 
@@ -56,11 +94,62 @@ public class Topic {
         this.remarks = remarks;
     }
 
-    public Integer getTopicName() {
+    public String getTopicName() {
         return topicName;
     }
 
-    public void setTopicName(Integer topicName) {
+    public void setTopicName(String topicName) {
         this.topicName = topicName;
     }
+
+	public int getMaxScore() {
+		return maxScore;
+	}
+
+	public void setMaxScore(int maxScore) {
+		this.maxScore = maxScore;
+	}
+
+	public int getPassingScore() {
+		return passingScore;
+	}
+
+	public void setPassingScore(int passingScore) {
+		this.passingScore = passingScore;
+	}
+
+	public int getWeightedNumber() {
+		return weightedNumber;
+	}
+
+	public void setWeightedNumber(int weightedNumber) {
+		this.weightedNumber = weightedNumber;
+	}
+
+	public int getTraineeScore() {
+		return traineeScore;
+	}
+
+	public void setTraineeScore(int traineeScore) {
+		this.traineeScore = traineeScore;
+	}
+
+	public void setTopicId(long topicId) {
+		this.topicId = topicId;
+	}
+
+
+
+	public Milestone getMilestone() {
+		return milestone;
+	}
+
+
+
+	public void setMilestone(Milestone milestone) {
+		this.milestone = milestone;
+	}
+    
+	
+    
 }

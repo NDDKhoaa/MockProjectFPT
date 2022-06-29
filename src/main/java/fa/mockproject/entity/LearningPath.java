@@ -14,22 +14,23 @@ public class LearningPath {
 
     @ManyToOne
     @JoinColumn(name = "topic_id")
-    private Topic topicId;
+    private Topic topic;
 
     @ManyToOne
-    @JoinColumn(name = "trainee_candidate id", nullable = false)
-    private Trainee traineeId;
+    @JoinColumn(name = "trainee_candidate_id", nullable = false)
+    private Trainee trainee;
 
     public LearningPath() {
     }
 
-    public LearningPath(Integer learningPathId, Topic topicId, Trainee traineeId) {
-        this.learningPathId = learningPathId;
-        this.topicId = topicId;
-        this.traineeId = traineeId;
-    }
+    public LearningPath(long learningPathId, Topic topic, Trainee trainee) {
+		super();
+		this.learningPathId = learningPathId;
+		this.topic = topic;
+		this.trainee = trainee;
+	}
 
-    public long getLearningPathId() {
+	public long getLearningPathId() {
         return learningPathId;
     }
 
@@ -38,19 +39,11 @@ public class LearningPath {
     }
 
     public Topic getTopicId() {
-        return topicId;
+        return topic;
     }
 
-    public void setTopicId(Topic topicId) {
-        this.topicId = topicId;
-    }
-
-    public Trainee getTraineeId() {
-        return traineeId;
-    }
-
-    public void setTraineeId(Trainee traineeId) {
-        this.traineeId = traineeId;
+    public void setTopicId(Topic topic) {
+        this.topic = topic;
     }
 
 }

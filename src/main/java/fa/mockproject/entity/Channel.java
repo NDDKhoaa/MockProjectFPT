@@ -1,13 +1,14 @@
 package fa.mockproject.entity;
 
+import java.util.List;
+
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -17,12 +18,8 @@ public class Channel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Column(name = "channel_id", length=20,unique = true, nullable = false)
+	@Column(name = "channel_id", length = 20, unique = true, nullable = false)
 	private String channelId;
-	
-	@ManyToOne
-	@JoinColumn(name = "candidate_id", nullable = true)
-	private Candidate candidate;
 
 	@Column(name = "remarks", length = 255, nullable = true)
 	private String remarks;
@@ -30,31 +27,26 @@ public class Channel {
 	@Column(name = "channel_name", length = 255, nullable = false)
 	private String channelName;
 
+	@OneToMany(mappedBy = "channel")
+	private List<Candidate> candidate;
+
 	public Channel() {
 		super();
 	}
 
-	public Channel(Candidate candidate, String remarks, String channelName) {
+	public Channel(Channel get) {
 		super();
-		this.candidate = candidate;
-		this.remarks = remarks;
-		this.channelName = channelName;
+		this.channelId = get.getChannelId();
+		this.remarks = get.getRemarks();
+		this.channelName = get.getChannelName();
 	}
-	
+
 	public String getChannelId() {
 		return channelId;
 	}
 
 	public void setChannelId(String channelId) {
 		this.channelId = channelId;
-	}
-
-	public Candidate getCandidate() {
-		return candidate;
-	}
-
-	public void setCandidate(Candidate candidate) {
-		this.candidate = candidate;
 	}
 
 	public String getRemarks() {
@@ -73,9 +65,17 @@ public class Channel {
 		this.channelName = channelName;
 	}
 
+	public List<Candidate> getCandidate() {
+		return candidate;
+	}
+
+	public void setCandidate(List<Candidate> candidate) {
+		this.candidate = candidate;
+	}
+
 	@Override
 	public String toString() {
-		return "Channel [channelId=" + channelId + ", remarks=" + remarks + ", channelName=" + channelName + "]";
+		return channelName;
 	}
 
 }

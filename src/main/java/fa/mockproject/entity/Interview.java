@@ -15,6 +15,8 @@ import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import fa.mockproject.model.TraineeCandidateProfileModel;
+
 @Entity
 @Table(name = "Interview")
 @Cacheable
@@ -24,21 +26,21 @@ public class Interview {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "interview_id", unique = true, nullable = false)
 	private long interviewId;
-
-	@Column(name = "time", nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "time", nullable = true)
 	private BigDecimal time;
 
 	@DateTimeFormat
-	@Column(name = "date", nullable = false)
+	@Column(name = "date", nullable = true)
 	private LocalDate date;
 
-	@Column(name = "interviewer", length = 255, nullable = false)
+	@Column(name = "interviewer", length = 255, nullable = true)
 	private String interviewer;
 
-	@Column(name = "comments", length = 1000, nullable = false)
+	@Column(name = "comments", length = 1000, nullable = true)
 	private String comments;
 
-	@Column(name = "result", length = 255, nullable = false)
+	@Column(name = "result", length = 255, nullable = true)
 	private String result;
 
 	@Column(name = "remarks", length = 255, nullable = true)
@@ -61,6 +63,16 @@ public class Interview {
 		this.comments = comments;
 		this.result = result;
 		this.remarks = remarks;
+	}
+
+	public Interview(TraineeCandidateProfileModel model) {
+		this.time = model.getInterviewTime();
+		this.date = model.getInterviewDate();
+		this.interviewer = model.getInterviewer();
+		this.comments = model.getInterviewComments();
+		this.result = model.getInterviewResult();
+		this.remarks = model.getInterviewRemarks();
+		this.candidate=model.getCandidate();
 	}
 
 	public long getInterviewId() {

@@ -3,11 +3,11 @@ package fa.mockproject.model;
 import java.time.LocalDate;
 
 import fa.mockproject.entity.ClassAdmin;
-import fa.mockproject.entity.ClassAdminProfile;
 
 public class ClassAdminModel {
 	
 	private long classAdminId;
+	private long classAdminProfileId;
 	private String fullName;
 	private LocalDate dateOfBirth;
 	private Integer gender;
@@ -19,11 +19,12 @@ public class ClassAdminModel {
 	public ClassAdminModel() {
 		super();
 	}
-
-	public ClassAdminModel(long classAdminId, String fullName, LocalDate dateOfBirth, Integer gender, String phone,
-			String email, String account, String remarks) {
+	
+	public ClassAdminModel(long classAdminId, long classAdminProfileId, String fullName, LocalDate dateOfBirth,
+			Integer gender, String phone, String email, String account, String remarks) {
 		super();
 		this.classAdminId = classAdminId;
+		this.classAdminProfileId = classAdminProfileId;
 		this.fullName = fullName;
 		this.dateOfBirth = dateOfBirth;
 		this.gender = gender;
@@ -32,10 +33,11 @@ public class ClassAdminModel {
 		this.account = account;
 		this.remarks = remarks;
 	}
-	
+
 	public ClassAdminModel(ClassAdmin classAdmin) {
 		super();
 		this.classAdminId = classAdmin.getClassAdminId();
+		this.classAdminProfileId = classAdmin.getClassAdminProfile().getClassAdminProfileId();
 		this.fullName = classAdmin.getClassAdminProfile().getFullName();
 		this.dateOfBirth = classAdmin.getClassAdminProfile().getDateOfBirth();
 		this.gender = classAdmin.getClassAdminProfile().getGender();
@@ -51,6 +53,14 @@ public class ClassAdminModel {
 
 	public void setClassAdminId(long classAdminId) {
 		this.classAdminId = classAdminId;
+	}
+
+	public long getClassAdminProfileId() {
+		return classAdminProfileId;
+	}
+
+	public void setClassAdminProfileId(long classAdminProfileId) {
+		this.classAdminProfileId = classAdminProfileId;
 	}
 
 	public String getFullName() {
@@ -111,9 +121,9 @@ public class ClassAdminModel {
 
 	@Override
 	public String toString() {
-		return "ClassAdminModel [classAdminId=" + classAdminId + ", fullName=" + fullName + ", dateOfBirth="
-				+ dateOfBirth + ", gender=" + gender + ", phone=" + phone + ", email=" + email + ", account=" + account
-				+ ", remarks=" + remarks + "]";
+		return "ClassAdminModel [classAdminId=" + classAdminId + ", classAdminProfileId=" + classAdminProfileId
+				+ ", fullName=" + fullName + ", dateOfBirth=" + dateOfBirth + ", gender=" + gender + ", phone=" + phone
+				+ ", email=" + email + ", account=" + account + ", remarks=" + remarks + "]";
 	}
 	
 }

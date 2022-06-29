@@ -3,12 +3,17 @@ package fa.mockproject.entity;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import fa.mockproject.entity.enumtype.TrainerTypeEnum;
+import fa.mockproject.model.TrainerModel;
 
 @Entity
 @Table(name = "Trainer")
@@ -17,30 +22,67 @@ public class Trainer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "trainer_id")
-	private int trainer_id;
+	private long trainerId;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name= "type", length = 255, nullable =  false)
+	private TrainerTypeEnum type;
 	
-	@OneToOne
-	@JoinColumn(name = "class_id", nullable = false)
+	@ManyToOne
+	@JoinColumn(name = "trainer_profile_id")
+	private TrainerProfile trainerProfile;
+
+	@ManyToOne
+	@JoinColumn(name = "class_id")
 	private ClassBatch classBatch;
-	
-	@OneToOne
-	@JoinColumn(name= "trainerprofile_id")
-	private int trainerprofile_id;
-	
-	@Column(name= "type")
-	private int type;
-	
-	@Column(name="remarks")
-	private int remarks;
-	
 
+	@Column(name = "remarks", length = 255, nullable = true)
+	private String remarks;
 
-	public int getTrainer_id() {
-		return trainer_id;
+	public Trainer() {
+		super();
 	}
 
-	public void setTrainer_id(int trainer_id) {
-		this.trainer_id = trainer_id;
+	public Trainer(long trainerId, TrainerTypeEnum type, TrainerProfile trainerProfile, ClassBatch classBatch, String remarks) {
+		super();
+		this.trainerId = trainerId;
+		this.type = type;
+		this.trainerProfile = trainerProfile;
+		this.classBatch = classBatch;
+		this.remarks = remarks;
+	}
+
+	public Trainer(TrainerModel trainerModel, ClassBatch classBatch) {
+		super();
+		this.trainerId = trainerModel.getTrainerId();
+		this.type = trainerModel.getType();
+		this.trainerProfile = new TrainerProfile(trainerModel);
+		this.classBatch = classBatch;
+		this.remarks = trainerModel.getRemarks();
+	}
+
+	public long getTrainerId() {
+		return trainerId;
+	}
+
+	public void setTrainerId(long trainerId) {
+		this.trainerId = trainerId;
+	}
+
+	public TrainerTypeEnum getType() {
+		return type;
+	}
+
+	public void setType(TrainerTypeEnum type) {
+		this.type = type;
+	}
+
+	public TrainerProfile getTrainerProfile() {
+		return trainerProfile;
+	}
+
+	public void setTrainerProfile(TrainerProfile trainerProfile) {
+		this.trainerProfile = trainerProfile;
 	}
 
 	public ClassBatch getClassBatch() {
@@ -51,46 +93,12 @@ public class Trainer {
 		this.classBatch = classBatch;
 	}
 
-	public int getTrainerprofile_id() {
-		return trainerprofile_id;
-	}
-
-	public void setTrainerprofile_id(int trainerprofile_id) {
-		this.trainerprofile_id = trainerprofile_id;
-	}
-
-	public int getType() {
-		return type;
-	}
-
-	public void setType(int type) {
-		this.type = type;
-	}
-
-	public int getRemarks() {
+	public String getRemarks() {
 		return remarks;
 	}
 
-	public void setRemarks(int remarks) {
+	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
 
-
-	@Override
-	public String toString() {
-		return "Trainer [trainer_id=" + trainer_id + ", classBatch=" + classBatch + ", trainerprofile_id="
-				+ trainerprofile_id + ", type=" + type + ", remarks=" + remarks + "]";
-	}
-
-	public Trainer(int trainer_id, ClassBatch classBatch, int trainerprofile_id, int type, int remarks) {
-		super();
-		this.trainer_id = trainer_id;
-		this.classBatch = classBatch;
-		this.trainerprofile_id = trainerprofile_id;
-		this.type = type;
-		this.remarks = remarks;
-	}
-	
-	
-	
 }

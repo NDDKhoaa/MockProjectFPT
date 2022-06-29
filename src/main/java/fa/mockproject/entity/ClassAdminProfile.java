@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -24,7 +25,8 @@ public class ClassAdminProfile {
 	@Column(name = "class_admin_profile_id")
 	private long classAdminProfileId;
 	
-	@OneToOne(mappedBy = "classAdminProfile")
+	@OneToOne
+	@JoinColumn(name = "class_admin_id", nullable = false)
 	private ClassAdmin classAdmin;
 	
 	@Column(name = "account", length = 255, unique = true, nullable = false)

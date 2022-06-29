@@ -1,7 +1,8 @@
 package fa.mockproject.entity;
 
 import java.time.LocalDate;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
@@ -12,11 +13,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import fa.mockproject.model.TraineeCandidateProfileModel;
 
 @Entity
 @Table(name = "Candidate")
@@ -24,43 +28,40 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Candidate {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "candidate_id", unique = true, nullable = false)
 	private long candidateId;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "candidate", cascade = CascadeType.MERGE)
+	@JoinColumn(name = "trainee_candidate_profile_id", unique = true, nullable = true)
 	private TraineeCandidateProfile traineeCandidateProfile;
-
-	@DateTimeFormat
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
 	@Column(name = "application_date", nullable = false)
-	private LocalDate applicationDate;
+	private LocalDateTime applicationDate;
+
+	@ManyToOne
+	@JoinColumn(name = "channel_id", nullable = true)
+	private Channel channel;
+
+	@ManyToOne
+	@JoinColumn(name = "location_id", nullable = true)
+	private Location location;
+
+	@OneToMany(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "entry_test_id", nullable = true)
+	private List<EntryTest> entryTests;
+
+	@OneToMany(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "interview_id", nullable = true)
+	private List<Interview> interviews;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "channel_id", nullable = true, insertable = false, updatable = false)
-	private Set<Channel> channel;
+	@JoinColumn(name = "offer_id", nullable = true)
+	private List<Offer> offers;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "location_id", nullable = true, insertable = false, updatable = false)
-	private Set<Location> location;
-
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "entry_test_id", nullable = true, insertable = false, updatable = false)
-	private Set<EntryTest> entryTest;
-
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "interview_id", nullable = true, insertable = false, updatable = false)
-	private Set<Interview> interview;
-
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "offer_id", nullable = true, insertable = false, updatable = false)
-	private Set<Offer> offer;
-	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "cv_id", nullable = true, insertable = false, updatable = false)
-	private Set<CV> CV;
-
-	@Column(name = "status", length = 255, nullable = true)
-	private String status;
+	@ManyToOne
+	@JoinColumn(name = "status", nullable = true)
+	private TraineeCandidateProfileStatus status;
 
 	@Column(name = "remarks", length = 255, nullable = true)
 	private String remarks;
@@ -85,59 +86,59 @@ public class Candidate {
 		this.traineeCandidateProfile = traineeCandidateProfile;
 	}
 
-	public LocalDate getApplicationDate() {
+	public LocalDateTime getApplicationDate() {
 		return applicationDate;
 	}
 
-	public void setApplicationDate(LocalDate applicationDate) {
+	public void setApplicationDate(LocalDateTime applicationDate) {
 		this.applicationDate = applicationDate;
 	}
 
-	public Set<Channel> getChannel() {
+	public Channel getChannel() {
 		return channel;
 	}
 
-	public void setChannel(Set<Channel> channel) {
+	public void setChannel(Channel channel) {
 		this.channel = channel;
 	}
 
-	public Set<Location> getLocation() {
+	public Location getLocation() {
 		return location;
 	}
 
-	public void setLocation(Set<Location> location) {
+	public void setLocation(Location location) {
 		this.location = location;
 	}
 
-	public Set<EntryTest> getEntryTest() {
-		return entryTest;
+	public List<EntryTest> getEntryTests() {
+		return entryTests;
 	}
 
-	public void setEntryTest(Set<EntryTest> entryTest) {
-		this.entryTest = entryTest;
+	public void setEntryTests(List<EntryTest> entryTests) {
+		this.entryTests = entryTests;
 	}
 
-	public Set<Interview> getInterview() {
-		return interview;
+	public List<Interview> getInterviews() {
+		return interviews;
 	}
 
-	public void setInterview(Set<Interview> interview) {
-		this.interview = interview;
+	public void setInterviews(List<Interview> interviews) {
+		this.interviews = interviews;
 	}
 
-	public Set<Offer> getOffer() {
-		return offer;
+	public List<Offer> getOffers() {
+		return offers;
 	}
 
-	public void setOffer(Set<Offer> offer) {
-		this.offer = offer;
+	public void setOffers(List<Offer> offers) {
+		this.offers = offers;
 	}
 
-	public String getStatus() {
+	public TraineeCandidateProfileStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(TraineeCandidateProfileStatus status) {
 		this.status = status;
 	}
 
@@ -147,6 +148,51 @@ public class Candidate {
 
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
+	}
+
+	public Candidate(TraineeCandidateProfileModel model, Channel channel2, Location location2,
+		 TraineeCandidateProfileStatus status2) {
+		LocalDate localDateApplicationDate = model.getApplicationDate();
+		this.applicationDate = localDateApplicationDate.atStartOfDay();
+		this.channel = channel2;
+		this.location = location2;
+		this.status = status2;
+		this.remarks = model.getRemarks();
+	}
+
+	public Candidate(Candidate findbyId) {
+		this.candidateId = findbyId.getCandidateId();
+		this.traineeCandidateProfile = findbyId.getTraineeCandidateProfile();
+		this.applicationDate = findbyId.getApplicationDate();
+		this.channel = findbyId.getChannel();
+		this.location = findbyId.getLocation();
+		this.entryTests = findbyId.getEntryTests();
+		this.interviews = findbyId.getInterviews();
+		this.offers = findbyId.getOffers();
+		this.status = findbyId.getStatus();
+		this.remarks = findbyId.getRemarks();
+	}
+
+	public Candidate(Candidate candidate2, Channel channel2, Location location2,TraineeCandidateProfileStatus status2) {
+		this.applicationDate = candidate2.getApplicationDate();
+		this.channel = channel2;
+		this.location = location2;
+		this.status = status2;
+		this.remarks = candidate2.getRemarks();
+		this.traineeCandidateProfile = candidate2.getTraineeCandidateProfile();
+	}
+
+	public Candidate(Candidate candidateID2, TraineeCandidateProfileStatus status2) {
+		this.candidateId = candidateID2.getCandidateId();
+		this.traineeCandidateProfile = candidateID2.getTraineeCandidateProfile();
+		this.applicationDate = candidateID2.getApplicationDate();
+		this.channel = candidateID2.getChannel();
+		this.location = candidateID2.getLocation();
+		this.entryTests = candidateID2.getEntryTests();
+		this.interviews = candidateID2.getInterviews();
+		this.offers = candidateID2.getOffers();
+		this.status = status2;
+		this.remarks = candidateID2.getRemarks();
 	}
 
 }
