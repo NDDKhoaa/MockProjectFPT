@@ -2,289 +2,289 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<meta charset="UTF-8">
-<title>Update Candidate Result</title>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-<style>
-table {
-	font-family: arial, sans-serif;
-	border-collapse: collapse;
-	width: 100%;
-}
+	<meta charset="UTF-8">
+	<title>Update Candidate Result</title>
+	<link rel="stylesheet"
+		  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script
+			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet"
+		  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+	<style>
+		table {
+			font-family: arial, sans-serif;
+			border-collapse: collapse;
+			width: 100%;
+		}
 
-td, th {
-	border: 1px solid #dddddd;
-	text-align: left;
-	padding: 8px;
-}
+		td, th {
+			border: 1px solid #dddddd;
+			text-align: left;
+			padding: 8px;
+		}
 
-th {
-	background-color: #CCCCCC
-}
+		th {
+			background-color: #CCCCCC
+		}
 
-tr:nth-child(even) {
-	background-color: #EEEEEE;
-}
+		tr:nth-child(even) {
+			background-color: #EEEEEE;
+		}
 
-.menusetting {
-	background-color: #CCCCCC;
-}
+		.menusetting {
+			background-color: #CCCCCC;
+		}
 
-.hrefsetting {
-	margin-top: 5px;
-	margin-bottom: 5px;
-}
+		.hrefsetting {
+			margin-top: 5px;
+			margin-bottom: 5px;
+		}
 
-.tablesetting {
-	padding: 10px;
-	height: 40px;
-	border: 1px solid black;
-}
+		.tablesetting {
+			padding: 10px;
+			height: 40px;
+			border: 1px solid black;
+		}
 
-.inputsetting {
-	margin-left: -8px;
-	margin-right: -8px;
-	padding: 5px;
-	margin-bottom: -10px;
-	margin-top: -10px;
-	border: 1px solid black;
-	width: 150px;
-}
+		.inputsetting {
+			margin-left: -8px;
+			margin-right: -8px;
+			padding: 5px;
+			margin-bottom: -10px;
+			margin-top: -10px;
+			border: 1px solid black;
+			width: 150px;
+		}
 
-.datesetting {
-	margin-left: -8px;
-	margin-right: -8px;
-	padding: 4px;
-	margin-bottom: -10px;
-	margin-top: -10px;
-	border: 1px solid black;
-	margin-right: -8px;
-	padding: 4px;
-	margin-bottom: -10px;
-	margin-top: -10px;
-}
+		.datesetting {
+			margin-left: -8px;
+			margin-right: -8px;
+			padding: 4px;
+			margin-bottom: -10px;
+			margin-top: -10px;
+			border: 1px solid black;
+			margin-right: -8px;
+			padding: 4px;
+			margin-bottom: -10px;
+			margin-top: -10px;
+		}
 
-.selectsetting {
-	padding: 10px;
-	border: 1px solid black;
-}
+		.selectsetting {
+			padding: 10px;
+			border: 1px solid black;
+		}
 
-.commentsetting {
-	margin-left: -8px;
-	margin-right: -8px;
-	padding: 5px;
-	margin-bottom: -10px;
-	margin-top: -10px;
-	border: 1px solid black;
-	width: 450px;
-}
+		.commentsetting {
+			margin-left: -8px;
+			margin-right: -8px;
+			padding: 5px;
+			margin-bottom: -10px;
+			margin-top: -10px;
+			border: 1px solid black;
+			width: 450px;
+		}
 
-.tablebackground {
-	background-color: #CCCCCC;
-}
+		.tablebackground {
+			background-color: #CCCCCC;
+		}
 
-.inputedbackground {
-	background-color: #DDDDDD;
-}
+		.inputedbackground {
+			background-color: #DDDDDD;
+		}
 
-.pagesetting {
-	border: 1px solid black;
-	border-style: solid solid solid solid;
-	padding: 7px;
-	border-color: black;
-	border-bottom-color: #FFFFFF;
-}
+		.pagesetting {
+			border: 1px solid black;
+			border-style: solid solid solid solid;
+			padding: 7px;
+			border-color: black;
+			border-bottom-color: #FFFFFF;
+		}
 
-.nontabsetting {
-	border: 1px solid black;
-	border-style: solid solid solid solid;
-	padding: 7px;
-	border-color: black;
-}
+		.nontabsetting {
+			border: 1px solid black;
+			border-style: solid solid solid solid;
+			padding: 7px;
+			border-color: black;
+		}
 
-.pagesettingfordiv {
-	margin-top: 12px;
-}
+		.pagesettingfordiv {
+			margin-top: 12px;
+		}
 
-.tabsetting {
-	border-style: solid solid solid solid;
-	border: 1px solid black;
-}
+		.tabsetting {
+			border-style: solid solid solid solid;
+			border: 1px solid black;
+		}
 
-.submitbutton {
-	background-color: #073763;
-	color: white;
-	border: 1px solid black;
-	padding: 3px;
-	width: 75px;
-}
+		.submitbutton {
+			background-color: #073763;
+			color: white;
+			border: 1px solid black;
+			padding: 3px;
+			width: 75px;
+		}
 
-.closebutton {
-	border: 1px solid black;
-	padding: 3px;
-	width: 75px;
-}
+		.closebutton {
+			border: 1px solid black;
+			padding: 3px;
+			width: 75px;
+		}
 
-.fa-arrow-left {
-	color: #CF2A28;
-}
-</style>
+		.fa-arrow-left {
+			color: #CF2A28;
+		}
+	</style>
 </head>
 
 <body>
-	<div class="container-fluid">
-		<div class="row"
-			style="height: 50px; background-color: #205081; vertical-align: middle;">
-			<div class="col-lg-2">
-				<img src="https://i.postimg.cc/7Y2Hrb9q/Logo.png" alt=""
-					style="height: 47px; width: 90px;">
-			</div>
-			<div class="col">
-				<h2 style="font-size: 19px; color: white; font-weight: 550;">FSOFT
-					HR ULTILITY</h2>
-			</div>
+<div class="container-fluid">
+	<div class="row"
+		 style="height: 50px; background-color: #205081; vertical-align: middle;">
+		<div class="col-lg-2">
+			<img src="https://i.postimg.cc/7Y2Hrb9q/Logo.png" alt=""
+				 style="height: 47px; width: 90px;">
 		</div>
-		<div class="row" style="font-weight: 550;">
-			<div class="col-lg-2 menusetting" style="height: 900px;">
-				<label>Your role now is:</label> <select
-					style="width: 170px; height: 30px; margin-bottom: 20px;">
-					<option>Select Role</option>
-				</select>
-				<div class="hrefsetting">
-					<a href=""><i class="fa fa-circle"></i> Dashboard</a>
-				</div>
-				<div class="hrefsetting">
-					<a href="/"><i class="fa fa-circle"></i> Class Management</a>
-				</div>
-				<div class="hrefsetting">
-					<a href="viewCandidate"><i class="fa fa-circle"></i> Candidate
-						Management</a>
-				</div>
-				<div class="hrefsetting">
-					<a href=""><i class="fa fa-circle"></i> Trainer Management</a>
-				</div>
-				<div class="hrefsetting">
-					<a href=""><i class="fa fa-circle"></i> Trainee Management</a>
-				</div>
-				<div class="hrefsetting">
-					<a href=""><i class="fa fa-circle"></i> General Setting</a>
-				</div>
-			</div>
-			<div class="col-lg-9">
-				<div>
-					<div class="row">
-						<div class="col-lg-1"></div>
-						<div class="col-lg-3 pagesettingfordiv">
-							<a class="pagesetting nontabsetting tablebackground"
-								th:href="@{/updateCandidate(traineeCandidateProfileId=*{interviewTestModel.traineeCandidateProfileId})}"
-								style="color: black;">Candidate Information</a>
-						</div>
-						<div class="col-lg-1 pagesettingfordiv"
-							style="margin-left: -50px;">
-							<a class="pagesetting"
-								th:href="@{/updateCandidateResults(traineeCandidateProfileId=*{interviewTestModel.traineeCandidateProfileId})}"
-								style="color: black;">Result</a>
-						</div>
-					</div>
-					<div class="row tabsetting"
-						style="margin-left: 20px; padding: 20px; margin-top: 5px; min-width: 1020px;">
-						<div class="col-lg-9 " style="font-weight: 550;">
-							<form
-								th:action="@{/saveUpdateResults(traineeCandidateProfileId=${interviewTestModel.traineeCandidateProfileId})}"
-								th:object="${interviewTestModel}" method="POST">
-								<table>
-									<tr>
-										<td><i class="fas fa-chevron-down"></i></td>
-										<td colspan="7">Entry Test</td>
-									</tr>
-									<tr>
-										<td><i class="fas fa-plus-circle"></i></td>
-										<td>Time</td>
-										<td>Date</td>
-										<td>Language Valuator</td>
-										<td>Language Point</td>
-										<td>Technical Valuator</td>
-										<td>Technical Point</td>
-										<td>Result</td>
-									</tr>
-
-									<tr>
-										<td><i class="fas fa-trash-alt"></i></td>
-										<td><span></span></td>
-										<td><input class="datesetting" type="date"
-											th:field="*{testDate}" /></td>
-										<td><input class="inputsetting" type="text"
-											th:field="*{testLanguageValuator}" /></td>
-										<td><input class="inputsetting" type="text"
-											th:field="*{testLanguageResult}" /></td>
-										<td><input class="inputsetting" type="text"
-											th:field="*{testTechnicalValuator}" /></td>
-										<td><input class="inputsetting" type="text"
-											th:field="*{testTechnicalResult}" /></td>
-										<td><select class="inputsetting" th:field="*{testResult}">
-												<option th:value="0">Select Result</option>
-												<option th:each="result:${resultList}"
-													th:value="${result.result}" th:text="${result.result}"></option>
-										</select></td>
-									</tr>
-								</table>
-
-								<table style="margin-top: 50px;">
-									<tr>
-										<td><i class="fas fa-chevron-down"></i></td>
-										<td colspan="7">Entry Test</td>
-									</tr>
-									<tr>
-										<td><i class="fas fa-plus-circle"></i></td>
-										<td>Time</td>
-										<td>Date</td>
-										<td>Interviewer</td>
-										<td colspan="3">Comment</td>
-										<td>Result</td>
-									</tr>
-									<tr>
-										<td><i class="fas fa-trash-alt"></i></td>
-										<td><span></span></td>
-										<td><input class="datesetting" type="date"
-											th:field="*{interviewDate}" /></td>
-										<td><input class="inputsetting" type="text"
-											th:field="*{interviewer}" /></td>
-										<td colspan="3"><input class="commentsetting" type="text"
-											th:field="*{interviewComments}" /></td>
-										<td><select class="inputsetting"
-											th:field="*{interviewResult}">
-												<option th:value="0">Select Result</option>
-												<option th:each="result:${resultList}"
-													th:value="${result.result}" th:text="${result.result}"></option>
-										</select></td>
-
-									</tr>
-								</table>
-								<div class="row" style="margin-top: 20px;">
-									<button class="submitbutton" type="submit">Submit</button>
-									<button class="closebutton" type="button"
-										onclick="history.back()">
-										<i class="fas fa-arrow-left"></i> Close
-									</button>
-								</div>
-							</form>
-
-
-
-
-
-						</div>
-					</div>
-				</div>
-			</div>
+		<div class="col">
+			<h2 style="font-size: 19px; color: white; font-weight: 550;">FSOFT
+				HR ULTILITY</h2>
 		</div>
-		<div class="row"></div>
 	</div>
+	<div class="row" style="font-weight: 550;">
+		<div class="col-lg-2 menusetting" style="height: 900px;">
+			<label>Your role now is:</label> <select
+				style="width: 170px; height: 30px; margin-bottom: 20px;">
+			<option>Select Role</option>
+		</select>
+			<div class="hrefsetting">
+				<a href=""><i class="fa fa-circle"></i> Dashboard</a>
+			</div>
+			<div class="hrefsetting">
+				<a href="/"><i class="fa fa-circle"></i> Class Management</a>
+			</div>
+			<div class="hrefsetting">
+				<a href="viewCandidate"><i class="fa fa-circle"></i> Candidate
+					Management</a>
+			</div>
+			<div class="hrefsetting">
+				<a href=""><i class="fa fa-circle"></i> Trainer Management</a>
+			</div>
+			<div class="hrefsetting">
+				<a href=""><i class="fa fa-circle"></i> Trainee Management</a>
+			</div>
+			<div class="hrefsetting">
+				<a href=""><i class="fa fa-circle"></i> General Setting</a>
+			</div>
+		</div>
+		<div class="col-lg-9">
+			<div>
+				<div class="row">
+					<div class="col-lg-1"></div>
+					<div class="col-lg-3 pagesettingfordiv">
+						<a class="pagesetting nontabsetting tablebackground"
+						   th:href="@{/updateCandidate(traineeCandidateProfileId=*{model.traineeCandidateProfileId})}"
+						   style="color: black;">Candidate Information</a>
+					</div>
+					<div class="col-lg-1 pagesettingfordiv"
+						 style="margin-left: -50px;">
+						<a class="pagesetting"
+						   th:href="@{/updateCandidateResults(traineeCandidateProfileId=*{model.traineeCandidateProfileId})}"
+						   style="color: black;">Result</a>
+					</div>
+				</div>
+				<div class="row tabsetting"
+					 style="margin-left: 20px; padding: 20px; margin-top: 5px; min-width: 1020px;">
+					<div class="col-lg-9 " style="font-weight: 550;">
+						<form
+								th:action="@{/saveUpdateResults(traineeCandidateProfileId=${model.traineeCandidateProfileId})}"
+								th:object="${model}" method="POST">
+							<table>
+								<tr>
+									<td><i class="fas fa-chevron-down"></i></td>
+									<td colspan="7">Entry Test</td>
+								</tr>
+								<tr>
+									<td><i class="fas fa-plus-circle"></i></td>
+									<td>Time</td>
+									<td>Date</td>
+									<td>Language Valuator</td>
+									<td>Language Point</td>
+									<td>Technical Valuator</td>
+									<td>Technical Point</td>
+									<td>Result</td>
+								</tr>
+
+								<tr>
+									<td><i class="fas fa-trash-alt"></i></td>
+									<td><span></span></td>
+									<td><input class="datesetting" type="date"
+											   th:field="*{testDate}" /></td>
+									<td><input class="inputsetting" type="text"
+											   th:field="*{testLanguageValuator}" /></td>
+									<td><input class="inputsetting" type="text"
+											   th:field="*{testLanguageResult}" /></td>
+									<td><input class="inputsetting" type="text"
+											   th:field="*{testTechnicalValuator}" /></td>
+									<td><input class="inputsetting" type="text"
+											   th:field="*{testTechnicalResult}" /></td>
+									<td><select class="inputsetting" th:field="*{testResult}">
+										<option th:value="0">Select Result</option>
+										<option th:each="result:${resultList}"
+												th:value="${result.result}" th:text="${result.result}"></option>
+									</select></td>
+								</tr>
+							</table>
+
+							<table style="margin-top: 50px;">
+								<tr>
+									<td><i class="fas fa-chevron-down"></i></td>
+									<td colspan="7">Entry Test</td>
+								</tr>
+								<tr>
+									<td><i class="fas fa-plus-circle"></i></td>
+									<td>Time</td>
+									<td>Date</td>
+									<td>Interviewer</td>
+									<td colspan="3">Comment</td>
+									<td>Result</td>
+								</tr>
+								<tr>
+									<td><i class="fas fa-trash-alt"></i></td>
+									<td><span></span></td>
+									<td><input class="datesetting" type="date"
+											   th:field="*{interviewDate}" /></td>
+									<td><input class="inputsetting" type="text"
+											   th:field="*{interviewer}" /></td>
+									<td colspan="3"><input class="commentsetting" type="text"
+														   th:field="*{interviewComments}" /></td>
+									<td><select class="inputsetting"
+												th:field="*{interviewResult}">
+										<option th:value="0">Select Result</option>
+										<option th:each="result:${resultList}"
+												th:value="${result.result}" th:text="${result.result}"></option>
+									</select></td>
+
+								</tr>
+							</table>
+							<div class="row" style="margin-top: 20px;">
+								<button class="submitbutton" type="submit">Submit</button>
+								<button class="closebutton" type="button"
+										onclick="history.back()">
+									<i class="fas fa-arrow-left"></i> Close
+								</button>
+							</div>
+						</form>
+
+
+
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row"></div>
+</div>
 
 
 </body>
