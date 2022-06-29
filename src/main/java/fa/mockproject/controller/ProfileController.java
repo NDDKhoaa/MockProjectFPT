@@ -171,8 +171,8 @@ public class ProfileController {
 		resultList.add(resultP);
 		resultList.add(resultF);
 		TraineeCandidateProfileModel model = new TraineeCandidateProfileModel(profile, candidate);
-		mav.addObject("interviewTestModel", model);
 		mav.addObject("resultList", resultList);
+		mav.addObject("model", model);
 
 		return mav;
 	}
