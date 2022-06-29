@@ -2,6 +2,8 @@ package fa.mockproject.model;
 
 import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import fa.mockproject.entity.Trainer;
 import fa.mockproject.entity.TrainerProfile;
 import fa.mockproject.entity.enumtype.TrainerTypeEnum;
@@ -13,6 +15,7 @@ public class TrainerModel {
 	private TrainerTypeEnum type;
 	private String account;
 	private String fullName;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dateOfBirth;
 	private int gender;
 	private String unit;
