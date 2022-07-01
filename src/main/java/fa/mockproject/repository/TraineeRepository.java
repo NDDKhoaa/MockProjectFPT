@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import fa.mockproject.entity.Trainee;
+import fa.mockproject.entity.TraineeCandidateProfile;
 
 public interface TraineeRepository extends JpaRepository<Trainee, Long> {
 	
