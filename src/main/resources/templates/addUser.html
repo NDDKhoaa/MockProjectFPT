@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create New Employee</title>
+  <link rel="stylesheet" th:href="@{../static/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{../static/css/use-role.css}">
+  <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
+</head>
+<body>
+<div>
+  <div class="row mr-5">
+    <div class="col-md-12" id="bodyform">
+      <div class="col-md-8 mx-auto center-me center-parent">
+        <h2>Add user</h2>
+        <div style="color:red;" id="add-user-error"></div>
+        <form id="form-add-user" th:object="${userModel}">
+          <div class="row block-center">
+            <div class="col-md-8">
+              <label>First name</label>
+              <input type="text" id="firstName" class="form-control">
+            </div>
+            <div class="col-md-8">
+              <label>Last name</label>
+              <input type="text" id="lastName" class="form-control"
+                     th:field="*{lastName}">
+            </div>
+            <div class="col-md-8">
+              <label>email</label>
+              <input type="email" id="email" class="form-control" th:field="*{email}">
+            </div>
+            <div class="col-md-8">
+              <label>Password</label>
+              <input type="password" id="password" class="form-control" th:field="*{password}">
+            </div>
+            <div class="col-md-8">
+              <label>Phone number</label>
+              <input type="text" id="phoneNumber" class="form-control" th:field="*{phoneNumber}">
+            </div>
+            <div class="col-md-8">
+              <label>Role</label>
+              <!--                        <input type="text"  class="form-control" id="roles">-->
+              <!-- <tr th:each="role : ${roles}">
+           <td><input type="text" class="form-control" th:text="${role.name}" /></td>
+       </tr>-->
+              <!--                               placeholder='Role Name' class="form-control" th:field="*{}"/>-->
+              <select class="col-lg-4 " th:field="*{roles}" multiple="multiple" id="roles">
+                <option th:each=" role1:${listRole}" th:field="*{roles}"
+                        th:value="${role1.getRoleId()}" th:text="${role1.getName()}"></option>
+              </select>
+            </div>
+
+          </div>
+
+        </form>
+        <button type="button" id="save-user" class="btn btn-primary mt-3">Save</button>
+        <button type="button" id="clear-add-user" class="btn btn-primary mt-3">Clear</button>
+        <button type="button" onclick="history.back()" class="btn btn-primary mt-3">Back</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script language="javascript">
+
+        $('#save-user').click(function() {
+         var firstName = $('#firstName').val();
+           var     lastName = $('#lastName').val();
+           var     email = $('#email').val();
+            var    password = $('#password').val();
+            var    phoneNumber= $('#phoneNumber').val();
+             var roleValue = $('#roles').val();
+
+        if(firstName == "" || email=="" || password==""){
+        document.getElementById("add-user-error").innerHTML = "First name, email, password not be empty.";
+        return;
+       }
+       var stringJson = [];
+
+        for(var i = 0; i < roleValue.length; i++) {
+          const role = {roleId:  roleValue[i]};
+          stringJson.push(role);
+
+        }
+        var userModel = {
+                firstName : firstName,
+                lastName : lastName,
+                email : email,
+                password : password,
+                phoneNumber: phoneNumber,
+                roles: stringJson
+        }
+         document.getElementById("add-user-error").innerHTML = "";
+        $.ajax({
+            url: '/addUser',
+            method: 'POST',
+            contentType: "application/json",
+            data:  JSON.stringify(userModel),
+            success: function (data) {
+            if(data == "OK"){
+              window.location = "/listUser";
+              }
+            },
+            error: function(error) {
+             if(error.responseText == "Email existed."){
+              document.getElementById("add-user-error").innerHTML = "Email existed.";
+             }
+                    }
+                });
+
+        });
+          $(function () {
+            $("#join_datepicker").datepicker({ dateFormat: "yy-mm-dd" });
+            $("#retire_datepicker").datepicker({ dateFormat: "yy-mm-dd" });
+        });
+
+
+    $('#clear-add-user').click(function() {
+      $("#form-add-user").trigger('reset');
+      });
+
+
+</script>
+</body>
+
+</html>

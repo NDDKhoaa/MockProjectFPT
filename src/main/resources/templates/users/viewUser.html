@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>View User</title>
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<h3>View Employee</h3>
+<table class="table table-striped">
+  <tbody>
+  <tr>
+    <td>Id</td>
+    <td th:text="${user.userId}"/>
+  </tr>
+  <tr>
+    <td>First name</td>
+    <td th:text="${user.firstName}"/>
+  </tr>
+  <tr>
+    <td>Last name</td>
+    <td th:text="${user.lastName}"/>
+  </tr>
+  <tr>
+    <td>Email</td>
+    <td th:text="${user.email}"/>
+  </tr>
+  <tr>
+    <td>Phone</td>
+    <td th:text="${user.phoneNumber}"/>
+  </tr>
+  <tr>
+    <td>Roles</td>
+    <td>
+      <p th:each=" role:${user.roles}" th:text="${role.getName()}"/>
+    </td>
+  </tr>
+  <tr>
+    <td>Privileges</td>
+    <td><p th:each=" role:${user.roles}"
+           th:if="${#lists.size(role.privileges) > 0}" th:text="${role.privileges}"/></td>
+  </tr>
+  </tbody>
+</table>
+<button type="button" onclick="history.back()" class="btn btn-primary mt-3">Back</button>
+</body>
+</html>
