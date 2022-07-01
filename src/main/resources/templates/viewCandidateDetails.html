@@ -2,300 +2,307 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<meta charset="UTF-8">
-<title>Candidate Profile Details</title>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-<style>
-.tablesetting {
-	padding: 10px;
-	height: 40px;
-	border: 1px solid black;
-}
-
-.inputsetting {
-	padding: 9px;
-	border: 1px solid black;
-}
-
-.selectsetting {
-	padding: 11px;
-	border: 1px solid black;
-}
-
-.radiosetting {
-	padding: 6.5px;
-}
-
-.tablebackground {
-	background-color: #CCCCCC;
-}
-
-.inputedbackground {
-	background-color: #DDDDDD;
-}
-
-.pagesetting {
-	border-style: solid solid solid solid;
-	padding: 5px;
-	border-color: black;
-	border-bottom-color: #FFFFFF;
-}
-
-.pagesettingfordiv {
-	margin-top: 10px;
-}
-
-.tabsetting {
-	border-style: solid solid solid solid;
-	border: 1px solid black;
-}
-
-.menusetting {
-	background-color: #CCCCCC;
-}
-
-.hrefsetting {
-	margin-top: 5px;
-	margin-bottom: 5px;
-}
-
-.fa-plus-circle {
-	color: green;
-}
-
-.fa-arrow-alt-circle-up {
-	color: blue;
-}
-
-.fa-times-circle {
-	color: red;
-}
-</style>
+    <meta charset="UTF-8">
+    <title>Candidate Profile Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <style>
+        .tablesetting {
+            padding: 10px;
+            height: 40px;
+            border: 1px solid black;
+        }
+        
+        .inputsetting {
+            padding: 9px;
+            border: 1px solid black;
+        }
+        
+        .selectsetting {
+            padding: 11px;
+            border: 1px solid black;
+        }
+        
+        .radiosetting {
+            padding: 6.5px;
+        }
+        
+        .tablebackground {
+            background-color: #CCCCCC;
+        }
+        
+        .inputedbackground {
+            background-color: #DDDDDD;
+        }
+        
+        .pagesetting {
+            border-style: solid solid solid solid;
+            padding: 5px;
+            border-color: black;
+            border-bottom-color: #FFFFFF;
+        }
+        
+        .pagesettingfordiv {
+            margin-top: 10px;
+        }
+        
+        .tabsetting {
+            border-style: solid solid solid solid;
+            border: 1px solid black;
+        }
+        
+        .menusetting {
+            background-color: #CCCCCC;
+        }
+        
+        .hrefsetting {
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        
+        .fa-plus-circle {
+            color: green;
+        }
+        
+        .fa-arrow-alt-circle-up {
+            color: blue;
+        }
+        
+        .fa-times-circle {
+            color: red;
+        }
+        
+        .deletebutton {
+            position: relative;
+            margin-left: 430px;
+        }
+        
+        .newbutton {
+            position: absolute;
+            margin-left: 0px;
+            margin-top: 0px;
+        }
+        
+        .updatebutton {
+            position: absolute;
+            margin-left: 200px;
+            margin-top: 0px;
+        }
+        
+        a {
+            text-decoration: none;
+        }
+    </style>
 </head>
 
 <body>
-	<div class="container-fluid">
-		<div class="row"
-			style="height: 50px; background-color: #205081; vertical-align: middle;">
-			<div class="col-lg-2">
-				<img src="https://i.postimg.cc/7Y2Hrb9q/Logo.png" alt=""
-					style="height: 47px; width: 90px;">
-			</div>
-			<div class="col">
-				<h2 style="font-size: 19px; color: white; font-weight: 550;">FSOFT
-					HR ULTILITY</h2>
-			</div>
-		</div>
-		<div class="row" style="font-weight: 550;">
-			<div class="col-lg-2 menusetting" style="height: 900px;">
-				<label>Your role now is:</label> <select
-					style="width: 170px; height: 30px; margin-bottom: 20px;">
+    <div class="container-fluid">
+        <div class="row" style="height: 50px; background-color: #205081; vertical-align: middle;">
+            <div class="col-lg-2">
+                <img src="https://i.postimg.cc/7Y2Hrb9q/Logo.png" alt="" style="height: 47px; width: 90px;">
+            </div>
+            <div class="col">
+                <h2 style="font-size: 25px; color: white; font-weight: 780; margin-top: 10px;">FSOFT HR ULTILITY</h2>
+            </div>
+        </div>
+        <div class="row" style="font-weight: 550;">
+            <div class="col-lg-2 menusetting" style="height: 900px;">
+                <label>Your role now is:</label> <select style="width: 170px; height: 30px; margin-bottom: 20px;">
 					<option>Select Role</option>
 				</select>
-				<div class="hrefsetting">
-					<a href=""><i class="fa fa-circle"></i> Dashboard</a>
-				</div>
-				<div class="hrefsetting">
-					<a href="/"><i class="fa fa-circle"></i> Class Management</a>
-				</div>
-				<div class="hrefsetting">
-					<a href="viewCandidate"><i class="fa fa-circle"></i> Candidate
+                <div class="hrefsetting">
+                    <a href=""><i class="fa fa-circle"></i> Dashboard</a>
+                </div>
+                <div class="hrefsetting">
+                    <a href="/"><i class="fa fa-circle"></i> Class Management</a>
+                </div>
+                <div class="hrefsetting">
+                    <a href="viewCandidate"><i class="fa fa-circle"></i> Candidate
 						Management</a>
-				</div>
-				<div class="hrefsetting">
-					<a href=""><i class="fa fa-circle"></i> Trainer Management</a>
-				</div>
-				<div class="hrefsetting">
-					<a href=""><i class="fa fa-circle"></i> Trainee Management</a>
-				</div>
-				<div class="hrefsetting">
-					<a href=""><i class="fa fa-circle"></i> General Setting</a>
-				</div>
-			</div>
-			<div class="col-lg-9"
-				style="margin-left: 20px; padding: 20px; margin-top: 5px; font-weight: 550;">
-				<form th:object="${profile}" enctype="multipart/form-data"
-					method="Get">
-					<div>
-						<div class="row tablesetting" style="background-color: #95BCF2;">Personal
-							Information</div>
-						<div class="row">
-							<div class="col-lg-2 tablesetting tablebackground">Empl ID</div>
-							<div class="col-lg-2 tablesetting inputedbackground">
-								<span th:text="*{traineeCandidateProfileId}"></span>
-							</div>
-							<div class="col-lg-2 tablesetting tablebackground">Type</div>
-							<div class="col-lg-2 tablesetting inputedbackground">
-								<span th:text="*{type}"></span>
-							</div>
-							<div class="col-lg-2 tablesetting tablebackground">Status</div>
-							<div class="col-lg-2 tablesetting inputedbackground">
-								<span th:text="*{statusName}"></span>
-							</div>
-						</div>
+                </div>
+                <div class="hrefsetting">
+                    <a href="showTrainerList"><i class="fa fa-circle"></i> Trainer Management</a>
+                </div>
+                <div class="hrefsetting">
+                    <a href="showTraineeList"><i class="fa fa-circle"></i> Trainee Management</a>
+                </div>
+                <div class="hrefsetting">
+                    <a href=""><i class="fa fa-circle"></i> General Setting</a>
+                </div>
+            </div>
+            <div class="col-lg-9" style="margin-left: 20px; padding: 20px; margin-top: 5px; font-weight: 550;">
+                <form th:object="${profile}" enctype="multipart/form-data" method="Get">
+                    <div>
+                        <div class="row tablesetting" style="background-color: #95BCF2;">Personal Information
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2 tablesetting tablebackground">Empl ID</div>
+                            <div class="col-lg-2 tablesetting inputedbackground">
+                                <span th:text="*{traineeCandidateProfileId}"></span>
+                            </div>
+                            <div class="col-lg-2 tablesetting tablebackground">Type</div>
+                            <div class="col-lg-2 tablesetting inputedbackground">
+                                <span th:text="*{type}"></span>
+                            </div>
+                            <div class="col-lg-2 tablesetting tablebackground">Status</div>
+                            <div class="col-lg-2 tablesetting inputedbackground">
+                                <span th:text="*{statusName}"></span>
+                            </div>
+                        </div>
 
 
 
-						<div class="row">
-							<div class="col-lg-2 tablesetting tablebackground">Application
-								Date</div>
-							<div class="col-lg-4 tablesetting inputedbackground">
-								<span th:text="*{applicationDate}"></span>
-							</div>
-							<div class="col-lg-2 tablesetting tablebackground">Channel
-								*</div>
-							<div class="col-lg-4 tablesetting inputedbackground">
-								<span th:text="*{channelName}"></span>
-							</div>
-						</div>
+                        <div class="row">
+                            <div class="col-lg-2 tablesetting tablebackground">Application Date
+                            </div>
+                            <div class="col-lg-4 tablesetting inputedbackground">
+                                <span th:text="*{applicationDate}"></span>
+                            </div>
+                            <div class="col-lg-2 tablesetting tablebackground">Channel *
+                            </div>
+                            <div class="col-lg-4 tablesetting inputedbackground">
+                                <span th:text="*{channelName}"></span>
+                            </div>
+                        </div>
 
 
 
-						<div class="row">
-							<div class="col-lg-2 tablesetting tablebackground">Site</div>
-							<div class="col-lg-4 tablesetting inputedbackground">
-								<span th:text="*{locationName}"></span>
-							</div>
-							<div class="col-lg-2 tablesetting tablebackground">Account</div>
-							<div class="col-lg-4 tablesetting inputedbackground">
-								<span th:text="*{account}"></span>
-							</div>
-						</div>
+                        <div class="row">
+                            <div class="col-lg-2 tablesetting tablebackground">Site</div>
+                            <div class="col-lg-4 tablesetting inputedbackground">
+                                <span th:text="*{locationName}"></span>
+                            </div>
+                            <div class="col-lg-2 tablesetting tablebackground">Account</div>
+                            <div class="col-lg-4 tablesetting inputedbackground">
+                                <span th:text="*{account}"></span>
+                            </div>
+                        </div>
 
 
 
-						<div class="row">
-							<div class="col-lg-2 tablesetting tablebackground">Name *</div>
-							<div class="col-lg-4 tablesetting inputedbackground">
-								<span th:text="*{fullName}"></span>
-							</div>
-							<div class="col-lg-2 tablesetting tablebackground">Gender *</div>
-							<div class="col-lg-4 tablesetting inputedbackground">
-								<span th:text="*{gender}"></span>
-							</div>
-						</div>
+                        <div class="row">
+                            <div class="col-lg-2 tablesetting tablebackground">Name *</div>
+                            <div class="col-lg-4 tablesetting inputedbackground">
+                                <span th:text="*{fullName}"></span>
+                            </div>
+                            <div class="col-lg-2 tablesetting tablebackground">Gender *</div>
+                            <div class="col-lg-4 tablesetting inputedbackground">
+                                <span th:text="*{gender}"></span>
+                            </div>
+                        </div>
 
 
 
-						<div class="row">
-							<div class="col-lg-2 tablesetting tablebackground">DOB *</div>
-							<div class="col-lg-4 tablesetting inputedbackground">
-								<span th:text="*{dateOfBirth}"></span>
-							</div>
-							<div class="col-lg-2 tablesetting tablebackground">CV</div>
-							<div class="col-lg-4 tablesetting inputedbackground">
-								<a th:href="@{/downloadCV(cvId=*{cvId})}"><span
+                        <div class="row">
+                            <div class="col-lg-2 tablesetting tablebackground">DOB *</div>
+                            <div class="col-lg-4 tablesetting inputedbackground">
+                                <span th:text="*{dateOfBirth}"></span>
+                            </div>
+                            <div class="col-lg-2 tablesetting tablebackground">CV</div>
+                            <div class="col-lg-4 tablesetting inputedbackground">
+                                <a th:href="@{/downloadCV(cvId=*{cvId})}"><span
 									th:text="*{CVname}"></span></a>
-							</div>
-						</div>
+                            </div>
+                        </div>
 
 
 
-						<div class="row">
-							<div class="col-lg-2 tablesetting tablebackground">University</div>
-							<div class="col-lg-4 tablesetting inputedbackground">
-								<span th:text="*{universityName}"></span>
-							</div>
-							<div class="col-lg-2 tablesetting tablebackground">Faculty</div>
-							<div class="col-lg-4 tablesetting inputedbackground">
-								<span th:text="*{facultyName}"></span>
-							</div>
-						</div>
+                        <div class="row">
+                            <div class="col-lg-2 tablesetting tablebackground">University</div>
+                            <div class="col-lg-4 tablesetting inputedbackground">
+                                <span th:text="*{universityName}"></span>
+                            </div>
+                            <div class="col-lg-2 tablesetting tablebackground">Faculty</div>
+                            <div class="col-lg-4 tablesetting inputedbackground">
+                                <span th:text="*{facultyName}"></span>
+                            </div>
+                        </div>
 
 
 
-						<div class="row">
-							<div class="col-lg-2 tablesetting tablebackground">Phone *</div>
-							<div class="col-lg-4 tablesetting inputedbackground">
-								<span th:text="*{phone}"></span>
-							</div>
-							<div class="col-lg-2 tablesetting tablebackground">Email *</div>
-							<div class="col-lg-4 tablesetting inputedbackground">
-								<span th:text="*{email}"></span>
-							</div>
-						</div>
+                        <div class="row">
+                            <div class="col-lg-2 tablesetting tablebackground">Phone *</div>
+                            <div class="col-lg-4 tablesetting inputedbackground">
+                                <span th:text="*{phone}"></span>
+                            </div>
+                            <div class="col-lg-2 tablesetting tablebackground">Email *</div>
+                            <div class="col-lg-4 tablesetting inputedbackground">
+                                <span th:text="*{email}"></span>
+                            </div>
+                        </div>
 
 
 
-						<div class="row">
-							<div class="col-lg-2 tablesetting tablebackground">Skill</div>
-							<div class="col-lg-4 tablesetting inputedbackground">
-								<span th:text="*{skillName}"></span>
-							</div>
-							<div class="col-lg-2 tablesetting tablebackground">Graduation
-								Year</div>
-							<div class="col-lg-4 tablesetting inputedbackground">
-								<span th:text="*{graduationYear}"></span>
-							</div>
-						</div>
+                        <div class="row">
+                            <div class="col-lg-2 tablesetting tablebackground">Skill</div>
+                            <div class="col-lg-4 tablesetting inputedbackground">
+                                <span th:text="*{skillName}"></span>
+                            </div>
+                            <div class="col-lg-2 tablesetting tablebackground">Graduation Year
+                            </div>
+                            <div class="col-lg-4 tablesetting inputedbackground">
+                                <span th:text="*{graduationYear}"></span>
+                            </div>
+                        </div>
 
 
 
-						<div class="row">
-							<div class="col-lg-2 tablesetting tablebackground">Foreign
-								Language</div>
-							<div class="col-lg-4 tablesetting inputedbackground">
-								<span th:text="*{foreignLanguage}"></span>
-							</div>
-							<div class="col-lg-2 tablesetting tablebackground">Level</div>
-							<div class="col-lg-4 tablesetting inputedbackground">
-								<span th:text="*{level}"></span>
-							</div>
-						</div>
+                        <div class="row">
+                            <div class="col-lg-2 tablesetting tablebackground">Foreign Language
+                            </div>
+                            <div class="col-lg-4 tablesetting inputedbackground">
+                                <span th:text="*{foreignLanguage}"></span>
+                            </div>
+                            <div class="col-lg-2 tablesetting tablebackground">Level</div>
+                            <div class="col-lg-4 tablesetting inputedbackground">
+                                <span th:text="*{level}"></span>
+                            </div>
+                        </div>
 
 
 
-						<div class="row">
-							<div class="col-lg-2 tablesetting tablebackground">Note</div>
-							<div class="col-lg-10 tablesetting inputedbackground">
-								<span th:text="*{remarks}">.</span>
-							</div>
-						</div>
+                        <div class="row">
+                            <div class="col-lg-2 tablesetting tablebackground">Note</div>
+                            <div class="col-lg-10 tablesetting inputedbackground">
+                                <span th:text="*{remarks}">.</span>
+                            </div>
+                        </div>
 
 
 
-						<div class="row">
-							<div class="col-lg-2 tablesetting tablebackground">History</div>
-							<div class="col-lg-10 tablesetting inputedbackground">2</div>
-						</div>
+                        <div class="row">
+                            <div class="col-lg-2 tablesetting tablebackground">History</div>
+                            <div class="col-lg-10 tablesetting inputedbackground">2</div>
+                        </div>
 
 
 
-						<div class="row"></div>
-					</div>
-				</form>
+                        <div class="row"></div>
+                    </div>
+                </form>
 
-			</div>
-			<div class="row" style="margin-top: 20px; margin-bottom: 20px;">
-				<div class="col-lg-2">
-					<a th:href="createNewCandidate" style="color: black;"><button>
+
+                <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
+                    <div class="col-lg-2 newbutton">
+                        <a th:href="createNewCandidate" style="color: black;"><button style="width: 150px;">
 							<i class="fas fa-plus-circle"></i> New Candidate
 						</button></a>
-				</div>
-				<div class="col-lg-2"
-					style="margin-left: -40px; margin-right: -10px;">
-					<a
-						th:href="@{/updateCandidate(traineeCandidateProfileId=*{profile.traineeCandidateProfileId})}"
-						style="color: black;"><button style="width: 160px;">
+                    </div>
+                    <div class="col-lg-2 updatebutton">
+                        <a th:href="@{/updateCandidate(traineeCandidateProfileId=*{profile.traineeCandidateProfileId})}" style="color: black;"><button style="width: 180px;">
 							<i class="fas fa-arrow-alt-circle-up"></i> Update Candidate
 						</button></a>
-				</div>
-				<div class="col-lg-2">
-					<a
-						th:href="@{/deleteCandidate(traineeCandidateProfileId=*{profile.traineeCandidateProfileId})}"
-						style="color: black;"><button style="width: 160px;">
+                    </div>
+                    <div class="col-lg-2 deletebutton">
+                        <a th:href="@{/deleteCandidate(traineeCandidateProfileId=*{profile.traineeCandidateProfileId})}" style="color: black;"><button style="width: 160px;">
 							<i class="fas fa-times-circle"></i> Delete Candidate
 						</button></a>
-				</div>
-			</div>
-		</div>
-		<div class="row"></div>
-	</div>
+                    </div>
+
+                </div>
+                <div class="row"></div>
+            </div>
 
 
 
