@@ -11,15 +11,18 @@
 	crossorigin="anonymous">
 <script src="https://kit.fontawesome.com/83baa56dfa.js"
 	crossorigin="anonymous"></script>
+<link rel="stylesheet" th:href="@{/css/trainer.css}">
 </head>
 <body>
 
-	<header class="bg-primary">
-		<span class="header text-white font-weight-bold"><h3>FSOFT
-				HR UTILITY</h3></span>
+	<header class="bg-blue">
+		<div class="header text-white font-weight-bold">
+		<img src="https://seeklogo.com/images/F/fpt-logo-5B8F17203A-seeklogo.com.png" alt="">
+		<h4>FSOFT
+				HR UTILITY</h4></div>
 	</header>
 	<div class="nav">
-		<div class="col-3">
+		<div class="col-2 bg-gray">
 			<button type="button" class="btn btn-sm float-right">&lt&lt</button>
 			<br>
 			<nav class="navbar-nav">
@@ -45,28 +48,30 @@
 			</nav>
 		</div>
 
-		<div class="col-9">
+		<div class="col-8">
 			<h4>Create Trainer</h4>
 			<hr>
 			<div class="container">
 				<div>
 					<div class="nav nav-tab">
-						<ul class="list-inline row">
-							<li class="nav-item border"><a th:href="@{/showTrainerForm}"
-								class="nav-link">Information</a></li>
-							<li class="nav-item"><a th:href="@{/showTrainerList}"
+						<ul class="list-inline">
+							<li class="nav-item border bg-gray"><a
+								th:href="@{/showTrainerForm}" class="nav-link">Information</a></li>
+							<li class="nav-item border"><a th:href="@{/showTrainerList}"
 								class="nav-link">Trainer</a></li>
 						</ul>
 					</div>
 
 					<form th:action="@{/saveTrainer}" th:object="${trainerModel}"
-						method="POST" class="form-group grid-container">
-						<table class="row border">
+						method="POST" class="form-group">
+						<table class="grid-container border">
 							<tbody class="col-6">
 								<tr>
 									<th>Account</th>
 									<td><input type="text" th:field="*{account}"
-										name="account" id="" class="form-control"></td>
+										name="account" id="" class="form-control">
+									<span th:if="${#fields.hasErrors('account')}" th:errors="*{account}">Account error</span>
+									</td>
 								</tr>
 								<tr>
 									<th>Full name</th>
@@ -89,8 +94,6 @@
 									<td><input type="text" th:field="*{unit}" name="unit"
 										class="form-control"></td>
 								</tr>
-							</tbody>
-							<tbody class="col-6">
 								<tr>
 									<th>Major</th>
 									<td><input type="text" th:field="*{major}" name="major"
@@ -104,7 +107,9 @@
 								<tr>
 									<th>Email</th>
 									<td><input type="text" th:field="*{email}" name="email"
-										class="form-control"></td>
+										class="form-control">
+									<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</span>	
+										</td>
 								</tr>
 								<tr>
 									<th>Experience</th>
@@ -121,17 +126,15 @@
 									<td><select th:field="*{type}" name="type">
 											<option value="" disabled>Select type</option>
 											<option th:each="trainerType:${trainerTypes}"
-												th:text="${trainerType.name}"
-												th:value="${trainerType}"></option>
+												th:text="${trainerType.name}" th:value="${trainerType}"></option>
 
 									</select></td>
 								</tr>
+								<tr>
+									<td colspan="2"><button type="submit"
+											class="btn btn-success btn-sm">Save</button></td>
+								</tr>
 							</tbody>
-
-							<tr>
-								<td colspan="2"><button type="submit"
-										class="btn btn-success btn-sm">Save</button></td>
-							</tr>
 						</table>
 					</form>
 				</div>
@@ -140,7 +143,7 @@
 	</div>
 
 
-	<div class="footer">
+	<div class="footer bg-gray border">
 		<span><a href="#"><i class="fas fa-question-circle"></i>Help</a>
 			<a href="#"><i class="fas fa-calendar-alt"></i>Create ticket on
 				FI2.0</a></span>
