@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import fa.mockproject.model.TraineeCandidateProfileModel;
+import fa.mockproject.model.InterviewModel;
 
 @Entity
 @Table(name = "Interview")
@@ -65,14 +65,23 @@ public class Interview {
 		this.remarks = remarks;
 	}
 
-	public Interview(TraineeCandidateProfileModel model) {
-		this.time = model.getInterviewTime();
-		this.date = model.getInterviewDate();
+	public Interview(InterviewModel model) {
+		this.time = model.getTime();
+		this.date = model.getDate();
 		this.interviewer = model.getInterviewer();
-		this.comments = model.getInterviewComments();
-		this.result = model.getInterviewResult();
-		this.remarks = model.getInterviewRemarks();
-		this.candidate=model.getCandidate();
+		this.comments = model.getComments();
+		this.result = model.getResult();
+		this.remarks = model.getRemarks();
+	}
+	
+	public Interview(InterviewModel model,Candidate candidate) {
+		this.time = model.getTime();
+		this.date = model.getDate();
+		this.interviewer = model.getInterviewer();
+		this.comments = model.getComments();
+		this.result = model.getResult();
+		this.remarks = model.getRemarks();
+		this.candidate=candidate;
 	}
 
 	public long getInterviewId() {

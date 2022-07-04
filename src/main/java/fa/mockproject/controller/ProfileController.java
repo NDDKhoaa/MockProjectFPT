@@ -35,12 +35,17 @@ import fa.mockproject.entity.Faculty;
 import fa.mockproject.entity.Interview;
 import fa.mockproject.entity.Location;
 import fa.mockproject.entity.Skill;
+import fa.mockproject.entity.Trainee;
 import fa.mockproject.entity.TraineeCandidateProfile;
 import fa.mockproject.entity.TraineeCandidateProfileStatus;
 import fa.mockproject.entity.TraineeCandidateProfileType;
 import fa.mockproject.entity.University;
+import fa.mockproject.model.EntryTestModel;
+import fa.mockproject.model.InterviewModel;
 import fa.mockproject.model.InterviewTestResultModel;
 import fa.mockproject.model.TraineeCandidateProfileModel;
+import fa.mockproject.model.WrapEntryTestModel;
+import fa.mockproject.model.WrapInterviewModel;
 import fa.mockproject.service.impl.AccountServiceImpl;
 import fa.mockproject.service.impl.CVServiceImpl;
 import fa.mockproject.service.impl.CandidateServiceImpl;
@@ -53,6 +58,7 @@ import fa.mockproject.service.impl.SkillServiceImpl;
 import fa.mockproject.service.impl.TraineeCandidateProfileServiceImpl;
 import fa.mockproject.service.impl.TraineeCandidateProfileStatusServiceImpl;
 import fa.mockproject.service.impl.TraineeCandidateProfileTypeServiceImpl;
+import fa.mockproject.service.impl.TraineeServiceImpl;
 import fa.mockproject.service.impl.UniversityServiceImpl;
 
 @Controller
@@ -96,25 +102,31 @@ public class ProfileController {
 
 	@Autowired
 	private TraineeCandidateProfileStatusServiceImpl traineeCandidateProfileStatusService;
+	
+	@Autowired
+	private TraineeServiceImpl traineeServiceImpl;
 
 	@RequestMapping("/viewCandidate")
 	public String viewCandidate(Model model) {
 		List<TraineeCandidateProfile> profileList = traineeCandidateProfileService.listAll();
 		List<TraineeCandidateProfileModel> modelList = new ArrayList<TraineeCandidateProfileModel>();
+		TraineeCandidateProfileType typeCondition = traineeCandidateProfileTypeService.findById("Candidate");
 		for (TraineeCandidateProfile profile : profileList) {
-			Candidate candidate = new Candidate(profile.getCandidate());
-			TraineeCandidateProfileStatus status = candidate.getStatus();
-			TraineeCandidateProfileType type = profile.getType();
-			University university = profile.getUniversity();
-			Faculty faculty = profile.getFaculty();
-			Location location = candidate.getLocation();
-			Skill skill = profile.getSkill();
-			Channel channel = candidate.getChannel();
-			CV cv = new CV(profile.getCv());
-			Account account = profile.getAccount();
-			TraineeCandidateProfileModel profileModel = new TraineeCandidateProfileModel(profile, candidate, status,
-					type, university, faculty, location, skill, channel, cv, account);
-			modelList.add(profileModel);
+			if (profile.getType() == typeCondition) {
+				Candidate candidate = new Candidate(profile.getCandidate());
+				TraineeCandidateProfileStatus status = candidate.getStatus();
+				TraineeCandidateProfileType type = profile.getType();
+				University university = profile.getUniversity();
+				Faculty faculty = profile.getFaculty();
+				Location location = candidate.getLocation();
+				Skill skill = profile.getSkill();
+				Channel channel = candidate.getChannel();
+				CV cv = new CV(profile.getCv());
+				Account account = profile.getAccount();
+				TraineeCandidateProfileModel profileModel = new TraineeCandidateProfileModel(profile, candidate, status,
+						type, university, faculty, location, skill, channel, cv, account);
+				modelList.add(profileModel);
+			}
 		}
 		model.addAttribute("profileList", modelList);
 		return "viewCandidate";
@@ -160,9 +172,8 @@ public class ProfileController {
 	}
 
 	@RequestMapping("/updateCandidateResults")
-	public ModelAndView updateCandidateResult(
+	public String updateCandidateResult(Model modelp,
 			@RequestParam("traineeCandidateProfileId") long traineeCandidateProfileId) {
-		ModelAndView mav = new ModelAndView("updateCandidateResult");
 		TraineeCandidateProfile profile = traineeCandidateProfileService.findById(traineeCandidateProfileId);
 		Candidate candidate = profile.getCandidate();
 		List<InterviewTestResultModel> resultList = new ArrayList<>();
@@ -171,10 +182,17 @@ public class ProfileController {
 		resultList.add(resultP);
 		resultList.add(resultF);
 		TraineeCandidateProfileModel model = new TraineeCandidateProfileModel(profile, candidate);
-		mav.addObject("resultList", resultList);
-		mav.addObject("model", model);
-
-		return mav;
+		modelp.addAttribute("resultList", resultList);
+		modelp.addAttribute("model", model);
+		List<InterviewModel> interviewModel = new ArrayList<>();
+		List<EntryTestModel> entryTestModel = new ArrayList<>();
+		WrapInterviewModel listInterviewModel = new WrapInterviewModel(interviewModel);
+		listInterviewModel.addModel(new InterviewModel());
+		modelp.addAttribute("listInterviewModel", listInterviewModel);
+		WrapEntryTestModel listEntryTestModel = new WrapEntryTestModel(entryTestModel);
+		listEntryTestModel.addModel(new EntryTestModel());
+		modelp.addAttribute("listEntryTestModel", listEntryTestModel);
+		return "updateCandidateResult";
 	}
 
 	@RequestMapping("/updateCandidate")
@@ -362,70 +380,55 @@ public class ProfileController {
 	}
 
 	@RequestMapping(value = "/saveUpdateResults", method = RequestMethod.POST)
-	public String saveResults(@ModelAttribute("interviewTestModel") TraineeCandidateProfileModel model,
+	public String saveResults(@ModelAttribute("listInterviewModel") WrapInterviewModel listInterviewModel,
+			@ModelAttribute("listEntryTestModel") WrapEntryTestModel listEntryTestModel,
 			@RequestParam("traineeCandidateProfileId") long traineeCandidateProfileId) {
 		TraineeCandidateProfile profile = traineeCandidateProfileService.findById(traineeCandidateProfileId);
 		Candidate candidateId = profile.getCandidate();
-		Interview interview = new Interview(model);
-		EntryTest entryTest = new EntryTest(model);
-		interview.setCandidate(candidateId);
-		entryTest.setCandidate(candidateId);
-		interviewServiceImpl.save(interview);
-		entryTestServiceImpl.save(entryTest);
-		if (interview.getResult().equals("Pass") && entryTest.getResult().equals("Pass")) {
-			String statusId = "IP";
-			TraineeCandidateProfileStatus status = traineeCandidateProfileStatusService.findById(statusId);
-			candidateId.setStatus(status);
-			candidateService.save(candidateId);
+		List<InterviewModel> interviewModels = listInterviewModel.getInterviewModels();
+		List<EntryTestModel> entryTestModels = listEntryTestModel.getEntryTestModels();
+		for (InterviewModel interviewModel : interviewModels) {
+			Interview interview = new Interview(interviewModel, candidateId);
+			interview.setCandidate(candidateId);
+			interviewServiceImpl.save(interview);
 		}
-		if (entryTest.getResult().equals("Failed") && interview.getResult().equals("Pass")) {
-			String statusId = "TF";
-			TraineeCandidateProfileStatus status = traineeCandidateProfileStatusService.findById(statusId);
-			candidateId.setStatus(status);
-			candidateService.save(candidateId);
+		for (EntryTestModel entryTestModel : entryTestModels) {
+			EntryTest entryTest = new EntryTest(entryTestModel, candidateId);
+			entryTest.setCandidate(candidateId);
+			entryTestServiceImpl.save(entryTest);
 		}
-		if (interview.getResult().equals("Failed") && entryTest.getResult().equals("Pass")) {
-			String statusId = "IF";
-			TraineeCandidateProfileStatus status = traineeCandidateProfileStatusService.findById(statusId);
-			candidateId.setStatus(status);
-			candidateService.save(candidateId);
+		for (InterviewModel interviewModel : interviewModels) {
+			for (EntryTestModel entryTestModel : entryTestModels) {
+				TraineeCandidateProfileStatus status = StatusCheck(interviewModel, entryTestModel);
+				candidateId.setStatus(status);
+				candidateService.save(candidateId);
+			}
 		}
-		if (interview.getResult().equals("Failed") && entryTest.getResult().equals("Failed")) {
-			String statusId = "IF";
-			TraineeCandidateProfileStatus status = traineeCandidateProfileStatusService.findById(statusId);
-			candidateId.setStatus(status);
-			candidateService.save(candidateId);
+		return "redirect:/viewCandidate";
+	}
+
+	@RequestMapping(value = "/transferCandidate")
+	public String transferCandidate(@RequestParam("traineeCandidateProfileId") long traineeCandidateProfileId) {
+		TraineeCandidateProfile profile = traineeCandidateProfileService.findById(traineeCandidateProfileId);
+		Candidate candidate = profile.getCandidate();
+		Trainee trainee = new Trainee();
+		trainee.setTraineeCandidateProfile(profile);
+		traineeServiceImpl.save(trainee);
+		TraineeCandidateProfileType type = traineeCandidateProfileTypeService.findById("Trainee");
+		profile.setType(type);
+		profile.setCandidate(null);
+		profile.setTrainee(trainee);
+		profile.setAllocationStatus("Not allocated");
+		List<EntryTest> tests = entryTestServiceImpl.findByCandidate(candidate);
+		List<Interview> interviews = interviewServiceImpl.findByCandidate(candidate);
+		for (EntryTest test : tests) {
+			entryTestServiceImpl.delete(test);
 		}
-		if (interview.getResult().equals("0") && entryTest.getResult().equals("Pass")) {
-			String statusId = "TP";
-			TraineeCandidateProfileStatus status = traineeCandidateProfileStatusService.findById(statusId);
-			candidateId.setStatus(status);
-			candidateService.save(candidateId);
+		for (Interview interview : interviews) {
+			interviewServiceImpl.delete(interview);
 		}
-		if (interview.getResult().equals("0") && entryTest.getResult().equals("Failed")) {
-			String statusId = "TF";
-			TraineeCandidateProfileStatus status = traineeCandidateProfileStatusService.findById(statusId);
-			candidateId.setStatus(status);
-			candidateService.save(candidateId);
-		}
-		if (entryTest.getResult().equals("0") && interview.getResult().equals("Pass")) {
-			String statusId = "IP";
-			TraineeCandidateProfileStatus status = traineeCandidateProfileStatusService.findById(statusId);
-			candidateId.setStatus(status);
-			candidateService.save(candidateId);
-		}
-		if (entryTest.getResult().equals("0") && interview.getResult().equals("Failed")) {
-			String statusId = "IF";
-			TraineeCandidateProfileStatus status = traineeCandidateProfileStatusService.findById(statusId);
-			candidateId.setStatus(status);
-			candidateService.save(candidateId);
-		}
-		if (interview.getResult().equals("0") && entryTest.getResult().equals("0")) {
-			String statusId = "New";
-			TraineeCandidateProfileStatus status = traineeCandidateProfileStatusService.findById(statusId);
-			candidateId.setStatus(status);
-			candidateService.save(candidateId);
-		}
+		candidateService.delete(candidate);
+		traineeCandidateProfileService.save(profile);
 		return "redirect:/viewCandidate";
 	}
 
@@ -517,6 +520,48 @@ public class ProfileController {
 		}
 		mav.addObject("modelList", modelList);
 		return mav;
+	}
+
+	public TraineeCandidateProfileStatus StatusCheck(InterviewModel interview, EntryTestModel entryTest) {
+		TraineeCandidateProfileStatus status = new TraineeCandidateProfileStatus();
+		if (interview.getResult().equals("Pass") && entryTest.getResult().equals("Pass")) {
+			String statusId = "IP";
+			status = traineeCandidateProfileStatusService.findById(statusId);
+			return status;
+		} else if (entryTest.getResult().equals("Failed") && interview.getResult().equals("Pass")) {
+			String statusId = "TF";
+			status = traineeCandidateProfileStatusService.findById(statusId);
+			return status;
+		} else if (interview.getResult().equals("Failed") && entryTest.getResult().equals("Pass")) {
+			String statusId = "IF";
+			status = traineeCandidateProfileStatusService.findById(statusId);
+			return status;
+		} else if (interview.getResult().equals("Failed") && entryTest.getResult().equals("Failed")) {
+			String statusId = "IF";
+			status = traineeCandidateProfileStatusService.findById(statusId);
+			return status;
+		} else if (interview.getResult().equals("0") && entryTest.getResult().equals("Pass")) {
+			String statusId = "TP";
+			status = traineeCandidateProfileStatusService.findById(statusId);
+			return status;
+		} else if (interview.getResult().equals("0") && entryTest.getResult().equals("Failed")) {
+			String statusId = "TF";
+			status = traineeCandidateProfileStatusService.findById(statusId);
+			return status;
+		} else if (entryTest.getResult().equals("0") && interview.getResult().equals("Pass")) {
+			String statusId = "IP";
+			status = traineeCandidateProfileStatusService.findById(statusId);
+			return status;
+		} else if (entryTest.getResult().equals("0") && interview.getResult().equals("Failed")) {
+			String statusId = "IF";
+			status = traineeCandidateProfileStatusService.findById(statusId);
+			return status;
+		} else if (interview.getResult().equals("0") && entryTest.getResult().equals("0")) {
+			String statusId = "New";
+			status = traineeCandidateProfileStatusService.findById(statusId);
+			return status;
+		} else
+			return status = traineeCandidateProfileStatusService.findById("New");
 	}
 
 	@InitBinder

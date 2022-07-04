@@ -70,6 +70,10 @@ public class TraineeServiceImpl implements TraineeService {
 		
 		return traineeModel;
 	}
+	
+	public void save(Trainee trainee) {
+		traineeRepository.save(trainee);
+	}
 
 
 

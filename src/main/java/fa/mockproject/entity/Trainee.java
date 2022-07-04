@@ -28,7 +28,7 @@ public class Trainee {
 
 	// Foreign key cua table Class Batch
 	@ManyToOne
-	@JoinColumn(name = "class_id", nullable = false)
+	@JoinColumn(name = "class_id", nullable = true)
 	private ClassBatch classBatch;
 
 	@OneToOne(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -100,6 +100,10 @@ public class Trainee {
 	}
 
 	
+
+	public Trainee(TraineeCandidateProfile profile) {
+		this.traineeCandidateProfile=profile;
+	}
 
 	public long getTraineeCandidateId() {
 		return traineeCandidateId;
