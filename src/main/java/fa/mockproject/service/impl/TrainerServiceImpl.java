@@ -5,32 +5,37 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import fa.mockproject.entity.Trainer;
 import fa.mockproject.entity.TrainerProfile;
 import fa.mockproject.model.TrainerModel;
-import fa.mockproject.repository.TrainerRepository;
+import fa.mockproject.repository.TrainerProfileRepository;
 import fa.mockproject.service.TrainerService;
 
 @Service
 public class TrainerServiceImpl implements TrainerService{
 	@Autowired
-	private TrainerRepository trainerRepository;
+	private TrainerProfileRepository trainerProfileRepository;
+	
+//	@Autowired
+//	private TrainerRepository trainerRepository;
 	
 	@Override
-	public List<TrainerProfile> getAllTrainers() {
-		return trainerRepository.findAll();
+	public List<TrainerProfile> getAllTrainers(String keyword) {
+		if(keyword!=null) {
+			return trainerProfileRepository.findAll(keyword); 
+		}
+		return trainerProfileRepository.findAll();
 	}
 
 	@Override
 	public void save(TrainerModel trainerModel) {
 		TrainerProfile trainerProfile = new TrainerProfile(trainerModel);
-		Trainer trainer = new Trainer(trainerModel);
-		trainerRepository.save(trainerProfile);
+		trainerProfileRepository.save(trainerProfile);
+
 	}
 
 	@Override
 	public TrainerProfile findByTrainerId(long trainerId) {
-		Optional<TrainerProfile> optional = trainerRepository.findById(trainerId);
+		Optional<TrainerProfile> optional = trainerProfileRepository.findById(trainerId);
 		TrainerProfile trainer = null;
 		if(optional.isPresent()) {
 			trainer = optional.get();
@@ -42,7 +47,7 @@ public class TrainerServiceImpl implements TrainerService{
 
 	@Override
 	public void deleteTrainerProfileById(long id) {
-		this.trainerRepository.deleteById(id);
+		this.trainerProfileRepository.deleteById(id);
 		
 	}
 

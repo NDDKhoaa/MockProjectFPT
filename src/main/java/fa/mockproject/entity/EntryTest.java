@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import fa.mockproject.model.TraineeCandidateProfileModel;
+import fa.mockproject.model.EntryTestModel;
 
 @Entity
 @Table(name = "EntryTest")
@@ -73,16 +73,27 @@ public class EntryTest {
 		this.remarks = remarks;
 	}
 
-	public EntryTest(TraineeCandidateProfileModel model) {
-		this.time = model.getTestTime();
-		this.date = model.getTestDate();
-		this.languageValuator = model.getTestLanguageValuator();
-		this.languageResult = model.getTestLanguageResult();
-		this.technicalValuator = model.getTestTechnicalValuator();
-		this.technicalResult = model.getTestTechnicalResult();
-		this.result = model.getTestResult();
-		this.remarks = model.getTestRemarks();
-		this.candidate = model.getCandidate();
+	public EntryTest(EntryTestModel model) {
+		this.time = model.getTime();
+		this.date = model.getDate();
+		this.languageValuator = model.getLanguageValuator();
+		this.languageResult = model.getLanguageResult();
+		this.technicalValuator = model.getTechnicalValuator();
+		this.technicalResult = model.getTechnicalResult();
+		this.result = model.getResult();
+		this.remarks = model.getRemarks();
+	}
+
+	public EntryTest(EntryTestModel model, Candidate candidate) {
+		this.time = model.getTime();
+		this.date = model.getDate();
+		this.languageValuator = model.getLanguageValuator();
+		this.languageResult = model.getLanguageResult();
+		this.technicalValuator = model.getTechnicalValuator();
+		this.technicalResult = model.getTechnicalResult();
+		this.result = model.getResult();
+		this.remarks = model.getRemarks();
+		this.candidate = candidate;
 	}
 
 	public long getTestId() {
