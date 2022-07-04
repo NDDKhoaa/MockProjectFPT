@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>List user</title>
-
-  <link rel="stylesheet"
-        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<head th:replace="/header :: head">
+  <title>List role</title>
 </head>
-</style>
 <body>
+<div th:include="header :: header"></div>
+<div class="body-content col-lg-9">
+  <button type="button" class="btn btn-primary"> <a th:href="@{'/addRole'}">Add Role</a> </button>
+  <!--<div class="alert alert-success" role="alert" th:text="${message}">
+  </div>-->
 <table class="table table-striped">
   <thead>
   <tr>
@@ -26,7 +24,7 @@
     <td th:text="${i.index +1}"/>
     <td th:text="${role.name}"/>
     <td><p th:if="${#lists.size(role.privileges) > 0}" th:text="${role.privileges}"/></td>
-    <td><a th:href="@{'/editRole?roleId=' + ${role.roleId}}">Update</a></td>
+    <td><a th:href="@{'/editRole?roleId=' + ${role.roleId}}">Edit</a></td>
   </tr>
   </tbody>
 </table>
@@ -37,5 +35,7 @@
       th:text=${pageNumber}
       class="page-link"></a></li>
 </ul>
+</div>
+<footer th:replace="/footer :: footer"></footer>
 </body>
 </html>

@@ -8,6 +8,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -28,14 +29,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
+    http.authorizeRequests().antMatchers("/listUser", "/listRole")
+        .access("hasRole('ROLE_SYSTEM_ADMIN')");
+    http.csrf().disable().authorizeRequests().anyRequest().authenticated()
+        .and().formLogin().loginPage("/login").defaultSuccessUrl("/dashboard", true).permitAll()
+        .and()
+        .logout().deleteCookies("JSESSIONID").permitAll();
 
-    http.csrf().disable().authorizeRequests()
-        .antMatchers(HttpMethod.GET, "/addUser").permitAll()
+    /*http.csrf().disable().authorizeRequests()*/
+    /*http.authorizeRequests().antMatchers(HttpMethod.GET, "/addUser").permitAll()
         .antMatchers(HttpMethod.GET, "/listUser").permitAll()
-        .antMatchers("/resources/**").permitAll()
-        .antMatchers(HttpMethod.POST, "/*").permitAll()
         .anyRequest().authenticated()
-        .and().formLogin().defaultSuccessUrl("/home", true).permitAll().and().logout().permitAll();
+        .and().formLogin()
+        .loginPage("/login")
+       *//* .defaultSuccessUrl("/home", true)
+        .failureUrl("/login?error=true")
+        .usernameParameter("username")
+        .passwordParameter("password")*//*
+        .and().logout().logoutUrl("/perform_logout")
+        .deleteCookies("JSESSIONID").permitAll();*/
     // http.authorizeRequests().antMatchers("/admin").access("hasRole(" + Role.ADMIN + ")");
   }
 
@@ -47,5 +59,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Autowired
   public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
     auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
+  }
+
+  @Override
+  public void configure(WebSecurity web) throws Exception {
+    web
+        .ignoring()
+        .antMatchers("/resources/**", "/static/**");
   }
 }

@@ -212,9 +212,67 @@ main .content-table-remove-btn {
 main .control-btn {
     margin: 8px 4px;
 }
+.header{
+    height: 50px;
+    background-image: url(/static/images/backgroundheader.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+.user-information{
+float: right;
+    padding: 5px;
+    color: white;
+}
+.logout{
+    margin-top: -5px;
+}
+.logout a{
+   color: white;
+}
+.menu {
+padding:10px;
+width: 100%;
+float: left;
+background-color:#e3e3e3;
+}
+.menu-top{
+ margin-top: 15px;
+}
+.navbar-inner{
+color: blue;
+}
+.dashboard{
+     float: right;
+         padding: 0px;
+}
+.dashboard hr {
+  border-top: 1px solid black;
+}
+.dashboard h3{
+padding: 10px;
+}
+.dashboard-menu{
+  padding: 15px;
+  height: 70px;
+  width: 100%;
+}
 
+.dashboard-menu select{
+  margin-right: 15px;
+  width: 15%;
+}
+.dashboard-content h5{
+text-align: center;
+}
+.body-content{
+     padding: 15px;
+     float:right;
+}
 footer {
     background-color: rgb(227, 223, 223);
     border: 1px solid black;
     padding: 12px;
+    height:50px;
+    float: left;
+        width: 100%;
 }

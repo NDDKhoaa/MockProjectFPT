@@ -25,19 +25,18 @@ public class RoleController {
 
 
   @RequestMapping(value = "/addRole", method = RequestMethod.POST)
-  public String addRole(@ModelAttribute("roleModel") RoleModel roleModel) {
+  public String addRole(@ModelAttribute("roleModel") RoleModel roleModel, Model model) {
     roleService.addRole(new Role(roleModel));
-
-    return "redirect:/addRole";
+    model.addAttribute("message", "Add success!");
+    return "redirect:/listRole";
   }
 
   @RequestMapping(value = "/addRole", method = RequestMethod.GET)
   public String addRolePage(Model model) {
     List<PrivilegesEnum> privileges = Arrays.asList(PrivilegesEnum.values());
-    privileges.remove(PrivilegesEnum.ROLE_SYSTEM_ADMIN);
     model.addAttribute("privileges", privileges);
     model.addAttribute("roleModel", new RoleModel());
-    return "addRole";
+    return "roles/addRole";
   }
 
   @RequestMapping(path = {"/listRole"}, method = RequestMethod.GET)
@@ -51,17 +50,22 @@ public class RoleController {
     model.addAttribute("totalElement", roles.getTotalElements());
     model.addAttribute("size", size);
     model.addAttribute("page", page);
-    return "listRole";
+    return "roles/listRole";
   }
 
   @RequestMapping(value = "/editRole", method = RequestMethod.GET)
   public String editRolePage(Model model, long roleId) {
     Role role = roleService.findByRoleId(roleId);
     List<PrivilegesEnum> privileges = Arrays.asList(PrivilegesEnum.values());
-    privileges.remove(PrivilegesEnum.ROLE_SYSTEM_ADMIN);
     model.addAttribute("privileges", privileges);
     model.addAttribute("role", role);
-    return "editRole";
+    return "roles/editRole";
+  }
+  @RequestMapping(value = "/editRole", method = RequestMethod.POST)
+  public String editRole(Model model, RoleModel roleModel) {
+    roleService.update(new Role(roleModel));
+    model.addAttribute("message", "Update success!");
+    return "redirect:/listRole";
   }
 }
 

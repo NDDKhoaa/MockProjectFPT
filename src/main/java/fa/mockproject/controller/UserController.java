@@ -2,13 +2,16 @@ package fa.mockproject.controller;
 
 import fa.mockproject.entity.User;
 import fa.mockproject.model.UserModel;
+import fa.mockproject.security.CustomUserDetails;
 import fa.mockproject.service.RoleService;
+import fa.mockproject.service.SecurityService;
 import fa.mockproject.service.UserService;
 import fa.mockproject.util.CommonConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -27,12 +30,14 @@ public class UserController {
   private UserService userService;
   @Autowired
   private RoleService roleService;
+  @Autowired
+  private SecurityService securityService;
 
   @GetMapping("/addUser")
   public String addUserPage(ModelMap model) {
     model.addAttribute("listRole", roleService.getList());
     model.addAttribute("userModel", new UserModel());
-    return "addUser";
+    return "users/addUser";
   }
 
   @RequestMapping(value = "/addUser", method = RequestMethod.POST)
@@ -45,10 +50,11 @@ public class UserController {
     return ResponseEntity.ok().body("OK");
   }
 
-  @RequestMapping(path = {"/login"}, method = RequestMethod.GET)
+  @GetMapping("/login")
   public String login(Model model, String error, String logout) {
     if (error != null) {
-      model.addAttribute("error", "Your username and password is invalid.");
+      model.addAttribute("error",
+          "Sorry, your username or password is incorrect. Please try again!");
     }
     if (logout != null) {
       model.addAttribute("message", "You have been logged out successfully.");
@@ -67,14 +73,14 @@ public class UserController {
     model.addAttribute("totalElement", users.getTotalElements());
     model.addAttribute("size", size);
     model.addAttribute("page", page);
-    return "listUser";
+    return "users/listUser";
   }
 
   @GetMapping(path = {"/viewUser"})
   public String viewUser(Model model, long userId, ModelMap modelMap) {
     User user = userService.findByUserId(userId);
     model.addAttribute("user", user);
-    return "viewUser";
+    return "users/viewUser";
   }
 
   @GetMapping(path = {"/editUser"})
@@ -82,13 +88,14 @@ public class UserController {
     User user = userService.findByUserId(userId);
     modelMap.addAttribute("userModel", new UserModel());
     model.addAttribute("user", user);
-    return "editUser";
+    model.addAttribute("listRole", roleService.getList());
+    return "users/editUser";
   }
 
   @PostMapping("/editUser")
-  public String editUser(@ModelAttribute("employeeModel") UserModel userModel) {
-
+  public String editUser(@ModelAttribute("employeeModel") UserModel userModel, Model model) {
     userService.update(new User(userModel));
+    model.addAttribute("message", "Update success!");
     return "redirect:/listUser";
   }
 }

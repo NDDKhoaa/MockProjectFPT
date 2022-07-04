@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>View User</title>
-  <link rel="stylesheet"
-        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<html lang="en">
+<head th:replace="/header :: head">
+  <title>Edit user</title>
 </head>
 <body>
+<div th:include="header :: header"></div>
+<div class="body-content col-lg-9">
 <h3>View Employee</h3>
 <table class="table table-striped">
   <tbody>
@@ -46,6 +43,8 @@
   </tr>
   </tbody>
 </table>
-<button type="button" onclick="history.back()" class="btn btn-primary mt-3">Back</button>
+  <button class="btn btn-danger"><a th:href="@{'/listUser'}">Back</a></button>
+</div>
+<footer th:replace="/footer :: footer"></footer>
 </body>
 </html>

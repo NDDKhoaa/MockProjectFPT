@@ -28,7 +28,7 @@ public class Role {
   @Column(name = "role_id", unique = true, nullable = false)
   private long roleId;
 
-  @Column(name = "name")
+  @Column(name = "name", unique = true)
   private String name;
 
   @ElementCollection(targetClass = PrivilegesEnum.class, fetch = FetchType.EAGER)

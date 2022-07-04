@@ -20,14 +20,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private RoleRepository roleRepository;
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(username);
-       // Optional<Role> role = roleRepository.findById(user.getRoles().);
-       // role.ifPresent(user::setRoles);
+        if (user == null) {
+            throw new UsernameNotFoundException(username);
+        }
         return new CustomUserDetails(user);
     }
 }

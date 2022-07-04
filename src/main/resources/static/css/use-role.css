@@ -1,8 +1,10 @@
+/*
 body {
     padding-top: 40px;
     padding-bottom: 40px;
     background-color: #eee;
 }
+*/
 
 .form-signin {
     max-width: 330px;
@@ -45,6 +47,11 @@ body {
 .has-error {
     color: red
 }
+.error-login{
+height: auto;
+padding: auto;
+color: red;
+}
 .inputbox {
     height: 30px;
     width: 100%;
@@ -78,8 +85,18 @@ body {
     background-color: #F8F8F8;
 }
 
-
-table,
+.body-content button a{
+ color: white;
+ text-decoration: none;
+}
+.body-content button a: hover{
+ color: white;
+ text-decoration: none;
+}
+.body-content table{
+  margin-top: 5px;
+}
+/*table,
 th,
 tr,
 td {
@@ -90,7 +107,7 @@ td {
     margin-right: auto;
     border: 1px solid LightGray;
     font-size: 17px;
-}
+}*/
 
 th {
     background-color: rgba(219, 219, 219, 0.705);
@@ -104,8 +121,18 @@ th {
 }
 
 .center-me {
-    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+#add-user-error{
+animation-duration: 4s;
+    color: red;
+    height: 40px;
+    width: auto;
+    padding: 7px;
+        -webkit-transition: 0.2s;
+        -moz-transition: 0.2s;
+        -o-transition: 0.2s;
+        transition: 0.2s;
 }
