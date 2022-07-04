@@ -1,6 +1,9 @@
 package fa.mockproject.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import fa.mockproject.entity.TrainerProfile;
+import fa.mockproject.entity.enumtype.TrainerTypeEnum;
 import fa.mockproject.model.TrainerModel;
 import fa.mockproject.service.TrainerService;
 
@@ -19,8 +23,10 @@ public class TrainerController {
 	private TrainerService trainerService;
 
 	@GetMapping("/showTrainerList")
-	public String showTrainerList(Model model) {
-		model.addAttribute("trainerList", trainerService.getAllTrainers());
+	public String showTrainerList(Model model,@Param("keyword") String keyword) {
+		List<TrainerProfile> trainerList = trainerService.getAllTrainers(keyword);
+		model.addAttribute("trainerList", trainerList);
+		model.addAttribute("keyword", keyword);
 		return "viewTrainer";
 	}
 
@@ -28,19 +34,22 @@ public class TrainerController {
 	public String newTrainer(Model model) {
 		TrainerModel trainerModel = new TrainerModel();
 		model.addAttribute("trainerModel", trainerModel);
+		
+		model.addAttribute("trainerTypes", TrainerTypeEnum.values());
 		return "createTrainer";
 	}
 
 	@PostMapping("/saveTrainer")
-	public String saveTrainer(@ModelAttribute("trainer") TrainerModel trainerModel) {
+	public String saveTrainer(@ModelAttribute("trainerModel") TrainerModel trainerModel) {
 		trainerService.save(trainerModel);
+		
 		return "redirect:/showTrainerList";
 	}
 
 	@GetMapping("/showFormForUpdateTrainer/{id}")
 	public String showUpdateForm(@PathVariable(value = "id") long id, Model model) {
 		TrainerProfile trainerProfile = trainerService.findByTrainerId(id);
-		model.addAttribute("trainer", trainerProfile);
+		model.addAttribute("trainerModel", trainerProfile);
 		return "updateTrainer";
 	}
 	
