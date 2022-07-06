@@ -10,6 +10,6 @@ public interface UserService {
     User addUser(User user);
     User findByUserId(long userId);
     boolean findUserByEmail(String email);
-    User update(User user);
+    String update(User user);
     Page<User> users(Pageable pageable);
 }
