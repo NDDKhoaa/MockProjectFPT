@@ -11,51 +11,48 @@
     <div id="add-user-error"></div>
     <form id="form-add-user" th:object="${user}">
         <input type="hidden" id="userId" th:value="${user.userId}">
-            <div class="form-group">
-                <label>First name
-                    <text style="color: red;">*</text>
-                </label>
-                <input th:value="${user.firstName}" type="text" id="firstName" class="form-control" required
-                       oninvalid="this.setCustomValidity('First name must be not empty!')"
-                       oninput="this.setCustomValidity('')">
-            </div>
-            <div  class="form-group">
-                <label>Last name</label>
-                <input th:value="${user.lastName}" type="text" id="lastName" class="form-control"
-                       th:field="*{lastName}">
-            </div>
-            <div class="form-group">
-                <label>email
-                    <text style="color: red;">*</text>
-                </label>
-                <input th:value="${user.email}" placeholder="test@gmail.com" type="email" id="email" class="form-control" th:field="*{email}" required
-                       oninvalid="this.setCustomValidity('Email must be not empty!')"
-                       oninput="this.setCustomValidity('')">
-            </div>
-            <div class="form-group">
-                <label>Password
-                    <text style="color: red;">*</text>
-                </label>
-                <input  type="password" id="password" class="form-control" th:field="*{password}" required
-                       oninvalid="this.setCustomValidity('Password must be not empty!')"
-                       oninput="this.setCustomValidity('')">
-            </div>
-            <div class="form-group">
-                <label>Phone number</label>
-                <input th:value="${user.phoneNumber}" type="text" id="phoneNumber" class="form-control" th:field="*{phoneNumber}">
-            </div>
-            <div class="form-group">
-                <label>Role
-                    <text style="color: red;">*</text>
-                </label>
-                <select class="form-control" th:field="*{roles}" multiple="multiple" id="roles">
-                    <option  th:each=" role:${listRole}" th:field="*{roles}"
-                             th:selected="${user.roles.contains(role.getRoleId())}"
-                            th:value="${role.getRoleId()}" th:text="${role.getName()}"></option>
-                </select>
-            </div>
+        <div class="form-group">
+            <label>First name
+                <text style="color: red;">*</text>
+            </label>
+            <input th:value="${user.firstName}" type="text" id="firstName" class="form-control" required
+                   oninvalid="this.setCustomValidity('First name must be not empty!')"
+                   oninput="this.setCustomValidity('')">
+        </div>
+        <div class="form-group">
+            <label>Last name</label>
+            <input th:value="${user.lastName}" type="text" id="lastName" class="form-control"
+                   th:field="*{lastName}">
+        </div>
+        <div class="form-group">
+            <label>email
+                <text style="color: red;">*</text>
+            </label>
+            <input th:value="${user.email}" placeholder="test@gmail.com" type="email" id="email"
+                   class="form-control" th:field="*{email}" required
+                   oninvalid="this.setCustomValidity('Email must be not empty!')"
+                   oninput="this.setCustomValidity('')">
+        </div>
+        <div class="form-group">
+            <label>Phone number</label>
+            <input th:value="${user.phoneNumber}" type="text" id="phoneNumber" class="form-control"
+                   th:field="*{phoneNumber}">
+        </div>
+        <div class="form-group">
+            <label>Role
+                <text style="color: red;">*</text>
+            </label>
+            <!--th:selected="${roleOfUser.contains(role.getRoleId())} ? true : false"-->
+            <span th:text="${#arrays.contains(roleOfUser, '6')}"></span>
+            <select class="form-control" th:field="*{roles}" multiple="multiple" id="roles">
+                <option th:each="role:${listRole}"
+                        th:selected="${#arrays.contains(roleOfUser, role.getRoleId())}"
+                        th:value="${role.getRoleId()}"
+                        th:text="${role.getName()}"></option>
+            </select>
+        </div>
     </form>
-    <button type="button" id="save-user" class="btn btn-primary">Save</button>
+    <button type="button" id="update-user" class="btn btn-primary">Save</button>
     <button type="button" id="clear-add-user" class="btn btn-warning">Clear</button>
     <button class="btn btn-danger"><a th:href="@{'/listUser'}">Cancel</a></button>
 </div>
@@ -63,61 +60,62 @@
 </body>
 </html>
 <script language="javascript">
-        $('#save-user').click(function() {
-         var firstName = $('#firstName').val();
-           var     lastName = $('#lastName').val();
-           var     email = $('#email').val();
-            var    password = $('#password').val();
-            var    phoneNumber= $('#phoneNumber').val();
-             var roleValue = $('#roles').val();
-   var pattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if (!email.match(pattern)) {
-     document.getElementById("add-user-error").innerHTML = "Please provide a valid email address. Example: test@gmail.com";
-     return;
-    }
-       var stringJson = [];
+    $('#update-user').click(function() {
+        var firstName = $('#firstName').val();
+        var     lastName = $('#lastName').val();
+        var     email = $('#email').val();
+        var    phoneNumber= $('#phoneNumber').val();
+        var roleValue = $('#roles').val();
+        var pattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if (!email.match(pattern)) {
+            document.getElementById("add-user-error").innerHTML = "Please provide a valid email address. Example: test@gmail.com";
+            return;
+        }
+        var stringJson = [];
 
         for(var i = 0; i < roleValue.length; i++) {
-          const role = {roleId:  roleValue[i]};
-          stringJson.push(role);
+            const role = {roleId:  roleValue[i]};
+            stringJson.push(role);
 
         }
         var userModel = {
-                firstName : firstName,
-                lastName : lastName,
-                email : email,
-                password : password,
-                phoneNumber: phoneNumber,
-                roles: stringJson
+            userId: $('#userId').val(),
+            firstName : firstName,
+            lastName : lastName,
+            email : email,
+            phoneNumber: phoneNumber,
+            roles: stringJson
         }
-         document.getElementById("add-user-error").innerHTML = "";
+        document.getElementById("add-user-error").innerHTML = "";
         $.ajax({
-            url: '/addUser',
+            url: '/editUser',
             method: 'POST',
             contentType: "application/json",
             data:  JSON.stringify(userModel),
             success: function (data) {
-            if(data == "OK"){
-              window.location = "/listUser";
-              }
+                if(data == "OK"){
+                    window.location = "/listUser";
+                }
             },
             error: function(error) {
-             if(error.responseText == "Email existed."){
-              document.getElementById("add-user-error").innerHTML = "Email existed.";
-             }
-                    }
-                });
+                var errorMssg = error.responseText;
+                console.log(errorMssg);
+                document.getElementById("add-user-error").innerHTML = errorMssg;
 
+            }
         });
-          $(function () {
-            $("#join_datepicker").datepicker({ dateFormat: "yy-mm-dd" });
-            $("#retire_datepicker").datepicker({ dateFormat: "yy-mm-dd" });
-        });
+
+    });
+    $(function () {
+        $("#join_datepicker").datepicker({ dateFormat: "yy-mm-dd" });
+        $("#retire_datepicker").datepicker({ dateFormat: "yy-mm-dd" });
+    });
 
 
     $('#clear-add-user').click(function() {
-      $("#form-add-user").trigger('reset');
-      });
+        $("#form-add-user").trigger('reset');
+    });
+
 
 
 

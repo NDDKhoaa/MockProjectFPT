@@ -3,7 +3,6 @@ package fa.mockproject.service.impl;
 import fa.mockproject.entity.User;
 import fa.mockproject.repository.UserRepository;
 import fa.mockproject.service.UserService;
-import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -39,13 +38,23 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public User update(User user) {
+  public String update(User user) {
     Optional<User> userUpdate = userRepository.findById(user.getUserId());
+
     if (userUpdate.isEmpty()) {
-      return null;
+      return "User not exited.";
+    }
+    user.setPassword(userUpdate.get().getPassword());
+    if (user.getEmail().equals(userUpdate.get().getEmail())) {
+      userRepository.save(user);
+      return "OK";
+    }
+    User checkUser = userRepository.findByEmail(user.getEmail());
+    if (checkUser != null) {
+      return "Email existed.";
     }
     userRepository.save(user);
-    return user;
+    return "OK";
   }
 
   @Override

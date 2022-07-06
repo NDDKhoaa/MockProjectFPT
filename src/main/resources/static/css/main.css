@@ -219,7 +219,7 @@ main .control-btn {
     background-size: 100%;
 }
 .user-information{
-float: right;
+    float: right;
     padding: 5px;
     color: white;
 }
@@ -227,46 +227,49 @@ float: right;
     margin-top: -5px;
 }
 .logout a{
-   color: white;
+    color: white;
 }
 .menu {
-padding:10px;
-width: 100%;
-float: left;
-background-color:#e3e3e3;
+    padding:10px;
+    width: 100%;
+    float: left;
+    background-color:#e3e3e3;
 }
 .menu-top{
- margin-top: 15px;
+    margin-top: 15px;
 }
 .navbar-inner{
-color: blue;
+    color: blue;
 }
 .dashboard{
-     float: right;
-         padding: 0px;
+    float: right;
+    padding: 0px;
 }
 .dashboard hr {
-  border-top: 1px solid black;
+    border-top: 1px solid black;
 }
 .dashboard h3{
-padding: 10px;
+    padding: 10px;
 }
 .dashboard-menu{
-  padding: 15px;
-  height: 70px;
-  width: 100%;
+    padding: 15px;
+    height: 70px;
+    width: 100%;
 }
 
 .dashboard-menu select{
-  margin-right: 15px;
-  width: 15%;
+    margin-right: 15px;
+    width: 15%;
 }
-.dashboard-content h5{
-text-align: center;
+.dashboard-content{
+    padding:15px;
+}
+.dashboard-content h6{
+    text-align: center;
 }
 .body-content{
-     padding: 15px;
-     float:right;
+    padding: 15px;
+    float:right;
 }
 footer {
     background-color: rgb(227, 223, 223);
@@ -274,5 +277,5 @@ footer {
     padding: 12px;
     height:50px;
     float: left;
-        width: 100%;
+    width: 100%;
 }

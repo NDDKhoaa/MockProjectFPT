@@ -3,6 +3,9 @@ package fa.mockproject.service;
 import java.util.List;
 import java.util.Map;
 
+import fa.mockproject.entity.ClassData;
+import fa.mockproject.entity.Location;
+import fa.mockproject.entity.enumtype.ClassBatchStatusEnum;
 import fa.mockproject.model.ClassBatchModel;
 
 public interface ClassBatchService {
@@ -24,4 +27,5 @@ public interface ClassBatchService {
 	
 	public abstract boolean addTrainee(Long classBatchId, List<Long> traineeId);
 	public abstract boolean removeTrainee(Long classBatchId, List<Long> traineeId);
+	List<ClassData> getListTrainee(Location location, ClassBatchStatusEnum status);
 }
