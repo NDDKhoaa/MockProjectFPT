@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head th:replace="/header :: head">
+  <title>Dashboard</title>
+
+</head>
+<body>
+<div th:include="header :: header"></div>
+
+<div class="dashboard col-lg-9">
+  <h3>Dashboard</h3>
+  <hr>
+  <div class="dashboard-menu">
+    <span>Dashboard for</span>
+    <span>
+        <select id="dashboard-for">
+          <option value="class">Class</option>
+          <option value="class">Candidate</option>
+          <option value="class">Trainee</option>
+          <option value="class">Trainer</option>
+        </select>
+    </span>
+    <span>Location</span>
+    <span>
+      <select class="col-lg-4 " th:field="*{locations}">
+        <option th:value="${'all'}" th:text="${'All'}"></option>
+        <option th:each="location:${locations}"
+                th:value="${location.locationId}"
+                th:text="${location.locationName}"></option>
+      </select>
+    </span>
+    <span>Type of Dashboard</span>
+    <span>
+      <select id="dashboard-type">
+          <option value="table">Table</option>
+          <option value="chart">Chart</option>
+      </select>
+    </span>
+    <span>Status</span>
+    <span>
+      <select class="dashboard-status"></select>
+    </span>
+  </div>
+  <hr>
+  <!--dashboard content-->
+  <div class="row">
+    <div class="col-lg-4 dashboard-content" id="planning">
+      <h6>Planning</h6>
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>Skill</th>
+          <th>Plan of enrolment</th>
+        </tr>
+        </thead>
+        <tbody>
+       <!-- <tr th:each="role, i : ${roles}">
+          <td th:text="${i.index +1}"/>
+          <td th:text="${role.name}"/>
+          <td><p th:if="${#lists.size(role.privileges) > 0}" th:text="${role.privileges}"/></td>
+          <td><a th:href="@{'/editRole?roleId=' + ${role.roleId}}">Update</a></td>
+        </tr>-->
+        </tbody>
+      </table>
+    </div>
+    <div class="col-lg-4 dashboard-content" id="planned">
+      <h6>Planned</h6>
+    </div>
+    <div class="col-lg-4 dashboard-content" id="in-progress">
+      <h6>In progress</h6>
+    </div>
+  </div>
+</div>
+
+</body>
+<footer th:replace="/footer :: footer"></footer>
+</html>
