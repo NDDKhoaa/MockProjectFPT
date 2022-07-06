@@ -2,11 +2,13 @@ package fa.mockproject.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,10 +42,13 @@ public class TrainerController {
 	}
 
 	@PostMapping("/saveTrainer")
-	public String saveTrainer(@ModelAttribute("trainerModel") TrainerModel trainerModel) {
-		trainerService.save(trainerModel);
-		
-		return "redirect:/showTrainerList";
+	public String saveTrainer(@Valid @ModelAttribute("trainerModel") TrainerModel trainerModel,BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			return "createTrainer";
+		}else {
+			trainerService.save(trainerModel);
+			return "redirect:/showTrainerList";
+		}
 	}
 
 	@GetMapping("/showFormForUpdateTrainer/{id}")

@@ -2,6 +2,10 @@ package fa.mockproject.model;
 
 import java.time.LocalDate;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 import fa.mockproject.entity.Trainer;
@@ -13,17 +17,28 @@ public class TrainerModel {
 	private long trainerId;
 	private long trainerProfileId;
 	private TrainerTypeEnum type;
+	@Size(min=3, max=50)
+	@NotBlank
 	private String account;
+	@Size(min=3, max=50)
+	@NotBlank
 	private String fullName;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dateOfBirth;
+	
 	private int gender;
+	@NotBlank
 	private String unit;
+	@NotBlank
 	private String major;
+	@NotBlank
 	private String phone;
+	@Email(message = "Please enter a valid email address")
+	@NotBlank
 	private String email;
+	
 	private int experience;
-
+	@NotBlank
 	private String remarks;
 
 	public TrainerModel() {

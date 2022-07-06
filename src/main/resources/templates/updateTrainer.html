@@ -11,15 +11,16 @@
 	crossorigin="anonymous">
 <script src="https://kit.fontawesome.com/83baa56dfa.js"
 	crossorigin="anonymous"></script>
+	<link rel="stylesheet" th:href="@{/css/trainer.css}">
 </head>
 <body>
 
-	<header class="bg-primary">
-		<span class="header text-white font-weight-bold"><h3>FSOFT
-				HR UTILITY</h3></span>
+<header class="bg-blue">
+		<div class="header text-white font-weight-bold"><h4>FSOFT
+				HR UTILITY</h4></div>
 	</header>
 	<div class="nav">
-		<div class="col-3">
+		<div class="col-2 bg-gray">
 			<button type="button" class="btn btn-sm float-right">&lt&lt</button>
 			<br>
 			<nav class="navbar-nav">
@@ -45,16 +46,16 @@
 			</nav>
 		</div>
 
-		<div class="col-9">
+		<div class="col-8">
 			<h4>Create Trainer</h4>
 			<hr>
 			<div class="container">
 				<div>
 					<div class="nav nav-tab">
 						<ul class="list-inline row">
-							<li class="nav-item border"><a th:href="@{/showTrainerForm}"
+							<li class="nav-item border bg-gray"><a th:href="@{/showTrainerForm}"
 								class="nav-link">Information</a></li>
-							<li class="nav-item"><a th:href="@{/showTrainerList}"
+							<li class="nav-item border"><a th:href="@{/showTrainerList}"
 								class="nav-link">Trainer</a></li>
 						</ul>
 					</div>
@@ -145,7 +146,7 @@
 	</div>
 
 
-	<div class="footer">
+	<div class="footer bg-gray border">
 		<span><a href="#"><i class="fas fa-question-circle"></i>Help</a>
 		 <a href="#"><i class="fas fa-calendar-alt"></i>Create ticket on FI2.0</a></span>
 	</div>

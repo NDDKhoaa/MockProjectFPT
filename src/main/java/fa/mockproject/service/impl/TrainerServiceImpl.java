@@ -15,9 +15,6 @@ public class TrainerServiceImpl implements TrainerService{
 	@Autowired
 	private TrainerProfileRepository trainerProfileRepository;
 	
-//	@Autowired
-//	private TrainerRepository trainerRepository;
-	
 	@Override
 	public List<TrainerProfile> getAllTrainers(String keyword) {
 		if(keyword!=null) {
