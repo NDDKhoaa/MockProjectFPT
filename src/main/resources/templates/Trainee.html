@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" href="../static/css/main.css">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css"
+	rel="stylesheet" type="text/css" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>Trainee</title>
+<link th:rel="stylesheet" th:href="@{webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+</head>
+<body>
+    <div class="app">
+        <header>
+            <span class="header-title">FSOFT HR UTILITY</span>
+        </header>
+        <div class="app-content">
+            <nav class="nav-bar">
+                <button class="collapse-btn">&lt&lt</button>
+                <p class="role-option-lable">Your role now is:</p>
+                <select value="" class="role-option">
+                    <option name="" id="" class="role-option-item">Delivery maoption/option/select>
+                </select>
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Candidate Management</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Trainer Management</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Trainee Management</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Class Management</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">General Setting</a>
+                    </li>
+                </ul>
+            </nav>
+            <main>
+                <div class="header">
+                    Trainee          
+                </div>
+                <div class="content">
+                    <form class="classbatch-infor-form" th:action="@{/addClass}" th:object="${classBatchModel}" method="post">
+                        <ul class="nav-tab">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">Information</a>
+                            </li>
+                            <li class="nav-item">
+                                <a th:href="@{_trainee}" class="nav-link">Trainee</a>
+                            </li>
+                        </ul>
+                        <div class="content-main">
+                            <section class="content-main-section class-general">
+                                <div class="section-header">
+                                </div>
+                                <div class="section-content">
+     
+     
+                                
+	<div class="container">
+		<div class="row">
+        <div class="col-lg-10 mt-5 mb-5">
+            <table id="example" class="table table-bordered" style="width: 100%">
+                <thead>
+                <tr>
+                    <th> Empl ID</th>
+                    <th> Name</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="abc : ${obj}">
+                <td th:text="${abc.traineeCandidateProfileId}"></td>
+                <td th:text="${abc.fullName}"></td>
+                </tr>
+                </tbody>
+            </table>
+            
+
+	
+	
+                             <div th:if="${totalPages >= 1}">
+		<div class="paging">
+			<!-- <div>Total Rows: [[${totalItems}]]</div> -->
+			<ul class="pagination">
+				<li class="page-link"><a
+					th:if="${currentPage <= totalPages && currentPage != 1}"
+					th:href="@{'/showTraineeList/' + ${currentPage - 1}}">Previous</a> <span
+					th:if="${currentPage == 1}">Previous</span></li>
+
+				<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+					<li class="page-link"><a th:if="${currentPage != i}"
+						th:href="@{'/showTraineeList/' + ${i}}">[[${i}]]</a> <span
+						th:unless="${currentPage != i}">[[${i}]]</span></li>
+				</span>
+				<li class="page-link"><a th:if="${currentPage < totalPages}"
+					th:href="@{'/showTraineeList/' + ${currentPage + 1}}">Next</a> <span
+					th:unless="${currentPage < totalPages}">Next</span></li>
+			</ul>
+		</div>
+	</div>
+        <footer>
+            <span>FOOTER</span>
+        </footer>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- <script src="../static/js/classManagement.js"></script> -->
+</body>
+</html>

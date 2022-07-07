@@ -68,4 +68,8 @@ public class CustomUserDetails implements UserDetails {
     public User getUser() {
         return user;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/haidang

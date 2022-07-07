@@ -22,7 +22,7 @@ public interface ClassBatchService {
 	public abstract boolean ApproveClass(Long classBatchId);
 	public abstract boolean RejectClass(Long classBatchId);
 	public abstract boolean CloseClass(Long classBatchId);
-	public abstract boolean AcceptClass(Long classBatchId);
+	public abstract ClassBatchModel AcceptClass(ClassBatchModel classBatchModel);
 	public abstract boolean DeclineClass(Long classBatchId);
 	
 	public abstract boolean addTrainee(Long classBatchId, List<Long> traineeId);

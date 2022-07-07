@@ -11,8 +11,8 @@ import fa.mockproject.entity.TraineeCandidateProfileStatus;
 
 @Repository
 public interface TraineeCandidateProfileStatusRepository extends JpaRepository<TraineeCandidateProfileStatus, String> {
-
 	@Query(value = "SELECT t from TraineeCandidateProfileStatus t where t.profileStatusId LIKE '%' || :word || '%' "
 			+ "OR t.status LIKE '%' || :word || '%' ")
 	public List<TraineeCandidateProfileStatus> search(@Param("word") String word);
+	
 }

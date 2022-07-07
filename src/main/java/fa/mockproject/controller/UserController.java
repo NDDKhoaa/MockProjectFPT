@@ -1,5 +1,6 @@
 package fa.mockproject.controller;
 
+<<<<<<< HEAD
 import fa.mockproject.entity.User;
 import fa.mockproject.model.UserModel;
 import fa.mockproject.service.RoleService;
@@ -8,6 +9,8 @@ import fa.mockproject.service.UserService;
 import fa.mockproject.util.CommonConstant;
 import java.util.HashSet;
 import java.util.Set;
+=======
+>>>>>>> origin/haidang
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,12 +19,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+<<<<<<< HEAD
+=======
+import org.springframework.web.bind.annotation.ModelAttribute;
+>>>>>>> origin/haidang
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+<<<<<<< HEAD
 @Controller
 public class UserController {
 
@@ -30,6 +38,23 @@ public class UserController {
   @Autowired
   private RoleService roleService;
   @Autowired
+=======
+import fa.mockproject.entity.User;
+import fa.mockproject.model.UserModel;
+import fa.mockproject.service.RoleService;
+import fa.mockproject.service.SecurityService;
+import fa.mockproject.service.UserService;
+import fa.mockproject.util.CommonConstant;
+
+@Controller
+public class UserController {
+
+ 
+  private UserService userService;
+ 
+  private RoleService roleService;
+  
+>>>>>>> origin/haidang
   private SecurityService securityService;
 
   @GetMapping("/addUser")
@@ -53,7 +78,11 @@ public class UserController {
   public String login(Model model, String error, String logout) {
     if (error != null) {
       model.addAttribute("error",
+<<<<<<< HEAD
               "Sorry, your username or password is incorrect. Please try again!");
+=======
+          "Sorry, your username or password is incorrect. Please try again!");
+>>>>>>> origin/haidang
     }
     if (logout != null) {
       model.addAttribute("message", "You have been logged out successfully.");
@@ -63,8 +92,13 @@ public class UserController {
 
   @RequestMapping(path = {"/listUser"}, method = RequestMethod.GET)
   public String listUsers(Model model,
+<<<<<<< HEAD
                           @RequestParam(defaultValue = CommonConstant.PAGE_DEFAULT) int page,
                           @RequestParam(defaultValue = CommonConstant.SIZE_DEFAULT) int size) {
+=======
+      @RequestParam(defaultValue = CommonConstant.PAGE_DEFAULT) int page,
+      @RequestParam(defaultValue = CommonConstant.SIZE_DEFAULT) int size) {
+>>>>>>> origin/haidang
     PageRequest pageable = PageRequest.of((page - 1), size);
     Page<User> users = userService.users(pageable);
     model.addAttribute("users", users.toList());
@@ -84,20 +118,35 @@ public class UserController {
 
   @GetMapping(path = {"/editUser"})
   public String editUserPage(Model model, long userId, ModelMap modelMap) {
+<<<<<<< HEAD
     Set<Long> longList = new HashSet<>();
     User user = userService.findByUserId(userId);
     user.getRoles().forEach(role -> longList.add(role.getRoleId()));
     modelMap.addAttribute("userModel", new UserModel());
     model.addAttribute("user", user);
     model.addAttribute("roleOfUser", longList);
+=======
+    User user = userService.findByUserId(userId);
+    modelMap.addAttribute("userModel", new UserModel());
+    model.addAttribute("user", user);
+>>>>>>> origin/haidang
     model.addAttribute("listRole", roleService.getList());
     return "users/editUser";
   }
 
   @PostMapping("/editUser")
+<<<<<<< HEAD
   public ResponseEntity editUser(@RequestBody UserModel userModel) {
     String response = userService.update(new User(userModel));
     return ResponseEntity.ok().body(response);
   }
 }
 
+=======
+  public String editUser(@ModelAttribute("employeeModel") UserModel userModel, Model model) {
+    userService.update(new User(userModel));
+    model.addAttribute("message", "Update success!");
+    return "redirect:/listUser";
+  }
+}
+>>>>>>> origin/haidang

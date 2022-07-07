@@ -27,7 +27,7 @@ import fa.mockproject.model.TrainerModel;
 @Controller
 public class ClassManagementController {
 	
-	@GetMapping("/")
+	@GetMapping("/classmanagement")
 	public String getClassList(Model model) {
 		List<LocationModel> locationModels = new ArrayList<LocationModel>();
 		locationModels.add(new LocationModel("CG", "Cau Giay", ""));

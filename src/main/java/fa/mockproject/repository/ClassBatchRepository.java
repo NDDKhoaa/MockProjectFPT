@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import fa.mockproject.entity.ClassBatch;
+import fa.mockproject.entity.enumtype.ClassBatchStatusEnum;
 
 import java.util.List;
 
@@ -14,5 +15,7 @@ public interface ClassBatchRepository extends JpaRepository<ClassBatch, Long> {
     List<ClassBatch> findByLocationAndStatus(Location location, ClassBatchStatusEnum status);
     List<ClassBatch> findByLocation(Location location);
     List<ClassBatch> findByStatus(ClassBatchStatusEnum status);
+
+	void save(ClassBatchStatusEnum plannedstatus);
 
 }

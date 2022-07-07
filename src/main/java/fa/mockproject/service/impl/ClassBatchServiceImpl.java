@@ -175,9 +175,9 @@ public class ClassBatchServiceImpl implements ClassBatchService {
 	}
 
 	@Override
-	public boolean AcceptClass(Long classBatchId) {
+	public ClassBatchModel AcceptClass(ClassBatchModel classBatchModel) {
 		// TODO Auto-generated method stub
-		return false;
+		return classBatchModel;
 	}
 
 	@Override
@@ -197,6 +197,7 @@ public class ClassBatchServiceImpl implements ClassBatchService {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 
 	@Override
 	public List<ClassData> getListTrainee(Location location, ClassBatchStatusEnum status) {
@@ -233,3 +234,6 @@ public class ClassBatchServiceImpl implements ClassBatchService {
 	}
 
 }
+
+}
+

@@ -8,7 +8,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+
 import javax.persistence.OneToOne;
+
 import javax.persistence.Table;
 
 @Entity
@@ -25,8 +28,10 @@ public class GPA {
     private AttendantStatus attendantStatus;
 
     @ManyToOne
-    @JoinColumn(name = "trainee_candidate_id", nullable = false)
+
+    @JoinColumn(name = "trainee_candidate id", nullable = false)
     private Trainee trainee;
+
 
     @OneToOne
     @JoinColumn(name = "allowance_id",nullable = true)
@@ -43,6 +48,7 @@ public class GPA {
 
     public GPA() {
     }
+
 
 
 	public GPA(long gpaId, Trainee trainee, AttendantStatus attendantStatus, Allowance allowance, String gpaResult,
@@ -112,6 +118,7 @@ public class GPA {
 	public void setGpaGpaId(long gpaGpaId) {
 		this.gpaGpaId = gpaGpaId;
 	}
+
 
    
 }
