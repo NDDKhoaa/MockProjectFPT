@@ -1,18 +1,20 @@
 package fa.mockproject.security;
 
-import fa.mockproject.entity.Role;
-import fa.mockproject.entity.User;
-import fa.mockproject.entity.enumtype.PrivilegesEnum;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.*;
+import fa.mockproject.entity.Role;
+import fa.mockproject.entity.User;
+import fa.mockproject.entity.enumtype.PrivilegesEnum;
 
-@Data
-@AllArgsConstructor
+
 public class CustomUserDetails implements UserDetails {
     /**
      *
@@ -68,8 +70,16 @@ public class CustomUserDetails implements UserDetails {
     public User getUser() {
         return user;
     }
-<<<<<<< HEAD
+
+	public CustomUserDetails(User user) {
+		super();
+		this.user = user;
+	}
+
+	@Override
+	public String toString() {
+		return "CustomUserDetails [user=" + user + "]";
+	}
+    
+    
 }
-=======
-}
->>>>>>> origin/haidang

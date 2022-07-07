@@ -17,13 +17,9 @@
 	<description>Mock Project for Final</description>
 
 	<properties>
-<<<<<<< HEAD
-		<java.version>12</java.version>
-		<maven.compiler.source>12</maven.compiler.source>
-		<maven.compiler.target>12</maven.compiler.target>
-=======
+
 		<java.version>11</java.version>
->>>>>>> origin/haidang
+
 	</properties>
 
 	<dependencies>
@@ -46,12 +42,12 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 			<version>1.5.6.RELEASE</version>
 		</dependency>
-<<<<<<< HEAD
+
 		 <dependency>
 		 <groupId>org.springframework.boot</groupId>
 		 <artifactId>spring-boot-starter-security</artifactId>
 		 </dependency>
-=======
+
 
 
 
@@ -80,7 +76,7 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 		</dependency>
->>>>>>> origin/haidang
+
 
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>

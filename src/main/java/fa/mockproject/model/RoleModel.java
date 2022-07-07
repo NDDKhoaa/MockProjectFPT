@@ -1,24 +1,13 @@
 package fa.mockproject.model;
 
 
+import java.util.Set;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.jsonschema.JsonSerializableSchema;
+
 import fa.mockproject.entity.enumtype.PrivilegesEnum;
-<<<<<<< HEAD
-import lombok.Getter;
-import lombok.Setter;
-
-import java.util.Set;
-
-@Getter
-@Setter
-=======
 
 
-import java.util.Set;
-
-
->>>>>>> origin/haidang
 public class RoleModel {
     @JsonProperty("roleId")
     private long roleId;
@@ -37,9 +26,6 @@ public class RoleModel {
         this.roleId = roleId;
     }
 
-<<<<<<< HEAD
-}
-=======
 	public long getRoleId() {
 		return roleId;
 	}
@@ -64,5 +50,9 @@ public class RoleModel {
 		this.privileges = privileges;
 	}
 
+	@Override
+	public String toString() {
+		return "RoleModel [roleId=" + roleId + ", name=" + name + ", privileges=" + privileges + "]";
+	}
+
 }
->>>>>>> origin/haidang

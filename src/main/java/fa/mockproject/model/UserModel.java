@@ -3,17 +3,10 @@ package fa.mockproject.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Set;
-<<<<<<< HEAD
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
-=======
 
-
-
->>>>>>> origin/haidang
 public class UserModel {
 
   private long userId;
@@ -27,9 +20,6 @@ public class UserModel {
 
   public UserModel() {
   }
-<<<<<<< HEAD
-}
-=======
 
 public long getUserId() {
 	return userId;
@@ -86,6 +76,11 @@ public Set<RoleModel> getRoles() {
 public void setRoles(Set<RoleModel> roles) {
 	this.roles = roles;
 }
+
+@Override
+public String toString() {
+	return "UserModel [userId=" + userId + ", password=" + password + ", firstName=" + firstName + ", lastName="
+			+ lastName + ", phoneNumber=" + phoneNumber + ", email=" + email + ", roles=" + roles + "]";
+}
   
 }
->>>>>>> origin/haidang

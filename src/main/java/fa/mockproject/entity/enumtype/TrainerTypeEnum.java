@@ -1,7 +1,6 @@
 package fa.mockproject.entity.enumtype;
 
 public enum TrainerTypeEnum {
-<<<<<<< HEAD
 	MasterTrainer ("MasterTrainer"),
 	Trainer ("Trainer");
 	
@@ -12,11 +11,4 @@ public enum TrainerTypeEnum {
 	public String getName() {
 		return name;
 	}
-=======
-	MasterTrainer,
-	Trainer
-
->>>>>>> origin/haidang
 }
-
-

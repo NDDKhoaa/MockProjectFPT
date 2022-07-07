@@ -19,11 +19,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "roles")
-<<<<<<< HEAD
-@Getter
-@Setter
-=======
->>>>>>> origin/haidang
+
 public class Role {
 
   @Id
@@ -62,9 +58,6 @@ public class Role {
 
   }
 
-<<<<<<< HEAD
-}
-=======
 public long getRoleId() {
 	return roleId;
 }
@@ -96,8 +89,10 @@ public Set<User> getUsers() {
 public void setUsers(Set<User> users) {
 	this.users = users;
 }
-  
-  
+
+@Override
+public String toString() {
+	return "Role [roleId=" + roleId + ", name=" + name + ", privileges=" + privileges + ", users=" + users + "]";
+}
 
 }
->>>>>>> origin/haidang

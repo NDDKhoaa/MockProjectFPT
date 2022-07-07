@@ -5,13 +5,7 @@ import fa.mockproject.entity.Role;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-<<<<<<< HEAD
 
-=======
-import org.springframework.stereotype.Service;
-
-@Service
->>>>>>> origin/haidang
 public interface RoleService {
 
   Role addRole(Role role);
@@ -23,8 +17,4 @@ public interface RoleService {
   List<Role> getList();
 
   Role update(Role role);
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/haidang

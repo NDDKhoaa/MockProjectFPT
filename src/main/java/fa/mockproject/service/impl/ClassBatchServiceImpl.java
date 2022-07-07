@@ -12,10 +12,14 @@ import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
-import fa.mockproject.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import fa.mockproject.entity.ClassBatch;
+import fa.mockproject.entity.ClassData;
+import fa.mockproject.entity.Location;
+import fa.mockproject.entity.Skill;
+import fa.mockproject.entity.Trainee;
 import fa.mockproject.entity.enumtype.ClassBatchStatusEnum;
 import fa.mockproject.model.ClassBatchModel;
 import fa.mockproject.repository.ClassBatchRepository;
@@ -235,5 +239,5 @@ public class ClassBatchServiceImpl implements ClassBatchService {
 
 }
 
-}
+
 

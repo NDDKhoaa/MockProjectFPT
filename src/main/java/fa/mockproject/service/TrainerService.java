@@ -13,9 +13,5 @@ public interface TrainerService {
 	TrainerProfile findByTrainerId(long trainerId);
 	
 	void deleteTrainerProfileById(long id);
-<<<<<<< HEAD
 	List<TrainerProfile> getAllTrainers(String keyword);
 }
-=======
-}
->>>>>>> origin/haidang
