@@ -85,7 +85,6 @@ public class TraineeCandidateProfile {
 	private String remarks;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "account_id", nullable = true)
 	private Account account;
 
 	public TraineeCandidateProfile() {
