@@ -37,35 +37,4 @@
 			</tr>
 		</tbody>
 	</table>
-	<div class="pagination-control d-flex">
-		<div class="page-size form-row mr-5">
-			<label for="" class="col col-form-label text-nowrap">Page Size</label>
-			<select name="pageSize" class="form-control rounded-0 col">
-				<option th:each="size: ${T(fa.mockproject.util.ClassManagementConstant).CLASS_LIST_PAGE_SIZE}" th:selected="${size} == ${pageSize}" th:value="${size}" th:text="${size}"></option>
-			</select>
-		</div>
-		<div class="current-page form-row">
-			<label class="current-page-description col col-form-label text-nowrap">Show 1 - [[${pageSize} >= ${totalElements} ? ${totalElements} : ${pageSize} ]] of total [[${totalElements}]] items</label>
-			<select name="pageIndex" class="form-control rounded-0 col">
-				<option th:each="i: ${#numbers.sequence(1, totalPage)}"  th:selected="${i} == ${pageIndex}" th:value="${i}" th:text="'Page ' + ${i} + '/' + ${totalPage}"></option>
-			</select>
-		</div>
-		<nav class="ml-auto">
-			<ul class="pagination mb-0">
-				<li class="page-item" th:classappend="${pageIndex} == ${1} ? 'disabled' : ''">
-					<button class="page-link rounded-0 text-body previous">
-						<span aria-hidden="true">&laquo;</span>
-					</button>
-				</li>
-				<li class="page-item" th:each="i: ${#numbers.sequence(1, totalPage)}" th:classappend="${i} == ${pageIndex} ? 'active' : ''">
-					<button class="page-link rounded-0 text-body" th:text="${i}"></button>
-				</li>
-				<li class="page-item"  th:classappend="${pageIndex} == ${totalPage} ? 'disabled' : ''">
-					<button class="page-link rounded-0 text-body next">
-						<span aria-hidden="true">&raquo;</span>
-					</button>
-				</li>
-			</ul>
-		</nav>
-	</div>
 </div>

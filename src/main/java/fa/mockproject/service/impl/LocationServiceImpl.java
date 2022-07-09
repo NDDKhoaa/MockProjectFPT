@@ -20,28 +20,28 @@ public class LocationServiceImpl implements LocationService {
 	@Autowired
 	private LocationRepository repo;
 
-	@Autowired
+	@Override
 	public List<Location> listAll() {
 		return (List<Location>) repo.findAll();
 	}
 
-	@Autowired
+	@Override
 	public void save(Location location) {
 		repo.save(location);
 	}
 
-	@Autowired
+	@Override
 	public Location findById(String locationId) {
 		Optional<Location> location = repo.findById(locationId);
 		return location.get();
 	}
 
-	@Autowired
+	@Override
 	public void delete(Location location) {
 		repo.delete(location);
 	}
 
-	@Autowired
+	@Override
 	public void deleteById(String locationId) {
 		repo.deleteById(locationId);
 	}
@@ -53,7 +53,7 @@ public class LocationServiceImpl implements LocationService {
 		return locationModels;
 	}
 
-	@Autowired
+	@Override
 	public List<Location> search(@Param("word") String word) {
 		return (List<Location>) repo.search(word);
 

@@ -81,25 +81,6 @@ INSERT INTO `mockproject`.`subject_type` (subject_type_id, subject_type_name, re
     (7, "Soft Skill", ""),
     (8, "Management", "");
 
-INSERT INTO `springbootdatajpasecurity`.`location` (`location_id`, `location_name`) VALUES ('HCM', 'Ho Chi Minh');
-INSERT INTO `springbootdatajpasecurity`.`location` (`location_id`, `location_name`) VALUES ('HN', 'Ha Noi');
-INSERT INTO `springbootdatajpasecurity`.`location` (`location_id`, `location_name`) VALUES ('DN', 'Da Nang');
-INSERT INTO `springbootdatajpasecurity`.`location` (`location_id`, `location_name`) VALUES ('NT', 'Nha Trang');
-INSERT INTO `springbootdatajpasecurity`.`location` (`location_id`, `location_name`) VALUES ('VT', 'Vung Tau');
-INSERT INTO `springbootdatajpasecurity`.`location` (`location_id`, `location_name`) VALUES ('CT', 'Can Tho');
-
-
-INSERT INTO `springbootdatajpasecurity`.`faculty` (`faculty_id`, `faculty_name`) VALUES ('FL', 'Foreign Language');
-INSERT INTO `springbootdatajpasecurity`.`faculty` (`faculty_id`, `faculty_name`) VALUES ('MKT', 'Marketting');
-INSERT INTO `springbootdatajpasecurity`.`faculty` (`faculty_id`, `faculty_name`) VALUES ('BA', 'Business Administration');
-INSERT INTO `springbootdatajpasecurity`.`faculty` (`faculty_id`, `faculty_name`) VALUES ('TESOL', 'Teaching English to Speakers of Other Languages');
-INSERT INTO `springbootdatajpasecurity`.`faculty` (`faculty_id`, `faculty_name`) VALUES ('BM', 'Brand Management');
-INSERT INTO `springbootdatajpasecurity`.`faculty` (`faculty_id`, `faculty_name`) VALUES ('BE', 'Biomedical Engineering');
-INSERT INTO `springbootdatajpasecurity`.`faculty` (`faculty_id`, `faculty_name`) VALUES ('FB', 'Finance and Banking');
-INSERT INTO `springbootdatajpasecurity`.`faculty` (`faculty_id`, `faculty_name`) VALUES ('HRM', 'Human Resource Management');
-INSERT INTO `springbootdatajpasecurity`.`faculty` (`faculty_id`, `faculty_name`) VALUES ('IT', 'Information Technology');
-
-
 INSERT INTO `mockproject`.`sub_subject_type` (sub_subject_type_id, sub_subject_type_name, remarks) VALUES
     (1, "Cloud", ""),
     (2, "Big Data", ""),
@@ -120,13 +101,6 @@ INSERT INTO `mockproject`.`delivery_type` (delivery_type_id, delivery_type_name,
     (7, "OJT", ""),
     (8, "Others", "");
 
-INSERT INTO `springbootdatajpasecurity`.`channel` (`channel_id`, `channel_name`) VALUES ('MAIL', 'Email Advertise');
-INSERT INTO `springbootdatajpasecurity`.`channel` (`channel_id`, `channel_name`) VALUES ('WEB', 'Website Advertise');
-INSERT INTO `springbootdatajpasecurity`.`channel` (`channel_id`, `channel_name`) VALUES ('FBOOK', 'Facebook Advertise');
-INSERT INTO `springbootdatajpasecurity`.`channel` (`channel_id`, `channel_name`) VALUES ('INSTA', 'Instagram Advertise');
-INSERT INTO `springbootdatajpasecurity`.`channel` (`channel_id`, `channel_name`) VALUES ('TV', 'Television Advertise');
-INSERT INTO `springbootdatajpasecurity`.`channel` (`channel_id`, `channel_name`) VALUES ('NEWS', 'Newspaper Advertise');
-
 INSERT INTO `mockproject`.`format_type` (format_type_id, format_type_name, remarks) VALUES
     (1, "Online", ""),
     (2, "Offline", ""),
@@ -136,17 +110,6 @@ INSERT INTO `mockproject`.`scope` (scope_id, scope_name, remarks) VALUES
     (1, "Company", ""),
     (2, "Unit", ""),
     (3, "Outside", "");
-
-INSERT INTO `springbootdatajpasecurity`.`university` (`university_id`, `university_name`) VALUES ('VLU', 'Van Lang University');
-INSERT INTO `springbootdatajpasecurity`.`university` (`university_id`, `university_name`) VALUES ('HSU', 'Hoa Sen University');
-INSERT INTO `springbootdatajpasecurity`.`university` (`university_id`, `university_name`) VALUES ('SIU', 'Saigon Internation University');
-INSERT INTO `springbootdatajpasecurity`.`university` (`university_id`, `university_name`) VALUES ('VNU', 'Vietnam National University');
-INSERT INTO `springbootdatajpasecurity`.`university` (`university_id`, `university_name`) VALUES ('NEU', 'National Economics University');
-INSERT INTO `springbootdatajpasecurity`.`university` (`university_id`, `university_name`) VALUES ('FTU', 'Foreign Trade University');
-INSERT INTO `springbootdatajpasecurity`.`university` (`university_id`, `university_name`) VALUES ('USSH', 'University of Social Science & Humanities');
-INSERT INTO `springbootdatajpasecurity`.`university` (`university_id`, `university_name`) VALUES ('HNUE', 'Hanoi National University of Education');
-INSERT INTO `springbootdatajpasecurity`.`university` (`university_id`, `university_name`) VALUES ('UAF', 'University of Agriculture & Forestry');
-INSERT INTO `springbootdatajpasecurity`.`university` (`university_id`, `university_name`) VALUES ('FPT', 'FPT University');
 
 INSERT INTO `mockproject`.`trainer_profile` (trainer_profile_id, account, full_name, date_of_birth, email, experience, gender, major, phone, remarks, unit) VALUES
     (1, "MinhDV1", "Dang Van Minh", "1992-10-28", "MinhDV1@gmail.com", 4, 0, "Information Technology", "0538647284", "", ""),
@@ -166,16 +129,6 @@ INSERT INTO `mockproject`.`position` (position_id, position_name, remarks) VALUE
     ('DOPS', 'DevOps', ""),
     ('DATA', 'Data Analysis', "");
 
-INSERT INTO `springbootdatajpasecurity`.`skill` (`skill_id`, `skill_name`) VALUES ('Java', 'Java ');
-INSERT INTO `springbootdatajpasecurity`.`skill` (`skill_id`, `skill_name`) VALUES ('SQL', 'SQL');
-INSERT INTO `springbootdatajpasecurity`.`skill` (`skill_id`, `skill_name`) VALUES ('HTML/CSS', 'HTML/CSS');
-INSERT INTO `springbootdatajpasecurity`.`skill` (`skill_id`, `skill_name`) VALUES ('C', 'C');
-INSERT INTO `springbootdatajpasecurity`.`skill` (`skill_id`, `skill_name`) VALUES ('C#', 'C#');
-INSERT INTO `springbootdatajpasecurity`.`skill` (`skill_id`, `skill_name`) VALUES ('Anguluar', 'Anguluar');
-INSERT INTO `springbootdatajpasecurity`.`skill` (`skill_id`, `skill_name`) VALUES ('ReactJS', 'ReactJS');
-INSERT INTO `springbootdatajpasecurity`.`skill` (`skill_id`, `skill_name`) VALUES ('JavaScript', 'JavaScript');
-INSERT INTO `springbootdatajpasecurity`.`skill` (`skill_id`, `skill_name`) VALUES ('Python', 'Python');
-
 SELECT * FROM class_admin_profile;
 
 SELECT * FROM curriculumn;
@@ -185,12 +138,6 @@ SELECT * FROM trainer;
 SELECT * FROM class_admin;
 SELECT * FROM supplier_partner;
 SELECT * FROM class_batch;
-
-INSERT INTO `springbootdatajpasecurity`.`profile_status` (`profile_status_id`, `status`) VALUES ('New', 'New');
-INSERT INTO `springbootdatajpasecurity`.`profile_status` (`profile_status_id`, `status`) VALUES ('TP', 'Test - Pass');
-INSERT INTO `springbootdatajpasecurity`.`profile_status` (`profile_status_id`, `status`) VALUES ('TF', 'Test - Failed');
-INSERT INTO `springbootdatajpasecurity`.`profile_status` (`profile_status_id`, `status`) VALUES ('IP', 'Interview - Pass');
-INSERT INTO `springbootdatajpasecurity`.`profile_status` (`profile_status_id`, `status`) VALUES ('IF', 'Interview - Failed');
 
 SELECT @dat := created_date FROM class_batch WHERE class_id = 28;
 SELECT datediff(now(), @dat);
@@ -202,9 +149,6 @@ DELETE FROM trainer;
 DELETE FROM class_admin;
 DELETE FROM supplier_partner;
 DELETE FROM class_batch;
-
-INSERT INTO `springbootdatajpasecurity`.`profile_type` (`profile_status_id`, `type`) VALUES ('Candidate', 'Candidate');
-INSERT INTO `springbootdatajpasecurity`.`profile_type` (`profile_status_id`, `type`) VALUES ('Trainee', 'Trainee');
 
 DROP PROCEDURE UPDATE_CLASS_BATCH_STATUS
 

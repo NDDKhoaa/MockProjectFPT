@@ -1,6 +1,7 @@
 :root {
 	--light-gray: #dddddd;
 	--gray: #cccccc;
+	--dark-gray: #666666;
 	--blue: #205081;
 	--blue-00: #3f80e2;
 	--blue-01: #2d78e3;
@@ -159,4 +160,20 @@ input:read-only,
 
 .form .control-btn button:disabled i {
 	color: var(--gray) !important;
+}
+
+header.navbar .login-control {
+	line-height: 1;
+}
+
+.page-item.active .page-link {
+	background-color: var(--dark-gray);
+}
+
+.page-item.disabled .page-link {
+	background-color: var(--gray);
+}
+
+.app {
+	min-height: 100vh;
 }

@@ -97,7 +97,7 @@ public class ClassManagementController {
 	@Autowired
 	CurriculumnService curriculumnService;
 	
-	@GetMapping("/classes/view")
+	@GetMapping({"/classes", "/classes/view"})
 	public String getClassList(Model model, @RequestParam Map<String, String> params) {
 		
 		Pair<List<ClassBatchModel>, Page<ClassBatch>> pair = classBatchService.getClassList(params);
