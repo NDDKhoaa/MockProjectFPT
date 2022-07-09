@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
@@ -17,14 +18,28 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedStoredProcedureQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.ParameterMode;
+import javax.persistence.StoredProcedureParameter;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import fa.mockproject.entity.enumtype.BudgetCodeEnum;
 import fa.mockproject.entity.enumtype.ClassBatchStatusEnum;
+import fa.mockproject.entity.enumtype.TrainerTypeEnum;
 import fa.mockproject.model.ClassBatchModel;
+import fa.mockproject.util.Converter;
 
+@NamedStoredProcedureQuery(name = "ClassBatch.updateStatus",
+		procedureName = "UPDATE_CLASS_BATCH_STATUS", parameters = {
+		@StoredProcedureParameter(mode = ParameterMode.IN, name = "class_id", type = Long.class),
+		@StoredProcedureParameter(mode = ParameterMode.IN, name = "status", type = String.class),
+		@StoredProcedureParameter(mode = ParameterMode.IN, name = "history", type = String.class),
+		@StoredProcedureParameter(mode = ParameterMode.IN, name = "remarks", type = String.class),
+		@StoredProcedureParameter(mode = ParameterMode.OUT, name = "row_cnt", type = Integer.class)})
 @Entity
 @Table(name = "ClassBatch")
 @Cacheable
@@ -32,155 +47,138 @@ public class ClassBatch {
 	
 	@SuppressWarnings("unused")
 	private static final String DATE_FORMAT = "dd/MM/yyyy";
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "class_id")
 	private long classId;
-	
 	@Column(name = "class_name", length = 255, unique = true, nullable = false)
 	private String className;
-	
 	@Column(name = "class_code", length = 255, unique = true, nullable = false)
 	private String classCode;
-	
 	@Column(name = "expected_start_date", nullable = false)
 	private LocalDate expectedStartDate;
-	
 	@Column(name = "expected_end_date", nullable = false)
 	private LocalDate expectedEndDate;
-	
-	@ManyToOne
-	@JoinColumn(name = "location_id", nullable = false)
-	private Location location;
-	
-	@Column(name = "detail_location", length = 255, nullable = false)
+	@Column(name = "detail_location", length = 255)
 	private String detailLocation;
-	
-	@ManyToOne
-	@JoinColumn(name = "class_admin_id", nullable = false)
-	private ClassAdmin classAdmin;
-	
-	@Column(name = "planned_trainee_number", nullable = false)
+	@Column(name = "planned_trainee_number")
 	private int plannedTraineeNumber;
-	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "budget_code", nullable = false)
 	private BudgetCodeEnum budgetCode;
-	
-	@OneToMany(mappedBy = "classBatch", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-	private List<Budget> budgets;
-	
 	@Column(name = "estimated_budget", nullable = false)
 	private long estimatedBudget;
-	
+	@Column(name = "accepted_trainee_number")
+	private int acceptedTraineeNumber;
+	@Column(name = "actual_trainee_number")
+	private int actualTraineeNumber;
+	@Column(name = "actual_start_date")
+	private LocalDate actualStartDate;
+	@Column(name = "actual_end_date")
+	private LocalDate actualEndDate;
+	@Column(name = "milestones", nullable = false)
+	private int milestones;
+	@Column(name = "weighted_number", length = 255)
+	private String weightedNumber;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "status", length = 255, nullable = false)
+	private ClassBatchStatusEnum status;
+	@Column(name = "history", length = 255, nullable = true)
+	private String history;
+	@Column(name = "remarks", length = 255, nullable = true)
+	private String remarks;
+	@ManyToOne
+	@JoinColumn(name = "class_type_id", nullable = false)
+	private ClassType classType;
+	@ManyToOne
+	@JoinColumn(name = "skill_id", nullable = false)
+	private Skill skill;
+	@ManyToOne
+	@JoinColumn(name = "position_id", nullable = false)
+	private Position position;
+	@ManyToOne
+	@JoinColumn(name = "location_id", nullable = false)
+	private Location location;
+	@OneToMany(mappedBy = "classBatch", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+	private List<ClassAdmin> classAdmins;
 	@ManyToOne
 	@JoinColumn(name = "subject_type_id", nullable = false)
 	private SubjectType subjectType;
-	
 	@ManyToOne
 	@JoinColumn(name = "sub_subject_type_id", nullable = false)
 	private SubSubjectType subSubjectType;
-	
 	@ManyToOne
 	@JoinColumn(name = "delivery_type_id", nullable = false)
 	private DeliveryType deliveryType;
-	
 	@ManyToOne
 	@JoinColumn(name = "format_type_id", nullable = false)
 	private FormatType formatType;
-	
 	@ManyToOne
 	@JoinColumn(name = "scope_id", nullable = false)
 	private Scope scope;
-	
-	@Column(name = "actual_start_date", nullable = false)
-	private LocalDate actualStartDate;
-	
-	@Column(name = "actual_end_date", nullable = false)
-	private LocalDate actualEndDate;
-	
-	@Column(name = "accepted_trainee_number", nullable = false)
-	private int acceptedTraineeNumber;
-	
-	@Column(name = "actual_trainee_number", nullable = false)
-	private int actualTraineeNumber;
-	
-	@OneToMany(mappedBy = "classBatch", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "classBatch", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+	private List<Budget> budgets;
+	@OneToMany(mappedBy = "classBatch", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private List<Trainer> trainers;
-	
-	@Column(name = "milestones", nullable = false)
-	private int milestones;
-	
-	@OneToOne(mappedBy = "classBatch")
+	@OneToOne(mappedBy = "classBatch", cascade = CascadeType.ALL)
 	private Curriculumn curriculumn;
-	
 	@OneToMany(mappedBy = "classBatch", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private List<Audit> audits;
-	
 	@OneToMany(mappedBy = "classBatch", fetch = FetchType.LAZY)
 	private List<Trainee> trainees;
-	
-	@Enumerated
-	@Column(name = "status", length = 255, nullable = false)
-	private ClassBatchStatusEnum status;
-	
-	@Column(name = "weighted_number", length = 255, nullable = true)
-	private String weightedNumber;
-	
-	@Column(name = "history", length = 255, nullable = true)
-	private String history;
-	
-	@Column(name = "remarks", length = 255, nullable = true)
-	private String remarks;
-	
-	@OneToOne(mappedBy = "classBatch")
+	@OneToOne(mappedBy = "classBatch", cascade = CascadeType.ALL)
 	private SupplierPartner supplierPartner;
+	@Column(name = "created_date", updatable = false)
+	@CreationTimestamp
+	private LocalDate createdDate;
 
 	public ClassBatch() {
 		super();
 	}
 
 	public ClassBatch(long classId, String className, String classCode, LocalDate expectedStartDate,
-			LocalDate expectedEndDate, Location location, String detailLocation, ClassAdmin classAdmin,
-			int plannedTraineeNumber, BudgetCodeEnum budgetCode, List<Budget> budgets, long estimatedBudget,
-			SubSubjectType subSubjectType, DeliveryType deliveryType, FormatType formatType, Scope scope,
-			SupplierPartner supplierPartner, LocalDate actualStartDate, LocalDate actualEndDate,
-			int acceptedTraineeNumber, int actualTraineeNumber, List<Trainer> trainers, int milestones,
-			Curriculumn curriculumn, List<Audit> audits, List<Trainee> trainees, SubjectType subjectType,
-			ClassBatchStatusEnum status, String weightedNumber, String history, String remarks) {
+			LocalDate expectedEndDate, String detailLocation, int plannedTraineeNumber, BudgetCodeEnum budgetCode,
+			long estimatedBudget, int acceptedTraineeNumber, int actualTraineeNumber, LocalDate actualStartDate,
+			LocalDate actualEndDate, int milestones, String weightedNumber, ClassBatchStatusEnum status, String history,
+			String remarks, ClassType classType, Skill skill, Position position, Location location,
+			List<ClassAdmin> classAdmins, SubjectType subjectType, SubSubjectType subSubjectType,
+			DeliveryType deliveryType, FormatType formatType, Scope scope, List<Budget> budgets, List<Trainer> trainers,
+			Curriculumn curriculumn, List<Audit> audits, List<Trainee> trainees, SupplierPartner supplierPartner) {
 		super();
 		this.classId = classId;
-		this.classCode = classCode;
 		this.className = className;
+		this.classCode = classCode;
 		this.expectedStartDate = expectedStartDate;
 		this.expectedEndDate = expectedEndDate;
-		this.location = location;
 		this.detailLocation = detailLocation;
-		this.classAdmin = classAdmin;
 		this.plannedTraineeNumber = plannedTraineeNumber;
 		this.budgetCode = budgetCode;
-		this.budgets = budgets;
 		this.estimatedBudget = estimatedBudget;
+		this.acceptedTraineeNumber = acceptedTraineeNumber;
+		this.actualTraineeNumber = actualTraineeNumber;
+		this.actualStartDate = actualStartDate;
+		this.actualEndDate = actualEndDate;
+		this.milestones = milestones;
+		this.weightedNumber = weightedNumber;
+		this.status = status;
+		this.history = history;
+		this.remarks = remarks;
+		this.classType = classType;
+		this.skill = skill;
+		this.position = position;
+		this.location = location;
+		this.classAdmins = classAdmins;
+		this.subjectType = subjectType;
 		this.subSubjectType = subSubjectType;
 		this.deliveryType = deliveryType;
 		this.formatType = formatType;
 		this.scope = scope;
-		this.supplierPartner = supplierPartner;
-		this.actualStartDate = actualStartDate;
-		this.actualEndDate = actualEndDate;
-		this.acceptedTraineeNumber = acceptedTraineeNumber;
-		this.actualTraineeNumber = actualTraineeNumber;
+		this.budgets = budgets;
 		this.trainers = trainers;
-		this.milestones = milestones;
 		this.curriculumn = curriculumn;
 		this.audits = audits;
 		this.trainees = trainees;
-		this.subjectType = subjectType;
-		this.status = status;
-		this.weightedNumber = weightedNumber;
-		this.history = history;
-		this.remarks = remarks;
+		this.supplierPartner = supplierPartner;
 	}
 
 	public ClassBatch(ClassBatchModel classBatchModel) throws IOException {
@@ -192,14 +190,13 @@ public class ClassBatch {
         this.expectedEndDate = classBatchModel.getExpectedEndDate();
         this.location = new Location(classBatchModel.getLocationModel());
         this.detailLocation = classBatchModel.getDetailLocation();
-        this.classAdmin = new ClassAdmin(classBatchModel.getClassAdminModel().getClassAdminId());
-        this.plannedTraineeNumber = classBatchModel.getPlannedTraineeNumber();
+        this.classAdmins = Converter.convertList(classBatchModel.getClassAdminModels(), 
+        		classAdminModel -> new ClassAdmin(classAdminModel, this));
+        this.plannedTraineeNumber = Optional.ofNullable(classBatchModel.getPlannedTraineeNumber()).orElse(0);
         this.budgetCode = classBatchModel.getBudgetCode();
-        this.budgets = new ArrayList<Budget>();
-        classBatchModel.getBudgetModels().forEach(budgetModel -> {
-        	this.budgets.add(new Budget(budgetModel, this));
-    	});
-        this.estimatedBudget = classBatchModel.getEstimatedBudget();
+        this.budgets = Converter.convertList(classBatchModel.getBudgetModels(), 
+        		budgetModel -> new Budget(budgetModel, this));
+        this.estimatedBudget = Optional.ofNullable(classBatchModel.getEstimatedBudget()).orElse(0L);
         this.subSubjectType = new SubSubjectType(classBatchModel.getSubSubjectTypeModel());
         this.deliveryType = new DeliveryType(classBatchModel.getDeliveryTypeModel());
         this.formatType = new FormatType(classBatchModel.getFormatTypeModel());
@@ -207,28 +204,28 @@ public class ClassBatch {
         this.supplierPartner = new SupplierPartner(classBatchModel.getSupplierPartnerModel(), this);
         this.actualStartDate = classBatchModel.getActualStartDate();
         this.actualEndDate = classBatchModel.getActualEndDate();
-        this.acceptedTraineeNumber = classBatchModel.getAcceptedTraineeNumber();
-        this.actualTraineeNumber = classBatchModel.getActualTraineeNumber();
-        this.trainers = new ArrayList<Trainer>();
+        this.acceptedTraineeNumber = Optional.ofNullable(classBatchModel.getAcceptedTraineeNumber()).orElse(0);
+        this.actualTraineeNumber = Optional.ofNullable(classBatchModel.getActualTraineeNumber()).orElse(0);
+        this.trainers = Converter.convertList(classBatchModel.getTrainerModels(), trainerModel -> {
+        	trainerModel.setType(TrainerTypeEnum.Trainer);
+        	return new Trainer(trainerModel, this);
+        });
+        classBatchModel.getMasterTrainerModel().setType(TrainerTypeEnum.MasterTrainer);
         this.trainers.add(new Trainer(classBatchModel.getMasterTrainerModel(), this));
-        classBatchModel.getTrainerModels().forEach(trainerModel -> {
-        	this.trainers.add(new Trainer(trainerModel, this));
-    	});
-        this.milestones = classBatchModel.getMilestones();
+        this.milestones = Optional.ofNullable(classBatchModel.getMilestones()).orElse(0);
         this.curriculumn = new Curriculumn(classBatchModel.getCurriculumnModel(), this);
-        this.audits = new ArrayList<Audit>();
-        classBatchModel.getAuditModels().forEach(auditModel -> {
-        	this.audits.add(new Audit(auditModel, this));
-        });
-        this.trainees = new ArrayList<Trainee>();
-        classBatchModel.getTraineeModels().forEach(traineeModel -> {
-        	this.trainees.add(new Trainee(traineeModel, this));
-        });
+        this.audits = Converter.convertList(classBatchModel.getAuditModels(), 
+        		auditModel -> new Audit(auditModel, this));
+        this.trainees = Converter.convertList(classBatchModel.getTraineeModels(), 
+        		traineeModel -> new Trainee(traineeModel, this));
         this.subjectType = new SubjectType(classBatchModel.getSubjectTypeModel());
         this.status = classBatchModel.getStatus();
         this.weightedNumber = classBatchModel.getWeightedNumber();
         this.history = classBatchModel.getHistory();
         this.remarks = classBatchModel.getRemarks();
+        this.classType = new ClassType(classBatchModel.getClassTypeModel());
+        this.skill = new Skill(classBatchModel.getSkillModel());
+        this.position = new Position(classBatchModel.getPositionModel());
 }
 
 	public long getClassId() {
@@ -287,12 +284,12 @@ public class ClassBatch {
 		this.detailLocation = detailLocation;
 	}
 
-	public ClassAdmin getClassAdmin() {
-		return classAdmin;
+	public List<ClassAdmin> getClassAdmins() {
+		return classAdmins;
 	}
 
-	public void setClassAdmin(ClassAdmin classAdmin) {
-		this.classAdmin = classAdmin;
+	public void setClassAdmins(List<ClassAdmin> classAdmins) {
+		this.classAdmins = classAdmins;
 	}
 
 	public int getPlannedTraineeNumber() {
@@ -477,6 +474,69 @@ public class ClassBatch {
 
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
+	}
+
+	public ClassType getClassType() {
+		return classType;
+	}
+
+	public void setClassType(ClassType classType) {
+		this.classType = classType;
+	}
+
+	public Skill getSkill() {
+		return skill;
+	}
+
+	public void setSkill(Skill skill) {
+		this.skill = skill;
+	}
+
+	public Position getPosition() {
+		return position;
+	}
+
+	public void setPosition(Position position) {
+		this.position = position;
+	}
+
+	@Override
+	public String toString() {
+		return "ClassBatch [\n\tclassId=" + classId 
+	            + "\n\tclassName=" + className 
+	            + "\n\tclassCode=" + classCode 
+	            + "\n\texpectedStartDate=" + expectedStartDate 
+	            + "\n\texpectedEndDate=" + expectedEndDate 
+	            + "\n\tdetailLocation=" + detailLocation 
+	            + "\n\tplannedTraineeNumber=" + plannedTraineeNumber 
+	            + "\n\tbudgetCode=" + budgetCode 
+	            + "\n\testimatedBudget=" + estimatedBudget 
+	            + "\n\tacceptedTraineeNumber=" + acceptedTraineeNumber 
+	            + "\n\tactualTraineeNumber=" + actualTraineeNumber 
+	            + "\n\tactualStartDate=" + actualStartDate 
+	            + "\n\tactualEndDate=" + actualEndDate 
+	            + "\n\tmilestones=" + milestones 
+	            + "\n\tweightedNumber=" + weightedNumber 
+	            + "\n\tstatus=" + status 
+	            + "\n\thistory=" + history 
+	            + "\n\tremarks=" + remarks 
+	            + "\n\tclassType=" + classType 
+	            + "\n\tskill=" + skill 
+	            + "\n\tposition=" + position 
+	            + "\n\tlocation=" + location 
+	            + "\n\tclassAdmins=" + classAdmins 
+	            + "\n\tsubjectType=" + subjectType 
+	            + "\n\tsubSubjectType=" + subSubjectType 
+	            + "\n\tdeliveryType=" + deliveryType 
+	            + "\n\tformatType=" + formatType 
+	            + "\n\tscope=" + scope 
+	            + "\n\tbudgets=" + budgets 
+	            + "\n\ttrainers=" + trainers 
+	            + "\n\tcurriculumn=" + curriculumn 
+	            + "\n\taudits=" + audits 
+	            + "\n\ttrainees=" + trainees 
+	            + "\n\tsupplierPartner=" + supplierPartner 
+	            + "]";
 	}
 	
 }

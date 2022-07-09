@@ -1,17 +1,17 @@
 package fa.mockproject.controller;
 
-import fa.mockproject.entity.Location;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
 import fa.mockproject.entity.User;
 import fa.mockproject.entity.enumtype.ClassBatchStatusEnum;
 import fa.mockproject.security.CustomUserDetails;
 import fa.mockproject.service.ClassBatchService;
 import fa.mockproject.service.LocationService;
 import fa.mockproject.service.SecurityService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class DashboardController {

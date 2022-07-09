@@ -3,6 +3,7 @@ package fa.mockproject.model;
 import java.time.LocalDate;
 
 import fa.mockproject.entity.ClassAdmin;
+import fa.mockproject.entity.ClassAdminProfile;
 
 public class ClassAdminModel {
 	
@@ -45,6 +46,18 @@ public class ClassAdminModel {
 		this.email = classAdmin.getClassAdminProfile().getEmail();
 		this.account = classAdmin.getClassAdminProfile().getAccount();
 		this.remarks = classAdmin.getRemarks();
+	}
+	
+	public ClassAdminModel(ClassAdminProfile classAdminProfile) {
+		super();
+		this.classAdminProfileId = classAdminProfile.getClassAdminProfileId();
+	    this.fullName = classAdminProfile.getFullName();
+	    this.dateOfBirth = classAdminProfile.getDateOfBirth();
+	    this.gender = classAdminProfile.getGender();
+	    this.phone = classAdminProfile.getPhone();
+	    this.email = classAdminProfile.getEmail();
+	    this.account = classAdminProfile.getAccount();
+	    this.remarks = classAdminProfile.getRemarks();
 	}
 
 	public long getClassAdminId() {

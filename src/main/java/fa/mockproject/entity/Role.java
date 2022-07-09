@@ -58,5 +58,4 @@ public class Role {
     this.privileges = roleModel.getPrivileges();
 
   }
-
 }

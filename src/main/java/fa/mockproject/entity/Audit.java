@@ -161,9 +161,9 @@ public class Audit {
 
 	@Override
 	public String toString() {
-		return "Audit [auditId=" + auditId + ", classBatch=" + classBatch + ", date=" + date + ", eventCategory="
-				+ eventCategory + ", relatedPartyOrPeople=" + relatedPartyOrPeople + ", action=" + action + ", pic="
-				+ pic + ", deadline=" + deadline + ", note=" + note + "]";
+		return "Audit [auditId=" + auditId + ", date=" + date + ", eventCategory=" + eventCategory
+				+ ", relatedPartyOrPeople=" + relatedPartyOrPeople + ", action=" + action + ", pic=" + pic
+				+ ", deadline=" + deadline + ", note=" + note + "]";
 	}
 	
 }

@@ -107,4 +107,10 @@ public class Trainer {
 		this.remarks = remarks;
 	}
 
+	@Override
+	public String toString() {
+		return "Trainer [trainerId=" + trainerId + ", type=" + type + ", trainerProfile=" + trainerProfile
+				+ ", remarks=" + remarks + "]";
+	}
+
 }

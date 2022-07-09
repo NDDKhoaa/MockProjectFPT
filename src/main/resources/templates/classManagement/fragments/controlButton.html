@@ -1,0 +1,50 @@
+<div th:fragment="controlBtn(actionables)" th:with="Action=${T(fa.mockproject.entity.enumtype.ClassManagementActionEnum)}" class="btn-wrapper">
+	<button th:disabled="not ${#lists.contains(actionables, Action.Update)}" type="button" th:attr="data-action=${Action.Update}" class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0 w-125px">
+		<i class="fa-solid fa-circle-arrow-up float-left text-primary"></i>
+		Update Class
+	</button>
+	<button th:disabled="not ${#lists.contains(actionables, Action.Submit)}" type="button" th:attr="data-action=${Action.Submit}" class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0 w-125px">
+		<i class="fa-solid fa-turn-up float-left text-orange"></i>
+		Submit Class
+	</button>
+	<button th:disabled="not ${#lists.contains(actionables, Action.Start)}" type="button" th:attr="data-action=${Action.Start}" class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0 w-125px">
+		<i class="fa-solid fa-play float-left text-cyan"></i>
+		Start Class
+	</button>
+	<button th:disabled="not ${#lists.contains(actionables, Action.Finish)}" type="button" th:attr="data-action=${Action.Finish}" class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0 w-125px">
+		<i class="fa-solid fa-square-minus float-left text-yellow"></i>
+		Finish Class
+	</button>
+	<a th:href="'/classes/view/'" type="button" class="close-btn btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0 w-125px">
+		<i class="fa-solid fa-reply float-left text-danger"></i>
+		Close
+	</a>
+	<button th:disabled="not ${#lists.contains(actionables, Action.Cancel)}" type="button" th:attr="data-action=${Action.Cancel}" class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0 w-125px">
+		<i class="fa-solid fa-ban float-left text-danger"></i>
+		Cancel Class
+	</button>
+	<button th:disabled="not ${#lists.contains(actionables, Action.Approve)}" type="button" th:attr="data-action=${Action.Approve}" class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0 w-125px">
+		<i class="fa-solid fa-thumbs-up float-left text-pink"></i>
+		Approve Class
+	</button>
+	<button th:disabled="not ${#lists.contains(actionables, Action.Reject)}" type="button" th:attr="data-action=${Action.Reject}" class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0 w-125px">
+		<i class="fa-solid fa-thumbs-down float-left text-brown"></i>
+		Reject Class
+	</button>
+	<button th:disabled="not ${#lists.contains(actionables, Action.Close)}" type="button" th:attr="data-action=${Action.Close}" class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0 w-125px">
+		<i class="fa-solid fa-circle-minus float-left text-danger"></i>
+		Close Class
+	</button>
+	<button th:disabled="not ${#lists.contains(actionables, Action.Request)}" type="button" th:attr="data-action=${Action.Request}" class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0 w-125px">
+		<i class="fa-solid fa-question float-left text-success"></i>
+		Request Infor
+	</button>
+	<button th:disabled="not ${#lists.contains(actionables, Action.Accept)}" type="button" th:attr="data-action=${Action.Accept}" class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0 w-125px">
+		<i class="fa-regular fa-thumbs-up float-left text-purple"></i>
+		Accept Class
+	</button>
+	<button th:disabled="not ${#lists.contains(actionables, Action.Decline)}" type="button" th:attr="data-action=${Action.Decline}" class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0 w-125px">
+		<i class="fa-regular fa-thumbs-down float-left text-info"></i>
+		Decline Class
+	</button>
+</div>

@@ -1,17 +1,16 @@
 package fa.mockproject.model;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.multipart.MultipartFile;
 
 import fa.mockproject.entity.ClassBatch;
 import fa.mockproject.entity.enumtype.BudgetCodeEnum;
 import fa.mockproject.entity.enumtype.ClassBatchStatusEnum;
 import fa.mockproject.entity.enumtype.TrainerTypeEnum;
+import fa.mockproject.util.Converter;
 
 public class ClassBatchModel {
 	
@@ -39,6 +38,9 @@ public class ClassBatchModel {
 	private String detailLocation;
 	private BudgetCodeEnum budgetCode;
 	private ClassBatchStatusEnum status;
+	private ClassTypeModel classTypeModel;
+	private SkillModel skillModel;
+	private PositionModel positionModel;
 	private CurriculumnModel curriculumnModel;
 	private LocationModel locationModel;
 	private SubjectTypeModel subjectTypeModel;
@@ -47,7 +49,7 @@ public class ClassBatchModel {
 	private ScopeModel scopeModel;
 	private FormatTypeModel formatTypeModel;
 	private SupplierPartnerModel supplierPartnerModel;
-	private ClassAdminModel classAdminModel;
+	private List<ClassAdminModel> classAdminModels;
 	private List<BudgetModel> budgetModels;
 	private TrainerModel masterTrainerModel;
 	private List<TrainerModel> trainerModels;
@@ -58,17 +60,23 @@ public class ClassBatchModel {
 	public ClassBatchModel() {
 		super();
 	}
+	
+	public ClassBatchModel(Long classId) {
+		super();
+		this.classId = classId;
+	}
 
 	public ClassBatchModel(long classId, String className, String classCode, LocalDate expectedStartDate,
 			LocalDate expectedEndDate, Integer plannedTraineeNumber, Long estimatedBudget, LocalDate actualStartDate,
 			LocalDate actualEndDate, Integer acceptedTraineeNumber, Integer actualTraineeNumber, Integer milestones,
 			String weightedNumber, String history, String detailLocation, BudgetCodeEnum budgetCode,
-			ClassBatchStatusEnum status, CurriculumnModel curriculumnModel, LocationModel locationModel,
+			ClassBatchStatusEnum status, ClassTypeModel classTypeModel, SkillModel skillModel,
+			PositionModel positionModel, CurriculumnModel curriculumnModel, LocationModel locationModel,
 			SubjectTypeModel subjectTypeModel, SubSubjectTypeModel subSubjectTypeModel,
 			DeliveryTypeModel deliveryTypeModel, ScopeModel scopeModel, FormatTypeModel formatTypeModel,
-			SupplierPartnerModel supplierPartnerModel, ClassAdminModel classAdminModel, List<BudgetModel> budgetModels,
-			TrainerModel masterTrainerModel, List<TrainerModel> trainerModels, List<AuditModel> auditModels,
-			List<TraineeModel> traineeModels, String remarks) {
+			SupplierPartnerModel supplierPartnerModel, List<ClassAdminModel> classAdminModels,
+			List<BudgetModel> budgetModels, TrainerModel masterTrainerModel, List<TrainerModel> trainerModels,
+			List<AuditModel> auditModels, List<TraineeModel> traineeModels, String remarks) {
 		super();
 		this.classId = classId;
 		this.className = className;
@@ -87,6 +95,9 @@ public class ClassBatchModel {
 		this.detailLocation = detailLocation;
 		this.budgetCode = budgetCode;
 		this.status = status;
+		this.classTypeModel = classTypeModel;
+		this.skillModel = skillModel;
+		this.positionModel = positionModel;
 		this.curriculumnModel = curriculumnModel;
 		this.locationModel = locationModel;
 		this.subjectTypeModel = subjectTypeModel;
@@ -95,10 +106,14 @@ public class ClassBatchModel {
 		this.scopeModel = scopeModel;
 		this.formatTypeModel = formatTypeModel;
 		this.supplierPartnerModel = supplierPartnerModel;
-		this.classAdminModel = classAdminModel;
+		this.classAdminModels = classAdminModels;
 		this.budgetModels = budgetModels;
 		this.masterTrainerModel = masterTrainerModel;
-		this.trainerModels = trainerModels;
+		this.masterTrainerModel.setType(TrainerTypeEnum.MasterTrainer);
+		this.trainerModels = Converter.convertList(trainerModels, trainerModel -> {
+				trainerModel.setType(TrainerTypeEnum.Trainer);
+				return trainerModel;
+		});
 		this.auditModels = auditModels;
 		this.traineeModels = traineeModels;
 		this.remarks = remarks;
@@ -113,13 +128,12 @@ public class ClassBatchModel {
 		this.expectedEndDate = classBatch.getExpectedEndDate();
 		this.locationModel = new LocationModel(classBatch.getLocation());
 		this.detailLocation = classBatch.getDetailLocation();
-		this.classAdminModel = new ClassAdminModel(classBatch.getClassAdmin());
+		this.classAdminModels = Converter.convertList(classBatch.getClassAdmins(), classAdmin -> 
+				new ClassAdminModel(classAdmin));
 		this.plannedTraineeNumber = classBatch.getPlannedTraineeNumber();
 		this.budgetCode = classBatch.getBudgetCode();
-		this.budgetModels = new ArrayList<BudgetModel>();
-		classBatch.getBudgets().forEach(budget -> {
-			this.budgetModels.add(new BudgetModel(budget));
-		});
+		this.budgetModels = Converter.convertList(classBatch.getBudgets(), budget -> 
+				new BudgetModel(budget));
 		this.estimatedBudget = classBatch.getEstimatedBudget();
 		this.subSubjectTypeModel = new SubSubjectTypeModel(classBatch.getSubSubjectType());
 		this.deliveryTypeModel = new DeliveryTypeModel(classBatch.getDeliveryType());
@@ -130,30 +144,74 @@ public class ClassBatchModel {
 		this.actualEndDate = classBatch.getActualEndDate();
 		this.acceptedTraineeNumber = classBatch.getAcceptedTraineeNumber();
 		this.actualTraineeNumber = classBatch.getActualTraineeNumber();
-		this.trainerModels = new ArrayList<TrainerModel>();
-		classBatch.getTrainers().forEach(trainer -> {
-			if (trainer.getType() == TrainerTypeEnum.MasterTrainer) {
-				this.masterTrainerModel = new TrainerModel(trainer);
-			}
-			else {
-				this.trainerModels.add(new TrainerModel(trainer));				
-			}
-		});
+		this.trainerModels = Converter.convertList(classBatch.getTrainers(), trainer -> {
+				if (trainer.getType() == TrainerTypeEnum.MasterTrainer) {
+					this.masterTrainerModel = new TrainerModel(trainer);
+					return null;
+				}
+				return new TrainerModel(trainer);
+		}, trainer -> trainer != null);
 		this.milestones = classBatch.getMilestones();
 		this.curriculumnModel = new CurriculumnModel(classBatch.getCurriculumn());
-		this.auditModels = new ArrayList<AuditModel>();
-		classBatch.getAudits().forEach(audit -> {
-			this.auditModels.add(new AuditModel(audit));
-		});
-		this.traineeModels = new ArrayList<TraineeModel>();
-		classBatch.getTrainees().forEach(trainee -> {
-			this.traineeModels.add(new TraineeModel(trainee));
-		});
+		this.auditModels = Converter.convertList(classBatch.getAudits(), audit -> 
+				new AuditModel(audit));
+		this.traineeModels = Converter.convertList(classBatch.getTrainees(), trainee -> 
+				new TraineeModel(trainee));
 		this.subjectTypeModel = new SubjectTypeModel(classBatch.getSubjectType());
 		this.weightedNumber = classBatch.getWeightedNumber();
 		this.history = classBatch.getHistory();
 		this.status = classBatch.getStatus();
 		this.remarks = classBatch.getRemarks();
+		this.classTypeModel = new ClassTypeModel(classBatch.getClassType());
+		this.skillModel = new SkillModel(classBatch.getSkill());
+		this.positionModel = new PositionModel(classBatch.getPosition());
+	}
+	
+	public void setAll(ClassBatch classBatch) {
+		this.classId = classBatch.getClassId();
+		this.className = classBatch.getClassName();
+		this.classCode = classBatch.getClassCode();
+		this.expectedStartDate = classBatch.getExpectedStartDate();
+		this.expectedEndDate = classBatch.getExpectedEndDate();
+		this.locationModel = new LocationModel(classBatch.getLocation());
+		this.detailLocation = classBatch.getDetailLocation();
+		this.classAdminModels = Converter.convertList(classBatch.getClassAdmins(), classAdmin -> 
+				new ClassAdminModel(classAdmin));
+		this.plannedTraineeNumber = classBatch.getPlannedTraineeNumber();
+		this.budgetCode = classBatch.getBudgetCode();
+		this.budgetModels = Converter.convertList(classBatch.getBudgets(), budget -> 
+				new BudgetModel(budget));
+		this.estimatedBudget = classBatch.getEstimatedBudget();
+		this.subSubjectTypeModel = new SubSubjectTypeModel(classBatch.getSubSubjectType());
+		this.deliveryTypeModel = new DeliveryTypeModel(classBatch.getDeliveryType());
+		this.formatTypeModel = new FormatTypeModel(classBatch.getFormatType());
+		this.scopeModel = new ScopeModel(classBatch.getScope());
+		this.supplierPartnerModel = new SupplierPartnerModel(classBatch.getSupplierPartner());
+		this.actualStartDate = classBatch.getActualStartDate();
+		this.actualEndDate = classBatch.getActualEndDate();
+		this.acceptedTraineeNumber = classBatch.getAcceptedTraineeNumber();
+		this.actualTraineeNumber = classBatch.getActualTraineeNumber();
+		this.trainerModels = Converter.convertList(classBatch.getTrainers(), trainer -> {
+				if (trainer.getType() == TrainerTypeEnum.MasterTrainer) {
+					this.masterTrainerModel = new TrainerModel(trainer);
+					return null;
+				}
+				return new TrainerModel(trainer);
+		}, trainer -> trainer != null);
+		this.milestones = classBatch.getMilestones();
+		this.curriculumnModel = new CurriculumnModel(classBatch.getCurriculumn());
+		this.auditModels = Converter.convertList(classBatch.getAudits(), audit -> 
+				new AuditModel(audit));
+		this.traineeModels = Converter.convertList(classBatch.getTrainees(), trainee -> 
+				new TraineeModel(trainee));
+		this.subjectTypeModel = new SubjectTypeModel(classBatch.getSubjectType());
+		this.weightedNumber = classBatch.getWeightedNumber();
+		this.history = classBatch.getHistory();
+		this.status = classBatch.getStatus();
+		this.remarks = classBatch.getRemarks();
+		this.classTypeModel = new ClassTypeModel(classBatch.getClassType());
+		this.skillModel = new SkillModel(classBatch.getSkill());
+		this.positionModel = new PositionModel(classBatch.getPosition());
 	}
 
 	public long getClassId() {
@@ -196,30 +254,6 @@ public class ClassBatchModel {
 		this.expectedEndDate = expectedEndDate;
 	}
 
-	public LocationModel getLocationModel() {
-		return locationModel;
-	}
-
-	public void setLocationModel(LocationModel locationModel) {
-		this.locationModel = locationModel;
-	}
-
-	public String getDetailLocation() {
-		return detailLocation;
-	}
-
-	public void setDetailLocation(String detailLocation) {
-		this.detailLocation = detailLocation;
-	}
-
-	public ClassAdminModel getClassAdminModel() {
-		return classAdminModel;
-	}
-
-	public void setClassAdminModel(ClassAdminModel classAdminModel) {
-		this.classAdminModel = classAdminModel;
-	}
-
 	public Integer getPlannedTraineeNumber() {
 		return plannedTraineeNumber;
 	}
@@ -228,76 +262,12 @@ public class ClassBatchModel {
 		this.plannedTraineeNumber = plannedTraineeNumber;
 	}
 
-	public BudgetCodeEnum getBudgetCode() {
-		return budgetCode;
-	}
-
-	public void setBudgetCode(BudgetCodeEnum budgetCode) {
-		this.budgetCode = budgetCode;
-	}
-
-	public List<BudgetModel> getBudgetModels() {
-		return budgetModels;
-	}
-
-	public void setBudgetModels(List<BudgetModel> budgetModels) {
-		this.budgetModels = budgetModels;
-	}
-
-	public List<AuditModel> getAuditModels() {
-		return auditModels;
-	}
-
-	public void setAuditModels(List<AuditModel> auditModels) {
-		this.auditModels = auditModels;
-	}
-
 	public Long getEstimatedBudget() {
 		return estimatedBudget;
 	}
 
 	public void setEstimatedBudget(Long estimatedBudget) {
 		this.estimatedBudget = estimatedBudget;
-	}
-
-	public SubSubjectTypeModel getSubSubjectTypeModel() {
-		return subSubjectTypeModel;
-	}
-
-	public void setSubSubjectTypeModel(SubSubjectTypeModel subSubjectTypeModel) {
-		this.subSubjectTypeModel = subSubjectTypeModel;
-	}
-
-	public DeliveryTypeModel getDeliveryTypeModel() {
-		return deliveryTypeModel;
-	}
-
-	public void setDeliveryTypeModel(DeliveryTypeModel deliveryTypeModel) {
-		this.deliveryTypeModel = deliveryTypeModel;
-	}
-
-	public FormatTypeModel getFormatTypeModel() {
-		return formatTypeModel;
-	}
-
-	public void setFormatTypeModel(FormatTypeModel formatTypeModel) {
-		this.formatTypeModel = formatTypeModel;
-	}
-
-	public ScopeModel getScopeModel() {
-		return scopeModel;
-	}
-
-	public void setScopeModel(ScopeModel scopeModel) {
-		this.scopeModel = scopeModel;
-	}
-
-	public SupplierPartnerModel getSupplierPartnerModel() {
-		return supplierPartnerModel;
-	}
-
-	public void setSupplierPartnerModel(SupplierPartnerModel supplierPartnerModel) {
-		this.supplierPartnerModel = supplierPartnerModel;
 	}
 
 	public LocalDate getActualStartDate() {
@@ -332,77 +302,12 @@ public class ClassBatchModel {
 		this.actualTraineeNumber = actualTraineeNumber;
 	}
 
-	public TrainerModel getMasterTrainerModel() {
-		return masterTrainerModel;
-	}
-
-	public void setMasterTrainerModel(TrainerModel masterTrainerModel) {
-		this.masterTrainerModel = masterTrainerModel;
-	}
-
-	public List<TrainerModel> getTrainerModels() {
-		return trainerModels;
-	}
-
-	public void setTrainerModels(List<TrainerModel> trainerModels) {
-		this.trainerModels = trainerModels;
-	}
-
 	public Integer getMilestones() {
 		return milestones;
 	}
 
 	public void setMilestones(Integer milestones) {
 		this.milestones = milestones;
-	}
-
-	public CurriculumnModel getCurriculumnModel() {
-		return curriculumnModel;
-	}
-
-	public void setCurriculumnModel(CurriculumnModel curriculumnModel) {
-		this.curriculumnModel = curriculumnModel;
-	}
-	
-	public void setCurriculumnModel(MultipartFile multipartFile) throws IOException {
-		if (curriculumnModel == null) {
-			this.curriculumnModel = new CurriculumnModel(multipartFile);
-		}
-		else {
-			this.curriculumnModel.setFile(multipartFile);;			
-		}
-	}
-
-	public List<AuditModel> getAudit() {
-		return auditModels;
-	}
-
-	public void setAudit(List<AuditModel> auditModels) {
-		this.auditModels = auditModels;
-	}
-
-	public List<TraineeModel> getTraineeModels() {
-		return traineeModels;
-	}
-
-	public void setTraineeModels(List<TraineeModel> traineeModels) {
-		this.traineeModels = traineeModels;
-	}
-
-	public SubjectTypeModel getSubjectTypeModel() {
-		return subjectTypeModel;
-	}
-
-	public void setSubjectTypeModel(SubjectTypeModel subjectTypeModel) {
-		this.subjectTypeModel = subjectTypeModel;
-	}
-
-	public ClassBatchStatusEnum getStatus() {
-		return status;
-	}
-
-	public void setStatus(ClassBatchStatusEnum status) {
-		this.status = status;
 	}
 
 	public String getWeightedNumber() {
@@ -421,12 +326,176 @@ public class ClassBatchModel {
 		this.history = history;
 	}
 
+	public String getDetailLocation() {
+		return detailLocation;
+	}
+
+	public void setDetailLocation(String detailLocation) {
+		this.detailLocation = detailLocation;
+	}
+
+	public BudgetCodeEnum getBudgetCode() {
+		return budgetCode;
+	}
+
+	public void setBudgetCode(BudgetCodeEnum budgetCode) {
+		this.budgetCode = budgetCode;
+	}
+
+	public ClassBatchStatusEnum getStatus() {
+		return status;
+	}
+
+	public void setStatus(ClassBatchStatusEnum status) {
+		this.status = status;
+	}
+
+	public CurriculumnModel getCurriculumnModel() {
+		return curriculumnModel;
+	}
+
+	public void setCurriculumnModel(CurriculumnModel curriculumnModel) {
+		this.curriculumnModel = curriculumnModel;
+	}
+
+	public LocationModel getLocationModel() {
+		return locationModel;
+	}
+
+	public void setLocationModel(LocationModel locationModel) {
+		this.locationModel = locationModel;
+	}
+
+	public SubjectTypeModel getSubjectTypeModel() {
+		return subjectTypeModel;
+	}
+
+	public void setSubjectTypeModel(SubjectTypeModel subjectTypeModel) {
+		this.subjectTypeModel = subjectTypeModel;
+	}
+
+	public SubSubjectTypeModel getSubSubjectTypeModel() {
+		return subSubjectTypeModel;
+	}
+
+	public void setSubSubjectTypeModel(SubSubjectTypeModel subSubjectTypeModel) {
+		this.subSubjectTypeModel = subSubjectTypeModel;
+	}
+
+	public DeliveryTypeModel getDeliveryTypeModel() {
+		return deliveryTypeModel;
+	}
+
+	public void setDeliveryTypeModel(DeliveryTypeModel deliveryTypeModel) {
+		this.deliveryTypeModel = deliveryTypeModel;
+	}
+
+	public ScopeModel getScopeModel() {
+		return scopeModel;
+	}
+
+	public void setScopeModel(ScopeModel scopeModel) {
+		this.scopeModel = scopeModel;
+	}
+
+	public FormatTypeModel getFormatTypeModel() {
+		return formatTypeModel;
+	}
+
+	public void setFormatTypeModel(FormatTypeModel formatTypeModel) {
+		this.formatTypeModel = formatTypeModel;
+	}
+
+	public SupplierPartnerModel getSupplierPartnerModel() {
+		return supplierPartnerModel;
+	}
+
+	public void setSupplierPartnerModel(SupplierPartnerModel supplierPartnerModel) {
+		this.supplierPartnerModel = supplierPartnerModel;
+	}
+
+	public List<ClassAdminModel> getClassAdminModels() {
+		return classAdminModels;
+	}
+
+	public void setClassAdminModels(List<ClassAdminModel> classAdminModels) {
+		this.classAdminModels = classAdminModels;
+	}
+
+	public List<BudgetModel> getBudgetModels() {
+		return budgetModels;
+	}
+
+	public void setBudgetModels(List<BudgetModel> budgetModels) {
+		this.budgetModels = budgetModels;
+	}
+
+	public TrainerModel getMasterTrainerModel() {
+		return masterTrainerModel;
+	}
+
+	public void setMasterTrainerModel(TrainerModel masterTrainerModel) {
+		this.masterTrainerModel = masterTrainerModel;
+		this.masterTrainerModel.setType(TrainerTypeEnum.MasterTrainer);
+	}
+
+	public List<TrainerModel> getTrainerModels() {
+		return trainerModels;
+	}
+
+	public void setTrainerModels(List<TrainerModel> trainerModels) {
+		this.trainerModels = Converter.convertList(trainerModels, trainerModel -> {
+			trainerModel.setType(TrainerTypeEnum.Trainer);
+			return trainerModel;
+	});
+	}
+
+	public List<AuditModel> getAuditModels() {
+		return auditModels;
+	}
+
+	public void setAuditModels(List<AuditModel> auditModels) {
+		this.auditModels = auditModels;
+	}
+
+	public List<TraineeModel> getTraineeModels() {
+		return traineeModels;
+	}
+
+	public void setTraineeModels(List<TraineeModel> traineeModels) {
+		this.traineeModels = traineeModels;
+	}
+
 	public String getRemarks() {
 		return remarks;
 	}
 
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
+	}
+
+	public ClassTypeModel getClassTypeModel() {
+		return classTypeModel;
+	}
+
+	public void setClassTypeModel(ClassTypeModel classTypeModel) {
+		this.classTypeModel = classTypeModel;
+	}
+
+	public SkillModel getSkillModel() {
+		return skillModel;
+	}
+
+	public void setSkillModel(SkillModel skillModel) {
+		this.skillModel = skillModel;
+	}
+
+	public PositionModel getPositionModel() {
+		return positionModel;
+	}
+
+	public void setPositionModel(PositionModel positionModel) {
+		this.positionModel = positionModel;
 	}
 
 	@Override
@@ -457,12 +526,15 @@ public class ClassBatchModel {
 				+ "scopeModel: " + scopeModel + "\n"
 				+ "formatTypeModel: " + formatTypeModel + "\n"
 				+ "supplierPartnerModel: " + supplierPartnerModel + "\n"
-				+ "classAdminModel: " + classAdminModel + "\n"
+				+ "classAdminModels: " + classAdminModels + "\n"
 				+ "budgetModels: " + budgetModels + "\n"
 				+ "masterTrainerModel: " + masterTrainerModel + "\n"
 				+ "trainerModels: " + trainerModels + "\n"
 				+ "auditModels: " + auditModels + "\n"
 				+ "traineeModels: " + traineeModels + "\n"
+				+ "classType: " + classTypeModel + "\n"
+				+ "skill: " + skillModel + "\n"
+				+ "position: " + positionModel + "\n"
 				+ "remarks: " + remarks + "\n";
 	}
 	

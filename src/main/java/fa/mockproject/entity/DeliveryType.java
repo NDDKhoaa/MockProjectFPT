@@ -19,14 +19,14 @@ import fa.mockproject.model.DeliveryTypeModel;
 @Cacheable
 public class DeliveryType {
 	@Id
-	@Column(name="delivery_type_id",unique=true)
+	@Column(name="delivery_type_id")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long deliveryTypeId;
     
-    @Column(name="delivery_type_name")
+    @Column(name="delivery_type_name", nullable = false)
     private String deliveryTypeName;
     
-    @Column(name="remarks",nullable=true)
+    @Column(name="remarks", nullable=true)
     private String remarks;
     
     @OneToMany(mappedBy = "deliveryType", fetch = FetchType.LAZY)
@@ -83,5 +83,10 @@ public class DeliveryType {
 		this.classBatchs = classBatchs;
 	}
 
-    
+	@Override
+	public String toString() {
+		return "DeliveryType [deliveryTypeId=" + deliveryTypeId + ", deliveryTypeName=" + deliveryTypeName
+				+ ", remarks=" + remarks + "]";
+	}
+
 }

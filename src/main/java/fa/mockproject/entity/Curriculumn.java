@@ -1,5 +1,7 @@
 package fa.mockproject.entity;
 
+import java.util.Arrays;
+
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -100,5 +102,12 @@ public class Curriculumn {
 	public void setClassBatch(ClassBatch classBatch) {
 		this.classBatch = classBatch;
 	}
+
+	@Override
+	public String toString() {
+		return "Curriculumn [curriculumnId=" + curriculumnId + ", name=" + name + ", type=" + type + ", content="
+				+ content.length + "]";
+	}
+	
 	
 }
