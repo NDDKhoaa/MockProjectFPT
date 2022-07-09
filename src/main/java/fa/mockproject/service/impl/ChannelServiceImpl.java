@@ -27,7 +27,7 @@ public class ChannelServiceImpl implements ChannelService {
 
 	public Channel get(String channelId) {
 		Optional<Channel> rs = repo.findById(channelId);
-		return rs.get();
+		return rs.orElse(null);
 	}
 
 	public void delete(Channel channel) {

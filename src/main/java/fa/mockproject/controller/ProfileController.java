@@ -102,7 +102,7 @@ public class ProfileController {
 
 	@Autowired
 	private TraineeCandidateProfileStatusServiceImpl traineeCandidateProfileStatusService;
-	
+
 	@Autowired
 	private TraineeServiceImpl traineeServiceImpl;
 
@@ -112,30 +112,32 @@ public class ProfileController {
 		List<TraineeCandidateProfileModel> modelList = new ArrayList<TraineeCandidateProfileModel>();
 		TraineeCandidateProfileType typeCondition = traineeCandidateProfileTypeService.findById("Candidate");
 		for (TraineeCandidateProfile profile : profileList) {
-			if (profile.getType() == typeCondition) {
+			if (profile!=null && profile.getType() == typeCondition) {
 				Candidate candidate = new Candidate(profile.getCandidate());
-				TraineeCandidateProfileStatus status = candidate.getStatus();
-				TraineeCandidateProfileType type = profile.getType();
-				University university = profile.getUniversity();
-				Faculty faculty = profile.getFaculty();
-				Location location = candidate.getLocation();
-				Skill skill = profile.getSkill();
-				Channel channel = candidate.getChannel();
-				CV cv = new CV(profile.getCv());
-				Account account = profile.getAccount();
-				TraineeCandidateProfileModel profileModel = new TraineeCandidateProfileModel(profile, candidate, status,
-						type, university, faculty, location, skill, channel, cv, account);
-				modelList.add(profileModel);
+				if (candidate != null) {
+					TraineeCandidateProfileStatus status = candidate.getStatus();
+					TraineeCandidateProfileType type = profile.getType();
+					University university = profile.getUniversity();
+					Faculty faculty = profile.getFaculty();
+					Location location = candidate.getLocation();
+					Skill skill = profile.getSkill();
+					Channel channel = candidate.getChannel();
+					CV cv = new CV(profile.getCv());
+					Account account = profile.getAccount();
+					TraineeCandidateProfileModel profileModel = new TraineeCandidateProfileModel(profile, candidate,
+							status, type, university, faculty, location, skill, channel, cv, account);
+					modelList.add(profileModel);
+				}
 			}
 		}
 		model.addAttribute("profileList", modelList);
-		return "viewCandidate";
+		return "/CandidateManagement/viewCandidate";
 	}
 
 	@RequestMapping(value = "/viewCandidateDetails", method = RequestMethod.GET)
 	public ModelAndView viewCandidateDetails(
 			@RequestParam(value = "traineeCandidateProfileId") long traineeCandidateProfileId) {
-		ModelAndView mav = new ModelAndView("viewCandidateDetails");
+		ModelAndView mav = new ModelAndView("/CandidateManagement/viewCandidateDetails");
 		TraineeCandidateProfile profile = traineeCandidateProfileService.findById(traineeCandidateProfileId);
 		Candidate candidate = new Candidate(profile.getCandidate());
 		TraineeCandidateProfileStatus status = candidate.getStatus();
@@ -168,7 +170,7 @@ public class ProfileController {
 		model.addAttribute("skillList", skillList);
 		CV cv = new CV();
 		model.addAttribute("cv", cv);
-		return "createCandidate";
+		return "/CandidateManagement/createCandidate";
 	}
 
 	@RequestMapping("/updateCandidateResults")
@@ -192,12 +194,12 @@ public class ProfileController {
 		WrapEntryTestModel listEntryTestModel = new WrapEntryTestModel(entryTestModel);
 		listEntryTestModel.addModel(new EntryTestModel());
 		modelp.addAttribute("listEntryTestModel", listEntryTestModel);
-		return "updateCandidateResult";
+		return "/CandidateManagement/updateCandidateResult";
 	}
 
 	@RequestMapping("/updateCandidate")
 	public ModelAndView updateCandidate(@RequestParam("traineeCandidateProfileId") long traineeCandidateProfileId) {
-		ModelAndView mav = new ModelAndView("updateCandidate");
+		ModelAndView mav = new ModelAndView("/CandidateManagement/updateCandidate");
 		TraineeCandidateProfile profile = traineeCandidateProfileService.findById(traineeCandidateProfileId);
 		Candidate candidate = new Candidate(profile.getCandidate());
 		mav.addObject("updateCandidate", candidate);
@@ -496,7 +498,7 @@ public class ProfileController {
 
 	@RequestMapping("/searchProfile")
 	public ModelAndView searchProfile(@RequestParam String word) {
-		ModelAndView mav = new ModelAndView("searchProfileResults");
+		ModelAndView mav = new ModelAndView("/CandidateManagement/searchProfileResults");
 		List<TraineeCandidateProfileModel> modelList = new ArrayList<TraineeCandidateProfileModel>();
 		List<TraineeCandidateProfile> profileList = traineeCandidateProfileService.search(word);
 		if (profileList.isEmpty()) {

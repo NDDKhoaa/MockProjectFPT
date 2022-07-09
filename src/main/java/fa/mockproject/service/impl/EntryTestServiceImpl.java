@@ -25,8 +25,8 @@ public class EntryTestServiceImpl implements EntryTestService {
 	}
 
 	public EntryTest findById(long entryTestId) {
-		Optional<EntryTest> location = repo.findById(entryTestId);
-		return location.get();
+		Optional<EntryTest> entryTest = repo.findById(entryTestId);
+		return entryTest.orElse(null);
 	}
 
 	public void delete(EntryTest entryTest) {

@@ -26,7 +26,7 @@ public class AccountServiceImpl implements AccountService {
 
 	public Account findById(long accountId) {
 		Optional<Account> rs = accountRepository.findById(accountId);
-		return rs.get();
+		return rs.orElse(null);
 	}
 
 	public void delete(Account account) {
