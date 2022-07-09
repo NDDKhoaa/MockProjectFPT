@@ -22,6 +22,10 @@ input:read-only,
 	background-color: var(--light-gray);
 }
 
+.bg-dark-gray {
+	background-color: var(--dark-gray);
+}
+
 .bg-gray {
 	background-color: var(--gray);
 }
