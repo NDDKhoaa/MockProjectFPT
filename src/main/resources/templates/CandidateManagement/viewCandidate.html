@@ -283,7 +283,7 @@
 							</button></a>
 
                     </div>
-                </form>
+               </form>
                 <div class="col-lg-2">
                     <a th:href="createNewCandidate" style="color: black;"><button
 							class="newButton">
@@ -291,11 +291,12 @@
 						</button></a>
                 </div>
                 <div class="col-lg-2">
-                    <a th:href="updateCandidate" style="color: black;"><button
+                    <a th:href="@{/updateCandidate(chkCheckBoxId=*{chkCheckBoxId})}" style="color: black;"><button
 							style="width: 180px;" class="updateButton">
 							<i class="fas fa-arrow-alt-circle-up"></i> Update Candidate
 						</button></a>
                 </div>
+                 
             </div>
         </div>
 

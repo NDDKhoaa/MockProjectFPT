@@ -33,18 +33,18 @@ public class Candidate {
 	private long candidateId;
 
 	@OneToOne(mappedBy = "candidate", cascade = CascadeType.MERGE)
-	@JoinColumn(name = "trainee_candidate_profile_id", unique = true, nullable = true)
+	@JoinColumn(name = "trainee_candidate_profile_id", unique = true, nullable = false)
 	private TraineeCandidateProfile traineeCandidateProfile;
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
 	@Column(name = "application_date", nullable = false)
 	private LocalDateTime applicationDate;
 
 	@ManyToOne
-	@JoinColumn(name = "channel_id", nullable = true)
+	@JoinColumn(name = "channel_id", nullable = false)
 	private Channel channel;
 
 	@ManyToOne
-	@JoinColumn(name = "location_id", nullable = true)
+	@JoinColumn(name = "location_id", nullable = false)
 	private Location location;
 
 	@OneToMany(cascade = CascadeType.MERGE)
@@ -60,7 +60,7 @@ public class Candidate {
 	private List<Offer> offers;
 
 	@ManyToOne
-	@JoinColumn(name = "status", nullable = true)
+	@JoinColumn(name = "status", nullable = false)
 	private TraineeCandidateProfileStatus status;
 
 	@Column(name = "remarks", length = 255, nullable = true)
