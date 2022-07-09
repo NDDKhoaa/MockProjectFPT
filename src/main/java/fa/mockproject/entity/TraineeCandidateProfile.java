@@ -1,13 +1,10 @@
 package fa.mockproject.entity;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,7 +21,7 @@ import fa.mockproject.model.TraineeCandidateProfileModel;
 @Table(name = "TraineeCandidateProfile")
 public class TraineeCandidateProfile {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "trainee_candidate_profile_id", nullable = false)
 	private long traineeCandidateProfileId;
 
@@ -33,12 +30,12 @@ public class TraineeCandidateProfile {
 	@JoinColumn(name = "trainee_candidate_id", nullable = true, unique = true)
 	private Trainee trainee;
 
-	@OneToOne(mappedBy = "traineeCandidateProfile", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.MERGE)
 	private Candidate candidate;
 
 	@Column(name = "full_name", length = 255, nullable = false)
 	private String fullName;
-
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "date_of_birth", nullable = false)
 	private LocalDate dateOfBirth;
 
@@ -57,7 +54,7 @@ public class TraineeCandidateProfile {
 	@JoinColumn(name = "faculty_id", nullable = true)
 	private Faculty faculty;
 
-	@DateTimeFormat(pattern = "MM/YYYY")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "graduation_year", nullable = true)
 	private LocalDate graduationYear;
 
@@ -87,6 +84,10 @@ public class TraineeCandidateProfile {
 	@Column(name = "remarks", length = 255, nullable = true)
 	private String remarks;
 
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "account_id", nullable = true)
+	private Account account;
+
 	public TraineeCandidateProfile() {
 		super();
 	}
@@ -97,6 +98,14 @@ public class TraineeCandidateProfile {
 
 	public void setTraineeCandidateProfileId(long traineeCandidateProfileId) {
 		this.traineeCandidateProfileId = traineeCandidateProfileId;
+	}
+
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
 	}
 
 	public Trainee getTrainee() {
@@ -241,12 +250,10 @@ public class TraineeCandidateProfile {
 		this.trainee = model.getTrainee();
 		this.candidate = model.getCandidate();
 		this.fullName = model.getFullName();
-		Date dateDOB = model.getDateOfBirth();
-		LocalDate localDateDOB = dateDOB.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		this.dateOfBirth = localDateDOB;
+		this.dateOfBirth = model.getDateOfBirth();
 		this.gender = model.getGender();
-		Date dateGraduationYear = model.getDateOfBirth();
-		LocalDate localDateGraduationYear = dateGraduationYear.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		String stringGraduationYear = model.getGraduationYear() + "-01";
+		LocalDate localDateGraduationYear = LocalDate.parse(stringGraduationYear);
 		this.graduationYear = localDateGraduationYear;
 		this.phone = model.getPhone();
 		this.email = model.getEmail();
@@ -258,15 +265,13 @@ public class TraineeCandidateProfile {
 		this.remarks = model.getRemarks();
 	}
 
-	public TraineeCandidateProfile(TraineeCandidateProfileModel model, University university2,
-			Faculty faculty2, Skill skill2, CV cv2, TraineeCandidateProfileType type2) {
+	public TraineeCandidateProfile(TraineeCandidateProfileModel model, Candidate candidate, University university2,
+			Faculty faculty2, Skill skill2, CV cv2, TraineeCandidateProfileType type2, Account account2) {
 		this.traineeCandidateProfileId = model.getTraineeCandidateProfileId();
 		this.trainee = model.getTrainee();
-		this.candidate = model.getCandidate();
+		this.candidate = candidate;
 		this.fullName = model.getFullName();
-		Date dateDOB = model.getDateOfBirth();
-		LocalDate localDateDOB = dateDOB.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		this.dateOfBirth = localDateDOB;
+		this.dateOfBirth = model.getDateOfBirth();
 		this.gender = model.getGender();
 		String stringGraduationYear = model.getGraduationYear() + "-01";
 		LocalDate localDateGraduationYear = LocalDate.parse(stringGraduationYear);
@@ -282,6 +287,45 @@ public class TraineeCandidateProfile {
 		this.university = university2;
 		this.faculty = faculty2;
 		this.skill = skill2;
+		this.account = account2;
+	}
+
+	public TraineeCandidateProfile(TraineeCandidateProfile traineeCandidateProfile) {
+
+		this.traineeCandidateProfileId = traineeCandidateProfile.getTraineeCandidateProfileId();
+		this.fullName = traineeCandidateProfile.getFullName();
+		this.dateOfBirth = traineeCandidateProfile.getDateOfBirth();
+		this.gender = traineeCandidateProfile.getGender();
+		this.graduationYear = traineeCandidateProfile.getGraduationYear();
+		this.phone = traineeCandidateProfile.getPhone();
+		this.email = traineeCandidateProfile.getEmail();
+		this.foreignLanguage = traineeCandidateProfile.getForeignLanguage();
+		this.level = traineeCandidateProfile.getLevel();
+		this.allocationStatus = traineeCandidateProfile.getAllocationStatus();
+		this.remarks = traineeCandidateProfile.getRemarks();
+	}
+
+	public TraineeCandidateProfile(TraineeCandidateProfile profile1, Candidate candidate, University university1,
+			Faculty faculty1, Skill skill1, CV cv1, TraineeCandidateProfileType type1, Account account1) {
+		this.traineeCandidateProfileId = profile1.getTraineeCandidateProfileId();
+		this.trainee = profile1.getTrainee();
+		this.candidate = candidate;
+		this.fullName = profile1.getFullName();
+		this.dateOfBirth = profile1.getDateOfBirth();
+		this.gender = profile1.getGender();
+		this.graduationYear = profile1.getGraduationYear();
+		this.phone = profile1.getPhone();
+		this.email = profile1.getEmail();
+		this.type = type1;
+		this.foreignLanguage = profile1.getForeignLanguage();
+		this.level = profile1.getLevel();
+		this.cv = cv1;
+		this.allocationStatus = profile1.getAllocationStatus();
+		this.remarks = profile1.getRemarks();
+		this.university = university1;
+		this.faculty = faculty1;
+		this.skill = skill1;
+		this.account = account1;
 	}
 
 	@Override

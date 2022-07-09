@@ -1,6 +1,6 @@
 package fa.mockproject.entity;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -28,14 +28,14 @@ public class Faculty {
 	private String remarks;
 
 	@OneToMany(mappedBy = "faculty")
-	private Set<TraineeCandidateProfile> traineeCandidateProfile;
+	private List<TraineeCandidateProfile> traineeCandidateProfile;
 
 	public Faculty() {
 		super();
 	}
 
 	public Faculty(String facultyId, String facultyName, String remarks,
-			Set<TraineeCandidateProfile> traineeCandidateProfile) {
+			List<TraineeCandidateProfile> traineeCandidateProfile) {
 		super();
 		this.facultyId = facultyId;
 		this.facultyName = facultyName;
@@ -73,12 +73,17 @@ public class Faculty {
 		this.remarks = remarks;
 	}
 
-	public Set<TraineeCandidateProfile> getTraineeCandidateProfile() {
+	public List<TraineeCandidateProfile> getTraineeCandidateProfile() {
 		return traineeCandidateProfile;
 	}
 
-	public void setTraineeCandidateProfile(Set<TraineeCandidateProfile> traineeCandidateProfile) {
+	public void setTraineeCandidateProfile(List<TraineeCandidateProfile> traineeCandidateProfile) {
 		this.traineeCandidateProfile = traineeCandidateProfile;
+	}
+
+	@Override
+	public String toString() {
+		return facultyName;
 	}
 
 }

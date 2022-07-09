@@ -2,6 +2,8 @@ package fa.mockproject.service;
 
 import java.util.List;
 
+import org.springframework.data.repository.query.Param;
+
 import fa.mockproject.entity.Faculty;
 
 public interface FacultyService {
@@ -15,4 +17,6 @@ public interface FacultyService {
 	public void delete(Faculty faculty);
 
 	public void deleteById(String facultyId);
+	
+	public List<Faculty> search(@Param("word") String word);
 }

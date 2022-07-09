@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import fa.mockproject.entity.University;
@@ -35,5 +36,9 @@ public class UniversityServiceImpl implements UniversityService {
 
 	public void deleteById(String universityId) {
 		repo.deleteById(universityId);
+	}
+
+	public List<University> search(@Param("word") String word) {
+		return (List<University>) repo.search(word);
 	}
 }

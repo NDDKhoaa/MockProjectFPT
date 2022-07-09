@@ -2,6 +2,8 @@ package fa.mockproject.service;
 
 import java.util.List;
 
+import org.springframework.data.repository.query.Param;
+
 import fa.mockproject.entity.Channel;
 
 public interface ChannelService {
@@ -16,4 +18,5 @@ public interface ChannelService {
 
 	public void deleteById(String channelId);
 
+	public List<Channel> search(@Param("word") String word);
 }

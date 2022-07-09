@@ -1,6 +1,6 @@
 package fa.mockproject.entity;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -28,7 +28,7 @@ public class Channel {
 	private String channelName;
 
 	@OneToMany(mappedBy = "channel")
-	private Set<Candidate> candidate;
+	private List<Candidate> candidate;
 
 	public Channel() {
 		super();
@@ -65,12 +65,17 @@ public class Channel {
 		this.channelName = channelName;
 	}
 
-	public Set<Candidate> getCandidate() {
+	public List<Candidate> getCandidate() {
 		return candidate;
 	}
 
-	public void setCandidate(Set<Candidate> candidate) {
+	public void setCandidate(List<Candidate> candidate) {
 		this.candidate = candidate;
+	}
+
+	@Override
+	public String toString() {
+		return channelName;
 	}
 
 }

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" th:href="@{/static/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/static/css/use-role.css}">
+  <link rel="stylesheet" th:href="@{/static/css/main.css}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<header>
+  <!--header-->
+  <div class="header">
+    <div class="user-information" th:if="${#request.userPrincipal != null}">Welcome, <span
+        th:utext="${fullName}"></span>
+      <div class="logout"><a th:href="@{/logout}">Logout</a></div>
+    </div>
+  </div>
+  <!--Menu-->
+  <div class="col-lg-3" style="padding:0px;">
+    <div class="menu">
+      <div class="menu-top">
+        <p> Your role now is:</p>
+        <select>
+          <option th:each="role:${roles}"
+                  th:value="${role.name}"
+                  th:text="${role.name}"></option>
+        </select>
+      </div>
+      <div class="navbar-inner">
+        <ul>
+          <li><a th:href="@{'/dashboard'}">Dashboard</a></li>
+          <li><a th:href="@{'/classManagement'}">Class Management</a></li>
+          <li><a th:href="@{'/'}">Candidate Management</a></li>
+          <li><a th:href="@{'/'}">Trainer Management</a></li>
+          <li><a th:href="@{'/'}">Trainee Management</a></li>
+          <li><a th:href="@{'/'}">General Setting</a></li>
+          <div sec:authorize="hasAnyRole('ROLE_SYSTEM_ADMIN')">
+            <li><a th:href="@{'/listRole'}">Role management</a></li>
+            <li><a th:href="@{'/listUser'}">User management</a></li>
+          </div>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>
+</html>

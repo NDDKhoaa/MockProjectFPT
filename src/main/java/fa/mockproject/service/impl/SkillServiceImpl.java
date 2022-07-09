@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import fa.mockproject.entity.Skill;
@@ -14,7 +15,7 @@ import fa.mockproject.repository.SkillRepository;
 import fa.mockproject.service.SkillService;
 
 @Service
-public class SkillServiceImpl implements SkillService{
+public class SkillServiceImpl implements SkillService {
 	@Autowired
 	private SkillRepository repo;
 
@@ -45,5 +46,8 @@ public class SkillServiceImpl implements SkillService{
 			new SkillModel(skill)).collect(Collectors.toCollection(ArrayList::new));
 	}
 
-}
+	public List<Skill> search(@Param("word") String word) {
+		return (List<Skill>) repo.search(word);
+	}
 
+}

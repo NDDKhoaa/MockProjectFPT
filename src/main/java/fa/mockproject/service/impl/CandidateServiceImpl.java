@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import fa.mockproject.entity.Candidate;
@@ -37,4 +38,7 @@ public class CandidateServiceImpl implements CandidateService {
 		candidateRepository.deleteById(candidateId);
 	}
 
+	public List<Candidate> search(@Param("word") String word) {
+		return (List<Candidate>) candidateRepository.search(word);
+	}
 }

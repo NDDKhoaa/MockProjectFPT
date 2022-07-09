@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import fa.mockproject.entity.ClassBatch;
+import fa.mockproject.entity.Location;
 import fa.mockproject.entity.enumtype.ClassBatchStatusEnum;
 
 @Repository
@@ -31,4 +32,8 @@ public interface ClassBatchRepository extends JpaRepository<ClassBatch, Long>, J
 	
 	@Query("SELECT c.weightedNumber FROM ClassBatch c WHERE c.classId = ?1")
 	String findWeightedNumber(Long classId);
+
+    List<ClassBatch> findByLocationAndStatus(Location location, ClassBatchStatusEnum status);
+    List<ClassBatch> findByLocation(Location location);
+    List<ClassBatch> findByStatus(ClassBatchStatusEnum status);
 }

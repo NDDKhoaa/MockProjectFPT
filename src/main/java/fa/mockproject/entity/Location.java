@@ -1,6 +1,6 @@
 package fa.mockproject.entity;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -30,10 +30,10 @@ public class Location {
 	private String remarks;
 
 	@OneToMany(mappedBy = "location")
-	private Set<ClassBatch> classBatchs;
+	private List<ClassBatch> classBatchs;
 
 	@OneToMany(mappedBy = "location")
-	private Set<Candidate> candidates;
+	private List<Candidate> candidates;
 
 	public Location() {
 		super();
@@ -86,25 +86,25 @@ public class Location {
 
 	
 
-	public Set<ClassBatch> getClassBatchs() {
+	public List<ClassBatch> getClassBatchs() {
 		return classBatchs;
 	}
 
-	public void setClassBatchs(Set<ClassBatch> classBatchs) {
+	public void setClassBatchs(List<ClassBatch> classBatchs) {
 		this.classBatchs = classBatchs;
 	}
 
-	public Set<Candidate> getCandidates() {
+	public List<Candidate> getCandidates() {
 		return candidates;
 	}
 
-	public void setCandidates(Set<Candidate> candidates) {
+	public void setCandidates(List<Candidate> candidates) {
 		this.candidates = candidates;
 	}
 
 	@Override
 	public String toString() {
-		return "Location [locationId=" + locationId + ", locationName=" + locationName + ", remarks=" + remarks + "]";
+		return locationName;
 	}
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import fa.mockproject.entity.TraineeCandidateProfileStatus;
@@ -35,5 +36,8 @@ public class TraineeCandidateProfileStatusServiceImpl implements TraineeCandidat
 	public void deleteById(String statusId) {
 		repo.deleteById(statusId);
 	}
-	
+
+	public List<TraineeCandidateProfileStatus> search(@Param("word") String word) {
+		return (List<TraineeCandidateProfileStatus>) repo.search(word);
+	}
 }

@@ -88,6 +88,7 @@ public class CV {
 
 	public CV(TraineeCandidateProfileModel model, TraineeCandidateProfile profile) {
 		super();
+		this.cvId = model.getCvId();
 		this.name = model.getCVname();
 		this.size = model.getSize();
 		this.content = model.getContent();
@@ -96,15 +97,23 @@ public class CV {
 
 	public CV(TraineeCandidateProfileModel model) {
 		super();
+		this.cvId = model.getCvId();
 		this.name = model.getCVname();
 		this.size = model.getSize();
 		this.content = model.getContent();
 	}
 
 	public CV(CV cv) {
+		this.cvId = cv.getCvId();
 		this.name = cv.getName();
 		this.size = cv.getSize();
 		this.content = cv.getContent();
+	}
+
+	public CV(String fileName, long fileSize, byte[] content2) {
+		this.name = fileName;
+		this.size = fileSize;
+		this.content = content2;
 	}
 
 	@Override

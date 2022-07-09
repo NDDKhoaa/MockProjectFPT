@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>View Trainer</title>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<script src="https://kit.fontawesome.com/83baa56dfa.js"
+	crossorigin="anonymous"></script>
+<link rel="stylesheet" th:href="@{/css/trainer.css}">
+</head>
+<body>
+
+	<header class="bg-blue">
+		<div class="header text-white font-weight-bold">
+			
+			<h4>FSOFT HR UTILITY</h4>
+		</div>
+	</header>
+	<div class="nav">
+		<div class="col-2 bg-gray">
+			<button type="button" class="btn btn-sm float-right">&lt&lt</button>
+			<br>
+			<nav class="navbar-nav">
+
+				<p class="role-option-lable">Your role now is:</p>
+				<select value="" class="role-option">
+					<option name="" id="" class="role-option-item">ROLE</option>
+				</select>
+				<ul class="nav-list">
+					<li class="nav-tabs"><a href="#" class="nav-link">Dashboard</a>
+					</li>
+					<li class="nav-tabs"><a href="#" class="nav-link">Candidate
+							Management</a></li>
+					<li class="nav-tabs"><a th:href="@{/showTrainerForm}"
+						class="nav-link">Trainer Management</a></li>
+					<li class="nav-tabs"><a href="#" class="nav-link">Trainee
+							Management</a></li>
+					<li class="nav-tabs"><a href="#" class="nav-link">Class
+							Management</a></li>
+					<li class="nav-tabs"><a href="#" class="nav-link">General
+							Setting</a></li>
+				</ul>
+			</nav>
+		</div>
+
+		<div class="col-8">
+			<h4>Trainer List</h4>
+			<hr>
+			<div class="container">
+				<div>
+					<div class="nav nav-tab">
+						<ul class="list-inline">
+							<li class="nav-item border"><a th:href="@{/showTrainerForm}"
+								class="nav-link">Information</a></li>
+							<li class="nav-item border bg-gray"><a th:href="@{/showTrainerList}"
+								class="nav-link">Trainer</a></li>
+						</ul>
+					</div>
+					<div>&nbsp;</div>
+					<div>
+						<form th:action="@{/showTrainerList}">
+							Filter: <input type="text" name="keyword" th:value="${keyword}" />
+							&nbsp; <input type="submit" value="Search" />
+						</form>
+					</div>
+					<div>&nbsp;</div>
+					<table class="form-group" border="1" cellpadding="3">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Account</th>
+								<th>Full name</th>
+								<th>Date Of Birth</th>
+								<th>Gender</th>
+								<th>Unit</th>
+								<th>Major</th>
+								<th>Phone</th>
+								<th>Email</th>
+								<th>Experience</th>
+								<th>Remarks</th>
+								<!-- <th>Type</th> -->
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="trainer:${trainerList}">
+								<td th:text="${trainer.trainerProfileId}"></td>
+								<td th:text=${trainer.account}></td>
+								<td th:text=${trainer.fullName}></td>
+								<td th:text=${trainer.dateOfBirth}></td>
+								<td th:text=${trainer.gender}></td>
+								<td th:text=${trainer.unit}></td>
+								<td th:text=${trainer.major}></td>
+								<td th:text=${trainer.phone}></td>
+								<td th:text=${trainer.email}></td>
+								<td th:text=${trainer.experience}></td>
+								<td th:text=${trainer.remarks}></td>
+								<!-- <td th:text=${trainer.type}></td> -->
+								<td><a
+									th:href="@{/showFormForUpdateTrainer/{id}(id=${trainer.trainerProfileId})}"
+									class="btn btn-primary btn-sm">Edit</a></td>
+								<td><a
+									th:href="@{/deleteTrainer/{id}(id=${trainer.trainerProfileId})}"
+									class="btn btn-warning btn-sm">Delete</a></td>
+							</tr>
+						</tbody>
+
+					</table>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="footer bg-gray border">
+		<span><a href="#"><i class="fas fa-question-circle"></i>Help</a>
+			<a href="#"><i class="fas fa-calendar-alt"></i>Create ticket on
+				FI2.0</a></span>
+	</div>
+</body>
+</html>

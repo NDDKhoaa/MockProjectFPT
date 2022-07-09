@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -23,6 +24,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
 import fa.mockproject.entity.ClassBatch;
+import fa.mockproject.entity.ClassData;
+import fa.mockproject.entity.Location;
+import fa.mockproject.entity.Skill;
+import fa.mockproject.entity.Trainee;
 import fa.mockproject.entity.enumtype.ClassBatchStatusEnum;
 import fa.mockproject.entity.enumtype.ClassManagementActionEnum;
 import fa.mockproject.entity.enumtype.WeightedNumberEnum;
@@ -411,5 +416,39 @@ public class ClassBatchServiceImpl implements ClassBatchService {
 			}
 		}
 		return weightedNumberMap;
+	}
+
+	@Override
+	public List<ClassData> getListTrainee(Location location, ClassBatchStatusEnum status) {
+		List<ClassBatch> classBatches = new ArrayList<>();
+		List<Trainee> trainees = new ArrayList<>();
+		if (location == null && status == null) {
+			classBatches = classBatchRepository.findAll();
+		} else {
+			classBatches = classBatchRepository.findByLocationAndStatus(location, status);
+		}
+		if (location == null) {
+			classBatches = classBatchRepository.findByStatus(status);
+		}
+		if (status == null) {
+			classBatches = classBatchRepository.findByLocation(location);
+		}
+		for (ClassBatch classBatch : classBatches) {
+			trainees.addAll(classBatch.getTrainees());
+		}
+		Map<String, Integer> stringIntegerMap = new HashMap<>();
+		for (Trainee trainee : trainees) {
+			Skill skill = trainee.getTraineeCandidateProfile().getSkill();
+			String skillName = skill.getSkillName();
+			if (stringIntegerMap.containsKey(skillName)) {
+				int value = stringIntegerMap.get(skillName) + 1;
+				stringIntegerMap.put(skillName, value);
+			} else {
+				stringIntegerMap.put(skillName, 1);
+			}
+		}
+		return stringIntegerMap.entrySet().stream().map(
+				stringIntegerEntry -> new ClassData(stringIntegerEntry.getKey(),
+						stringIntegerEntry.getValue())).collect(Collectors.toList());
 	}
 }

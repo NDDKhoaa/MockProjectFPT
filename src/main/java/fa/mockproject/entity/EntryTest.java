@@ -15,6 +15,8 @@ import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import fa.mockproject.model.EntryTestModel;
+
 @Entity
 @Table(name = "EntryTest")
 @Cacheable
@@ -24,27 +26,27 @@ public class EntryTest {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "test_id", unique = true, nullable = false)
 	private long testId;
-
-	@Column(name = "time", nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "time", nullable = true)
 	private BigDecimal time;
 
 	@DateTimeFormat
-	@Column(name = "date", nullable = false)
+	@Column(name = "date", nullable = true)
 	private LocalDate date;
 
-	@Column(name = "language_valuator", nullable = false)
-	private int languageValuator;
+	@Column(name = "language_valuator", nullable = true)
+	private String languageValuator;
 
-	@Column(name = "language_result", length = 255, nullable = false)
+	@Column(name = "language_result", length = 255, nullable = true)
 	private String languageResult;
 
-	@Column(name = "techinal_valuator", nullable = false)
-	private int technicalValuator;
+	@Column(name = "techinal_valuator", nullable = true)
+	private String technicalValuator;
 
-	@Column(name = "technical_result", length = 255, nullable = false)
+	@Column(name = "technical_result", length = 255, nullable = true)
 	private String technicalResult;
 
-	@Column(name = "result", length = 255, nullable = false)
+	@Column(name = "result", length = 255, nullable = true)
 	private String result;
 
 	@Column(name = "remarks", length = 255, nullable = true)
@@ -58,8 +60,8 @@ public class EntryTest {
 		super();
 	}
 
-	public EntryTest(BigDecimal time, LocalDate date, int languageValuator, String languageResult, int technicalValuator,
-			String technicalResult, String result, String remarks) {
+	public EntryTest(BigDecimal time, LocalDate date, String languageValuator, String languageResult,
+			String technicalValuator, String technicalResult, String result, String remarks) {
 		super();
 		this.time = time;
 		this.date = date;
@@ -69,6 +71,29 @@ public class EntryTest {
 		this.technicalResult = technicalResult;
 		this.result = result;
 		this.remarks = remarks;
+	}
+
+	public EntryTest(EntryTestModel model) {
+		this.time = model.getTime();
+		this.date = model.getDate();
+		this.languageValuator = model.getLanguageValuator();
+		this.languageResult = model.getLanguageResult();
+		this.technicalValuator = model.getTechnicalValuator();
+		this.technicalResult = model.getTechnicalResult();
+		this.result = model.getResult();
+		this.remarks = model.getRemarks();
+	}
+
+	public EntryTest(EntryTestModel model, Candidate candidate) {
+		this.time = model.getTime();
+		this.date = model.getDate();
+		this.languageValuator = model.getLanguageValuator();
+		this.languageResult = model.getLanguageResult();
+		this.technicalValuator = model.getTechnicalValuator();
+		this.technicalResult = model.getTechnicalResult();
+		this.result = model.getResult();
+		this.remarks = model.getRemarks();
+		this.candidate = candidate;
 	}
 
 	public long getTestId() {
@@ -95,11 +120,11 @@ public class EntryTest {
 		this.date = date;
 	}
 
-	public int getLanguageValuator() {
+	public String getLanguageValuator() {
 		return languageValuator;
 	}
 
-	public void setLanguageValuator(int languageValuator) {
+	public void setLanguageValuator(String languageValuator) {
 		this.languageValuator = languageValuator;
 	}
 
@@ -111,11 +136,11 @@ public class EntryTest {
 		this.languageResult = languageResult;
 	}
 
-	public int getTechnicalValuator() {
+	public String getTechnicalValuator() {
 		return technicalValuator;
 	}
 
-	public void setTechnicalValuator(int technicalValuator) {
+	public void setTechnicalValuator(String technicalValuator) {
 		this.technicalValuator = technicalValuator;
 	}
 

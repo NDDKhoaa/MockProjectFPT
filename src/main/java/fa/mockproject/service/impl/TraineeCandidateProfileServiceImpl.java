@@ -4,10 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+import fa.mockproject.entity.Candidate;
 import fa.mockproject.entity.TraineeCandidateProfile;
-import fa.mockproject.model.TraineeCandidateProfileModel;
 import fa.mockproject.repository.TraineeCandidateProfileRepository;
 import fa.mockproject.service.TraineeCandidateProfileService;
 
@@ -24,11 +25,6 @@ public class TraineeCandidateProfileServiceImpl implements TraineeCandidateProfi
 		repo.save(profile);
 	}
 
-	public void save(TraineeCandidateProfileModel model) {
-		TraineeCandidateProfile profile = new TraineeCandidateProfile(model);
-		repo.save(profile);
-	}
-
 	public TraineeCandidateProfile findById(long profileId) {
 		Optional<TraineeCandidateProfile> rs = repo.findById(profileId);
 		return rs.get();
@@ -41,5 +37,13 @@ public class TraineeCandidateProfileServiceImpl implements TraineeCandidateProfi
 	public void deleteById(long profileId) {
 		repo.deleteById(profileId);
 	}
-	
+
+	public List<TraineeCandidateProfile> search(@Param("word") String word) {
+		return (List<TraineeCandidateProfile>) repo.search(word);
+	}
+
+	public TraineeCandidateProfile findByCandidate(Candidate candidateId) {
+		TraineeCandidateProfile rs = repo.findByCandidate(candidateId);
+		return rs;
+	}
 }

@@ -28,7 +28,7 @@ public class Skill {
 	private String remarks;
 
 	@OneToMany(mappedBy = "skill")
-	private Set<TraineeCandidateProfile> traineeCanditaCandidateProfile;
+	private Set<TraineeCandidateProfile> traineeCandidateProfiles;
 	
 	@OneToMany(mappedBy = "skill")
 	private List<ClassBatch> classBatchs;
@@ -57,12 +57,12 @@ public class Skill {
 		this.remarks = remarks;
 	}
 
-	public Set<TraineeCandidateProfile> getTraineeCanditaCandidateProfile() {
-		return traineeCanditaCandidateProfile;
+	public Set<TraineeCandidateProfile> getTraineeCandidateProfiles() {
+		return traineeCandidateProfiles;
 	}
 
-	public void setTraineeCanditaCandidateProfile(Set<TraineeCandidateProfile> traineeCanditaCandidateProfile) {
-		this.traineeCanditaCandidateProfile = traineeCanditaCandidateProfile;
+	public void setTraineeCandidateProfiles(Set<TraineeCandidateProfile> traineeCandidateProfiles) {
+		this.traineeCandidateProfiles = traineeCandidateProfiles;
 	}
 
 	public List<ClassBatch> getClassBatchs() {
@@ -78,21 +78,21 @@ public class Skill {
 	}
 
 	public Skill(String skillId, String skillName, String remarks,
-			Set<TraineeCandidateProfile> traineeCanditaCandidateProfile) {
+			Set<TraineeCandidateProfile> traineeCandidateProfiles) {
 		super();
 		this.skillId = skillId;
 		this.skillName = skillName;
 		this.remarks = remarks;
-		this.traineeCanditaCandidateProfile = traineeCanditaCandidateProfile;
+		this.traineeCandidateProfiles = traineeCandidateProfiles;
 	}
 
 	public Skill(String skillId, String skillName, String remarks,
-			Set<TraineeCandidateProfile> traineeCanditaCandidateProfile, List<ClassBatch> classBatchs) {
+			Set<TraineeCandidateProfile> traineeCandidateProfiles, List<ClassBatch> classBatchs) {
 		super();
 		this.skillId = skillId;
 		this.skillName = skillName;
 		this.remarks = remarks;
-		this.traineeCanditaCandidateProfile = traineeCanditaCandidateProfile;
+		this.traineeCandidateProfiles = traineeCandidateProfiles;
 		this.classBatchs = classBatchs;
 	}
 

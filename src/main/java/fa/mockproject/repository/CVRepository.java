@@ -10,8 +10,9 @@ import org.springframework.stereotype.Repository;
 import fa.mockproject.entity.CV;
 
 @Repository
-public interface CVRepository extends JpaRepository<CV, Long>{
+public interface CVRepository extends JpaRepository<CV, Long> {
 
-		@Query("SELECT new CV(c.cvId,c.name) FROM CV c where c.name LIKE :name")
-		List<CV> findByName(@Param("name") String name);
+	@Query(value = "SELECT c from CV c where c.cvId LIKE '%' || :word || '%' " + "OR c.size LIKE '%' || :word || '%' "
+			+ "OR c.name LIKE '%' || :word || '%' ")
+	public List<CV> search(@Param("word") String word);
 }
