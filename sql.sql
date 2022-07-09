@@ -1,7 +1,7 @@
 USE `mockproject` ;
 
 INSERT INTO `mockproject`.`location` (`location_id`, `location_name`, `remarks`) VALUES 
-    ('HN', 'Ha Noi', ""),
+    ('HN', "Ha Noi", ""),
     ("CG", "Cau Giay", ""),
     ("HL", "Hoa Lac", ""),
     ("DN", "Da Nang", ""),
