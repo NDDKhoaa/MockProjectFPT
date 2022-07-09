@@ -194,9 +194,10 @@ public class TrainerProfile {
 
 	@Override
 	public String toString() {
-		return "TrainerProfile [trainerProfileId=" + trainerProfileId + ", fullName=" + fullName + ", dateOfBirth="
-				+ dateOfBirth + ", gender=" + gender + ", unit=" + unit + ", major=" + major + ", phone=" + phone
-				+ ", email=" + email + ", experience=" + experience + ", remarks=" + remarks + "]";
+		return "TrainerProfile [trainerProfileId=" + trainerProfileId + ", account=" + account + ", fullName="
+				+ fullName + ", dateOfBirth=" + dateOfBirth + ", gender=" + gender + ", unit=" + unit + ", major="
+				+ major + ", phone=" + phone + ", email=" + email + ", experience=" + experience + ", remarks="
+				+ remarks + "]";
 	}
 
 }

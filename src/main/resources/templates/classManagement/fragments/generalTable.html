@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Management</title>
+    <script src="https://kit.fontawesome.com/eb5105679e.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" th:href="@{/lib/multiselect/multiselect.css}">
+    <link rel="stylesheet" th:href="@{/common/css/main.css}">
+</head>
+<body>
+	<div th:with="readonly = (${viewMode} == ${ViewMode.ViewClass} or ${viewMode} == ${ViewMode.UpdateInprogressClass})" th:fragment="table(viewMode)" class="section-content">
+		<table th:if="${readonly}" class="content-table table table-bordered table-sm mb-0 border-bottom-0">
+			<tr>
+				<td class="bg-gray">Class Code</td>
+				<td>
+					<input readonly th:field="*{classCode}" type="text" name="" class="w-100 border-0">
+				</td>
+				<td class="bg-gray">Class Name</td>
+				<td>
+					<input readonly th:field="*{className}" type="text" name="" class="w-100 border-0">
+				</td>
+				<td class="bg-gray">Status</td>
+				<td>
+					<input readonly th:field="*{status}" type="text" name="" class="w-100 border-0">
+				</td>
+			</tr>
+			<tr>
+				<td class="bg-gray">Class Type</td>
+				<td>
+					<span th:text="*{classTypeModel?.classTypeName}" class="readonly"></span>
+				</td>
+				<td class="bg-gray">Skill</td>
+				<td>
+					<span th:text="*{skillModel?.skillName}" class="readonly"></span>
+				</td>
+				<td class="bg-gray">Position</td>
+				<td>
+					<span th:text="*{positionModel?.positionName}" class="readonly"></span>
+				</td>
+			</tr>
+			<tr>
+				<td class="border-bottom-0 bg-gray">Planned Trainee No</td>
+				<td class="border-bottom-0">
+					<input readonly th:field="*{plannedTraineeNumber}" type="number" name="" class="w-100 border-0">
+				</td>
+				<td class="border-bottom-0 bg-gray">Accepted Trainee No</td>
+				<td class="border-bottom-0">
+					<input readonly th:field="*{acceptedTraineeNumber}" type="number" name="" class="w-100 border-0">
+				</td>
+				<td class="border-bottom-0 bg-gray">Actual Trainee No</td>
+				<td class="border-bottom-0">
+					<input readonly th:field="*{actualTraineeNumber}" type="number" name="" class="w-100 border-0">
+				</td>
+			</tr>
+		</table>
+		<table th:unless="${readonly}" class="content-table table table-bordered table-sm mb-0 border-bottom-0">
+			<tr>
+				<td class="bg-gray">Class Code</td>
+				<td>
+					<input readonly th:field="*{classCode}" type="text" name="" class="w-100 border-0">
+				</td>
+				<td class="bg-gray">Class Name</td>
+				<td>
+					<input readonly th:field="*{className}" type="text" name="" class="w-100 border-0">
+				</td>
+				<td class="bg-gray">Status</td>
+				<td>
+					<input readonly th:field="*{status}" type="text" name="" class="w-100 border-0">
+				</td>
+			</tr>
+			<tr>
+				<td class="bg-gray">Class Type</td>
+				<td>
+					<select th:field="*{classTypeModel.classTypeId}" name="" class="w-100 border-0">
+						<option value="" hidden="true"></option>                                    
+						<option th:each="type : ${classTypeModels}" th:value="${type.classTypeId}" th:text="${type.classTypeName}"></option>
+					</select>
+				</td>
+				<td class="bg-gray">Skill</td>
+				<td>
+					<select th:field="*{skillModel.skillId}" name="" class="w-100 border-0">
+						<option value="" hidden="true"></option>                                    
+						<option th:each="skill : ${skillModels}" th:value="${skill.skillId}" th:text="${skill.skillName}"></option>
+					</select>
+				</td>
+				<td class="bg-gray">Position</td>
+				<td>
+					<select th:field="*{positionModel.positionId}" name="" class="w-100 border-0">
+						<option value="" hidden="true"></option>                                    
+						<option th:each="position : ${positionModels}" th:value="${position.positionId}" th:text="${position.positionName}"></option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td class="border-bottom-0 bg-gray">Planned Trainee No</td>
+				<td class="border-bottom-0">
+					<input th:field="*{plannedTraineeNumber}" type="number" name="" class="w-100 border-0">
+				</td>
+				<td class="border-bottom-0 bg-gray">Accepted Trainee No</td>
+				<td class="border-bottom-0">
+					<input readonly th:field="*{acceptedTraineeNumber}" type="number" name="" class="w-100 border-0">
+				</td>
+				<td class="border-bottom-0 bg-gray">Actual Trainee No</td>
+				<td class="border-bottom-0">
+					<input readonly th:field="*{actualTraineeNumber}" type="number" name="" class="w-100 border-0">
+				</td>
+			</tr>
+		</table>
+		<table th:if="${readonly}" class="content-table table table-bordered table-sm mb-0 border-bottom-0">
+			<tr>
+				<td class="col-3 bg-gray">Expected Start Date</td>
+				<td class="col-3">
+					<input readonly th:field="*{expectedStartDate}" type="date" name="" class="w-100 border-0">
+				</td>
+				<td class="col-3 bg-gray">Expected End Date</td>
+				<td class="col-3">
+					<input readonly th:field="*{expectedEndDate}" type="date" name="" class="w-100 border-0">
+				</td>
+			</tr>
+			<tr>
+				<td class="bg-gray">Location</td>
+				<td>
+					<span th:text="*{locationModel?.locationName}" class="readonly"></span>
+				</td>
+				<td class="bg-gray">Detailed Location</td>
+				<td>
+					<input readonly th:field="*{detailLocation}" type="text" name="" class="w-100 border-0">
+				</td>
+			</tr>
+			<tr>
+				<td class="bg-gray">Budget Code</td>
+				<td>
+					<span th:text="*{budgetCode}" class="readonly"></span>
+				</td>
+				<td class="bg-gray">Estimated Budget</td>
+				<td>
+					<input readonly th:field="*{estimatedBudget}" type="number" name="" class="w-100 border-0">
+				</td>
+			</tr>
+			<tr>
+				<td class="bg-gray">Class Admin</td>
+				<td>
+					<p class="readonly mb-0">
+						<span th:each="classAdmin,iterStat: *{classAdminModels}" 
+							th:text="((${iterStat.index} == 0) ? '' : ', ') + ${classAdmin?.account}">
+						</span>
+					</p>
+				</td>
+				<td class="bg-gray">Weighted Number</td>
+				<td>
+					<input readonly th:field="*{weightedNumber}" type="text" name="" class="w-100 border-0">
+				</td>
+			</tr>
+			<tr>
+				<td class="bg-gray">History</td>
+				<td colspan="3">
+					<input readonly th:field="*{history}" type="text" name="" class="w-100 border-0">
+				</td>
+			</tr>
+		</table>
+		<table th:unless="${readonly}" class="content-table table table-bordered table-sm mb-0 border-bottom-0">
+			<tr>
+				<td class="col-3 bg-gray">Expected Start Date</td>
+				<td class="col-3">
+					<input th:field="*{expectedStartDate}" type="date" name="" class="w-100 border-0">
+				</td>
+				<td class="col-3 bg-gray">Expected End Date</td>
+				<td class="col-3">
+					<input th:field="*{expectedEndDate}" type="date" name="" class="w-100 border-0">
+				</td>
+			</tr>
+			<tr>
+				<td class="bg-gray">Location</td>
+				<td>
+					<select th:field="*{locationModel.locationId}" name="" class="w-100 border-0">
+						<option value="" hidden="true"></option>                                    
+						<option th:each="location : ${locationModels}" th:value="${location.locationId}" th:text="${location.locationName}"></option>
+					</select>
+				</td>
+				<td class="bg-gray">Detailed Location</td>
+				<td>
+					<input th:field="*{detailLocation}" type="text" name="" class="w-100 border-0">
+				</td>
+			</tr>
+			<tr>
+				<td class="bg-gray">Budget Code</td>
+				<td>
+					<select th:field="*{budgetCode}" name="" class="w-100 border-0">
+						<option value="" hidden="true"></option> 
+						<option th:each="budget: ${T(fa.mockproject.entity.enumtype.BudgetCodeEnum).values()}" th:value="${budget}" th:text="${budget}"></option>
+					</select>
+				</td>
+				<td class="bg-gray">Estimated Budget</td>
+				<td>
+					<input th:field="*{estimatedBudget}" type="number" name="" class="w-100 border-0">
+				</td>
+			</tr>
+			<tr>
+				<td class="bg-gray">Class Admin</td>
+				<td>
+					<div class="multiple-select border-0" name="classAdminModels[].classAdminProfileId">
+						<div class="append-btn"></div>
+						<div class="selected-box">
+							<div class="selected-item" th:each="classAdminModel, itemStat: *{classAdminModels}">
+								<span th:if="${itemStat.index} != 0" class="item-separate">,&nbsp</span>
+								<input type="text" hidden class="item-input" th:field="*{classAdminModels[__${itemStat.index}__].classAdminProfileId}">
+								<label class="item-label" th:text="*{classAdminModels[__${itemStat.index}__].account}"></label>
+							</div>
+						</div>
+						<div class="select-data">
+							<div class="data-item" th:each="classAdmin: ${classAdminModels}">
+								<input type="checkbox" class="data-item-input" th:value="${classAdmin.classAdminProfileId}">
+								<label class="data-item-label" th:text="${classAdmin.account}"></label>
+							</div>
+						</div>
+					</div>
+				</td>
+				<td class="bg-gray">Weighted Number</td>
+				<td>
+					<input th:field="*{weightedNumber}" type="text" name="" class="w-100 border-0">
+				</td>
+			</tr>
+			<tr>
+				<td class="bg-gray">History</td>
+				<td colspan="3">
+					<input readonly th:field="*{history}" type="text" name="" class="w-100 border-0">
+				</td>
+			</tr>
+		</table>
+	</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
+    <script th:src="@{/common/js/main.js}"></script>
+    <script th:src="@{/lib/multiselect/multiselect.js}"></script>
+    <script th:src="@{/classManagement/js/classManagement.js}"></script>
+</body>
+</html>

@@ -6,6 +6,7 @@ import java.util.Arrays;
 import org.springframework.web.multipart.MultipartFile;
 
 import fa.mockproject.entity.Curriculumn;
+import fa.mockproject.util.MultipartFileImpl;
 
 public class CurriculumnModel {
 	
@@ -13,17 +14,20 @@ public class CurriculumnModel {
 	private String name;
 	private String type;
 	private byte[] content;
+	private MultipartFile file;
+	private long updateState;
 	
 	public CurriculumnModel() {
 		super();
 	}
 	
-	public CurriculumnModel(long curriculumnId, String name, String type, byte[] content) {
+	public CurriculumnModel(long curriculumnId, String name, String type, byte[] content, long updateState) {
 		super();
 		this.curriculumnId = curriculumnId;
 		this.name = name;
 		this.type = type;
 		this.content = content;
+		this.updateState = updateState;
 	}
 
 	public CurriculumnModel(Curriculumn curriculumn) {
@@ -34,6 +38,7 @@ public class CurriculumnModel {
 		this.name = curriculumn.getName();
 		this.type = curriculumn.getType();
 		this.content = curriculumn.getContent();
+		this.file = new MultipartFileImpl(content, name, type);
 	}
 	
 	public CurriculumnModel(MultipartFile file) throws IOException {
@@ -43,6 +48,7 @@ public class CurriculumnModel {
 		this.name = file.getOriginalFilename();
 		this.type = file.getContentType();
 		this.content = file.getBytes();
+		this.file = file;
 	}
 
 	public long getCurriculumnId() {
@@ -83,16 +89,27 @@ public class CurriculumnModel {
 		this.name = file.getOriginalFilename();
 		this.type = file.getContentType();
 		this.content = file.getBytes();
+		this.file = file;
 	}
 	
 	public MultipartFile getFile() {
-		return null;
+		return this.file;
+	}
+
+	public long getUpdateState() {
+		return updateState;
+	}
+
+	public void setUpdateState(long updateState) {
+		this.updateState = updateState;
 	}
 
 	@Override
 	public String toString() {
 		return "CurriculumnModel [curriculumnId=" + curriculumnId + ", name=" + name + ", type=" + type + ", content="
-				+ Arrays.toString(content) + "]";
+				+ content.length + ", updateState=" + updateState + "]";
 	}
+
+	
 
 }

@@ -22,15 +22,12 @@ public class SupplierPartner {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name= "supplier_partner_id")
 	private long supplierPartnerId;
-	
 	@Column(name = "supplier_partner_name", length = 255, nullable = false)
-	private String supplierPartnerName;
-	
+	private String supplierPartnerName;	
 	@OneToOne
 	@JoinColumn(name = "class_id", nullable = false)
 	private ClassBatch classBatch;
-	
-	@Column(name= "remarks",  length = 255, nullable = true)
+	@Column(name= "remarks",  length = 255)
 	private String remarks;
 
 	public SupplierPartner() {
@@ -95,7 +92,7 @@ public class SupplierPartner {
 	@Override
 	public String toString() {
 		return "SupplierPartner [supplierPartnerId=" + supplierPartnerId + ", supplierPartnerName="
-				+ supplierPartnerName + ", classBatch=" + classBatch + ", remarks=" + remarks + "]";
+				+ supplierPartnerName + ", remarks=" + remarks + "]";
 	}
 	
 }

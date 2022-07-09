@@ -1,0 +1,40 @@
+<div class="table-wrapper" th:fragment="table">
+	<table class="class-table table table-bordered table-striped mt-3">
+		<thead class="bg-gray">
+			<tr>
+				<th class="py-0 border-dark">
+					<input type="checkbox" name="" id="" class="check-all">
+				</th>
+				<th class="py-0 border-dark">#</th>
+				<th class="py-0 border-dark">
+					Class Code
+					<i class="fa-solid fa-sort ml-auto float-right mt-1"></i>
+				</th>
+				<th class="py-0 border-dark">Class Name</th>
+				<th class="py-0 border-dark">Actual Start Date</th>
+				<th class="py-0 border-dark">Actual End Date</th>
+				<th class="py-0 border-dark">Location</th>
+				<th class="py-0 border-dark">
+					Status
+					<i class="fa-solid fa-filter float-right mt-1"></i>
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="class-item" th:each="class,iterStat : ${classBatchModels}">
+				<td class="py-0">
+					<input type="checkbox" name="classId" th:value="class.classId" class="check-class">
+				</td>
+				<td class="py-0" th:text="${iterStat.count}"></td>
+				<td class="py-0">
+					<a th:href="'/classes/view/' + ${class.classId}" th:text="${class.classCode}"></a>
+				</td>
+				<td class="py-0" th:text="${class.className}"></td>
+				<td class="py-0" th:text="${#temporals.format(class.actualStartDate, 'dd-MMM-yyyy')}"></td>
+				<td class="py-0" th:text="${#temporals.format(class.actualEndDate, 'dd-MMM-yyyy')}"></td>
+				<td class="py-0" th:text="${class.locationModel.locationName}"></td>
+				<td class="py-0" th:text="${class.status}"></td>
+			</tr>
+		</tbody>
+	</table>
+</div>

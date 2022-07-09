@@ -5,8 +5,11 @@ import java.util.List;
 import org.springframework.data.repository.query.Param;
 
 import fa.mockproject.entity.Location;
+import fa.mockproject.model.LocationModel;
 
 public interface LocationService {
+	
+	public List<LocationModel> getAll();
 	
 	public List<Location> listAll();
 

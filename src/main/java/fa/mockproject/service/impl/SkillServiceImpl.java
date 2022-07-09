@@ -1,13 +1,16 @@
 package fa.mockproject.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import fa.mockproject.entity.Skill;
+import fa.mockproject.model.SkillModel;
 import fa.mockproject.repository.SkillRepository;
 import fa.mockproject.service.SkillService;
 
@@ -35,6 +38,12 @@ public class SkillServiceImpl implements SkillService {
 
 	public void deleteById(String skillId) {
 		repo.deleteById(skillId);
+	}
+
+	@Override
+	public List<SkillModel> getAll() {
+		return repo.findAll().stream().map(skill -> 
+			new SkillModel(skill)).collect(Collectors.toCollection(ArrayList::new));
 	}
 
 	public List<Skill> search(@Param("word") String word) {

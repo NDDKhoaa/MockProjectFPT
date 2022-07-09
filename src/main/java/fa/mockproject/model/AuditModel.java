@@ -2,6 +2,8 @@ package fa.mockproject.model;
 
 import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import fa.mockproject.entity.Audit;
 import fa.mockproject.entity.enumtype.AuditEventCategoryEnum;
 
@@ -10,11 +12,13 @@ public class AuditModel {
 	@SuppressWarnings("unused")
 	private static final String DATE_FORMAT = "dd/MM/yyyy";
 	private long auditId;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate date;
 	private AuditEventCategoryEnum eventCategory;
 	private String relatedPartyOrPeople;
 	private String action;
 	private String pic;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate deadline;
 	private String note;
 	
@@ -111,6 +115,20 @@ public class AuditModel {
 		this.note = note;
 	}
 
+	public boolean isEmpty() {
+		if ((auditId == 0)
+			&& (date == null) 
+			&& (eventCategory == null) 
+			&& (relatedPartyOrPeople == null || relatedPartyOrPeople.trim().equals("")) 
+			&& (action == null || action.trim().equals("")) 
+			&& (pic == null || pic.trim().equals("")) 
+			&& (deadline == null) 
+			&& (note == null || note.trim().equals(""))) {
+			return true;
+		}
+		return false;
+	}
+	
 	@Override
 	public String toString() {
 		return "AuditModel [auditId=" + auditId + ", date=" + date + ", eventCategory=" + eventCategory

@@ -83,5 +83,11 @@ public class FormatType {
 	public void setClassBatchs(List<ClassBatch> classBatchs) {
 		this.classBatchs = classBatchs;
 	}
+
+	@Override
+	public String toString() {
+		return "FormatType [formatTypeId=" + formatTypeId + ", formatTypeName=" + formatTypeName + ", remarks="
+				+ remarks + "]";
+	}
 	
 }
