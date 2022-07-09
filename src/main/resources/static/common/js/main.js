@@ -2,12 +2,12 @@ $('document').ready(e => {
     $("input[type='date']:read-only").filter('[value=""]').prop('type', 'text');
 })
 
-function showModal({modal = '.modal', html, timeOut = 0, backdrop = 'true'}) {
+function showModal({modal = '.modal', html = false, timeOut = 0, backdrop = 'true'}) {
     if  (backdrop == 'static') {
         $(modal).data('bs.modal')._config.backdrop = 'static';
         $(modal).data('bs.modal')._config.keyboard = false;
     }
-    $(modal).html(html);
+    !!html && $(modal).html(html);
     $(modal).modal('show');
     if (timeOut > 0) {
         setTimeout(() => {
@@ -15,12 +15,14 @@ function showModal({modal = '.modal', html, timeOut = 0, backdrop = 'true'}) {
         }, timeOut)
     }
 }
+window.showModal = showModal;
 
 function resetModal(jqModal) {
     jqModal.empty();
     jqModal.data('bs.modal')._config.backdrop = true;
     jqModal.data('bs.modal')._config.keyboard = true;
 }
+window.resetModal = resetModal;
 
 function addOrRemoveTableRow({table, addBtn = ".add-row-btn", removeBtn = ".remove-row-btn", contentItem = ".content-item"}) {
     const addRowBtn = $(table).find(addBtn);

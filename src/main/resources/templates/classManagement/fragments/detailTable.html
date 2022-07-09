@@ -120,7 +120,7 @@
 				<td class="px-1 py-0">
 					<div class="readonly pt-1">
 						<i th:if="*{curriculumnModel?.name != null}" class="fa-solid fa-file-pdf display-6 text-warning"></i>
-						<a th:href="@{/classes/curriculumn/} + ${curriculumnModel?.curriculumnId}" target="_blank" rel="noopener noreferrer" class="text-dark" th:text="*{curriculumnModel?.name}"></a>
+						<a th:href="@{'/classes/curriculumn?curriculumnId=' + ${curriculumnModel?.curriculumnId}}" target="_blank" rel="noopener noreferrer" class="text-dark" th:text="*{curriculumnModel?.name}"></a>
 					</div>
 				</td>
 				<td class="bg-gray">Remarks</td>
@@ -177,7 +177,7 @@
 						<input type="file" class="custom-file-input h-100" id="curriculumn-file" th:field="*{curriculumnModel.file}">
 						<label class="custom-file-label h-100 border-0 pl-2 m-0" for="curriculumn-file">
 							[[*{curriculumnModel} == null ? 'Upload curriculumn...']]
-							<a th:href="@{/classes/curriculumn/} + *{curriculumnModel?.curriculumnId}" target="_blank" rel="noopener noreferrer" class="curriculumn-download text-body" th:text="*{curriculumnModel?.name}"></a>
+							<a th:href="@{'/classes/curriculumn?curriculumnId=' + ${curriculumnModel?.curriculumnId}}" target="_blank" rel="noopener noreferrer" class="curriculumn-download text-body" th:text="*{curriculumnModel?.name}"></a>
 						</label>
 					</div>
 				</td>
