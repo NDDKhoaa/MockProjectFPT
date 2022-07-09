@@ -81,5 +81,10 @@ public class Scope {
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
+
+	@Override
+	public String toString() {
+		return "Scope [scopeId=" + scopeId + ", scopeName=" + scopeName + ", remarks=" + remarks + "]";
+	}
 	
 }

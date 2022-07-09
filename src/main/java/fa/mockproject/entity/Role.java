@@ -5,4 +5,4 @@ public enum Role {
     FA_MANAGER,
     DELIVERY_MANAGER,
     CLASSA_DMIN
-    }
+}

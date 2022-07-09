@@ -3,25 +3,30 @@ package fa.mockproject.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.util.Pair;
+
+import fa.mockproject.entity.ClassBatch;
+import fa.mockproject.entity.enumtype.ClassBatchStatusEnum;
+import fa.mockproject.entity.enumtype.ClassManagementActionEnum;
+import fa.mockproject.entity.enumtype.WeightedNumberEnum;
 import fa.mockproject.model.ClassBatchModel;
 
 public interface ClassBatchService {
 	
-	public abstract List<ClassBatchModel> getClassListGeneral(Map<String, String> filters);
-	public abstract ClassBatchModel getClass(Long classBatchId);
-	public abstract ClassBatchModel addClass(ClassBatchModel classBatchModel);
-	public abstract ClassBatchModel updateDraftClass(ClassBatchModel classBatchModel);
-	public abstract ClassBatchModel updateInprogressClass(ClassBatchModel classBatchModel);
-	public abstract boolean SubmitClass(Long classBatchId);
-	public abstract boolean StartClass(Long classBatchId);
-	public abstract boolean FinishClass(Long classBatchId);
-	public abstract boolean CancelClass(Long classBatchId);
-	public abstract boolean ApproveClass(Long classBatchId);
-	public abstract boolean RejectClass(Long classBatchId);
-	public abstract boolean CloseClass(Long classBatchId);
-	public abstract boolean AcceptClass(Long classBatchId);
-	public abstract boolean DeclineClass(Long classBatchId);
+	public abstract Pair<List<ClassBatchModel>, Page<ClassBatch>> getClassList(Map<String, String> filters);
+	public abstract List<String> getAllClassNames();
+	public abstract ClassBatchModel getClazz(String classId);
+	ClassBatchStatusEnum getClassStatus(String classId);
+	public abstract ClassBatchModel createClass(ClassBatchModel classBatchModel);
+	public abstract boolean updateClass(ClassBatchModel classBatchModel);
+	public abstract boolean updateDraftClass(ClassBatchModel classBatchModel);
+	public abstract boolean updateInprogressClass(ClassBatchModel classBatchModel);
+	boolean changeClassState(String classId, ClassManagementActionEnum action);
+	boolean changeClassState(String classId, ClassManagementActionEnum action, String remark);
 	
-	public abstract boolean addTrainee(Long classBatchId, List<Long> traineeId);
-	public abstract boolean removeTrainee(Long classBatchId, List<Long> traineeId);
+	public abstract boolean addTrainee(Long classId, List<Long> traineeId);
+	public abstract boolean removeTrainee(Long classId, List<Long> traineeId);
+	
+	public Map<WeightedNumberEnum, Integer> convertWeightedNumber(String weightedNumber);
 }

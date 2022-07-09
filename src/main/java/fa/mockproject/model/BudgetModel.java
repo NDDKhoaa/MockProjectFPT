@@ -78,8 +78,8 @@ public class BudgetModel {
 	}
 	public Float getSum() {
 		Long amount = this.getAmount();
-		if (amount == null) {
-			return null;
+		if (amount == null || tax == null) {
+			return 0F;
 		}		
 		return (float) amount + amount * tax;
 	}
@@ -88,6 +88,19 @@ public class BudgetModel {
 	}
 	public void setNote(String note) {
 		this.note = note;
+	}
+	
+	public boolean isEmpty() {
+		if ((budgetId == 0)
+			&& (item == null || item.trim().equals(""))
+			&& (unit == null || unit.trim().equals(""))
+			&& (unitExpense == null || unitExpense == 0)
+			&& (quantity == null || quantity == 0)
+			&& (tax == null || tax == 0)
+			&& (note == null || note.trim().equals(""))) {
+			return true;
+		}
+		return false;
 	}
 	
 	@Override

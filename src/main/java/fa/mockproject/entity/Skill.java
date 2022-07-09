@@ -1,15 +1,16 @@
 package fa.mockproject.entity;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import fa.mockproject.model.SkillModel;
 
 @Entity
 @Table(name = "Skill")
@@ -17,7 +18,6 @@ import javax.persistence.Table;
 public class Skill {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "skill_id", length = 20, unique = true, nullable = false)
 	private String skillId;
 
@@ -29,6 +29,9 @@ public class Skill {
 
 	@OneToMany(mappedBy = "skill")
 	private Set<TraineeCandidateProfile> traineeCanditaCandidateProfile;
+	
+	@OneToMany(mappedBy = "skill")
+	private List<ClassBatch> classBatchs;
 
 	public String getSkillId() {
 		return skillId;
@@ -62,6 +65,14 @@ public class Skill {
 		this.traineeCanditaCandidateProfile = traineeCanditaCandidateProfile;
 	}
 
+	public List<ClassBatch> getClassBatchs() {
+		return classBatchs;
+	}
+
+	public void setClassBatchs(List<ClassBatch> classBatchs) {
+		this.classBatchs = classBatchs;
+	}
+
 	public Skill() {
 		super();
 	}
@@ -75,17 +86,33 @@ public class Skill {
 		this.traineeCanditaCandidateProfile = traineeCanditaCandidateProfile;
 	}
 
-	public Skill(Skill find) {
+	public Skill(String skillId, String skillName, String remarks,
+			Set<TraineeCandidateProfile> traineeCanditaCandidateProfile, List<ClassBatch> classBatchs) {
 		super();
-		this.skillId = find.getSkillId();
-		this.skillName = find.getSkillName();
-		this.remarks = find.getRemarks();
+		this.skillId = skillId;
+		this.skillName = skillName;
+		this.remarks = remarks;
+		this.traineeCanditaCandidateProfile = traineeCanditaCandidateProfile;
+		this.classBatchs = classBatchs;
+	}
+
+	public Skill(Skill skill) {
+		super();
+		this.skillId = skill.getSkillId();
+		this.skillName = skill.getSkillName();
+		this.remarks = skill.getRemarks();
+	}
+	
+	public Skill(SkillModel skillModel) {
+		super();
+		this.skillId = skillModel.getSkillId();
+		this.skillName = skillModel.getSkillName();
+		this.remarks = skillModel.getRemarks();
 	}
 
 	@Override
 	public String toString() {
-		return "Skill [skillId=" + skillId + ", skillName=" + skillName + ", remarks=" + remarks
-				+ ", traineeCanditaCandidateProfile=" + traineeCanditaCandidateProfile + "]";
+		return "Skill [skillId=" + skillId + ", skillName=" + skillName + ", remarks=" + remarks + "]";
 	}
 
 }

@@ -3,10 +3,11 @@ package fa.mockproject.service;
 import java.util.List;
 
 import fa.mockproject.entity.Location;
+import fa.mockproject.model.LocationModel;
 
 public interface LocationService {
 	
-	public List<Location> listAll();
+	public List<LocationModel> getAll();
 
 	public void save(Location location);
 

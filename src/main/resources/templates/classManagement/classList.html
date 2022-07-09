@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Management</title>
+    <script src="https://kit.fontawesome.com/eb5105679e.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" th:href="@{/common/css/main.css}">
+	<link rel="stylesheet" th:href="@{/classManagement/css/classList.css}">
+</head>
+<body>
+    <div class="app">
+        <header class="navbar bg-blue border-bottom border-dark">
+            <span class="header-title">FSOFT HR UTILITY</span>
+        </header>
+        <div class="app-content container-fluid">
+			<div class="row">
+				<nav class="left-menu col col-2 nav flex-column bg-light-gray border-right border-dark">
+					<div class="nav-item text-right">
+						<button type="button" class="collapse-btn border-0 bg-transparent text-primary h5 pr-0">
+							<i class="fa-solid fa-angles-left"></i>
+						</button>
+					</div>
+					<div class="nav-item pl-2 mb-4">
+						<p class="role-option-lable mb-0">Your role now is:</p>
+						<select value="" class="role-option py-1 w-100">
+							<option name="" id="" class="role-option-item">Delivery manager</option>
+						</select>
+					</div>
+					<ul class="nav flex-column pl-0">
+						<li class="nav-item">
+							<a href="#" class="nav-link pl-2 py-1 d-flex align-items-center">
+								<span class="nav-link-dot mr-2">
+									<i class="fa-solid fa-circle"></i>
+								</span>
+								Dashboard
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="#" class="nav-link pl-2 py-1 d-flex align-items-center">
+								<span class="nav-link-dot mr-2">
+									<i class="fa-solid fa-circle"></i>
+								</span>
+								Candidate Management
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="#" class="nav-link pl-2 py-1 d-flex align-items-center">
+								<span class="nav-link-dot mr-2">
+									<i class="fa-solid fa-circle"></i>
+								</span>
+								Trainer Management
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="#" class="nav-link pl-2 py-1 d-flex align-items-center">
+								<span class="nav-link-dot mr-2">
+									<i class="fa-solid fa-circle"></i>
+								</span>
+								Trainee Management
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="#" class="nav-link pl-2 py-1 d-flex align-items-center">
+								<span class="nav-link-dot mr-2">
+									<i class="fa-solid fa-circle"></i>
+								</span>
+								Class Management
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="#" class="nav-link pl-2 py-1 d-flex align-items-center">
+								<span class="nav-link-dot mr-2">
+									<i class="fa-solid fa-circle"></i>
+								</span>
+								General Setting
+							</a>
+						</li>
+					</ul>
+				</nav>
+				<main class="col col-10 px-0">
+					<div class="header border-bottom border-dark py-1 px-3">
+						<h4 class="m-0">Class List</h4>          
+					</div>
+					<div class="content p-2">
+						<form action="" class="serach-class-form form" novalidate>
+							<div class="form-row w-100 mb-2">
+								<div class="col-4">
+									<div class="form-group mb-0 row justify-content-start">
+										<label for="" class="col-form-label col-4">Location</label>
+										<div class="col-6">
+											<select name="locationId" class="form-control rounded-0 border-dark py-0">
+												<option value="" >All</option>                                    
+												<option th:each="location : ${locationModels}" th:value="${location.locationId}" th:text="${location.locationName}"></option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="col-4">
+									<div class="form-group mb-0 row justify-content-start">
+										<label for="" class="col-form-label col-4">Class Name</label>
+										<div class="col-6">
+											<select name="className" class="form-control rounded-0 border-dark py-0">
+												<option value="">All</option>
+												<option th:each="name : ${classNames}" th:value="${name}" th:text="${name}"></option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="col-4">
+									<div class="form-group mb-0 row justify-content-start">
+										<label for="" class="col-form-label col-2">Status</label>
+										<div class="col-6">
+											<select name="status" class="form-control rounded-0 border-dark py-0">
+												<option value="">All</option>
+												<option th:each="status : ${T(fa.mockproject.entity.enumtype.ClassBatchStatusEnum).values()}" th:value="${status}" th:text="${status}">
+											</select>
+										</div>
+										<div class="col-auto ml-auto pr-1">
+											<button type="submit" class="search-btn btn btn-secondary">
+												<i class="fa-solid fa-magnifying-glass"></i>
+												Search
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-row w-100">
+								<div class="col-4">
+									<div class="form-group mb-0 row justify-content-start">
+										<label for="" class="col-form-label col-4">From Date</label>
+										<div class="col-6">
+											<input type="date" name="actualStartDate" class="form-control rounded-0 border-dark py-0">
+										</div>
+									</div>
+								</div>
+								<div class="col-4">
+									<div class="form-group mb-0 row justify-content-start">
+										<label for="" class="col-form-label col-4">To Date</label>
+										<div class="col-6">
+											<input type="date" name="actualEndDate" class="form-control rounded-0 border-dark py-0">
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+						<div class="table-wrapper" th:include="~{classManagement/fragments/classListTable :: table}">
+						</div>
+						<div class="control-btn pt-3">
+							<div class="btn-wrapper w-75">
+								<button class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0 w-125px">
+									<i class="fa-solid fa-circle-plus float-left text-success"></i>
+									New Class
+								</button>
+								<button class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0 w-125px">
+									<i class="fa-solid fa-circle-arrow-up float-left text-primary"></i>
+									Update Class
+								</button>
+								<button class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0 w-125px">
+									<i class="fa-solid fa-turn-up float-left text-orange"></i>
+									Submit Class
+								</button>
+								<button class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0 w-125px">
+									<i class="fa-solid fa-play float-left text-cyan"></i>
+									Start Class
+								</button>
+								<button class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0 w-125px">
+									<i class="fa-solid fa-square-minus float-left text-yellow"></i>
+									Finish Class
+								</button>
+								<button class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0 w-125px">
+									<i class="fa-solid fa-ban float-left text-danger"></i>
+									Cancel Class
+								</button>
+								<button class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0 w-125px">
+									<i class="fa-solid fa-thumbs-up float-left text-pink"></i>
+									Approve Class
+								</button>
+								<button class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0 w-125px">
+									<i class="fa-solid fa-thumbs-down float-left text-brown"></i>
+									Reject Class
+								</button>
+								<button class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0 w-125px">
+									<i class="fa-solid fa-circle-minus float-left text-danger"></i>
+									Close Class
+								</button>
+								<button class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0 w-125px">
+									<i class="fa-solid fa-question float-left text-success"></i>
+									Request Infor
+								</button>
+								<button class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0 w-125px">
+									<i class="fa-regular fa-thumbs-up float-left text-purple"></i>
+									Accept Class
+								</button>
+								<button class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0 w-125px">
+									<i class="fa-regular fa-thumbs-down float-left text-info"></i>
+									Decline Class
+								</button>
+							</div>
+						</div>
+					</div>
+				</main>
+			</div>
+        </div>
+        <footer class="border-top border-dark">
+            <span>FOOTER</span>
+        </footer>
+        <div class="modal fade" data-backdrop="true" id="classModal" tabindex="-1" aria-hidden="true">
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
+    <script th:src="@{/common/js/main.js}"></script>
+    <script th:src="@{/lib/multiselect/multiselect.js}"></script>
+    <script th:src="@{/classManagement/js/classManagement.js}"></script>
+</body>
+</html>
