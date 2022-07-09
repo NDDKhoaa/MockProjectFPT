@@ -33,7 +33,7 @@ public class LocationServiceImpl implements LocationService {
 	@Override
 	public Location findById(String locationId) {
 		Optional<Location> location = repo.findById(locationId);
-		return location.get();
+		return location.orElse(null);
 	}
 
 	@Override

@@ -26,7 +26,7 @@ public class InterviewServiceImpl implements InterviewService{
 
 	public Interview findById(long interviewId) {
 		Optional<Interview> interview = repo.findById(interviewId);
-		return interview.get();
+		return interview.orElse(null);
 	}
 
 	public void delete(Interview interview) {

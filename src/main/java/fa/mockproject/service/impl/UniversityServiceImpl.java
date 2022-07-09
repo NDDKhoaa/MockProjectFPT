@@ -27,7 +27,7 @@ public class UniversityServiceImpl implements UniversityService {
 
 	public University get(String universityId) {
 		Optional<University> rs = repo.findById(universityId);
-		return rs.get();
+		return rs.orElse(null);
 	}
 
 	public void delete(University university) {
