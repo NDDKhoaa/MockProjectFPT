@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -31,6 +32,8 @@ public class UserController {
   private RoleService roleService;
   @Autowired
   private SecurityService securityService;
+@Autowired
+  PersistentTokenRepository persistentTokenRepository;
 
   @GetMapping("/addUser")
   public String addUserPage(ModelMap model) {

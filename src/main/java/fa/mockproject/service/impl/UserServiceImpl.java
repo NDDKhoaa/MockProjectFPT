@@ -4,9 +4,12 @@ import fa.mockproject.entity.User;
 import fa.mockproject.repository.UserRepository;
 import fa.mockproject.service.UserService;
 import java.util.Optional;
+
+import fa.mockproject.util.EmailSending;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +20,20 @@ public class UserServiceImpl implements UserService {
   UserRepository userRepository;
   @Autowired
   private BCryptPasswordEncoder bCryptPasswordEncoder;
-
+  @Autowired
+  public JavaMailSender emailSender;
   @Override
   public User addUser(User user) {
-    String pwdEncrypt = bCryptPasswordEncoder.encode(user.getPassword());
+    String pwd = user.getPassword();
+    String pwdEncrypt = bCryptPasswordEncoder.encode(pwd);
     user.setPassword(pwdEncrypt);
+    String messageSending =
+            "<h5> Hi " + user.getFirstName() + "</h5><br><p> Your account is:</p> <p> Username: "
+                    + user.getEmail() + "</p><p>Password: " + pwd
+                    + "</p><p>You can login now: <a href='http://localhost:8080/login'>Login</a></p><br><p>Thanks!</p>";
+
+    EmailSending.sendEmail(user.getEmail(), "Account Information", messageSending,
+            emailSender);
     return userRepository.save(user);
   }
 
