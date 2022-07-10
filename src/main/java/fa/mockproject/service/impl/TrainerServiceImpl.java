@@ -15,6 +15,7 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
@@ -53,11 +54,12 @@ public class TrainerServiceImpl implements TrainerService{
 		
 		pageIndex = pageIndex == null ? 1 : pageIndex;
 		pageSize = pageSize == null ? ClassManagementConstant.CLASS_LIST_PAGE_SIZE.get(0) : pageSize;
-		
-		Pageable pageable = PageRequest.of(pageIndex-1, pageSize);
+		Sort sort = Sort.by("trainerProfileId").ascending();
+		Pageable pageable = PageRequest.of(pageIndex-1, pageSize,sort);
 		
 		Page<TrainerProfile> page = trainerProfileRepository.findAll(pageable);
 		List<TrainerProfile> trainerList = page.getContent();
+		
 		long totalItems = page.getTotalElements();
 		int totalPages = page.getTotalPages();
 		totalPages = totalPages == 0 ? 1 : totalPages;
