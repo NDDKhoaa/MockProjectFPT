@@ -2,8 +2,9 @@ package fa.mockproject.model;
 
 import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import fa.mockproject.entity.Trainee;
-import fa.mockproject.entity.Trainer;
 
 public class TraineeModel {
 	private long id;
@@ -12,26 +13,31 @@ public class TraineeModel {
 	private String status;
 	private String allocationStatus;
 	private String gender;
-	private String dayOfBirth;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate dayOfBirth;
 	private String universityName;
 	private String falcutyName;
 	private String phone;
 	private String email;
-	private boolean salaryPaid;
+	private String salaryPaid;
 	private String allowanceGroup;
 	private String history;
-	private String TPBAccount;
+	private String tpbAccount;
 	private String commitment;
-	private Trainer trainer;
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	private LocalDate endDate; 
+//	private Trainer trainer;
 
 	public TraineeModel() {
 		super();
 	}
 
 	public TraineeModel(long id, String account, String fullName, String status, String allocationStatus, String gender,
-			String dayOfBirth, String universityName, String falcutyName, String phone, String email,
-			boolean salaryPaid, String allowanceGroup, String history, String tPBAccount, String commitment,
-			Trainer trainer) {
+			LocalDate dayOfBirth, String universityName, String falcutyName, String phone, String email,
+			String salaryPaid, String allowanceGroup, String history, String tPBAccount,
+			String commitment/*
+								 * , Trainer trainer
+								 */) {
 		super();
 		this.id = id;
 		this.account = account;
@@ -47,9 +53,9 @@ public class TraineeModel {
 		this.salaryPaid = salaryPaid;
 		this.allowanceGroup = allowanceGroup;
 		this.history = history;
-		TPBAccount = tPBAccount;
+		tpbAccount = tPBAccount;
 		this.commitment = commitment;
-		this.trainer = trainer;
+//		this.trainer = trainer;
 	}
 
 
@@ -61,15 +67,15 @@ public class TraineeModel {
 
 	
 	
-	public Trainer getTrainer() {
-		return trainer;
-	}
-
-
-
-	public void setTrainer(Trainer trainer) {
-		this.trainer = trainer;
-	}
+//	public Trainer getTrainer() {
+//		return trainer;
+//	}
+//
+//
+//
+//	public void setTrainer(Trainer trainer) {
+//		this.trainer = trainer;
+//	}
 
 
 
@@ -137,12 +143,12 @@ public class TraineeModel {
 		this.falcutyName = falcutyName;
 	}
 
-	public String getDayOfBirth() {
+	public LocalDate getDayOfBirth() {
 		return dayOfBirth;
 	}
 
-	public void setDayOfBirth(String dayOfBirth) {
-		this.dayOfBirth = dayOfBirth;
+	public void setDayOfBirth(LocalDate localDate) {
+		this.dayOfBirth = localDate;
 	}
 
 	public String getPhone() {
@@ -161,11 +167,11 @@ public class TraineeModel {
 		this.email = email;
 	}
 
-	public boolean isSalaryPaid() {
+	public String getSalaryPaid() {
 		return salaryPaid;
 	}
 
-	public void setSalaryPaid(boolean salaryPaid) {
+	public void setSalaryPaid(String salaryPaid) {
 		this.salaryPaid = salaryPaid;
 	}
 
@@ -185,12 +191,12 @@ public class TraineeModel {
 		this.history = history;
 	}
 
-	public String getTPBAccount() {
-		return TPBAccount;
+	public String getTpbAccount() {
+		return tpbAccount;
 	}
 
-	public void setTPBAccount(String tPBAccount) {
-		TPBAccount = tPBAccount;
+	public void setTpbAccount(String tpbAccount) {
+		this.tpbAccount = tpbAccount;
 	}
 
 	public String getCommitment() {
@@ -201,13 +207,20 @@ public class TraineeModel {
 		this.commitment = commitment;
 	}
 
+	public LocalDate getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(LocalDate endDate) {
+		this.endDate = endDate;
+	}
+
 	@Override
 	public String toString() {
 		return "TraineeModel [id=" + id + ", account=" + account + ", fullName=" + fullName + ", status=" + status
 				+ ", allocationStatus=" + allocationStatus + ", gender=" + gender + ", universityName=" + universityName
 				+ ", falcutyName=" + falcutyName + ", phone=" + phone + ", email=" + email + ", salaryPaid="
 				+ salaryPaid + ", allowanceGroup=" + allowanceGroup + ", history=" + history + ", TPBAccount="
-				+ TPBAccount + ", commitment=" + commitment + "]";
+				+ tpbAccount + ", commitment=" + commitment + "]";
 	}
-
 }

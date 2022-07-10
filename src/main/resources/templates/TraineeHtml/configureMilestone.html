@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http: //www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+        integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" media="all" href="../static/css/traineeInfo.css"
+        th:href="@{/static/css/traineeInfo.css}" />
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <title>Configure Milestone</title>
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <div class="row" style="height: 50px; background-color: #205081; vertical-align: middle;">
+            <div class="col-lg-2">
+                <img src="https://i.postimg.cc/7Y2Hrb9q/Logo.png" alt="" style="height: 47px; width: 90px;">
+            </div>
+            <div class="col">
+                <h2 style="font-size: 25px; color: white; font-weight: 780; margin-top: 10px;">FSOFT
+                    HR ULTILITY</h2>
+            </div>
+        </div>
+        <div class="row" style="font-weight: 550;">
+            <div class="col-lg-2 menusetting" style="height: 3000px;">
+                <label>Your role now is:</label> <select style="width: 170px; height: 30px; margin-bottom: 20px;">
+                    <option>Select Role</option>
+                </select>
+                <div class="hrefsetting">
+                    <a href=""><i class="fa fa-circle"></i> Dashboard</a>
+                </div>
+                <div class="hrefsetting">
+                    <a href="/"><i class="fa fa-circle"></i> Class Management</a>
+                </div>
+                <div class="hrefsetting">
+                    <a href="viewCandidate"><i class="fa fa-circle"></i> Candidate
+                        Management</a>
+                </div>
+                <div class="hrefsetting">
+                    <a href=""><i class="fa fa-circle"></i> Trainer Management</a>
+                </div>
+                <div class="hrefsetting">
+                    <a href=""><i class="fa fa-circle"></i> Trainee Management</a>
+                </div>
+                <div class="hrefsetting">
+                    <a href=""><i class="fa fa-circle"></i> General Setting</a>
+                </div>
+            </div>
+        </div>
+        
+        <div style="width: 80%; margin-top: -2970px; margin-left: 260px; font-size: 15px">
+            <th:block>
+                <h3 style="margin-bottom: 20px;">Update Trainee Profile</h3>
+                <span> <a class="btn btn-info" th:href="@{http://localhost:8080/showTraineeInfo?id={traineeid}(traineeid=${#request.getParameter('id')})}"> Trainee Profile</a> </span>
+			    <span> <a class="btn btn-info" th:href="@{http://localhost:8080/trainingResult/getMilestones?id={traineeid}(traineeid=${#request.getParameter('id')})}"> Training Result</a></span>
+                <hr>
+                <table th:object="${milestone}" class="table table-bordered table-parent">
+                    <!-- <a th:text="Config Milestone" 
+                    th:href="@{/configeMilestone}"></a> -->
+                    <div class="section-header d-flex flex-row">
+                        <button class="collapse-btn" style="border-radius: 0%">
+                            <i class="fa fa-solid fa-caret-down"></i>
+                        </button>
+                        <span>
+                            <p>Configure Milestone</p> <span>
+                    </div>
+                    <tr class="header">
+                        <th>
+                            <p>Total Max Score</p>
+                        </th>
+                        <td>
+                            <p th:text="${milestone.totalMaxScore}"></p>
+                            <p></p>
+                        </td>
+                        <th>
+                            <p>Total Passing Score</p>
+                        </th>
+                        <td>
+                            <p th:text="${milestone.totalPassingScore}"></p>
+                        </td>
+                        <th>
+                            <p>Total Weighted Number</p>
+                        </th>
+                        <td>
+                            <p th:text="${milestone.totalWeightedNumber}"></p>
+                        </td>
+                    </tr>
+                    <!-- ?id={id}(id=${milestoneModel.milestoneId}) -->
+
+                    <form th:object="${updatedMilestones}" th:action="@{/trainingResult/updateMilestone?traineeid={traineeid}(traineeid=${#request.getParameter('id')})}"
+                            method="post">
+    
+                            <table class="milestoneTables table table-bordered" th:each="milestone, stat : *{milestones}">
+    
+                                <tr>
+                                    <th>
+                                        <button th:type="submit" name="action" value="Update">
+                                            <i class="fa fa-solid fa-plus"></i>
+                                        </button>
+                                    </th>
+                                    <th colspan="">
+                                        <p>Milestone Name</p>
+                                    </th>
+                                    <th colspan="">
+                                        <p>Salary Paid</p>
+                                    </th>
+                                    <th colspan="">
+                                        <p>Start Date</p>
+                                    </th>
+                                    <th colspan="">
+                                        <p>End Date</p>
+                                    </th>
+                                </tr>
+    
+                                <tr>
+                                    <th>
+                                        <button name="action" value="deleteMilestone">
+                                            <a
+                                                th:href="@{/trainingResult/deleteMilestone/{id}/{traineeid}/(id=${listMilestones[__${stat.index}__].milestoneId},traineeid=${#request.getParameter('id')})}"><i
+                                                    class="fa fa-trash"></i></a>
+                                        </button> <input th:field="*{milestones[__${stat.index}__].milestoneId}"
+                                            th:value="${listMilestones[__${stat.index}__].milestoneId}"
+                                            style="display: none;" />
+                                    </th>
+                                    <td colspan=""><input th:field="*{milestones[__${stat.index}__].milestoneName}"
+                                            th:value="${listMilestones[__${stat.index}__].milestoneName}"></input>
+                                    </td>
+                                    <td th:if="${listMilestones[__${stat.index}__].salaryPaid == 'Yes'}" )><input
+                                            th:field="*{milestones[__${stat.index}__].salaryPaid}" type="radio"
+                                            th:value="${listMilestones[__${stat.index}__].salaryPaid}" checked="checked" />
+                                        <label th:text="Yes" /> <input
+                                            th:field="*{milestones[__${stat.index}__].salaryPaid}" type="radio"
+                                            value="No" /> <label th:text="No" /></td>
+                                    <td th:if="${listMilestones[__${stat.index}__].salaryPaid == 'No'}">
+                                        <input th:field="*{milestones[__${stat.index}__].salaryPaid}" type="radio"
+                                            value="Yes" /> <label th:text="Yes" /> <input
+                                            th:field="*{milestones[__${stat.index}__].salaryPaid}" type="radio"
+                                            th:value="${listMilestones[__${stat.index}__].salaryPaid}" checked="checked" />
+                                        <label th:text="No" />
+                                    </td>
+                                    <td colspan=""><input th:field="*{milestones[__${stat.index}__].startDate}" type="date"
+                                            th:value="${listMilestones[__${stat.index}__].startDate}"></input>
+                                    </td>
+                                    <td colspan=""><input th:field="*{milestones[__${stat.index}__].endDate}" type="date"
+                                            th:value="${listMilestones[__${stat.index}__].startDate}"></input>
+    
+                                    </td>
+                                </tr>
+                                <table class="milestoneTables table table-bordered"
+                                    th:each="topic, itemStat : *{milestones[__${stat.index}__].topics}">
+    
+                                    <tr>
+                                        <td></td>
+                                        <th>
+                                            <button type="submit" name="action" value="Update">
+                                                <i class="fa fa-solid fa-plus"></i>
+                                            </button>
+                                        </th>
+                                        <th colspan="">
+                                            <p>Topic Name</p>
+                                        </th>
+                                        <th colspan="">
+                                            <p>Max Score</p>
+                                        </th>
+                                        <th colspan="">
+                                            <p>Passing Score</p>
+                                        </th>
+                                        <th colspan="">
+                                            <p>Weighted Number</p>
+                                        </th>
+                                    </tr>
+    
+                                    <tr>
+                                        <td></td>
+                                        <th>
+                                            <button name="action" value="deleteMilestone">
+                                                <a
+                                                    th:href="@{/trainingResult/deleteTopic/{id}/{traineeid}/(id=${topic.topicId},traineeid=${#request.getParameter('id')})}">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            </button> <input
+                                                th:field="*{milestones[__${stat.index}__].topics[__${itemStat.index}__].topicId}"
+                                                th:value="${listMilestones[__${stat.index}__].topics[__${itemStat.index}__].topicId}"
+                                                style="display: none;" />
+                                        </th>
+                                        <td colspan="">
+                                            <select
+                                                th:field="*{milestones[__${stat.index}__].topics[__${itemStat.index}__].topicName}"
+                                                th:value="${listMilestones[__${stat.index}__].topics[__${itemStat.index}__].topicName}">
+                                                <option th:value = "${listMilestones[__${stat.index}__].topics[__${itemStat.index}__].topicName}" 
+                                                        th:text = "${listMilestones[__${stat.index}__].topics[__${itemStat.index}__].topicName}">
+                                                <option th:each = "status : ${topicStatuses}" th:value = "${status}" th:text = "${status}">
+                                            </select>
+                                        </td>
+                                        <td><select
+                                                th:field="*{milestones[__${stat.index}__].topics[__${itemStat.index}__].maxScore}"
+                                                th:value="${listMilestones[__${stat.index}__].topics[__${itemStat.index}__].maxScore}" >
+                                                    <option th:each="i : ${#numbers.sequence(0, 100, 10)}" th:value="${i}" th:text="${i}">
+                                                    </option>
+                                                
+                                                </select>
+                                        </td>
+                                        <td colspan="">
+                                                <select th:field="*{milestones[__${stat.index}__].topics[__${itemStat.index}__].passingScore}"
+                                                    th:value="${listMilestones[__${stat.index}__].topics[__${itemStat.index}__].passingScore}">
+                                                    <option th:each="i : ${#numbers.sequence(0, 10)}" th:value="${i}" th:text="${i}">
+                                                    </option>
+                                                </select>
+                                        </td>
+                                        <td colspan="">
+                                            <select
+                                                th:field="*{milestones[__${stat.index}__].topics[__${itemStat.index}__].weightedNumber}"
+                                                th:value="${listMilestones[__${stat.index}__].topics[__${itemStat.index}__].weightedNumber}">
+                                                <option th:each="i : ${#numbers.sequence(0, 100, 10)}" th:value="${i}" th:text="${i}">
+                                                </option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </table>
+    
+                                <table class="milestoneTables table table-bordered">
+    
+                                    <tr>
+                                        <td></td>
+                                        <th>
+                                            <button type="submit" name="action" value="Add">
+                                                <i class="fa fa-solid fa-plus"></i>
+                                            </button>
+                                        </th>
+                                        <th colspan="">
+                                            <p>Topic Name</p>
+                                        </th>
+                                        <th colspan="">
+                                            <p>Max Score</p>
+                                        </th>
+                                        <th colspan="">
+                                            <p>Passing Score</p>
+                                        </th>
+                                        <th colspan="">
+                                            <p>Weighted Number</p>
+                                        </th>
+    
+                                    </tr>
+    
+                                    <tr th:object="${newTopic}">
+                                        <td></td>
+                                        <td></td>
+                                        <input name="milestoneId" th:value="${milestone.milestoneId}"
+                                            style="display: none;" />
+                                        <td colspan="">
+                                            <select th:field="*{topicName}" >
+                                                <option value = "" th:text = "-------------">
+                                                </option>
+                                                <option th:each = "status : ${topicStatuses}" th:value = "${status}" th:text = "${status}">
+                                                </option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select th:field="*{maxScore}"  >
+                                                <option th:each="i : ${#numbers.sequence(0, 100, 10)}" th:value="${i}" th:text="${i}">
+                                                </option>
+                                            </select>
+                                        </td>
+                                        <td colspan="">
+                                            <select th:field="*{passingScore}" >
+                                                <option th:each="i : ${#numbers.sequence(0, 10)}" th:value="${i}" th:text="${i}">
+                                                </option>
+                                            </select>
+                                        </td>
+                                        <td colspan="">
+                                            <select th:field="*{weightedNumber}" >
+                                                <option th:each="i : ${#numbers.sequence(0, 100, 10)}" th:value="${i}" th:text="${i}">
+                                                </option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </table>
+                        </form>
+    
+                        <form th:object=${newMilestoneModel}
+                            th:action="@{/trainingResult/createMilestone?id={id}(id=${#request.getParameter('id')})}"
+                            method="post">
+                            <table class="milestoneTables table new-milestone-table table-bordered">
+                                <tr>
+                                    <th>
+                                        <button name="action" value="addMilestone">
+                                            <i class="fa fa-solid fa-plus"></i>
+                                        </button>
+                                    </th>
+                                    <th colspan="">
+                                        <p>Milestone Name</p>
+                                    </th>
+                                    <th colspan="">
+                                        <p>Salary Paid</p>
+                                    </th>
+                                    <th colspan="">
+                                        <p>Start Date</p>
+                                    </th>
+                                    <th colspan="">
+                                        <p>End Date</p>
+                                    </th>
+                                </tr>
+    
+                                <tr>
+                                    <th></th>
+                                    <td colspan=""></td>
+                                    <td colspan=""><input type="radio" th:field="*{salaryPaid}" th:value="Yes" /> <label
+                                            th:text="Yes" /> <input type="radio" th:field="*{salaryPaid}" th:value="No" />
+                                        <label th:text="No" />
+                                    </td>
+    
+                                    <td colspan=""><input type="date" th:field="*{startDate}" />
+                                        <p style="color: red;" th:text="${errorMessage}"></p>
+                                    </td>
+                                    <td colspan=""><input type="date" th:field="*{endDate}" />
+                                        <p style="color: red;" th:text="${errorMessage}"></p>
+                                    </td>
+                                </tr>
+                            </table>
+               
+                
+                        
+                        <table class="table table-parent table-bordered" style="caption-side: top;"
+                            th:object="${attendanceStatusModels}">
+                            <div class="header-attendance section-header d-flex flex-row">
+                                <button type="button" class="collapse-btn" style="border-radius: 0%">
+                                    <i class="fa fa-solid fa-caret-down"></i>
+                                </button>
+                                <span>
+                                    <p>Attendance Status</p> <span>
+                            </div>
+
+                            <tr class="toggle1" style="text-align: left;">
+                                <th></th>
+                                <th>Absent Times</th>
+                                <th>Late & Early Leave</th>
+                                <th>No Permission Rate</th>
+                                <th>Disciplinary Point</th>
+                            </tr>
+                            <tr class="toggle1" th:each="attendanceStatusModel: ${attendanceStatusModels}">
+                                <td><a
+                                        th:href="@{/trainingResult/viewAttendanceDayStatus?milestoneid={milestoneid}(milestoneid=${attendanceStatusModel.milestone.milestoneId})}">
+                                        <p th:text="${attendanceStatusModel.milestone.milestoneName}">
+                                        </p>
+                                    </a></td>
+                                <td>
+                                    <p th:text="${attendanceStatusModel.absentTimes}"></p>
+                                </td>
+                                <td>
+                                    <p th:text="${attendanceStatusModel.lateEarlyLeave}"></p>
+                                </td>
+                                <td>
+                                    <p th:text="${attendanceStatusModel.noPermissionRate}"></p>
+                                </td>
+                                <td>
+                                    <p th:text="${attendanceStatusModel.disciplinaryPoint}"></p>
+                                </td>
+                            </tr>
+                            <tr class="toggle1" th:object="${finalAttendanceStatusModel}">
+                                <td>Final</td>
+                                <td>
+                                    <p th:text="${finalAttendanceStatusModel.finalAbsentTimes}"></p>
+                                </td>
+                                <td>
+                                    <p th:text="${finalAttendanceStatusModel.finalLateEarlyLeave}"></p>
+                                </td>
+                                <td>
+                                    <p th:text="${finalAttendanceStatusModel.finalNoPermissionRate}"></p>
+                                </td>
+                                <td>
+                                    <p th:text="${finalAttendanceStatusModel.finalDisciplinaryPoint}"></p>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+
+                    <form th:object="${updatedMilestoneTopicMarkModels}"
+                        th:action="@{/trainingResult/updateTopicMark?id={id}(id=${#request.getParameter('id')})}"
+                        method="post">
+                        <div type="button" class="section-header d-flex flex-row">
+                            <button type="button" class="collapse-btn" style="border-radius: 0%">
+                                <i class="fa fa-solid fa-caret-down"></i>
+                            </button>
+                            <span>
+                                <p>Topic Mark</p> <span>
+                        </div>
+                        <div class=" d-flex flex-row">
+                            <table class="toggle-table table table-parent table-bordered"
+                                th:each="milestoneTopicMark, stat : *{milestoneTopicMarkModels}">
+                                
+                                <tr style="text-align: left;">
+                                    <th>
+                                        <p th:text="${listMilestoneTopicMarkModels[__${stat.index}__].milestoneName}"></p>
+                                    </th>
+                                    <td>
+                                        <p th:text="${listMilestoneTopicMarkModels[__${stat.index}__].total}"></p>
+                                    </td>
+                                </tr>
+                                <tr style="text-align: left;">
+                                    <th>
+                                        <p>Topic</p>
+                                    </th>
+                                    <td>
+                                        <p>Score</p>
+                                    </td>
+                                </tr>
+                                <tr style="text-align: left;"
+                                    th:each="topic, itemStat : ${listMilestoneTopicMarkModels[__${stat.index}__].topics}">
+                                    <th>
+                                        <p
+                                            th:text="${listMilestoneTopicMarkModels[__${stat.index}__].topics[__${itemStat.index}__].topicName}">
+                                        </p>
+                                    </th>
+
+                                    <td><input
+                                            th:value="${listMilestoneTopicMarkModels[__${stat.index}__].topics[__${itemStat.index}__].topicId}"
+                                            th:field="*{milestoneTopicMarkModels[__${stat.index}__].topics[__${itemStat.index}__].topicId}"
+                                            style="display: none;" /> <input
+                                            th:value="${listMilestoneTopicMarkModels[__${stat.index}__].topics[__${itemStat.index}__].traineeScore}"
+                                            th:field="*{milestoneTopicMarkModels[__${stat.index}__].topics[__${itemStat.index}__].traineeScore}" />
+                                    </td>
+                                </tr>
+                                
+                            </table>
+                        </div>
+                        <table class="content-table table table-parent table-bordered budget-table"
+                            th:object="${listRewardAndPenalties}">
+                            <div class="section-header d-flex flex-row">
+                                <button type="button" class="collapse-btn" style="border-radius: 0%">
+                                    <i class="fa fa-solid fa-caret-down"></i>
+                                </button>
+                                <span>
+                                    <p>Reward And Penalty</p> <span>
+                            </div>
+                            <tr style="text-align: left;">
+
+                                <td>
+                                    <button type="button" class="add-row-btn add-budget-btn">
+                                        <i class="fa fa-solid fa-plus"></i>
+                                    </button>
+                                </td>
+                                <th>
+                                    <p>Milestone</p>
+                                </th>
+                                <th>
+                                    <p>Date</p>
+                                </th>
+                                <th>
+                                    <p>Bonus Point</p>
+                                </th>
+                                <th>
+                                    <p>Penalty Point</p>
+                                </th>
+                                <th>
+                                    <p>Reason</p>
+                                </th>
+                            </tr>
+                            <tr class="content-item" th:each="rewardPenalty, itemStat : *{rewardPenaltyModels}">
+                                <td>
+                                    <button class="remove-row-btn" type="button">
+                                        <i class="fa fa-trash"></i>
+                                    </button> 
+                                    <input
+                                        th:field="*{rewardPenaltyModels[__${itemStat.index}__].rewardPenaltyId}"
+                                        type="text" style="display: none;"/>
+                                </td>
+                                <td><select th:field="*{rewardPenaltyModels[__${itemStat.index}__].milestoneId}">
+                                        <option value="1">------------</option>
+                                        <option th:each="milestone, stat : ${milestonesForReward}"
+                                            th:value="${milestonesForReward[__${stat.index}__].milestoneId}"
+                                            th:text="${milestonesForReward[__${stat.index}__].milestoneName}">
+                                        </option>
+                                    </select></td>
+                                <td><input th:field="*{rewardPenaltyModels[__${itemStat.index}__].date}"
+                                        type="date"></input></td>
+                                <td><input th:field="*{rewardPenaltyModels[__${itemStat.index}__].bonusPoint}"
+                                        type="text" /></td>
+                                <td><input th:field="*{rewardPenaltyModels[__${itemStat.index}__].penaltyPoint}"
+                                        type="text" /></td>
+                                <td><input th:field="*{rewardPenaltyModels[__${itemStat.index}__].reason}"
+                                        type="text" />
+                                        <input
+                                        th:field="*{rewardPenaltyModels[__${itemStat.index}__].status}"
+                                        type="text" style="display: none;" class="first-input" /></td>
+                            </tr>
+                        </table>
+
+                        <table class="table table-parent table-bordered" th:object="${gpaViewModels}">
+                            <div class="section-header d-flex flex-row">
+                                <button type="button" class="collapse-btn" style="border-radius: 0%">
+                                    <i class="fa fa-solid fa-caret-down"></i>
+                                </button>
+                                <span>
+                                    <p>GPA</p> <span>
+                            </div>
+                            <tr style="text-align: left;">
+                                <th>
+
+                                </th>
+                                <th>
+                                    <p>Academic Mark</p>
+                                </th>
+                                <th>
+                                    <p>Disciplinary Point</p>
+                                </th>
+                                <th>
+                                    <p>Bonus</p>
+                                </th>
+                                <th>
+                                    <p>Penalty</p>
+                                </th>
+                                <th>
+                                    <p>GPA</p>
+                                </th>
+                            </tr>
+                            <tr style="text-align: left;" th:each="gpaViewModel, stat : ${gpaViewModels}">
+                                <td>
+                                    <p th:text="${gpaViewModel.milestoneName}"></p>
+                                </td>
+                                <td>
+                                    <p th:text="${gpaViewModel.academicMark}"></p>
+                                </td>
+                                <td>
+                                    <p th:text="${gpaViewModel.disciplinaryPoint}"></p>
+                                </td>
+                                <td>
+                                    <p th:text="${gpaViewModel.bonus}"></p>
+                                </td>
+                                <td>
+                                    <p th:text="${gpaViewModel.pelnaty}"></p>
+                                </td>
+                                <td>
+                                    <p th:text="${gpaViewModel.gpaResult}"></p>
+                                </td>
+                            </tr>
+                            <tr style="text-align: left;" th:object="${finalGpaResult}">
+                                <th>
+                                    <p>Final</p>
+                                </th>
+                                <td>
+                                    <p th:text="${finalGpaResult.finalAcademicMark}"></p>
+                                </td>
+                                <td>
+                                    <p th:text="${finalGpaResult.finalDisciplinaryPoint}"></p>
+                                </td>
+                                <td>
+                                    <p th:text="${finalGpaResult.finalBonus}"></p>
+                                </td>
+                                <td>
+                                    <p th:text="${finalGpaResult.finalPelnaty}"></p>
+                                </td>
+                                <td>
+                                    <p th:text="${finalGpaResult.finalGpaResult}"></p>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table class="table table-parent table-bordered" th:object="${commitmentViewModel}">
+                            <div class="section-header d-flex flex-row">
+                                <button type="button" class="collapse-btn" style="border-radius: 0%">
+                                    <i class="fa fa-solid fa-caret-down"></i>
+                                </button>
+                                <span>
+                                    <p>Commitment</p> <span>
+                            </div>
+                            <tr style="text-align: left;">
+                                <th>
+                                    <p>Committed Value</p>
+                                </th>
+                                <th>
+                                    <p>Committed Working Duration</p>
+                                </th>
+                                <th>
+                                    <p>Committed Working Start Date</p>
+                                </th>
+                                <th>
+                                    <p>Committed Working End Date</p>
+                                </th>
+                                <th>
+                                    <p>Remarks</p>
+                                </th>
+                            </tr>
+                            <tr style="text-align: left;">
+                                <td>
+                                    <input th:field="*{commitmentId}" th:value="${commitmentViewModel.commitmentId}" style="display: none;"></input>
+                                    <input th:field="*{committedValue}" th:value="${commitmentViewModel.committedValue}" style="display: none;"></input>
+                                    <p th:text="${commitmentViewModel.committedValue}"></p>
+                                </td>
+                                <td>
+                                    <input th:field="*{committedWorkingDuration}" th:value="${commitmentViewModel.committedWorkingDuration}" style="display: none;"></input>
+                                    <p th:text="${commitmentViewModel.committedWorkingDuration}"></p>
+                                </td>
+                                <td>
+                                    <input th:field="*{committedWorkingStartDate}" th:value="${commitmentViewModel.committedWorkingStartDate}" style="display: none;"></input>
+                                    <p th:text="${commitmentViewModel.committedWorkingStartDate}"></p>
+                                </td>
+                                <td>
+                                    <input th:field="*{committedWorkingEndDate}" th:value="${commitmentViewModel.committedWorkingEndDate}" style="display: none;"></input>
+                                    <p th:text="${commitmentViewModel.committedWorkingEndDate}"></p>
+                                </td>
+                                <td>
+                                    <input th:field="*{remarks}" th:value="${commitmentViewModel.remarks}"></input>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="table table-parent table-bordered" th:object="${gpaViewModels}">
+                            <div  class="section-header d-flex flex-row">
+                                <button type="button" class="collapse-btn" style="border-radius: 0%">
+                                    <i class="fa fa-solid fa-caret-down"></i>
+                                </button>
+                                <span>
+                                    <p>Allowance</p> <span>
+                            </div>
+                            <tr style="text-align: left;">
+                                <th>
+
+                                </th>
+                                <th>
+                                    <p>GPA</p>
+                                </th>
+                                <th>
+                                    <p>Level</p>
+                                </th>
+                                <th>
+                                    <p>SalaryPaid</p>
+                                </th>
+                                <th>
+                                    <p>Standard Allowance</p>
+                                </th>
+                                <th>
+                                    <p>Remarks</p>
+                                </th>
+                            </tr>
+                            <tr style="text-align: left;" th:each="allowanceModel, stat : ${allowanceModels}">
+                                <td>
+                                    <p th:text="${allowanceModel.milestoneName}"></p>
+                                </td>
+                                <td>
+                                    <p th:text="${allowanceModel.gpa}"></p>
+                                </td>
+                                <td>
+                                    <p th:text="${allowanceModel.level}"></p>
+                                </td>
+                                <td>
+                                    <p th:text="${allowanceModel.salaryPaid}"></p>
+                                </td>
+                                <td>
+                                    <p th:text="${allowanceModel.allowanceStandard}"></p>
+                                </td>
+                                <td>
+                                    <p th:text="${allowanceModel.remark}"></p>
+                                </td>
+                            </tr>
+                        </table>
+                        
+                            <table class="table table-parent table-bordered" th:object = "${allocationModel}">
+                                <div class="section-header d-flex flex-row">
+                                    <button type="button" class="collapse-btn" style="border-radius: 0%">
+                                        <i class="fa fa-solid fa-caret-down"></i>
+                                    </button>
+                                    <span>
+                                        <p>Allocation</p>
+                                    </span>
+                                </div>
+                                <tr style="text-align: left;">
+                                    <th>
+                                        <p>Allocated FSU</p>
+                                    </th>
+                                    <th>
+                                        <p>Salary</p>
+                                    </th>
+                                    <th>
+                                        <p>Start Date</p>
+                                    </th>
+                                    <th>
+                                        <p>Allocation Status</p>
+                                    </th>
+                                    <th>
+                                        <p>Remarks</p>
+                                    </th>
+                                </tr>
+                                <tr style="text-align: left;">
+                                    <td>
+                                    	<input type="text" th:field="*{allocationId}"
+                                            th:value="${allocationModel.allocationId}" style = "display: none;"></input>
+                                        <input type="text" th:field="*{allocationName}"
+                                            th:value="${allocationModel.allocationName}"></input>
+                                    </td>
+                                    <td>
+                                        <input type="text" th:field="*{salary}"
+                                            th:value="${allocationModel.salary}"></input>
+                                    </td>
+                                    <td>
+                                        <input th:field="*{startDate}"
+                                            th:value="${allocationModel.startDate}" type="date"></input>
+                                    </td>
+                                    <td>
+                                        <select th:field="*{allocationStatus}">
+                                            <option value="Allocation">Allocation</option>
+                                            <option value="Not Allocation">Not Allocation</option>
+                                        </select>
+                                    </td> 
+                                    <td>
+                                        <input th:field="*{allocationRemarks}" type="text"
+                                            th:value="${allocationModel.allocationRemarks}"></input>
+                                    </td>
+                                </tr>
+                            </table>
+                        
+
+                        <input class="btn btn-info" type="submit" value="Update" /> <a class="btn btn-info" th:href="@{http://localhost:8080/trainingResult/getMilestones?id={traineeid}(traineeid=${#request.getParameter('id')})}"> Training Result</a>
+                    </form>
+            </th:block>
+            </table>
+
+        </div>
+        <script src="../static/js/addremovebutton.js"></script>
+        <script type="text/javascript" th:src="@{/static/js/addremovebutton.js}"></script>
+</body>
+
+</html>

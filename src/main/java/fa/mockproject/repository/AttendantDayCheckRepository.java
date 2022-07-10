@@ -7,5 +7,6 @@ import fa.mockproject.entity.AttendantDayCheck;
 
 @Repository
 public interface AttendantDayCheckRepository extends JpaRepository<AttendantDayCheck, Long> {
+	
 
 }

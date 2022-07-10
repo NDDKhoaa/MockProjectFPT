@@ -8,11 +8,12 @@ import fa.mockproject.entity.Milestone;
 public class AttendanceStatusModel {
 	
 	private int absentTimes;
-	private int LateEarlyLeave;
+	private int lateEarlyLeave;
 	private int noPermissionRate;
 	private int disciplinaryPoint;
 	private Milestone milestone;
 	private List<AttendantDayCheck> attendantDayChecks;
+	private FinalAttendanceStatusModel finalAttendanceStatusModel;
 
 	public AttendanceStatusModel() {
 		super();
@@ -22,7 +23,7 @@ public class AttendanceStatusModel {
 			Milestone milestone, List<AttendantDayCheck> attendantDayChecks) {
 		super();
 		this.absentTimes = absentTimes;
-		LateEarlyLeave = lateEarlyLeave;
+		this.lateEarlyLeave = lateEarlyLeave;
 		this.noPermissionRate = noPermissionRate;
 		this.disciplinaryPoint = disciplinaryPoint;
 		this.milestone = milestone;
@@ -38,11 +39,11 @@ public class AttendanceStatusModel {
 	}
 
 	public int getLateEarlyLeave() {
-		return LateEarlyLeave;
+		return lateEarlyLeave;
 	}
 
 	public void setLateEarlyLeave(int lateEarlyLeave) {
-		LateEarlyLeave = lateEarlyLeave;
+		this.lateEarlyLeave = lateEarlyLeave;
 	}
 
 	public int getNoPermissionRate() {
@@ -76,10 +77,18 @@ public class AttendanceStatusModel {
 	public void setAttendantDayChecks(List<AttendantDayCheck> attendantDayChecks) {
 		this.attendantDayChecks = attendantDayChecks;
 	}
+	
+	public FinalAttendanceStatusModel getFinalAttendanceStatusModel() {
+		return finalAttendanceStatusModel;
+	}
+
+	public void setFinalAttendanceStatusModel(FinalAttendanceStatusModel finalAttendanceStatusModel) {
+		this.finalAttendanceStatusModel = finalAttendanceStatusModel;
+	}
 
 	@Override
 	public String toString() {
-		return "AttendaceStatus [absentTimes=" + absentTimes + ", LateEarlyLeave=" + LateEarlyLeave
+		return "AttendaceStatus [absentTimes=" + absentTimes + ", LateEarlyLeave=" + lateEarlyLeave
 				+ ", noPermissionRate=" + noPermissionRate + ", disciplinaryPoint=" + disciplinaryPoint + "]";
 	}
 
