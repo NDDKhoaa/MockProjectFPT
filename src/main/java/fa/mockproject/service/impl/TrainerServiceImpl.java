@@ -1,20 +1,32 @@
 package fa.mockproject.service.impl;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import fa.mockproject.entity.ClassBatch;
 import fa.mockproject.entity.Trainer;
 import fa.mockproject.entity.TrainerProfile;
+import fa.mockproject.entity.enumtype.ClassBatchStatusEnum;
 import fa.mockproject.model.TrainerModel;
 import fa.mockproject.repository.TrainerProfileRepository;
 import fa.mockproject.repository.TrainerRepository;
 import fa.mockproject.service.TrainerService;
+import fa.mockproject.util.ClassManagementConstant;
 
 @Service
 public class TrainerServiceImpl implements TrainerService{
@@ -23,13 +35,44 @@ public class TrainerServiceImpl implements TrainerService{
 	private TrainerProfileRepository trainerProfileRepository;
 	@Autowired
 	private TrainerRepository trainerRepository;
-	
+	@Autowired
+	ResourceBundleMessageSource messageSource;
 	@Override
 	public List<TrainerProfile> getAllTrainers(String keyword) {
-		if(keyword!=null) {
-			return trainerProfileRepository.findAll(keyword); 
+//		Pageable pageable = PageRequest.of(0, 2);
+//		if(keyword!=null) {
+//			return trainerProfileRepository.findAll(keyword); 
+//		}
+//		return trainerProfileRepository.findAll();
+		return null;
+	}
+	@Override
+	public void getAllTrainers(Model model, Map<String, String> filters) {
+		Integer pageSize = (Integer) convertFilterType(Integer.class, filters.get("pageSize"));
+		Integer pageIndex = (Integer) convertFilterType(Integer.class, filters.get("pageIndex"));
+		
+		pageIndex = pageIndex == null ? 1 : pageIndex;
+		pageSize = pageSize == null ? ClassManagementConstant.CLASS_LIST_PAGE_SIZE.get(0) : pageSize;
+		
+		Pageable pageable = PageRequest.of(pageIndex-1, pageSize);
+		
+		Page<TrainerProfile> page = trainerProfileRepository.findAll(pageable);
+		List<TrainerProfile> trainerList = page.getContent();
+		long totalItems = page.getTotalElements();
+		int totalPages = page.getTotalPages();
+		totalPages = totalPages == 0 ? 1 : totalPages;
+		pageIndex = page.getNumber() + 1;
+		pageSize = page.getSize();
+		
+		model.addAttribute("pageSize",pageSize);
+		model.addAttribute("pageIndex",pageIndex);
+		model.addAttribute("totalItems",totalItems);
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("trainerList", trainerList);
+		if (trainerList == null || trainerList.size() == 0) {
+			model.addAttribute("modal", "warningModal");
+			model.addAttribute("message", messageSource.getMessage("msg8", null, null));			
 		}
-		return trainerProfileRepository.findAll();
 	}
 
 	@Override
@@ -74,9 +117,41 @@ public class TrainerServiceImpl implements TrainerService{
 		
 		return latestTrainers;
 	}
-	
+	@Override
 	public void deleteTrainerProfileById(long id) {
 		this.trainerProfileRepository.deleteById(id);
+	}
+	@SuppressWarnings("unchecked")
+	private Object convertFilterType(@SuppressWarnings("rawtypes") Class type, String value) {
+		if (type.isAssignableFrom(String.class)) {
+			if (value == null || value.trim().equals("")) {
+				return null;				
+			}
+			return value;
+		}
+		if (type.isAssignableFrom(Integer.class)) {
+			try {
+				return Integer.parseInt(value);
+			} catch (NumberFormatException e) {
+				return null;
+			}
+		}
+		if (type.isAssignableFrom(ClassBatchStatusEnum.class)) {
+			try {
+				return ClassBatchStatusEnum.valueOf(value);
+			} catch (IllegalArgumentException | NullPointerException e) {
+				return null;
+			}
+		}
+		if (type.isAssignableFrom(LocalDate.class)) {
+			try {
+				return LocalDate.parse(value, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+			} catch (DateTimeParseException | NullPointerException e) {
+				return null;
+			}
+		}
+		
+		return null;
 	}
 
 }
