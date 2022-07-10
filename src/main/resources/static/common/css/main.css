@@ -93,17 +93,31 @@ input:read-only,
 .nav-tabs .nav-link {
 	border-width: 1px;
 	border-style: solid;
-	border-color: var(--dark) var(--dark) var(--dark) transparent;
+	border-color: var(--dark) transparent var(--dark) var(--dark);
+}
+
+.nav-tabs .nav-item:last-child .nav-link {
+	border-width: 1px;
+	border-style: solid;
+	border-color: var(--dark) var(--dark) var(--dark) var(--dark);
 }
 
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
     color: #495057;
     background-color: #fff;
-    border-color: var(--dark) var(--dark) transparent;
+    border-color: var(--dark) transparent transparent var(--dark);
+}
+
+.nav-tabs .nav-item.show:last-child .nav-link, .nav-tabs .nav-item:last-child .nav-link.active {
+    border-color: var(--dark) var(--dark) transparent var(--dark);
 }
 
 .nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover {
-    border-color: var(--dark) var(--dark) transparent;
+    border-color: var(--dark) transparent transparent var(--dark);
+}
+
+.nav-tabs .nav-item:last-child .nav-link:focus, .nav-tabs .nav-item:last-child .nav-link:hover {
+    border-color: var(--dark) var(--dark) transparent var(--dark);
 }
 
 .nav-link-dot {
