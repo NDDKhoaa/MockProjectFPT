@@ -1,41 +1,55 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
-<head th:replace="/header :: head">
+<head>
+  <link th:replace="fragments/head :: head-infor"></link>
   <title>List role</title>
 </head>
 <body>
-<div th:include="header :: header"></div>
-<div class="body-content col-lg-9">
-  <button type="button" class="btn btn-primary"> <a th:href="@{'/addRole'}">Add Role</a> </button>
-  <!--<div class="alert alert-success" role="alert" th:text="${message}">
-  </div>-->
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th>No</th>
-    <th> Role name</th>
-    <th> Privileges</th>
-    <th> Action</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="role, i : ${roles}">
-    <td th:text="${i.index +1}"/>
-    <td th:text="${role.name}"/>
-    <td><p th:if="${#lists.size(role.privileges) > 0}" th:text="${role.privileges}"/></td>
-    <td><a th:href="@{'/editRole?roleId=' + ${role.roleId}}">Edit</a></td>
-  </tr>
-  </tbody>
-</table>
-<ul th:if="${totalElement > 0}" class="pagination"
-    th:each="pageNumber : ${#numbers.sequence( 1,totalPage ,1)}">
-  <li class="page-item" th:classappend="${pageNumber==page} ? active"><a
-      th:href="@{/listRole(size=${size}, page=${pageNumber})}"
-      th:text=${pageNumber}
-      class="page-link"></a></li>
-</ul>
+<div class="app container-fluid d-flex flex-column">
+  <header th:replace="fragments/header :: #app-header"></header>
+  <div class="row app-content flex-grow-1">
+    <div class="container-fluid">
+      <div class="row h-100">
+        <nav th:replace="fragments/sidebar :: #app-sidebar"></nav>
+        <main class="col col-10 px-0 d-flex flex-column">
+          <div class="body-content col-lg-12">
+            <button type="button" class="btn btn-primary"><a th:href="@{'/addRole'}">Add Role</a>
+            </button>
+            <!--<div class="alert alert-success" role="alert" th:text="${message}">
+            </div>-->
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th>No</th>
+                <th> Role name</th>
+                <th> Privileges</th>
+                <th> Action</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="role, i : ${roles}">
+                <td th:text="${i.index +1}"/>
+                <td th:text="${role.name}"/>
+                <td><p th:if="${#lists.size(role.privileges) > 0}" th:text="${role.privileges}"/>
+                </td>
+                <td><a th:href="@{'/editRole?roleId=' + ${role.roleId}}">Edit</a></td>
+              </tr>
+              </tbody>
+            </table>
+            <ul th:if="${totalElement > 0}" class="pagination"
+                th:each="pageNumber : ${#numbers.sequence( 1,totalPage ,1)}">
+              <li class="page-item" th:classappend="${pageNumber==page} ? active"><a
+                  th:href="@{/listRole(size=${size}, page=${pageNumber})}"
+                  th:text=${pageNumber}
+                  class="page-link"></a></li>
+            </ul>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
 </div>
-<footer th:replace="/footer :: footer"></footer>
+<footer th:replace="fragments/footer :: #app-footer"></footer>
 </body>
 </html>

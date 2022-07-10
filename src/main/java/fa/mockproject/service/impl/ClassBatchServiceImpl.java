@@ -25,7 +25,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
 import fa.mockproject.entity.ClassBatch;
-import fa.mockproject.entity.ClassData;
+import fa.mockproject.entity.DashboardData;
 import fa.mockproject.entity.Location;
 import fa.mockproject.entity.Skill;
 import fa.mockproject.entity.Trainee;
@@ -491,7 +491,7 @@ public class ClassBatchServiceImpl implements ClassBatchService {
 	}
 
 	@Override
-	public List<ClassData> getListTrainee(Location location, ClassBatchStatusEnum status) {
+	public List<DashboardData> getListTrainee(Location location, ClassBatchStatusEnum status) {
 		List<ClassBatch> classBatches = new ArrayList<>();
 		List<Trainee> trainees = new ArrayList<>();
 		if (location == null && status == null) {
@@ -520,7 +520,7 @@ public class ClassBatchServiceImpl implements ClassBatchService {
 			}
 		}
 		return stringIntegerMap.entrySet().stream().map(
-				stringIntegerEntry -> new ClassData(stringIntegerEntry.getKey(),
+				stringIntegerEntry -> new DashboardData(stringIntegerEntry.getKey(),
 						stringIntegerEntry.getValue())).collect(Collectors.toList());
 	}
 

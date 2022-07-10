@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+  <link th:replace="fragments/head :: head-infor"></link>
+  <title>Dashboard</title>
+  <link rel="stylesheet" th:href="@{/static/dashboard/css/dashboard.css}">
+</head>
+<body>
+<div class="app container-fluid d-flex flex-column">
+  <header th:replace="fragments/header :: #app-header"></header>
+  <div class="row app-content flex-grow-1">
+    <div class="container-fluid">
+      <div class="row h-100">
+        <nav th:replace="fragments/sidebar :: #app-sidebar"></nav>
+        <main class="col col-10 px-0 d-flex flex-column">
+          <div class="dashboard col-lg-12">
+            <h3>Dashboard</h3>
+            <hr>
+            <div class="dashboard-menu">
+              <span>Dashboard for</span>
+              <span>
+                <select onchange="dashboardFor()" id="dashboard-for">
+                  <option value="class">Class</option>
+                  <option value="candidate">Candidate</option>
+                  <!--<option value="trainee">Trainee</option>
+                  <option value="trainer">Trainer</option>-->
+                </select>
+            </span>
+              <span>Location</span>
+              <span>
+                <select onchange="locationFor()" id="locationId">
+                  <option th:value="${'all'}" th:text="${'All'}"></option>
+                  <option th:each="location:${locations}"
+                          th:value="${location.locationId}"
+                          th:text="${location.locationName}"></option>
+                </select>
+              </span>
+              <span>Type of Dashboard</span>
+              <span>
+                <select onchange="dashboardType()" id="dashboard-type">
+                  <option value="table">Table</option>
+                  <option value="chart">Chart</option>
+              </select>
+            </span>
+              <span>Status</span>
+              <span>
+                 <input type="hidden" id="candidateStatus" th:value="${candidateStatus}">
+                <select onchange="statusFor()" id="status" class="dashboard-status">
+                  <option value="all">All</option>
+                   <option
+                       th:each="status : ${T(fa.mockproject.entity.enumtype.ClassBatchStatusEnum).values()}"
+                       th:value="${status}" th:text="${status}">
+                </select>
+              </span>
+            </div>
+            <hr>
+            <!--dashboard content-->
+            <div class="dashboard-content">
+              <canvas id="myChart" style="width:100%;max-width:600px; display:none"></canvas>
+              <div id="dashboard-table" class="row">
+                <div class="col-lg-4" id="planning">
+                  <h6>Planning</h6>
+                  <table class="table table-striped">
+                    <thead>
+                    <tr>
+                      <th>Skill</th>
+                      <th>Plan of enrolment</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="class : ${classPlanning}">
+                      <td th:text="${class.skill}"/>
+                      <td th:text="${class.total}"/>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-lg-4" id="planned">
+                  <h6>Planned</h6>
+                  <table class="table table-striped">
+                    <thead>
+                    <tr>
+                      <th>Skill</th>
+                      <th>Plan of enrolment</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="class : ${classPlanned}">
+                      <td th:text="${class.skill}"/>
+                      <td th:text="${class.total}"/>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-lg-4" id="in-progress">
+                  <h6>In progress</h6>
+                  <table class="table table-striped">
+                    <thead>
+                    <tr>
+                      <th>Skill</th>
+                      <th>Plan of enrolment</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="class : ${classInProgress}">
+                      <td th:text="${class.skill}"/>
+                      <td th:text="${class.total}"/>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<footer th:replace="fragments/footer :: #app-footer"></footer>
+</body>
+</html>
+<script language="javascript">
+ function dashboardFor() {
+  getStatusForDashboard();
+  dashboardOnChange();
+ }
+ function getStatusForDashboard(){
+ var dashboardFor = $('#dashboard-for').val();
+   document.getElementById("status").innerHTML = "";
+  $.ajax({
+            url: '/getStatus?status=' + dashboardFor,
+            method: 'GET',
+            contentType: "application/json",
+            success: function (data) {
+               if(dashboardFor == "class"){
+                var html =  "<option value='all'>All</option>"
+                     var json = JSON.parse(data);
+                             for (let i = 0; i < json.length; i++) {
+                                  html += "<option value=" + json[i] + ">" + json[i] +"</option>";
+                                }
+                 document.getElementById("status").innerHTML = html;
+                }
+                if(dashboardFor == "candidate"){
+                document.getElementById("status").innerHTML = "";
+                      var html = "<option value='all'>All</option>";
+                      var json = JSON.parse(data);
+                             for (let i = 0; i < json.length; i++) {
+                                  html += "<option value=" + json[i].profileStatusId + ">" + json[i].status +"</option>";
+                                }
+                      document.getElementById("status").innerHTML = html;
+              }
+            },
+            error: function(error) {
+            var json = JSON.parse(error);
+             alert(json);
+                    }
+      });
+ }
+function locationFor() {
+    dashboardOnChange();
+ }
+function dashboardType() {
+   dashboardOnChange();
+ }
+ function statusFor() {
+   dashboardOnChange();
+ }
+
+function dashboardOnChange(){
+    var dashboardFor = $('#dashboard-for').val();
+    var dashboardType = $('#dashboard-type').val();
+    var location = $('#locationId').val();
+     var status = $('#status').val();
+     var dataSend = {
+                dashboardFor: dashboardFor,
+                location : location,
+                status : status
+        }
+      $.ajax({
+            url: '/dashboardType',
+            method: 'POST',
+            contentType: "application/json",
+            data:  JSON.stringify(dataSend),
+            success: function (data) {
+
+            if(data != ""){
+            console.log(data);
+               if(dashboardFor == "class"){
+                classDashboard(data, dashboardType);
+                }
+                if(dashboardFor == "candidate"){
+                candidateDashboard(data, dashboardType);
+                }
+              }
+            },
+            error: function(error) {
+            var json = JSON.parse(error);
+             alert(json);
+                    }
+      });
+}
+
+ function classDashboard(data, dashboardType){
+ var json = JSON.parse(data);
+ var stringHtml = "<div class='col-lg-12'><table class='table table-striped'> <thead> <tr> <th>Skill</th> <th>Plan of enrolment</th> </tr> </thead> <tbody>";
+     document.getElementById("dashboard-table").innerHTML = "";
+    if(dashboardType=="table"){
+       document.getElementById("myChart").style.display = "none";
+          for (let i in json.class) {
+          stringHtml += "<tr>";
+          stringHtml +=  "<td>" + json.class[i] + "</td>";
+          stringHtml +=  "<td>" + json.class[i] + "</td></tr>";
+        }
+       stringHtml += "</tbody>";
+             document.getElementById("dashboard-table").innerHTML = stringHtml;
+     }
+     if(dashboardType=="chart"){
+     document.getElementById("myChart").style.display = "block";
+        var xValues = ["Java", ".Net", "C", "Paython"];
+        var yValues = [55, 49, 44, 24];
+        var barColors = ["red", "green","blue","orange"];
+
+        new Chart("myChart", {
+          type: "bar",
+          data: {
+            labels: xValues,
+            datasets: [{
+              backgroundColor: barColors,
+              data: yValues
+            }]
+          },
+          options: {
+            legend: {display: false},
+            title: {
+              display: true,
+              text: "Class"
+            }
+          }
+        });
+     }
+ }
+ function candidateDashboard(data, dashboardType){
+ var json = JSON.parse(data);
+ console.log(json);
+ var stringHtml = "<div class='col-lg-12'><table class='table table-striped'> <thead> <tr> <th>Status</th> <th>Total</th> </tr> </thead> <tbody>";
+     document.getElementById("dashboard-table").innerHTML = "";
+    if(dashboardType=="table"){
+     document.getElementById("myChart").style.display = "none";
+        for (let i in json.candidate) {
+        stringHtml += "<tr>";
+        stringHtml +=  "<td>" + json.candidate[i] + "</td>";
+        stringHtml +=  "<td>" + json.candidate[i] + "</td></tr>";
+      }
+     stringHtml += "</tbody>";
+           document.getElementById("dashboard-table").innerHTML = stringHtml;
+         }
+     if(dashboardType=="chart"){
+     document.getElementById("myChart").style.display = "block";
+        var xValues = ["Interview - Pass", "Interview - Fail", "Test - Pass", "Test - Fail"];
+        var yValues = [55, 49, 44, 24];
+        var barColors = ["red", "green","blue","orange"];
+
+        new Chart("myChart", {
+          type: "bar",
+          data: {
+            labels: xValues,
+            datasets: [{
+              backgroundColor: barColors,
+              data: yValues
+            }]
+          },
+          options: {
+            legend: {display: false},
+            title: {
+              display: true,
+              text: "Candidate"
+            }
+          }
+        });
+     }
+ }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

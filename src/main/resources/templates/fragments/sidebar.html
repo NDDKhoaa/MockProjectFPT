@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,12 +20,14 @@
 		<div class="nav-item pl-2 mb-4">
 			<p class="role-option-lable mb-0">Your role now is:</p>
 			<select value="" class="role-option py-1 w-100">
-				<option name="" id="" class="role-option-item">Delivery manager</option>
+				<option class="role-option-item" th:each="role:${roles}"
+								th:value="${role.name}"
+								th:text="${role.name}"></option>
 			</select>
 		</div>
 		<ul class="nav flex-column pl-0">
 			<li class="nav-item">
-				<a href="#" class="nav-link pl-2 pr-0 py-1 d-flex align-items-center">
+				<a th:href="@{'/dashboard'}" class="nav-link pl-2 pr-0 py-1 d-flex align-items-center">
 					<span class="nav-link-dot mr-2">
 						<i class="fa-solid fa-circle"></i>
 					</span>
@@ -72,6 +74,24 @@
 					General Setting
 				</a>
 			</li>
+			<div sec:authorize="hasAnyRole('ROLE_SYSTEM_ADMIN')">
+				<li class="nav-item">
+					<a  th:href="@{'/listRole'}" class="nav-link pl-2 pr-0 py-1 d-flex align-items-center">
+					<span class="nav-link-dot mr-2">
+						<i class="fa-solid fa-circle"></i>
+					</span>
+						Role management
+					</a>
+				</li>
+				<li class="nav-item">
+					<a th:href="@{'/listUser'}" class="nav-link pl-2 pr-0 py-1 d-flex align-items-center">
+					<span class="nav-link-dot mr-2">
+						<i class="fa-solid fa-circle"></i>
+					</span>
+						User management
+					</a>
+				</li>
+			</div>
 		</ul>
 	</nav>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
