@@ -1,0 +1,95 @@
+* {
+    box-sizing: border-box;
+}
+
+.multiple-select {
+    min-height: 24px;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    font-size: inherit;
+    border: 1px solid black;
+}
+
+.append-btn {
+    background-color: white;
+    background-image: url(./resources/chevron-down-solid.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 9px;
+    position: absolute;
+    top: 1px;
+    bottom: 1px;
+    right: 1px;
+    width: 16px;
+}
+
+.selected-box {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding-right: 26px !important;
+    overflow: auto;
+}
+
+.selected-item {
+    display: flex;
+}
+
+.item-label {
+    margin-bottom: 0;
+}
+
+.select-data {
+    min-height: 20px;
+    text-align: left;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    position: absolute;
+    left: 2px;
+    right: 2px;
+    top: calc(100% - 1px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    background-color: white;
+    z-index: 2;
+    display: none;
+}
+
+.data-item {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.data-item:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.data-item:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.data-item.selected {
+    color: #bbb;
+}
+
+.data-item:hover {
+    background-color: aliceblue;
+}
+
+.data-item-input  {
+   width: auto !important;
+   margin-right: 8px;
+}
+
+.data-item-label  {
+    display: block;
+    padding: 2px 8px;
+    flex-grow: 1;
+    margin-bottom: 0;
+}

@@ -2,6 +2,8 @@ package fa.mockproject.service;
 
 import java.util.List;
 
+import org.springframework.data.repository.query.Param;
+
 import fa.mockproject.entity.TraineeCandidateProfileStatus;
 
 public interface TraineeCandidateProfileStatusService {
@@ -14,5 +16,7 @@ public interface TraineeCandidateProfileStatusService {
 	public void delete(TraineeCandidateProfileStatus status);
 
 	public void deleteById(String statusId);
+	
+	public List<TraineeCandidateProfileStatus> search(@Param("word") String word);
 }
 

@@ -1,199 +1,323 @@
 package fa.mockproject.controller;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import fa.mockproject.entity.enumtype.BudgetCodeEnum;
+import fa.mockproject.entity.enumtype.ClassBatchStatusEnum;
+import fa.mockproject.entity.enumtype.ClassManagementActionEnum;
+import fa.mockproject.entity.enumtype.ClassViewMode;
 import fa.mockproject.model.AuditModel;
 import fa.mockproject.model.BudgetModel;
-import fa.mockproject.model.ClassAdminModel;
 import fa.mockproject.model.ClassBatchModel;
-import fa.mockproject.model.DeliveryTypeModel;
-import fa.mockproject.model.FormatTypeModel;
-import fa.mockproject.model.LocationModel;
-import fa.mockproject.model.ScopeModel;
-import fa.mockproject.model.SubSubjectTypeModel;
-import fa.mockproject.model.SubjectTypeModel;
+import fa.mockproject.model.CurriculumnModel;
 import fa.mockproject.model.TrainerModel;
+import fa.mockproject.service.AuditService;
+import fa.mockproject.service.BudgetService;
+import fa.mockproject.service.ClassAdminService;
+import fa.mockproject.service.ClassBatchService;
+import fa.mockproject.service.ClassTypeService;
+import fa.mockproject.service.CurriculumnService;
+import fa.mockproject.service.DeliveryTypeService;
+import fa.mockproject.service.FormatTypeService;
+import fa.mockproject.service.LocationService;
+import fa.mockproject.service.PositionService;
+import fa.mockproject.service.ScopeService;
+import fa.mockproject.service.SkillService;
+import fa.mockproject.service.SubSubjectTypeService;
+import fa.mockproject.service.SubjectTypeService;
+import fa.mockproject.service.TrainerService;
+import fa.mockproject.util.ClassManagementConstant;
 
 @Controller
 public class ClassManagementController {
 	
-	@GetMapping("/")
-	public String getClassList(Model model) {
-		List<LocationModel> locationModels = new ArrayList<LocationModel>();
-		locationModels.add(new LocationModel("CG", "Cau Giay", ""));
-		locationModels.add(new LocationModel("HL", "Hoa Lac", ""));
-		locationModels.add(new LocationModel("DN", "Da Nang", ""));
-		locationModels.add(new LocationModel("QN", "Quy Nhon", ""));
-		locationModels.add(new LocationModel("HCM", "Ho Chi Minh", ""));
-		
-		BudgetCodeEnum[] budgetCodeEnums = BudgetCodeEnum.values();
-		
-		List<ClassAdminModel> classAdminModels = new ArrayList<ClassAdminModel>();
-		classAdminModels.add(new ClassAdminModel(1, 1, "Nguyen Nhu Ngoc", LocalDate.of(1995, 10, 13), 1, "0937652189", "NgocNN@email.com", "ngocnn", ""));
-		classAdminModels.add(new ClassAdminModel(2, 2, "Le Nguyen Ai Nhi", LocalDate.of(1996, 6, 16), 1, "0937254689", "NhiLNA@email.com", "NhiLNA", ""));
-		classAdminModels.add(new ClassAdminModel(3, 3, "Tran Ngoc Nhu Quynh", LocalDate.of(1997, 11, 21), 1, "09637636189", "QuynhTNN@email.com", "QuynhTNN", ""));
-		classAdminModels.add(new ClassAdminModel(4, 4, "Le Hong Tham", LocalDate.of(1994, 9, 25), 1, "0934766589", "ThamLH@email.com", "ThamLH", ""));
-		classAdminModels.add(new ClassAdminModel(5, 5, "Duong Vu Quynh Anh", LocalDate.of(1994, 4, 12), 1, "0974554779", "AnhDVQ@email.com", "AnhDVQ", ""));
-		classAdminModels.add(new ClassAdminModel(6, 6, "Nguyen Tran Kim Ngan", LocalDate.of(1995, 7, 8), 1, "0936346768", "NganNTK@email.com", "NganNTK", ""));
-		
-		List<SubjectTypeModel> subjectTypeModels = new ArrayList<SubjectTypeModel>();
-		subjectTypeModels.add(new SubjectTypeModel(1, "Organizational Overview & Culture", ""));
-		subjectTypeModels.add(new SubjectTypeModel(2, "Company Process", ""));
-		subjectTypeModels.add(new SubjectTypeModel(3, "Standard Process", ""));
-		subjectTypeModels.add(new SubjectTypeModel(4, "IT Technical", ""));
-		subjectTypeModels.add(new SubjectTypeModel(5, "Non-IT Technical", ""));
-		subjectTypeModels.add(new SubjectTypeModel(6, "Foreign Language", ""));
-		subjectTypeModels.add(new SubjectTypeModel(7, "Soft Skill", ""));
-		subjectTypeModels.add(new SubjectTypeModel(8, "Management", ""));
-		
-		List<SubSubjectTypeModel> subSubjectTypeModels = new ArrayList<SubSubjectTypeModel>();
-		subSubjectTypeModels.add(new SubSubjectTypeModel(1, "Cloud", ""));
-		subSubjectTypeModels.add(new SubSubjectTypeModel(2, "Big Data", ""));
-		subSubjectTypeModels.add(new SubSubjectTypeModel(3, "CAD", ""));
-		subSubjectTypeModels.add(new SubSubjectTypeModel(4, "CAE", ""));
-		subSubjectTypeModels.add(new SubSubjectTypeModel(5, "SAP", ""));
-		subSubjectTypeModels.add(new SubSubjectTypeModel(6, "IT General", ""));
-		subSubjectTypeModels.add(new SubSubjectTypeModel(7, "Test", ""));
-		subSubjectTypeModels.add(new SubSubjectTypeModel(8, "Others", ""));
-		
-		List<DeliveryTypeModel> deliveryTypeModels = new ArrayList<DeliveryTypeModel>();
-		deliveryTypeModels.add(new DeliveryTypeModel(1, "Class", ""));
-		deliveryTypeModels.add(new DeliveryTypeModel(2, "Seminar", ""));
-		deliveryTypeModels.add(new DeliveryTypeModel(3, "Exam", ""));
-		deliveryTypeModels.add(new DeliveryTypeModel(4, "Contest", ""));
-		deliveryTypeModels.add(new DeliveryTypeModel(5, "Certificate", ""));
-		deliveryTypeModels.add(new DeliveryTypeModel(6, "Club", ""));
-		deliveryTypeModels.add(new DeliveryTypeModel(7, "OJT", ""));
-		deliveryTypeModels.add(new DeliveryTypeModel(8, "Others", ""));
-		
-		List<FormatTypeModel> formatTypeModels = new ArrayList<FormatTypeModel>();
-		formatTypeModels.add(new FormatTypeModel(1, "Online", ""));
-		formatTypeModels.add(new FormatTypeModel(2, "Offline", ""));
-		formatTypeModels.add(new FormatTypeModel(3, "Blended", ""));
-		
-		List<ScopeModel> scopeModels = new ArrayList<ScopeModel>();
-		scopeModels.add(new ScopeModel(1, "Company", ""));
-		scopeModels.add(new ScopeModel(2, "Unit", ""));
-		scopeModels.add(new ScopeModel(3, "Outside", ""));
-		
-		List<TrainerModel> trainerModels = new ArrayList<TrainerModel>();
-		trainerModels.add(new TrainerModel(1, 1, null, "MinhDV", "Dang Van Minh",null, 0, null, null, null, null, 0, null));
-		trainerModels.add(new TrainerModel(2, 2, null, "DungNH", "Nguyen Hoang Dung",null, 0, null, null, null, null, 0, null));
-		trainerModels.add(new TrainerModel(3, 3, null, "LienDTM", "Duong Thi My Lien",null, 0, null, null, null, null, 0, null));
-		trainerModels.add(new TrainerModel(4, 4, null, "DungTV", "Tran Van Dung",null, 0, null, null, null, null, 0, null));
-		trainerModels.add(new TrainerModel(5, 5, null, "HaiLH", "Le Hoang Hai",null, 0, null, null, null, null, 0, null));
-		
-		List<BudgetModel> budgetModels = new ArrayList<BudgetModel>();
-		
-		List<AuditModel> auditModels = new ArrayList<AuditModel>();
-		
-		ClassBatchModel classBatchModel = new ClassBatchModel();
-		classBatchModel.setBudgetModels(budgetModels);
-		classBatchModel.setAuditModels(auditModels);
-
-		model.addAttribute("locationModels", locationModels);
-		model.addAttribute("budgetCodeEnums", budgetCodeEnums);
-		model.addAttribute("classAdminModels", classAdminModels);
-		model.addAttribute("subjectTypeModels", subjectTypeModels);
-		model.addAttribute("subSubjectTypeModels", subSubjectTypeModels);
-		model.addAttribute("deliveryTypeModels", deliveryTypeModels);
-		model.addAttribute("formatTypeModels", formatTypeModels);
-		model.addAttribute("scopeModels", scopeModels);
-		model.addAttribute("trainerModels", trainerModels);
-		model.addAttribute("classBatchModel", classBatchModel);
-		
-		return "ClassManagement";
+	@Autowired
+	ResourceBundleMessageSource messageSource;
+	@Autowired
+	ClassBatchService classBatchService;
+	@Autowired
+	LocationService locationService;
+	@Autowired
+	ClassAdminService classAdminService;
+	@Autowired
+	SubjectTypeService subjectTypeService;
+	@Autowired
+	SubSubjectTypeService subSubjectTypeService;
+	@Autowired
+	DeliveryTypeService deliveryTypeService;
+	@Autowired
+	FormatTypeService formatTypeService;
+	@Autowired
+	ScopeService scopeService;
+	@Autowired
+	TrainerService trainerService;
+	@Autowired
+	BudgetService budgetService;
+	@Autowired
+	AuditService auditService;
+	@Autowired
+	ClassTypeService classTypeService;
+	@Autowired
+	SkillService skillService;
+	@Autowired
+	PositionService positionService;
+	@Autowired
+	CurriculumnService curriculumnService;
+	
+	@GetMapping("/classes")
+	public String getClassList(Model model, @RequestParam Map<String, String> params) {
+		classBatchService.getClasses(model, params);
+		return "classManagement/classList";
 	}
 	
-	@PostMapping("/addClass")
+	@GetMapping("/classes/view")
+	public String getClass(Model model, @RequestParam(name = "classId", defaultValue = "0") String classId) {
+
+		ClassBatchModel classBatchModel = classBatchService.getClazz(classId);
+		if (classBatchModel == null) {
+			return "redirect:/classes";
+		}
+		
+		List<ClassManagementActionEnum> actionables = new ArrayList<ClassManagementActionEnum>();
+		ClassManagementConstant.CLASS_PRE_CONDITION.forEach((ClassManagementActionEnum action, List<ClassBatchStatusEnum> status) -> {
+			if (status.contains(classBatchModel.getStatus())) {
+				actionables.add(action);
+			}
+		});
+		
+		model.addAttribute("classBatchModel", classBatchModel);
+		model.addAttribute("curriculumnModel", classBatchModel.getCurriculumnModel());		
+		model.addAttribute("viewMode", ClassViewMode.ViewClass);
+		model.addAttribute("actionables", actionables);
+				
+		return "classManagement/classDetail";
+	}
+	
+	@GetMapping(value = "/classes/create")
+	public String createNewClass(Model model) {
+		ClassBatchModel classBatchModel = new ClassBatchModel();
+		classBatchModel.setTrainerModels(new ArrayList<TrainerModel>());
+		classBatchModel.setBudgetModels(new ArrayList<BudgetModel>());
+		classBatchModel.setAuditModels(new ArrayList<AuditModel>());
+		
+		classBatchModel.getBudgetModels().add(new BudgetModel());
+		classBatchModel.getAuditModels().add(new AuditModel());
+		
+		model.addAttribute("classBatchModel", classBatchModel);
+		model.addAttribute("viewMode", ClassViewMode.CreateClass);
+		model.addAttribute("action", ClassManagementActionEnum.Create);
+		
+		classBatchService.getClassBaseData(model);
+
+		return "classManagement/classDetail";
+	}
+	
+	@PostMapping(value = "/classes/create", produces = MediaType.APPLICATION_JSON_VALUE)
+	public String createNewClass(Model model, 
+			@ModelAttribute("classBatchModel") @Valid ClassBatchModel classBatchModel, 
+			BindingResult result,
+			@RequestParam(name = "confirm", defaultValue = "false") String confirm) {
+		
+		if (result.hasErrors()) {
+			result.getAllErrors().forEach(error -> {
+				System.out.println(error.getDefaultMessage());
+			});
+			model.addAttribute("viewMode", ClassViewMode.CreateClass);
+			return "classManagement/classDetail";
+		}
+		
+		if (confirm.equals("false")) {
+			model.addAttribute("message", messageSource.getMessage(
+					"msg53", 
+					new Object[] {ClassManagementActionEnum.Submit.toString().toLowerCase()},
+					null));
+			return "modals/confirmModal";
+		}
+		
+		ClassBatchModel savedClassBatchModel = classBatchService.createClass(classBatchModel);
+		
+		if (savedClassBatchModel == null) {
+			model.addAttribute("message", messageSource.getMessage(
+					"msg50", 
+					new Object[] {ClassManagementActionEnum.Create}, 
+					null));
+			return "modals/errorModal";
+		}
+		
+		model.addAttribute("message", messageSource.getMessage("msg54", 
+				new Object[] {ClassManagementActionEnum.Create}, 
+				null));
+		model.addAttribute("redirect", "/classes/view?classId=" + savedClassBatchModel.getClassId());
+		model.addAttribute("redirectDelay", 1000);
+		
+		return "modals/messageModal";
+	}
+
+	@GetMapping(value = "/classes/update")
+	public String updateClass(Model model, @RequestParam(name = "classId", defaultValue = "0") String classId) {
+		
+		ClassBatchStatusEnum classStatus = classBatchService.getClassStatus(classId);
+		
+		if (classStatus == null) {
+			model.addAttribute("message", messageSource.getMessage("msg51", null, null));
+			return "modals/errorModal";
+		}
+		
+		if (!ClassManagementConstant.CLASS_PRE_CONDITION.get(ClassManagementActionEnum.Update).contains(classStatus)) {
+			model.addAttribute("message", messageSource.getMessage("msg52", null, null));
+			return "modals/messageModal";
+		}
+		
+		ClassBatchModel classBatchModel = classBatchService.getClazz(classId);
+		if ((classBatchModel.getBudgetModels() == null || classBatchModel.getBudgetModels().size() == 0) && classStatus != ClassBatchStatusEnum.InProgress) {
+			classBatchModel.setBudgetModels(new ArrayList<>(Arrays.asList(new BudgetModel())));
+		}
+		if ((classBatchModel.getAuditModels() == null || classBatchModel.getAuditModels().size() == 0) && classStatus == ClassBatchStatusEnum.InProgress) {
+			classBatchModel.setAuditModels(new ArrayList<>(Arrays.asList(new AuditModel())));
+		}
+		
+		if (classStatus == ClassBatchStatusEnum.InProgress) {
+			model.addAttribute("viewMode", ClassViewMode.UpdateInprogressClass);
+		}
+		else {
+			model.addAttribute("viewMode", ClassViewMode.UpdateDraftClass);
+		}
+		
+		model.addAttribute("classBatchModel", classBatchModel);
+		model.addAttribute("action", ClassManagementActionEnum.Update);
+		
+		classBatchService.getClassBaseData(model);
+
+		return "classManagement/classDetail";
+	}
+	
+	@PostMapping(value = "/classes/update", produces = MediaType.APPLICATION_JSON_VALUE)
+	public String updateClass(Model model, 
+			@ModelAttribute("classBatchModel") @Valid ClassBatchModel classBatchModel, 
+			BindingResult result,
+			@RequestParam(name = "classId", defaultValue = "0") String classId,
+			@RequestParam(name = "confirm", defaultValue = "false") String confirm) {
+		
+		if (result.hasErrors()) {
+			// Do Something
+			return "classManagement/classDetail";
+		}
+		
+		if (confirm.equals("false")) {
+			model.addAttribute("message", messageSource.getMessage(
+					"msg53", 
+					new Object[] {ClassManagementActionEnum.Submit.toString().toLowerCase()},
+					null));
+			return "modals/confirmModal";
+		}
+		
+		if (!classBatchService.updateClass(classBatchModel)) {
+			model.addAttribute("message", messageSource.getMessage(
+					"msg50", 
+					new Object[] {ClassManagementActionEnum.Update}, 
+					null));
+			return "modals/errorModal";
+		}
+	
+		model.addAttribute("message", messageSource.getMessage("msg54", 
+				new Object[] {ClassManagementActionEnum.Update}, 
+				null));
+		model.addAttribute("redirect", "/classes/view?classId=" + classId);
+		model.addAttribute("redirectDelay", 1000);
+		
+		return "modals/messageModal";
+	}
+	
+	@GetMapping(value = "/classes/{action: |^submit$|^reject$|^cancel$|^approve$|^decline$|^accept$|^start$|^finish$|^close$|^request$}")
+	public String changeClassState(Model model, 
+			@PathVariable(required = true) String action,
+			@RequestParam(name = "classId", defaultValue = "0") String classId) {
+		
+		ClassBatchStatusEnum classStatus = classBatchService.getClassStatus(classId);
+		ClassManagementActionEnum actionEnum; 
+		
+		if (classStatus == null) {
+			model.addAttribute("message", messageSource.getMessage("msg51", null, null));
+			return "modals/errorModal";
+		}
+		
+		try {
+			actionEnum = ClassManagementActionEnum.valueOf(StringUtils.capitalize(action));
+		} catch (IllegalArgumentException | NullPointerException e) {
+			e.printStackTrace();
+			model.addAttribute("message", messageSource.getMessage("msg51", null, null));
+			return "modals/errorModal";
+		}
+		
+		if (ClassManagementConstant.CLASS_PRE_CONDITION.get(actionEnum).contains(classStatus)) {
+			model.addAttribute("classBatchModel", new ClassBatchModel(Long.parseLong(classId)));
+			model.addAttribute("message", messageSource.getMessage(
+					"msg53", 
+					new Object[] {actionEnum.toString().toLowerCase()},
+					null));
+			return "modals/confirmModal";
+		}
+		
+		model.addAttribute("message", messageSource.getMessage("msg52", null, null));
+		return "modals/messageModal";
+	}
+	
+	@PostMapping(value = "/classes/{action: |^submit$|^reject$|^cancel$|^approve$|^decline$|^accept$|^start$|^finish$|^close$|^request$}")
+	public String changeClassState(Model model, 
+			@PathVariable(required = true) String action,
+			@RequestParam(name = "classId", defaultValue = "0") String classId,
+			@RequestParam(name = "remarks", defaultValue = "") String remarks) {
+		
+		ClassManagementActionEnum actionEnum; 
+		
+		try {
+			actionEnum = ClassManagementActionEnum.valueOf(StringUtils.capitalize(action));
+		} catch (IllegalArgumentException | NullPointerException e) {
+			e.printStackTrace();
+			model.addAttribute("message", messageSource.getMessage("msg51", null, null));
+			return "modals/errorModal";
+		}
+		
+		if (!classBatchService.changeClassState(classId, actionEnum, remarks)) {
+			model.addAttribute("message", messageSource.getMessage(
+					"msg50", 
+					new Object[] {actionEnum.toString()}, 
+					null));
+			return "modals/errorModal";
+		}
+		
+		model.addAttribute("message", messageSource.getMessage("msg54", 
+				new Object[] {actionEnum},
+				null));
+		model.addAttribute("redirect", "/classes/view?classId=" + classId);
+		model.addAttribute("redirectDelay", 1000);
+		
+		return "modals/messageModal";
+	}
+	
+	@GetMapping(value = "/classes/curriculumn", produces = {MediaType.APPLICATION_PDF_VALUE})
 	@ResponseBody
-	public String creatNewClass(Model model, @ModelAttribute("classBatchModel") ClassBatchModel classBatchModel) {
-		List<LocationModel> locationModels = new ArrayList<LocationModel>();
-		locationModels.add(new LocationModel("CG", "Cau Giay", ""));
-		locationModels.add(new LocationModel("HL", "Hoa Lac", ""));
-		locationModels.add(new LocationModel("DN", "Da Nang", ""));
-		locationModels.add(new LocationModel("QN", "Quy Nhon", ""));
-		locationModels.add(new LocationModel("HCM", "Ho Chi Minh", ""));
-		
-		BudgetCodeEnum[] budgetCodeEnums = BudgetCodeEnum.values();
-		
-		List<ClassAdminModel> classAdminModels = new ArrayList<ClassAdminModel>();
-		classAdminModels.add(new ClassAdminModel(1, 1, "Nguyen Nhu Ngoc", LocalDate.of(1995, 10, 13), 1, "0937652189", "NgocNN@email.com", "ngocnn", ""));
-		classAdminModels.add(new ClassAdminModel(2, 2, "Le Nguyen Ai Nhi", LocalDate.of(1996, 6, 16), 1, "0937254689", "NhiLNA@email.com", "NhiLNA", ""));
-		classAdminModels.add(new ClassAdminModel(3, 3, "Tran Ngoc Nhu Quynh", LocalDate.of(1997, 11, 21), 1, "09637636189", "QuynhTNN@email.com", "QuynhTNN", ""));
-		classAdminModels.add(new ClassAdminModel(4, 4, "Le Hong Tham", LocalDate.of(1994, 9, 25), 1, "0934766589", "ThamLH@email.com", "ThamLH", ""));
-		classAdminModels.add(new ClassAdminModel(5, 5, "Duong Vu Quynh Anh", LocalDate.of(1994, 4, 12), 1, "0974554779", "AnhDVQ@email.com", "AnhDVQ", ""));
-		classAdminModels.add(new ClassAdminModel(6, 6, "Nguyen Tran Kim Ngan", LocalDate.of(1995, 7, 8), 1, "0936346768", "NganNTK@email.com", "NganNTK", ""));
-		
-		List<SubjectTypeModel> subjectTypeModels = new ArrayList<SubjectTypeModel>();
-		subjectTypeModels.add(new SubjectTypeModel(1, "Organizational Overview & Culture", ""));
-		subjectTypeModels.add(new SubjectTypeModel(2, "Company Process", ""));
-		subjectTypeModels.add(new SubjectTypeModel(3, "Standard Process", ""));
-		subjectTypeModels.add(new SubjectTypeModel(4, "IT Technical", ""));
-		subjectTypeModels.add(new SubjectTypeModel(5, "Non-IT Technical", ""));
-		subjectTypeModels.add(new SubjectTypeModel(6, "Foreign Language", ""));
-		subjectTypeModels.add(new SubjectTypeModel(7, "Soft Skill", ""));
-		subjectTypeModels.add(new SubjectTypeModel(8, "Management", ""));
-		
-		List<SubSubjectTypeModel> subSubjectTypeModels = new ArrayList<SubSubjectTypeModel>();
-		subSubjectTypeModels.add(new SubSubjectTypeModel(1, "Cloud", ""));
-		subSubjectTypeModels.add(new SubSubjectTypeModel(2, "Big Data", ""));
-		subSubjectTypeModels.add(new SubSubjectTypeModel(3, "CAD", ""));
-		subSubjectTypeModels.add(new SubSubjectTypeModel(4, "CAE", ""));
-		subSubjectTypeModels.add(new SubSubjectTypeModel(5, "SAP", ""));
-		subSubjectTypeModels.add(new SubSubjectTypeModel(6, "IT General", ""));
-		subSubjectTypeModels.add(new SubSubjectTypeModel(7, "Test", ""));
-		subSubjectTypeModels.add(new SubSubjectTypeModel(8, "Others", ""));
-		
-		List<DeliveryTypeModel> deliveryTypeModels = new ArrayList<DeliveryTypeModel>();
-		deliveryTypeModels.add(new DeliveryTypeModel(1, "Class", ""));
-		deliveryTypeModels.add(new DeliveryTypeModel(2, "Seminar", ""));
-		deliveryTypeModels.add(new DeliveryTypeModel(3, "Exam", ""));
-		deliveryTypeModels.add(new DeliveryTypeModel(4, "Contest", ""));
-		deliveryTypeModels.add(new DeliveryTypeModel(5, "Certificate", ""));
-		deliveryTypeModels.add(new DeliveryTypeModel(6, "Club", ""));
-		deliveryTypeModels.add(new DeliveryTypeModel(7, "OJT", ""));
-		deliveryTypeModels.add(new DeliveryTypeModel(8, "Others", ""));
-		
-		List<FormatTypeModel> formatTypeModels = new ArrayList<FormatTypeModel>();
-		formatTypeModels.add(new FormatTypeModel(1, "Online", ""));
-		formatTypeModels.add(new FormatTypeModel(2, "Offline", ""));
-		formatTypeModels.add(new FormatTypeModel(3, "Blended", ""));
-		
-		List<ScopeModel> scopeModels = new ArrayList<ScopeModel>();
-		scopeModels.add(new ScopeModel(1, "Company", ""));
-		scopeModels.add(new ScopeModel(2, "Unit", ""));
-		scopeModels.add(new ScopeModel(3, "Outside", ""));
-		
-		List<TrainerModel> trainerModels = new ArrayList<TrainerModel>();
-		trainerModels.add(new TrainerModel(1, 1, null, "MinhDV", "Dang Van Minh",null, 0, null, null, null, null, 0, null));
-		trainerModels.add(new TrainerModel(2, 2, null, "DungNH", "Nguyen Hoang Dung",null, 0, null, null, null, null, 0, null));
-		trainerModels.add(new TrainerModel(3, 3, null, "LienDTM", "Duong Thi My Lien",null, 0, null, null, null, null, 0, null));
-		trainerModels.add(new TrainerModel(4, 4, null, "DungTV", "Tran Van Dung",null, 0, null, null, null, null, 0, null));
-		trainerModels.add(new TrainerModel(5, 5, null, "HaiLH", "Le Hoang Hai",null, 0, null, null, null, null, 0, null));
-		
-		System.out.println(classBatchModel);
-		
-		model.addAttribute("locationModels", locationModels);
-		model.addAttribute("budgetCodeEnums", budgetCodeEnums);
-		model.addAttribute("classAdminModels", classAdminModels);
-		model.addAttribute("subjectTypeModels", subjectTypeModels);
-		model.addAttribute("subSubjectTypeModels", subSubjectTypeModels);
-		model.addAttribute("deliveryTypeModels", deliveryTypeModels);
-		model.addAttribute("formatTypeModels", formatTypeModels);
-		model.addAttribute("scopeModels", scopeModels);
-		model.addAttribute("trainerModels", trainerModels);
-		
-		return "ClassManagement";
+	public byte[] downloadCurriculumn(@RequestParam(name = "curriculumnId", defaultValue = "0") String curriculumnId) {
+		CurriculumnModel curriculumnModel = curriculumnService.getOne(Long.parseLong(curriculumnId));
+		System.out.println(curriculumnModel);
+		return curriculumnModel.getContent();
 	}
 }

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+<title>Update Candidate Result</title>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+	integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
+	crossorigin="anonymous">
+<script
+	src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+	integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+	crossorigin="anonymous"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+<style>
+table {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+td, th {
+	border: 1px solid #dddddd;
+	text-align: left;
+	padding: 8px;
+}
+
+th {
+	background-color: #CCCCCC;
+}
+
+tr:nth-child(even) {
+	background-color: #EEEEEE;
+}
+
+.menusetting {
+	background-color: #CCCCCC;
+}
+
+a {
+	text-decoration: none;
+}
+
+.hrefsetting {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.tablesetting {
+	padding: 10px;
+	height: 40px;
+	border: 1px solid black;
+}
+
+.inputsetting {
+	margin-left: -8px;
+	margin-right: -8px;
+	padding: 5px;
+	margin-bottom: -10px;
+	margin-top: -10px;
+	border: 1px solid black;
+	width: 170px;
+}
+
+.datesetting {
+	margin-left: -8px;
+	margin-right: -8px;
+	padding: 4px;
+	margin-bottom: -10px;
+	margin-top: -10px;
+	border: 1px solid black;
+	margin-right: -8px;
+	padding: 4px;
+	margin-bottom: -10px;
+	margin-top: -10px;
+}
+
+.selectsetting {
+	padding: 7.5px;
+	margin-left: -8px;
+	margin-right: -8px;
+	margin-bottom: -10px;
+	margin-top: -10px;
+	border: 1px solid black;
+	margin-top: -10px;
+}
+
+.commentsetting {
+	margin-left: -8px;
+	margin-right: -8px;
+	padding: 5px;
+	margin-bottom: -10px;
+	margin-top: -10px;
+	border: 1px solid black;
+	width: 510px;
+}
+
+.tablebackground {
+	background-color: #CCCCCC;
+}
+
+.inputedbackground {
+	background-color: #DDDDDD;
+}
+
+.pagesetting {
+	border: 1px solid black;
+	border-style: solid solid solid solid;
+	padding: 7px;
+	border-color: black;
+	border-bottom-color: #FFFFFF;
+}
+
+.nontabsetting {
+	border: 1px solid black;
+	border-style: solid solid solid solid;
+	padding: 7px;
+	border-color: black;
+}
+
+.pagesettingfordiv {
+	margin-top: 12px;
+}
+
+.tabsetting {
+	border-style: solid solid solid solid;
+	border: 1px solid black;
+}
+
+.submitbutton {
+	background-color: #073763;
+	color: white;
+	border: 1px solid black;
+	padding: 3px;
+	width: 75px;
+}
+
+.closebutton {
+	border: 1px solid black;
+	padding: 3px;
+	width: 75px;
+}
+
+.fa-arrow-left {
+	color: #CF2A28;
+}
+
+.fa-trash-alt {
+	color: #CF2A28;
+}
+
+.fa-plus-circle {
+	color: green;
+}
+</style>
+
+
+</head>
+
+<body>
+	<div class="container-fluid">
+		<div class="row"
+			style="height: 50px; background-color: #205081; vertical-align: middle;">
+			<div class="col-lg-2">
+				<img src="https://i.postimg.cc/7Y2Hrb9q/Logo.png" alt=""
+					style="height: 47px; width: 90px;">
+			</div>
+			<div class="col">
+				<h2
+					style="font-size: 25px; color: white; font-weight: 780; margin-top: 10px;">FSOFT
+					HR ULTILITY</h2>
+			</div>
+		</div>
+		<div class="row" style="font-weight: 550;">
+			<div class="col-lg-2 menusetting" style="height: 900px;">
+				<label>Your role now is:</label> <select
+					style="width: 170px; height: 30px; margin-bottom: 20px;">
+					<option>Select Role</option>
+				</select>
+				<div class="hrefsetting">
+					<a href=""><i class="fa fa-circle"></i> Dashboard</a>
+				</div>
+
+				<div class="hrefsetting">
+					<a href="/"><i class="fa fa-circle"></i> Class Management</a>
+				</div>
+
+				<div class="hrefsetting">
+					<a href="viewCandidate"><i class="fa fa-circle"></i> Candidate
+						Management</a>
+				</div>
+				<div class="hrefsetting">
+					<a href=""><i class="fa fa-circle"></i> Trainer Management</a>
+				</div>
+				<div class="hrefsetting">
+					<a href=""><i class="fa fa-circle"></i> Trainee Management</a>
+				</div>
+				<div class="hrefsetting">
+					<a href=""><i class="fa fa-circle"></i> General Setting</a>
+				</div>
+			</div>
+			<div class="col-lg-9">
+				<div>
+					<div class="row">
+						<div class="col-lg-1"></div>
+						<div class="col-lg-3 pagesettingfordiv">
+							<a class="pagesetting nontabsetting tablebackground"
+								th:href="@{/updateCandidate(traineeCandidateProfileId=*{model.traineeCandidateProfileId})}"
+								style="color: black;">Candidate Information</a>
+						</div>
+						<div class="col-lg-1 pagesettingfordiv"
+							style="margin-left: -50px;">
+							<a class="pagesetting"
+								th:href="@{/updateCandidateResults(traineeCandidateProfileId=*{model.traineeCandidateProfileId})}"
+								style="color: black;">Result</a>
+						</div>
+					</div>
+					<div class="row tabsetting"
+						style="margin-left: 20px; padding: 20px; margin-top: 5px; min-width: 1150px;">
+						<div class="col-lg-12 " style="font-weight: 550;">
+							<form
+								th:action="@{/saveUpdateResults(traineeCandidateProfileId=${model.traineeCandidateProfileId})}"
+								method="POST">
+								<table class="entrytest-table content-table"
+									th:object="${listEntryTestModel}">
+									<tr>
+										<td><i class="fas fa-chevron-down"></i></td>
+										<td colspan="7">Entry Test</td>
+									</tr>
+									<tr>
+										<td><a class="add-row-btn addbutton"> <i
+												class="fas fa-plus-circle"></i>
+										</a></td>
+										<td>Time</td>
+										<td>Date</td>
+										<td>Language Valuator</td>
+										<td>Language Point</td>
+										<td>Technical Valuator</td>
+										<td>Technical Point</td>
+										<td>Result</td>
+									</tr>
+
+									<tr class="content-item"
+										th:each="entryTest, itemStat: *{entryTestModels}">
+										<td><a class="remove-row-btn removebutton"> <i
+												class="fas fa-trash-alt"></i>
+										</a></td>
+										<td><span><input type="text"
+												th:field="*{entryTestModels[__${itemStat.index}__].time}"
+												th:value="${itemStat.index}" style="display: none;" /></span></td>
+										<td><input class="datesetting" type="date"
+											th:field="*{entryTestModels[__${itemStat.index}__].date}" /></td>
+										<td><input class="inputsetting" type="text"
+											th:field="*{entryTestModels[__${itemStat.index}__].languageValuator}" /></td>
+										<td><input class="inputsetting" type="text"
+											th:field="*{entryTestModels[__${itemStat.index}__].languageResult}" /></td>
+										<td><input class="inputsetting" type="text"
+											th:field="*{entryTestModels[__${itemStat.index}__].technicalValuator}" /></td>
+										<td><input class="inputsetting" type="text"
+											th:field="*{entryTestModels[__${itemStat.index}__].technicalResult}" /></td>
+										<td><select class="selectsetting"
+											th:field="*{entryTestModels[__${itemStat.index}__].result}">
+												<option th:value="0">Select Result</option>
+												<option th:each="result:${resultList}"
+													th:value="${result.result}" th:text="${result.result}"></option>
+										</select></td>
+									</tr>
+								</table>
+
+								<table style="margin-top: 50px;"
+									class="interview-table content-table"
+									th:object="${listInterviewModel}">
+									<tr>
+										<td><i class="fas fa-chevron-down"></i></td>
+										<td colspan="7">Interview</td>
+									</tr>
+									<tr>
+										<td><a class="add-row-btn addbutton"> <i
+												class="fas fa-plus-circle"></i>
+										</a></td>
+										<td>Time</td>
+										<td>Date</td>
+										<td>Interviewer</td>
+										<td colspan="3">Comment</td>
+										<td>Result</td>
+									</tr>
+									<tr class="content-item"
+										th:each="interview, itemStat: *{interviewModels}">
+										<td><a class="remove-row-btn removebutton"> <i
+												class="fas fa-trash-alt"></i>
+										</a></td>
+										<td><span><input type="text"
+												th:field="*{interviewModels[__${itemStat.index}__].time}"
+												th:value="${itemStat.index}" style="display: none;" /></span></td>
+										<td><input class="datesetting" type="date"
+											th:field="*{interviewModels[__${itemStat.index}__].date}" /></td>
+										<td><input class="inputsetting" type="text"
+											th:field="*{interviewModels[__${itemStat.index}__].interviewer}" /></td>
+										<td colspan="3"><input class="commentsetting" type="text"
+											th:field="*{interviewModels[__${itemStat.index}__].comments}" /></td>
+										<td><select class="selectsetting"
+											th:field="*{interviewModels[__${itemStat.index}__].result}">
+												<option th:value="0">Select Result</option>
+												<option th:each="result:${resultList}"
+													th:value="${result.result}" th:text="${result.result}"></option>
+										</select></td>
+
+									</tr>
+								</table>
+								<div class="row" style="margin-top: 20px;">
+									<button class="submitbutton" type="submit"
+										style="margin-right: 30px;">Submit</button>
+									<button class="closebutton" type="button"
+										onclick="history.back()">
+										<i class="fas fa-arrow-left"></i> Close
+									</button>
+								</div>
+							</form>
+
+
+
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row"></div>
+	</div>
+
+
+	<script>
+	addRemoveTableRow($(".entrytest-table"));
+addRemoveTableRow($(".interview-table"));
+
+
+function addRemoveTableRow(table) {
+
+    const addRowBtn = table.find(".add-row-btn");
+    const removeRowBtn = table.find(".remove-row-btn");
+
+    addRowBtn.click(e => {
+        addTableRow(table);
+    })
+
+    removeRowBtn.click(e => {
+        removeTableRow($(e.target).parents(".content-item"));
+    })
+}
+
+function addTableRow(table) {
+    if (!table) {
+        return;
+    }
+
+    const newRow = $(table).find(".content-item:last-child").clone();
+    newRow.find("input:not([type='radio']), select, textarea").filter(":not([type='checkbox'])").val('');
+    newRow.find("input[type='radio'], input[type='checkbox']").prop("checked", false);
+
+    let newRowIndex = newRow.find("input:first-child")[0].name?.replaceAll(/(.*\[)|(\].*)/g, "");
+    newRowIndex = Number(newRowIndex);
+    if (typeof newRowIndex === "number" && newRowIndex != NaN) {
+        newRowIndex++;
+        newRow.find("input, textarea, select").each((index, item) => {
+            item.name = item?.name.replace(/\[[\d]+\]/, "[" + newRowIndex + "]");
+        })
+    }
+
+    newRow.find(".remove-row-btn").click(e => {
+        removeTableRow(newRow);
+    })
+
+    $(table).find("tbody").append(newRow);
+}
+
+function removeTableRow(row) {
+    if (!row) {
+        return;
+    }
+
+    if (row.parents(".content-table").find(".content-item").length == 1) {
+        row.find("input:not([type='radio']), select, textarea").filter(":not([type='checkbox'])").val('');
+        row.find("input[type='radio'], input[type='checkbox']").prop("checked", false);
+        return;
+    }
+
+    if (!row.is(row.parents(".content-table").find(".content-item:last-child"))) {
+        let rowIndex = $(row).find("input:first-child")[0].name?.replace(/(.*\[)|(\].*)/g, "");
+        if (typeof newRowIndex === "number" && newRowIndex != NaN) {
+            row.nextAll().each((index, item) => {
+                item.name = item.name?.replace(/\[[\d]+\]/, "[" + rowIndex + "]");
+                rowIndex++;
+            })
+        }
+    }
+
+    row.remove();
+}
+</script>
+</body>
+
+</html>
+

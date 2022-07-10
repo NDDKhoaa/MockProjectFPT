@@ -60,7 +60,13 @@ public class Trainer {
 		this.classBatch = classBatch;
 		this.remarks = trainerModel.getRemarks();
 	}
-
+	public Trainer(TrainerModel trainerModel) {
+		super();
+		this.trainerId = trainerModel.getTrainerId();
+		this.type = trainerModel.getType();
+		this.trainerProfile = new TrainerProfile(trainerModel);
+		this.remarks = trainerModel.getRemarks();
+	}
 	public long getTrainerId() {
 		return trainerId;
 	}
@@ -99,6 +105,12 @@ public class Trainer {
 
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
+	}
+
+	@Override
+	public String toString() {
+		return "Trainer [trainerId=" + trainerId + ", type=" + type + ", trainerProfile=" + trainerProfile
+				+ ", remarks=" + remarks + "]";
 	}
 
 }

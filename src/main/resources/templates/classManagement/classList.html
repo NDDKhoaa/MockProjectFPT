@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<link th:replace="fragments/head :: head-infor"></link>
+	<title>Class Management</title>
+	<link rel="stylesheet" th:href="@{/static/classManagement/css/classList.css}">
+</head>
+<body>
+    <div class="app container-fluid d-flex flex-column">
+        <header th:replace="fragments/header :: #app-header"></header>
+        <div class="row app-content flex-grow-1">
+			<div class="container-fluid">
+				<div class="row h-100">
+					<nav th:replace="fragments/sidebar :: #app-sidebar"></nav>
+					<main class="col col-10 px-0 d-flex flex-column">
+						<div class="header border-bottom border-dark py-1 px-3">
+							<h4 class="m-0">Class Listing</h4>          
+						</div>
+						<div class="content p-2 d-flex flex-column flex-grow-1">
+ 							<form action="" class="search-class-form form" novalidate>
+								<div class="form-row w-100 mb-1">
+									<div class="col-4">
+										<div class="form-group mb-0 row justify-content-start">
+											<label for="" class="col-form-label col-4">Location</label>
+											<div class="col-6">
+												<select name="locationId" class="form-control rounded-0 border-dark py-0">
+													<option value="" >All</option>                                    
+													<option th:each="location : ${locationModels}" th:value="${location.locationId}" th:text="${location.locationName}"></option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="col-4">
+										<div class="form-group mb-0 row justify-content-start">
+											<label for="" class="col-form-label col-4">Class Name</label>
+											<div class="col-6">
+												<select name="className" class="form-control rounded-0 border-dark py-0">
+													<option value="">All</option>
+													<option th:each="name : ${classNames}" th:value="${name}" th:text="${name}"></option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="col-4">
+										<div class="form-group mb-0 row justify-content-start">
+											<label for="" class="col-form-label col-2">Status</label>
+											<div class="col-6">
+												<select name="status" class="form-control rounded-0 border-dark py-0">
+													<option value="">All</option>
+													<option th:each="status : ${T(fa.mockproject.entity.enumtype.ClassBatchStatusEnum).values()}" th:value="${status}" th:text="${status}">
+												</select>
+											</div>
+											<div class="col-auto ml-auto pr-1">
+												<button type="submit" class="search-btn btn bg-gray border border-dark rounded-0 text-dark">
+													<i class="fa-solid fa-magnifying-glass"></i>
+													Search
+												</button>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-row w-100">
+									<div class="col-4">
+										<div class="form-group mb-0 row justify-content-start">
+											<label for="" class="col-form-label col-4">From Date</label>
+											<div class="col-6">
+												<input type="date" name="actualStartDate" class="form-control rounded-0 border-dark py-0">
+											</div>
+										</div>
+									</div>
+									<div class="col-4">
+										<div class="form-group mb-0 row justify-content-start">
+											<label for="" class="col-form-label col-4">To Date</label>
+											<div class="col-6">
+												<input type="date" name="actualEndDate" class="form-control rounded-0 border-dark py-0">
+											</div>
+										</div>
+									</div>
+								</div>
+							</form>
+							<div th:replace="~{classManagement/fragments/classListTable :: table}">
+							</div>
+						</div>
+					</main>
+				</div>
+			</div>
+        </div>
+        <footer th:replace="fragments/footer :: #app-footer"></footer>
+        <div th:replace="fragments/modal :: #app-modal"></div>
+    </div>
+    <script type="text/javascript" th:replace="fragments/script :: script"></script>
+    <script th:src="@{/static/classManagement/js/classList.js}"></script>
+</body>
+</html>

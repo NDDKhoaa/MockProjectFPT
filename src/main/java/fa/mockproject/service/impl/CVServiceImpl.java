@@ -23,7 +23,7 @@ public class CVServiceImpl implements CVService {
 
 	public CV getFile(long fileId) {
 		Optional<CV> rs = repo.findById(fileId);
-		return rs.get();
+		return rs.orElse(null);
 	}
 
 	public List<CV> getFiles() {

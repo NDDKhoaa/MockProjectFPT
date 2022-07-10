@@ -25,7 +25,7 @@ public class TraineeCandidateProfileTypeServiceImpl implements TraineeCandidateP
 
 	public TraineeCandidateProfileType findById(String typeId) {
 		Optional<TraineeCandidateProfileType> rs = repo.findById(typeId);
-		return rs.get();
+		return rs.orElse(null);
 	}
 
 	public void delete(TraineeCandidateProfileType type) {

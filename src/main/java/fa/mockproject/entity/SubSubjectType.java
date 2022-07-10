@@ -83,5 +83,12 @@ public class SubSubjectType {
 	public void setClassBatchs(List<ClassBatch> classBatchs) {
 		this.classBatchs = classBatchs;
 	}
+
+	public SubSubjectType(long subSubjectTypeId, String subSubjectTypeName, String remarks) {
+		super();
+		this.subSubjectTypeId = subSubjectTypeId;
+		this.subSubjectTypeName = subSubjectTypeName;
+		this.remarks = remarks;
+	}
     
 }

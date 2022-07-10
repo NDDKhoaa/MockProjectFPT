@@ -117,6 +117,10 @@ public class Trainee {
 
 	
 
+	public Trainee(TraineeCandidateProfile profile) {
+		this.traineeCandidateProfile=profile;
+	}
+
 	public long getTraineeCandidateId() {
 		return traineeCandidateId;
 	}

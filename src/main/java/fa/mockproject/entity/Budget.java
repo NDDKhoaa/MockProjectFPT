@@ -1,5 +1,7 @@
 package fa.mockproject.entity;
 
+import java.util.Optional;
+
 import javax.persistence.*;
 
 import fa.mockproject.model.BudgetModel;
@@ -55,9 +57,9 @@ public class Budget {
 		super();
 		this.item = budgetModel.getItem();
 		this.unit = budgetModel.getUnit();
-		this.unitExpense = budgetModel.getUnitExpense();
-		this.quantity = budgetModel.getQuantity();
-		this.tax = budgetModel.getTax();
+		this.unitExpense = Optional.ofNullable(budgetModel.getUnitExpense()).orElse(0);
+		this.quantity = Optional.ofNullable(budgetModel.getQuantity()).orElse(0);
+		this.tax = Optional.ofNullable(budgetModel.getTax()).orElse(0);
 		this.note = budgetModel.getNote();
 	}
 	
@@ -65,9 +67,9 @@ public class Budget {
 		super();
 		this.item = budgetModel.getItem();
 		this.unit = budgetModel.getUnit();
-		this.unitExpense = budgetModel.getUnitExpense();
-		this.quantity = budgetModel.getQuantity();
-		this.tax = budgetModel.getTax();
+		this.unitExpense = Optional.ofNullable(budgetModel.getUnitExpense()).orElse(0);
+		this.quantity = Optional.ofNullable(budgetModel.getQuantity()).orElse(0);
+		this.tax = Optional.ofNullable(budgetModel.getTax()).orElse(0);
 		this.note = budgetModel.getNote();
 		this.classBatch = classBatch;
 	}
@@ -139,7 +141,7 @@ public class Budget {
 	@Override
 	public String toString() {
 		return "Budget [budgetId=" + budgetId + ", item=" + item + ", unit=" + unit + ", unitExpense=" + unitExpense
-				+ ", quantity=" + quantity + ", tax=" + tax + ", note=" + note + ", classBatch=" + classBatch + "]";
+				+ ", quantity=" + quantity + ", tax=" + tax + ", note=" + note + "]";
 	}
     
 }

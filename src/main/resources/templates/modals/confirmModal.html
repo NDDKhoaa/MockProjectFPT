@@ -1,0 +1,22 @@
+<div th:fragment="modal" class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-dark rounded-0">
+      <div class="modal-header py-1 border-dark">
+        <h5 class="modal-title font-weight-normal text-body" id="exampleModalLabel" style="font-size: 18px;">Confirm</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+          <div class="d-flex justify-content-center align-top">
+              <i class="fa-solid fa-circle-info text-success mr-2" style="font-size: 22px;"></i>
+              <span th:text="${message}"></span>
+          </div>
+          <div class="pt-2">
+              <button type="button" class="btn bg-light border border-dark rounded-0 confirm-btn" style="width: 75px;">OK</button>
+              <button type="button" class="btn bg-light border border-dark rounded-0 ml-3" data-dismiss="modal" style="width: 75px;">Cancel</button>
+          </div>
+      </div>
+      <div class="modal-footer py-3 border-dark">                 
+      </div>
+    </div>
+</div>

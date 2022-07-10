@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Trainer</title>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<script src="https://kit.fontawesome.com/83baa56dfa.js"
+	crossorigin="anonymous"></script>
+<link rel="stylesheet" th:href="@{/css/trainer.css}">
+</head>
+<body>
+
+	<header class="bg-blue">
+		<div class="header text-white font-weight-bold">
+		<img src="https://seeklogo.com/images/F/fpt-logo-5B8F17203A-seeklogo.com.png" alt="">
+		<h4>FSOFT
+				HR UTILITY</h4></div>
+	</header>
+	<div class="nav">
+		<div class="col-2 bg-gray">
+			<button type="button" class="btn btn-sm float-right">&lt&lt</button>
+			<br>
+			<nav class="navbar-nav">
+
+				<p class="role-option-lable">Your role now is:</p>
+				<select value="" class="role-option">
+					<option name="" id="" class="role-option-item">ROLE</option>
+				</select>
+				<ul class="nav-list">
+					<li class="nav-tabs"><a href="#" class="nav-link">Dashboard</a>
+					</li>
+					<li class="nav-tabs"><a href="#" class="nav-link">Candidate
+							Management</a></li>
+					<li class="nav-tabs"><a th:href="@{/showTrainerForm}"
+						class="nav-link">Trainer Management</a></li>
+					<li class="nav-tabs"><a href="#" class="nav-link">Trainee
+							Management</a></li>
+					<li class="nav-tabs"><a href="#" class="nav-link">Class
+							Management</a></li>
+					<li class="nav-tabs"><a href="#" class="nav-link">General
+							Setting</a></li>
+				</ul>
+			</nav>
+		</div>
+
+		<div class="col-8">
+			<h4>Create Trainer</h4>
+			<hr>
+			<div class="container">
+				<div>
+					<div class="nav nav-tab">
+						<ul class="list-inline">
+							<li class="nav-item border bg-gray"><a
+								th:href="@{/showTrainerForm}" class="nav-link">Information</a></li>
+							<li class="nav-item border"><a th:href="@{/showTrainerList}"
+								class="nav-link">Trainer</a></li>
+						</ul>
+					</div>
+
+					<form th:action="@{/saveTrainer}" th:object="${trainerModel}"
+						method="POST" class="form-group">
+						<table class="grid-container border">
+							<tbody class="col-6">
+								<tr>
+									<th>Account</th>
+									<td><input type="text" th:field="*{account}"
+										name="account" id="" class="form-control">
+									<span th:if="${#fields.hasErrors('account')}" th:errors="*{account}">Account error</span>
+									</td>
+								</tr>
+								<tr>
+									<th>Full name</th>
+									<td><input type="text" th:field="*{fullName}"
+										name="fullName" id="" class="form-control"></td>
+								</tr>
+								<tr>
+									<th>Date of birth</th>
+									<td><input type="date" th:field="*{dateOfBirth}" name=""
+										id="" class="form-control"></td>
+								</tr>
+								<tr>
+									<th>Gender</th>
+									<td><input type="radio" th:field="*{gender}" name="gender"
+										value="1">Male <input type="radio"
+										th:field="*{gender}" name="gender" value="0">Female</td>
+								</tr>
+								<tr>
+									<th>Unit</th>
+									<td><input type="text" th:field="*{unit}" name="unit"
+										class="form-control"></td>
+								</tr>
+								<tr>
+									<th>Major</th>
+									<td><input type="text" th:field="*{major}" name="major"
+										class="form-control"></td>
+								</tr>
+								<tr>
+									<th>Phone</th>
+									<td><input type="text" th:field="*{phone}" name="phone"
+										class="form-control"></td>
+								</tr>
+								<tr>
+									<th>Email</th>
+									<td><input type="text" th:field="*{email}" name="email"
+										class="form-control">
+									<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</span>	
+										</td>
+								</tr>
+								<tr>
+									<th>Experience</th>
+									<td><input type="text" th:field="*{experience}"
+										name="experience" class="form-control"></td>
+								</tr>
+								<tr>
+									<th>Remarks</th>
+									<td><input type="text" th:field="*{remarks}"
+										name="remarks" class="form-control"></td>
+								</tr>
+								<tr>
+									<th>Type</th>
+									<td><select th:field="*{type}" name="type">
+											<option value="" disabled>Select type</option>
+											<option th:each="trainerType:${trainerTypes}"
+												th:text="${trainerType.name}" th:value="${trainerType}"></option>
+
+									</select></td>
+								</tr>
+								<tr>
+									<td colspan="2"><button type="submit"
+											class="btn btn-success btn-sm">Save</button></td>
+								</tr>
+							</tbody>
+						</table>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="footer bg-gray border">
+		<span><a href="#"><i class="fas fa-question-circle"></i>Help</a>
+			<a href="#"><i class="fas fa-calendar-alt"></i>Create ticket on
+				FI2.0</a></span>
+	</div>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+	<div id="app-modal" class="modal fade" data-backdrop="true" tabindex="-1" aria-hidden="true">
+		<th:block th:replace="${modal} == 'warningModal' ? ~{modals/warningModal :: modal(message=${message})} : _">
+		</th:block>
+		<th:block th:replace="${modal} == 'messageModal' ? ~{modals/messageModal :: modal(message=${message})} : _">
+		</th:block>
+		<th:block th:replace="${modal} == 'confirmModal' ? ~{modals/confirmModal :: modal(message=${message})} : _">
+		</th:block>
+		<th:block th:replace="${modal} == 'errorModal' ? ~{modals/errorModal :: modal(message=${message})} : _">
+		</th:block>
+		<script th:if="${showModal} == true" type="text/javascript">
+			showModal({});
+		</script>
+	</div>
+</body>
+</html>

@@ -2,9 +2,14 @@ package fa.mockproject.service;
 
 import java.util.List;
 
+import org.springframework.data.repository.query.Param;
+
 import fa.mockproject.entity.Location;
+import fa.mockproject.model.LocationModel;
 
 public interface LocationService {
+	
+	public List<LocationModel> getAll();
 	
 	public List<Location> listAll();
 
@@ -16,4 +21,5 @@ public interface LocationService {
 
 	public void deleteById(String locationId);
 
+	public List<Location> search(@Param("word") String word);
 }

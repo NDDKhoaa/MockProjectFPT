@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import fa.mockproject.entity.Channel;
@@ -12,7 +13,7 @@ import fa.mockproject.service.ChannelService;
 
 @Service
 public class ChannelServiceImpl implements ChannelService {
-	
+
 	@Autowired
 	private ChannelRepository repo;
 
@@ -26,7 +27,7 @@ public class ChannelServiceImpl implements ChannelService {
 
 	public Channel get(String channelId) {
 		Optional<Channel> rs = repo.findById(channelId);
-		return rs.get();
+		return rs.orElse(null);
 	}
 
 	public void delete(Channel channel) {
@@ -37,4 +38,7 @@ public class ChannelServiceImpl implements ChannelService {
 		repo.deleteById(channelId);
 	}
 
+	public List<Channel> search(@Param("word") String word) {
+		return (List<Channel>) repo.search(word);
+	}
 }

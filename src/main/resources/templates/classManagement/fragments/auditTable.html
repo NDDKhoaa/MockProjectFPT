@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Management</title>
+    <script src="https://kit.fontawesome.com/eb5105679e.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" th:href="@{/lib/multiselect/multiselect.css}">
+    <link rel="stylesheet" th:href="@{/common/css/main.css}">
+</head>
+<body>
+	<div th:with="readonly = (${viewMode} == ${ViewMode.ViewClass} or (${viewMode} != ${ViewMode.UpdateInprogressClass} and ${viewMode} != ${ViewMode.CreateClass}))" th:fragment="table()" class="section-content">
+		<table th:if="${readonly}" class="content-table table table-bordered table-sm mb-0 border-bottom-0">
+			<tr>
+				<td class="bg-gray">Date</td>
+				<td class="bg-gray">Event Category</td>
+				<td class="bg-gray">Related People</td>
+				<td class="bg-gray">Action</td>
+				<td class="bg-gray">PIC</td>
+				<td class="bg-gray">Deadline</td>
+				<td class="bg-gray">Note</td>
+			</tr>
+			<tr class="content-item" th:each="audit, itemStat: *{auditModels}">
+				<td>
+					<input readonly class="w-100 border-0" type="date" th:field="*{auditModels[__${itemStat.index}__].date}">
+				</td>
+				<td>
+					<span th:text="*{auditModels[__${itemStat.index}__].eventCategory}" class="readonly"></span>
+				</td>
+				<td>
+					<input readonly class="w-100 border-0" type="text" th:field="*{auditModels[__${itemStat.index}__].relatedPartyOrPeople}">
+				</td>
+				<td>
+					<input readonly class="w-100 border-0" type="text" th:field="*{auditModels[__${itemStat.index}__].action}">
+				</td>
+				<td>
+					<input readonly class="w-100 border-0" type="text" th:field="*{auditModels[__${itemStat.index}__].pic}">
+				</td>
+				<td>
+					<input readonly class="w-100 border-0" type="date" th:field="*{auditModels[__${itemStat.index}__].deadline}">
+				</td>
+				<td>
+					<input readonly class="w-100 border-0" type="text" th:field="*{auditModels[__${itemStat.index}__].note}">
+				</td>
+			</tr>
+		</table>
+		<table th:unless="${readonly}" class="content-table table table-bordered table-sm mb-0 border-bottom-0">
+			<tr>
+				<td>
+					<button type="button" class="add-row-btn btn py-0 bg-light-blue text-white">
+						<i class="fa-solid fa-plus"></i>
+					</button>
+				</td>
+				<td class="bg-gray">Date</td>
+				<td class="bg-gray">Event Category</td>
+				<td class="bg-gray">Related People</td>
+				<td class="bg-gray">Action</td>
+				<td class="bg-gray">PIC</td>
+				<td class="bg-gray">Deadline</td>
+				<td class="bg-gray">Note</td>
+			</tr>
+			<tr class="content-item" th:each="audit, itemStat: *{auditModels}">
+				<td>
+					<button type="button" class="remove-row-btn btn bg-transparent text-danger">
+						<i class="fa-solid fa-trash-can"></i>
+					</button>
+				</td>
+				<td>
+					<input class="w-100 border-0" type="date" th:field="*{auditModels[__${itemStat.index}__].date}">
+				</td>
+				<td>
+					<select class="w-100 border-0" th:field="*{auditModels[__${itemStat.index}__].eventCategory}">
+						<option value="" hidden="true"></option>
+						<option th:each="eventCategory: ${T(fa.mockproject.entity.enumtype.AuditEventCategoryEnum).values()}" th:value="${eventCategory}" th:text="${eventCategory}"></option>
+					</select>
+				</td>
+				<td>
+					<input class="w-100 border-0" type="text" th:field="*{auditModels[__${itemStat.index}__].relatedPartyOrPeople}">
+				</td>
+				<td>
+					<input class="w-100 border-0" type="text" th:field="*{auditModels[__${itemStat.index}__].action}">
+				</td>
+				<td>
+					<input class="w-100 border-0" type="text" th:field="*{auditModels[__${itemStat.index}__].pic}">
+				</td>
+				<td>
+					<input class="w-100 border-0" type="date" th:field="*{auditModels[__${itemStat.index}__].deadline}">
+				</td>
+				<td>
+					<input class="w-100 border-0" type="text" th:field="*{auditModels[__${itemStat.index}__].note}">
+				</td>
+			</tr>
+		</table>
+	</div>
+											
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
+    <script th:src="@{/common/js/main.js}"></script>
+    <script th:src="@{/lib/multiselect/multiselect.js}"></script>
+    <script th:src="@{/classManagement/js/classManagement.js}"></script>
+</body>
+</html>

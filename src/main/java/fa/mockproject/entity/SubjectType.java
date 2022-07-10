@@ -82,5 +82,11 @@ public class SubjectType {
 	public void setClassBatchs(List<ClassBatch> classBatchs) {
 		this.classBatchs = classBatchs;
 	}
+
+	@Override
+	public String toString() {
+		return "SubjectType [subjectTypeId=" + subjectTypeId + ", subjectTypeName=" + subjectTypeName + ", remarks="
+				+ remarks + "]";
+	}
     
 }

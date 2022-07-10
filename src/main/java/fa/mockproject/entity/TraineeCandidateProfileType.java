@@ -1,6 +1,6 @@
 package fa.mockproject.entity;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
@@ -25,7 +25,7 @@ public class TraineeCandidateProfileType {
 	private String type;
 
 	@OneToMany(mappedBy = "type")
-	private Set<TraineeCandidateProfile> traineeCandidateProfiles;
+	private List<TraineeCandidateProfile> traineeCandidateProfiles;
 
 	public String getProfileStatusId() {
 		return profileStatusId;
@@ -43,11 +43,11 @@ public class TraineeCandidateProfileType {
 		this.type = type;
 	}
 
-	public Set<TraineeCandidateProfile> getTraineeCandidateProfiles() {
+	public List<TraineeCandidateProfile> getTraineeCandidateProfiles() {
 		return traineeCandidateProfiles;
 	}
 
-	public void setTraineeCandidateProfiles(Set<TraineeCandidateProfile> traineeCandidateProfiles) {
+	public void setTraineeCandidateProfiles(List<TraineeCandidateProfile> traineeCandidateProfiles) {
 		this.traineeCandidateProfiles = traineeCandidateProfiles;
 	}
 
