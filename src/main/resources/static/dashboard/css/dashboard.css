@@ -36,7 +36,6 @@ html {
 }
 
 .app {
-    max-width: 1200px;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -214,7 +213,7 @@ main .control-btn {
 }
 .header{
     height: 50px;
-    background-image: url(/static/images/backgroundheader.png);
+    background-image: url(/static/common/images/backgroundheader.png);
     background-repeat: no-repeat;
     background-size: 100%;
 }

@@ -60,6 +60,10 @@ public class TraineeCandidateProfileStatus {
 		this.status = find.getStatus();
 	}
 
+	public TraineeCandidateProfileStatus(String profileStatusId) {
+		this.profileStatusId = profileStatusId;
+	}
+
 	@Override
 	public String toString() {
 		return status;

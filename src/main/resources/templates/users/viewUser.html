@@ -1,50 +1,63 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
-<head th:replace="/header :: head">
-  <title>Edit user</title>
+<head>
+  <link th:replace="fragments/head :: head-infor"></link>
+  <title>View user</title>
 </head>
 <body>
-<div th:include="header :: header"></div>
-<div class="body-content col-lg-9">
-<h3>View Employee</h3>
-<table class="table table-striped">
-  <tbody>
-  <tr>
-    <td>Id</td>
-    <td th:text="${user.userId}"/>
-  </tr>
-  <tr>
-    <td>First name</td>
-    <td th:text="${user.firstName}"/>
-  </tr>
-  <tr>
-    <td>Last name</td>
-    <td th:text="${user.lastName}"/>
-  </tr>
-  <tr>
-    <td>Email</td>
-    <td th:text="${user.email}"/>
-  </tr>
-  <tr>
-    <td>Phone</td>
-    <td th:text="${user.phoneNumber}"/>
-  </tr>
-  <tr>
-    <td>Roles</td>
-    <td>
-      <p th:each=" role:${user.roles}" th:text="${role.getName()}"/>
-    </td>
-  </tr>
-  <tr>
-    <td>Privileges</td>
-    <td><p th:each=" role:${user.roles}"
-           th:if="${#lists.size(role.privileges) > 0}" th:text="${role.privileges}"/></td>
-  </tr>
-  </tbody>
-</table>
-  <button class="btn btn-danger"><a th:href="@{'/listUser'}">Back</a></button>
+<div class="app container-fluid d-flex flex-column">
+  <header th:replace="fragments/header :: #app-header"></header>
+  <div class="row app-content flex-grow-1">
+    <div class="container-fluid">
+      <div class="row h-100">
+        <nav th:replace="fragments/sidebar :: #app-sidebar"></nav>
+        <main class="col col-10 px-0 d-flex flex-column">
+          <div class="body-content col-lg-12">
+            <h3>View Employee</h3>
+            <table class="table table-striped">
+              <tbody>
+              <tr>
+                <td>Id</td>
+                <td th:text="${user.userId}"/>
+              </tr>
+              <tr>
+                <td>First name</td>
+                <td th:text="${user.firstName}"/>
+              </tr>
+              <tr>
+                <td>Last name</td>
+                <td th:text="${user.lastName}"/>
+              </tr>
+              <tr>
+                <td>Email</td>
+                <td th:text="${user.email}"/>
+              </tr>
+              <tr>
+                <td>Phone</td>
+                <td th:text="${user.phoneNumber}"/>
+              </tr>
+              <tr>
+                <td>Roles</td>
+                <td>
+                  <p th:each=" role:${user.roles}" th:text="${role.getName()}"/>
+                </td>
+              </tr>
+              <tr>
+                <td>Privileges</td>
+                <td><p th:each=" role:${user.roles}"
+                       th:if="${#lists.size(role.privileges) > 0}" th:text="${role.privileges}"/>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <button class="btn btn-danger"><a th:href="@{'/listUser'}">Back</a></button>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
 </div>
-<footer th:replace="/footer :: footer"></footer>
+<footer th:replace="fragments/footer :: #app-footer"></footer>
 </body>
 </html>

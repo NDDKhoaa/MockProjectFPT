@@ -2,15 +2,18 @@ package fa.mockproject.repository;
 
 import java.time.LocalDate;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.transaction.annotation.Transactional;
+
 
 import fa.mockproject.entity.Commitment;
 
 public interface CommitmentRepository extends JpaRepository<Commitment, Long> {
+
 	@Modifying
 	@Transactional
 	@Query("Update Commitment c Set c.committedValue = :committedValue, c.committedWorkingDuration = :committedWorkingDuration,"
@@ -21,4 +24,5 @@ public interface CommitmentRepository extends JpaRepository<Commitment, Long> {
 			@Param("committedWorkingEndDate") LocalDate committedWorkingEndDate, 
 			@Param("committedWorkingStartDate") LocalDate committedWorkingStartDate,
 			@Param("remarks") String remarks);
+
 }
