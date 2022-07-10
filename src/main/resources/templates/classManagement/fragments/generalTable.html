@@ -12,7 +12,7 @@
     <link rel="stylesheet" th:href="@{/common/css/main.css}">
 </head>
 <body>
-	<div th:with="readonly = (${viewMode} == ${ViewMode.ViewClass} or ${viewMode} == ${ViewMode.UpdateInprogressClass})" th:fragment="table(viewMode)" class="section-content">
+	<div th:with="readonly = (${viewMode} == ${ViewMode.ViewClass} or ${viewMode} == ${ViewMode.UpdateInprogressClass})" th:fragment="table(viewMode,ViewMode)" class="section-content">
 		<table th:if="${readonly}" class="content-table table table-bordered table-sm mb-0 border-bottom-0">
 			<tr>
 				<td class="bg-gray">Class Code</td>

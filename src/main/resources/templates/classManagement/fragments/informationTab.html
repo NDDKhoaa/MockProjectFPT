@@ -1,0 +1,44 @@
+<form th:with="ViewMode=${T(fa.mockproject.entity.enumtype.ClassViewMode)}"
+		enctype="multipart/form-data" 
+		class="classbatch-infor-form form" 
+		th:action="@{/classes/create}" 
+		th:object="${classBatchModel}" 
+		th:attr="data-class-id=*{classId}, data-action=${action}"
+		method="POST">
+		
+	<div class="form-content border-left border-right border-bottom p-1 border-dark">
+		<section th:replace="classManagement/fragments/formContentSection::section(
+			sectionClass='class-general mb-2',
+			sectionTitle='General',
+			sectionContent=~{classManagement/fragments/generalTable::table(viewMode=${viewMode},ViewMode=${ViewMode})})" 
+		class="form-content-section">
+		</section>
+		<section th:replace="classManagement/fragments/formContentSection::section(
+			sectionClass='class-detail mb-2',
+			sectionTitle='Detail',
+			sectionContent=~{classManagement/fragments/detailTable::table(viewMode=${viewMode},ViewMode=${ViewMode})})" 
+		class="form-content-section">
+		</section>
+		<section th:replace="classManagement/fragments/formContentSection::section(
+			sectionClass='class-budget mb-2',
+			sectionTitle='Budget',
+			sectionContent=~{classManagement/fragments/budgetTable::table(viewMode=${viewMode},ViewMode=${ViewMode})})" 
+		class="form-content-section">
+		</section>
+		<section th:replace="classManagement/fragments/formContentSection::section(
+			sectionClass='class-audit',
+			sectionTitle='Audit',
+			sectionContent=~{classManagement/fragments/auditTable::table(viewMode=${viewMode},ViewMode=${ViewMode})})" 
+		class="form-content-section">
+		</section>
+	</div>
+	<div th:insert="${viewMode} == ${ViewMode.ViewClass} ? ~{classManagement/fragments/controlButton :: controlBtn(actionables = ${actionables})} : _" class="control-btn pt-3">
+		<div class="btn-wrapper">
+			<button type="submit" class="submit-btn btn btn-primary text-white pt-0 pb-1 rounded-0 bg-dark-blue mr-2 mb-2">Submit</button>
+			<a th:href="${viewMode} != ${ViewMode.CreateClass} ? ('/classes/view?classId=' + ${classBatchModel.classId}) : '/classes/view/'" class="close-btn btn btn-outline-secondary pt-0 pb-1 rounded-0 mb-2">
+				<i class="fa-solid fa-reply text-danger"></i>
+				Close
+			</a>
+		</div>
+	</div>
+</form>
