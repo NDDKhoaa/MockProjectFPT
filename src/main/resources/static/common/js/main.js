@@ -1,13 +1,20 @@
 $('document').ready(e => {
-    $("input[type='date']:read-only").filter('[value=""]').prop('type', 'text');
+    handleReadonlyInput();
 })
 
-function showModal({modal = '.modal', html = false, timeOut = 0, backdrop = 'true'}) {
+function showModal({modal = '.modal', html = false, timeOut = 0, backdrop = 'true', confirm = false}) {
     if  (backdrop == 'static') {
         $(modal).data('bs.modal')._config.backdrop = 'static';
         $(modal).data('bs.modal')._config.keyboard = false;
     }
+
     !!html && $(modal).html(html);
+    if (confirm) {
+        $(modal).find('.confirm-btn')?.click(e => {
+            confirm($(modal));
+        });
+    }
+
     $(modal).modal('show');
     if (timeOut > 0) {
         setTimeout(() => {
@@ -86,4 +93,8 @@ function sendRedirect(redirect, redirectDelay) {
     setTimeout(() => {
         window.location.href = redirect;
     }, redirectDelay);
+}
+
+function handleReadonlyInput() {
+	$("input[type='date']:read-only").filter('[value=""]').prop('type', 'text');
 }
