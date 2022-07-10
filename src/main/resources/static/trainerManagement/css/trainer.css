@@ -1,0 +1,51 @@
+.list-inline {
+	display: flex;
+	flex-direction: row;
+	margin-left: 10px;
+}
+.nav-list {
+	padding: 20px;
+}
+
+.error {
+	color: red;
+	font-style: italic;
+}
+table{
+	width:100%;
+}
+.border1 {
+	border: 0.5px solid black;
+}
+
+.list-inline {
+	margin: 0;
+}
+
+.content-form,.content-detail {
+	padding: 5px;
+}
+
+.content-detail th {
+	background-color: #cccccc;
+	padding: 3px;
+}
+
+.content-detail th, .content-detail td {
+	border: 1px solid black;
+	padding: 4px 2px;
+	font-weight: normal;
+}
+
+.content-detail td input {
+	border: none;
+	outline: none;
+	width:100%;
+}
+.btn.btn-sm.border1:hover{
+	background-color: #eeeeee;
+}
+.pagination{
+	display:flex;
+	flex-direction: row;
+}
