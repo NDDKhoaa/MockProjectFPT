@@ -1,10 +1,17 @@
 package fa.mockproject.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,9 +20,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import fa.mockproject.entity.TrainerProfile;
-import fa.mockproject.entity.enumtype.TrainerTypeEnum;
 import fa.mockproject.model.TrainerModel;
 import fa.mockproject.service.TrainerService;
 
@@ -25,26 +32,30 @@ public class TrainerController {
 	private TrainerService trainerService;
 
 	@GetMapping("/showTrainerList")
-	public String showTrainerList(Model model,@Param("keyword") String keyword) {
+	public String showTrainerList(Model model, @RequestParam Map<String, String> params) {
+		trainerService.getAllTrainers(model, params);
+		return "trainerManagement/viewTrainer";
+	}
+	
+	@GetMapping("/searchTrainer")
+	public String searchTrainer(Model model,@Param("keyword") String keyword) {
 		List<TrainerProfile> trainerList = trainerService.getAllTrainers(keyword);
 		model.addAttribute("trainerList", trainerList);
 		model.addAttribute("keyword", keyword);
-		return "viewTrainer";
+		return "trainerManagement/viewTrainer";
 	}
 
 	@GetMapping("/showTrainerForm")
 	public String newTrainer(Model model) {
 		TrainerModel trainerModel = new TrainerModel();
 		model.addAttribute("trainerModel", trainerModel);
-		
-		model.addAttribute("trainerTypes", TrainerTypeEnum.values());
-		return "createTrainer";
+		return "trainerManagement/createTrainer";
 	}
 
 	@PostMapping("/saveTrainer")
-	public String saveTrainer(@Valid @ModelAttribute("trainerModel") TrainerModel trainerModel,BindingResult bindingResult) {
+	public String saveTrainer(@Valid @ModelAttribute("trainerModel") TrainerModel trainerModel,BindingResult bindingResult,Model model) {
 		if(bindingResult.hasErrors()) {
-			return "createTrainer";
+			return "trainerManagement/createTrainer";
 		}else {
 			trainerService.save(trainerModel);
 			return "redirect:/showTrainerList";
@@ -55,7 +66,7 @@ public class TrainerController {
 	public String showUpdateForm(@PathVariable(value = "id") long id, Model model) {
 		TrainerProfile trainerProfile = trainerService.findByTrainerId(id);
 		model.addAttribute("trainerModel", trainerProfile);
-		return "updateTrainer";
+		return "trainerManagement/updateTrainer";
 	}
 	
 	@GetMapping("/deleteTrainer/{id}")
@@ -63,9 +74,5 @@ public class TrainerController {
 		trainerService.deleteTrainerProfileById(id);
 		return "redirect:/showTrainerList";
 	}
-//	@InitBinder     
-//	public void initBinder(WebDataBinder binder){
-//	     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//	     binder.registerCustomEditor(Date.class,new CustomDateEditor(dateFormat, false));   
-//	}
+	
 }
