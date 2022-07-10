@@ -28,59 +28,19 @@ import fa.mockproject.model.AuditModel;
 import fa.mockproject.model.BudgetModel;
 import fa.mockproject.model.ClassBatchModel;
 import fa.mockproject.model.CurriculumnModel;
-import fa.mockproject.model.TrainerModel;
-import fa.mockproject.service.AuditService;
-import fa.mockproject.service.BudgetService;
-import fa.mockproject.service.ClassAdminService;
 import fa.mockproject.service.ClassBatchService;
-import fa.mockproject.service.ClassTypeService;
 import fa.mockproject.service.CurriculumnService;
-import fa.mockproject.service.DeliveryTypeService;
-import fa.mockproject.service.FormatTypeService;
-import fa.mockproject.service.LocationService;
-import fa.mockproject.service.PositionService;
-import fa.mockproject.service.ScopeService;
-import fa.mockproject.service.SkillService;
-import fa.mockproject.service.SubSubjectTypeService;
-import fa.mockproject.service.SubjectTypeService;
-import fa.mockproject.service.TrainerService;
 import fa.mockproject.util.ClassManagementConstant;
 
 @Controller
 public class ClassManagementController {
 	
 	@Autowired
-	ResourceBundleMessageSource messageSource;
+	private ResourceBundleMessageSource messageSource;
 	@Autowired
-	ClassBatchService classBatchService;
+	private ClassBatchService classBatchService;
 	@Autowired
-	LocationService locationService;
-	@Autowired
-	ClassAdminService classAdminService;
-	@Autowired
-	SubjectTypeService subjectTypeService;
-	@Autowired
-	SubSubjectTypeService subSubjectTypeService;
-	@Autowired
-	DeliveryTypeService deliveryTypeService;
-	@Autowired
-	FormatTypeService formatTypeService;
-	@Autowired
-	ScopeService scopeService;
-	@Autowired
-	TrainerService trainerService;
-	@Autowired
-	BudgetService budgetService;
-	@Autowired
-	AuditService auditService;
-	@Autowired
-	ClassTypeService classTypeService;
-	@Autowired
-	SkillService skillService;
-	@Autowired
-	PositionService positionService;
-	@Autowired
-	CurriculumnService curriculumnService;
+	private CurriculumnService curriculumnService;
 	
 	@GetMapping("/classes")
 	public String getClassList(Model model, @RequestParam Map<String, String> params) {
@@ -111,15 +71,15 @@ public class ClassManagementController {
 		return "classManagement/classDetail";
 	}
 	
+	@GetMapping("/classes/trainees")
+	public String getClassTrainees(Model model, @RequestParam Map<String, String> params) {
+		classBatchService.getClassTrainees(model, params);
+		return "classManagement/classDetail";
+	}
+	
 	@GetMapping(value = "/classes/create")
 	public String createNewClass(Model model) {
-		ClassBatchModel classBatchModel = new ClassBatchModel();
-		classBatchModel.setTrainerModels(new ArrayList<TrainerModel>());
-		classBatchModel.setBudgetModels(new ArrayList<BudgetModel>());
-		classBatchModel.setAuditModels(new ArrayList<AuditModel>());
-		
-		classBatchModel.getBudgetModels().add(new BudgetModel());
-		classBatchModel.getAuditModels().add(new AuditModel());
+		ClassBatchModel classBatchModel = classBatchService.getEmptyClass();
 		
 		model.addAttribute("classBatchModel", classBatchModel);
 		model.addAttribute("viewMode", ClassViewMode.CreateClass);
@@ -209,14 +169,15 @@ public class ClassManagementController {
 		return "classManagement/classDetail";
 	}
 	
-	@PostMapping(value = "/classes/update", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/classes/update/{classId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String updateClass(Model model, 
 			@ModelAttribute("classBatchModel") @Valid ClassBatchModel classBatchModel, 
 			BindingResult result,
-			@RequestParam(name = "classId", defaultValue = "0") String classId,
+			@PathVariable(name = "classId") String classId,
 			@RequestParam(name = "confirm", defaultValue = "false") String confirm) {
 		
 		if (result.hasErrors()) {
+			System.out.println(result.getAllErrors());
 			// Do Something
 			return "classManagement/classDetail";
 		}

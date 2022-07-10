@@ -22,7 +22,7 @@ public class CV {
 	@Column(name = "cv_id", nullable = true, unique = true)
 	private long cvId;
 
-	@Column(name = "name", length = 512, nullable = true, unique = true)
+	@Column(name = "name", length = 512, nullable = true)
 	private String name;
 
 	@Column(name = "size", nullable = true)

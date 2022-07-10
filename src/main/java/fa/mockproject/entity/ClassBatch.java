@@ -87,30 +87,30 @@ public class ClassBatch {
 	private String history;
 	@Column(name = "remarks", length = 255, nullable = true)
 	private String remarks;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "class_type_id", nullable = false)
 	private ClassType classType;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "skill_id", nullable = false)
 	private Skill skill;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "position_id", nullable = false)
 	private Position position;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "location_id", nullable = false)
 	private Location location;
 	@OneToMany(mappedBy = "classBatch", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private List<ClassAdmin> classAdmins;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "subject_type_id", nullable = false)
 	private SubjectType subjectType;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "sub_subject_type_id", nullable = false)
 	private SubSubjectType subSubjectType;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "delivery_type_id", nullable = false)
 	private DeliveryType deliveryType;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "format_type_id", nullable = false)
 	private FormatType formatType;
 	@ManyToOne
@@ -120,13 +120,13 @@ public class ClassBatch {
 	private List<Budget> budgets;
 	@OneToMany(mappedBy = "classBatch", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private List<Trainer> trainers;
-	@OneToOne(mappedBy = "classBatch", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "classBatch", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Curriculumn curriculumn;
 	@OneToMany(mappedBy = "classBatch", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	private List<Audit> audits;
 	@OneToMany(mappedBy = "classBatch", fetch = FetchType.LAZY)
 	private List<Trainee> trainees;
-	@OneToOne(mappedBy = "classBatch", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "classBatch", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private SupplierPartner supplierPartner;
 	@Column(name = "created_date", updatable = false)
 	@CreationTimestamp

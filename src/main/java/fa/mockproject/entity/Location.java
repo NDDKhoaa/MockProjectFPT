@@ -60,6 +60,10 @@ public class Location {
 
 	}
 
+	public Location(String locationId) {
+		this.locationId = locationId;
+	}
+
 	public String getLocationId() {
 		return locationId;
 	}

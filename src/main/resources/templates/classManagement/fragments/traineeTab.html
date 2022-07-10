@@ -1,0 +1,96 @@
+<div class="table-wrapper border-left border-right border-bottom px-1 pt-1 border-dark h-100 d-flex flex-column">
+	<table class="trainee-table table table-bordered table-striped mt-0 mb-2">
+		<thead class="bg-gray">
+			<tr>
+				<th class="py-0 border-dark">
+					<input type="checkbox" class="check-all">
+				</th>
+				<th class="py-0 border-dark">#</th>
+				<th class="py-0 border-dark">Empl ID</th>
+				<th class="py-0 border-dark">
+					Name
+					<i class="fa-solid fa-sort ml-auto float-right mt-1"></i>
+				</th>
+				<th class="py-0 border-dark">DOB</th>
+				<th class="py-0 border-dark">Gender</th>
+				<th class="py-0 border-dark">University</th>
+				<th class="py-0 border-dark">Faculty</th>
+				<th class="py-0 border-dark">Phone</th>
+				<th class="py-0 border-dark">Email</th>
+				<th class="py-0 border-dark">Status</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="class-item" th:each="trainee,iterStat : ${traineeModels}">
+				<td class="py-0">
+					<input type="checkbox" name="id" th:value="${trainee.id}" class="check-trainee">
+				</td>
+				<td class="py-0" th:text="${iterStat.count}"></td>
+				<td class="py-0" th:text="${trainee.id}"></td>
+				<td class="py-0">
+					<a th:href="@{'/showTraineeInfo?id=' + ${trainee.id}}" th:text="${traineeModels.fullName}"></a>
+				</td>
+				<td class="py-0" th:text="${#temporals.format(trainee.dayOfBirth, 'dd-MMM-yyyy')}"></td>
+				<td class="py-0" th:text="${trainee.gender}"></td>
+				<td class="py-0" th:text="${trainee.universityName}"></td>
+				<td class="py-0" th:text="${trainee.facultyName}"></td>
+				<td class="py-0" th:text="${trainee.phone"></td>
+				<td class="py-0" th:text="${trainee.email}"></td>
+				<td class="py-0" th:text="${trainee.status}"></td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="mb-0 mt-auto">
+		<div class="pagination-control d-flex">
+			<div class="page-size form-row mr-5">
+				<label for="" class="col col-form-label text-nowrap">Page Size</label>
+				<select name="pageSize" class="form-control rounded-0 col border-dark">
+					<option th:each="size: ${T(fa.mockproject.util.ClassManagementConstant).CLASS_LIST_PAGE_SIZE}" th:selected="${size} == ${pageSize}" th:value="${size}" th:text="${size}"></option>
+				</select>
+			</div>
+			<div class="current-page form-row">
+				<label class="current-page-description col col-form-label text-nowrap">Show [[${totalElements} == 0 ? 0 : 1]] - [[${pageSize} >= ${totalElements} ? ${totalElements} : ${pageSize} ]] of total [[${totalElements}]] items</label>
+				<select name="pageIndex" class="form-control rounded-0 col border-dark">
+					<option th:each="i: ${#numbers.sequence(1, totalPages)}"  th:selected="${i} == ${pageIndex}" th:value="${i}" th:text="'Page ' + ${i} + '/' + ${totalPages}"></option>
+				</select>
+			</div>
+			<nav class="ml-auto">
+				<ul class="pagination mb-0">
+					<li class="page-item" th:classappend="${pageIndex} == ${1} ? 'disabled' : ''">
+						<button class="page-link bg-light-gray border-dark rounded-0 text-body previous">
+							<span aria-hidden="true">&laquo;</span>
+						</button>
+					</li>
+					<li class="page-item" th:each="i: ${#numbers.sequence(1, totalPages)}" th:classappend="${i} == ${pageIndex} ? 'active' : ''">
+						<button class="page-link bg-light-gray border-dark rounded-0 text-body" th:text="${i}"></button>
+					</li>
+					<li class="page-item"  th:classappend="${pageIndex} == ${totalPages} ? 'disabled' : ''">
+						<button class="page-link bg-light-gray border-dark rounded-0 text-body next">
+							<span aria-hidden="true">&raquo;</span>
+						</button>
+					</li>
+				</ul>
+			</nav>
+		</div>
+		<div class="control-btn pt-3">
+			<div class="btn-wrapper w-75">
+				<button type="button" class="create-btn btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0">
+					<i class="fa-solid fa-upload text-blue-00"></i>
+					Import Trainee
+				</button>
+				<button type="button" class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0">
+					<i class="fa-solid fa-user-plus text-success"></i>
+					Add Trainee
+				</button>
+				<button type="button" class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0">
+					<i class="fa-solid fa-user-xmark text-danger"></i>
+					Romove Trainee
+				</button>
+				<button type="button" class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0">
+					<i class="fa-solid fa-pencil text-dark"></i>
+					Update Trainee
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

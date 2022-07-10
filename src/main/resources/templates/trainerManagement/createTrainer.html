@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<link th:replace="fragments/head :: head-infor"></link>
+<title>Create Trainer</title>
+<link rel="stylesheet"
+	th:href="@{/static/trainerManagement/css/trainer.css}">
+</head>
+<body>
+	<div class="app container-fluid d-flex flex-column">
+		<header th:replace="fragments/header :: #app-header"></header>
+		<div class="row app-content flex-grow-1">
+			<div class="container-fluid">
+				<div class="row h-100">
+					<nav th:replace="fragments/sidebar :: #app-sidebar"></nav>
+					<main class="col col-10 px-0 d-flex flex-column">
+						<div class="header border-bottom border-dark py-1 px-3">
+							<h4 class="m-0">Create Trainer Profile</h4>
+						</div>
+						<div class="content p-2 d-flex flex-column flex-grow-1">
+
+
+							<div class="mx-4">
+								<ul class="list-inline">
+									<li class="nav-item border1 "><a
+										th:href="@{/showTrainerForm}" class="nav-link"
+										style="color: black;">Trainer Information</a></li>
+									<li class="nav-item border1 bg-gray"><a
+										th:href="@{/showTrainerList}" class="nav-link"
+										style="color: black;">Trainer List</a></li>
+								</ul>
+							</div>
+
+							<form th:action="@{/saveTrainer}" th:object="${trainerModel}"
+								method="POST" class="content-form border1">
+								<div class="bg-light-blue border1 p-1">
+									Personal Information
+									</div>
+								<table class="border1 content-detail">
+									
+									<tbody>
+										<tr>
+											<th>Type</th>
+											<td style="background-color: #dddddd;">Trainer</td>
+											<th>Status</th>
+											<td style="background-color: #dddddd;">New</td>
+										</tr>
+										<tr>
+											<th>Account</th>
+											<td><input type="text" th:field="*{account}"
+												name="account" id=""> <span
+												th:if="${#fields.hasErrors('account')}"
+												th:errors="*{account}" class="error">Account error</span></td>
+											<th>Full name</th>
+											<td><input type="text" th:field="*{fullName}"
+												name="fullName" id=""> <span
+												th:if="${#fields.hasErrors('fullName')}"
+												th:errors="*{fullName}" class="error">Full name error</span></td>
+										</tr>
+
+										<tr>
+											<th>Date of birth</th>
+											<td><input type="date" th:field="*{dateOfBirth}" name=""
+												id=""></td>
+											<th>Gender</th>
+											<td><input type="radio" th:field="*{gender}"
+												name="gender" value="0" style="width: 10%">Male <input
+												type="radio" th:field="*{gender}" name="gender" value="1"
+												style="width: 10%; margin-left: 80px">Female</td>
+										</tr>
+
+										<tr>
+											<th>Unit</th>
+											<td><input type="text" th:field="*{unit}" name="unit">
+												<span th:if="${#fields.hasErrors('unit')}"
+												th:errors="*{unit}" class="error">Unit error</span></td>
+											<th>Major</th>
+											<td><input type="text" th:field="*{major}" name="major">
+												<span th:if="${#fields.hasErrors('major')}"
+												th:errors="*{major}" class="error">Major error</span></td>
+										</tr>
+
+										<tr>
+											<th>Phone</th>
+											<td><input type="text" th:field="*{phone}" name="phone">
+												<span th:if="${#fields.hasErrors('phone')}"
+												th:errors="*{phone}" class="error">Phone error</span></td>
+											<th>Email</th>
+											<td><input type="text" th:field="*{email}" name="email">
+												<span th:if="${#fields.hasErrors('email')}"
+												th:errors="*{email}" class="error">Email error</span></td>
+										</tr>
+
+										<tr>
+											<th>Experience</th>
+											<td><input type="text" th:field="*{experience}"
+												name="experience"> <span
+												th:if="${#fields.hasErrors('experience')}"
+												th:errors="*{experience}" class="error">Experience
+													error</span></td>
+											<th>Remarks</th>
+											<td><input type="text" th:field="*{remarks}"
+												name="remarks"> <span
+												th:if="${#fields.hasErrors('remarks')}"
+												th:errors="*{remarks}" class="error">Remarks error</span></td>
+										</tr>
+									</tbody>
+								</table>
+								<br>
+								<div>
+									<button type="submit" class="btn btn-outline-dark">
+									<i class="fa-solid fa-turn-up float-left text-orange"></i>
+									Submit</button>
+									<a th:href="@{/showTrainerList}" class="btn btn-outline-dark"><i
+										class="fas fa-reply" style="color: red"></i> Close</a>
+								</div>
+							</form>
+
+
+
+						</div>
+					</main>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="fragments/footer :: #app-footer"></footer>
+	<div th:replace="fragments/modal :: #app-modal"></div>
+	<script type="text/javascript" th:replace="fragments/script :: script"></script>
+</body>
+</html>

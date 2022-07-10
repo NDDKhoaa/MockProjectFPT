@@ -19,6 +19,7 @@ public class SupplierPartnerModel {
 	}
 	public SupplierPartnerModel(SupplierPartner supplierPartner) {
 		super();
+		if (supplierPartner == null) return;
 		this.supplierPartnerId = supplierPartner.getSupplierPartnerId();
 		this.supplierPartnerName = supplierPartner.getSupplierPartnerName();
 		this.remarks = supplierPartner.getRemarks();

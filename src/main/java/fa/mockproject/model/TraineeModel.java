@@ -67,7 +67,7 @@ public class TraineeModel {
 		this.salaryPaid = salaryPaid;
 		this.allowanceGroup = allowanceGroup;
 		this.history = history;
-		tpbAccount = tPBAccount;
+		this.tpbAccount = tPBAccount;
 		this.commitment = commitment;
 //		this.trainer = trainer;
 	}
@@ -76,10 +76,22 @@ public class TraineeModel {
 
 	public TraineeModel(Trainee trainee) {
 		super();
-		// ..
+		this.id = trainee.getTraineeCandidateId();
+		this.gender = trainee.getTraineeCandidateProfile().getGender();
+		this.fullName = trainee.getTraineeCandidateProfile().getFullName();
+		this.dayOfBirth = trainee.getTraineeCandidateProfile().getDateOfBirth();
+		this.account = trainee.getTraineeCandidateProfile().getAccount().getAccount();
+		this.universityName = trainee.getTraineeCandidateProfile().getUniversity().getUniversityName();
+		this.falcutyName = trainee.getTraineeCandidateProfile().getFaculty().getFacultyName();
+		this.phone = trainee.getTraineeCandidateProfile().getPhone();
+		this.email = trainee.getTraineeCandidateProfile().getEmail();
+		this.salaryPaid = trainee.getMilestones().get(0).getSalaryPaid();
+		this.tpbAccount = trainee.getTpbankAccount();
+		this.commitment = trainee.getCommitment().getCommittedWorkingDuration().toString();
+		this.endDate = trainee.getCommitment().getCommittedWorkingEndDate();
+		this.allocationStatus = trainee.getAllocation().getAllocationStatus();
+		this.allowanceGroup = trainee.getAllowanceGroup() == null ? "" : trainee.getAllowanceGroup().getAllowanceGroupName();
 	}
-
-	
 	
 //	public Trainer getTrainer() {
 //		return trainer;

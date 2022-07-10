@@ -112,7 +112,7 @@ public class ProfileController {
 		List<TraineeCandidateProfileModel> modelList = new ArrayList<TraineeCandidateProfileModel>();
 		TraineeCandidateProfileType typeCondition = traineeCandidateProfileTypeService.findById("Candidate");
 		for (TraineeCandidateProfile profile : profileList) {
-			if (profile!=null && profile.getType() == typeCondition) {
+			if (profile != null && profile.getType() == typeCondition) {
 				Candidate candidate = new Candidate(profile.getCandidate());
 				if (candidate != null) {
 					TraineeCandidateProfileStatus status = candidate.getStatus();
@@ -317,12 +317,7 @@ public class ProfileController {
 		Location location = locationService.findById(model.getLocationId());
 		Skill skill = skillService.get(model.getSkillId());
 		Channel channel = channelService.get(model.getChannelId());
-		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-		long fileSize = multipartFile.getSize();
-		byte[] content = multipartFile.getBytes();
-		model.setCVname(fileName);
-		model.setSize(fileSize);
-		model.setContent(content);
+
 		String fullname = model.getFullName();
 		int countspace = 0;
 		for (char c : fullname.toCharArray()) {
@@ -364,8 +359,14 @@ public class ProfileController {
 		Account account1 = new Account(model);
 		TraineeCandidateProfileStatus status = traineeCandidateProfileStatusService.findById(model.getStatusId());
 		TraineeCandidateProfileType type = traineeCandidateProfileTypeService.findById(model.getTypeId());
-		CV cv = new CV(model);
 		Candidate candidate = new Candidate(model, channel, location, status);
+		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+		long fileSize = multipartFile.getSize();
+		byte[] content = multipartFile.getBytes();
+		model.setCVname(fileName);
+		model.setSize(fileSize);
+		model.setContent(content);
+		CV cv = new CV(model);
 		TraineeCandidateProfile profile = new TraineeCandidateProfile(model, candidate, university, faculty, skill, cv,
 				type, account1);
 		List<Candidate> candidates = new ArrayList<>();
@@ -378,6 +379,7 @@ public class ProfileController {
 		traineeCandidateProfileService.save(profile);
 		account1.setTraineeCandidateProfile(profile);
 		accountServiceImpl.save(account1);
+
 		return "redirect:/viewCandidate";
 	}
 
