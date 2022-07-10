@@ -150,7 +150,6 @@ public class TraineeServiceImpl implements TraineeService {
 	}
 
 
-
 // 	public void update(TraineeModel traineeModelForm) {
 // 		
 }

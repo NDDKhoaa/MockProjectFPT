@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
@@ -45,6 +46,7 @@ import fa.mockproject.model.ScopeModel;
 import fa.mockproject.model.SkillModel;
 import fa.mockproject.model.SubSubjectTypeModel;
 import fa.mockproject.model.SubjectTypeModel;
+import fa.mockproject.model.TraineeModel;
 import fa.mockproject.model.TrainerModel;
 import fa.mockproject.repository.ClassBatchRepository;
 import fa.mockproject.repository.PositionRepository;
@@ -63,8 +65,10 @@ import fa.mockproject.service.ScopeService;
 import fa.mockproject.service.SkillService;
 import fa.mockproject.service.SubSubjectTypeService;
 import fa.mockproject.service.SubjectTypeService;
+import fa.mockproject.service.TraineeService;
 import fa.mockproject.service.TrainerService;
 import fa.mockproject.util.ClassManagementConstant;
+import fa.mockproject.util.Converter;
 
 @Service
 public class ClassBatchServiceImpl implements ClassBatchService {
@@ -108,13 +112,13 @@ public class ClassBatchServiceImpl implements ClassBatchService {
 	
 	@Override
 	public void getClasses(Model model, Map<String, String> filters) {
-		Integer pageSize = (Integer) convertFilterType(Integer.class, filters.get("pageSize"));
-		Integer pageIndex = (Integer) convertFilterType(Integer.class, filters.get("pageIndex"));
-		String locationId = (String) convertFilterType(String.class, filters.get("locationId"));
-		String className = (String) convertFilterType(String.class, filters.get("className"));
-		ClassBatchStatusEnum status = (ClassBatchStatusEnum) convertFilterType(ClassBatchStatusEnum.class, filters.get("status"));
-		LocalDate actualStartDate = (LocalDate) convertFilterType(LocalDate.class, filters.get("actualStartDate"));
-		LocalDate actualEndDate = (LocalDate) convertFilterType(LocalDate.class, filters.get("actualEndDate"));
+		Integer pageSize = (Integer) convertRequestParam(Integer.class, filters.get("pageSize"));
+		Integer pageIndex = (Integer) convertRequestParam(Integer.class, filters.get("pageIndex"));
+		String locationId = (String) convertRequestParam(String.class, filters.get("locationId"));
+		String className = (String) convertRequestParam(String.class, filters.get("className"));
+		ClassBatchStatusEnum status = (ClassBatchStatusEnum) convertRequestParam(ClassBatchStatusEnum.class, filters.get("status"));
+		LocalDate actualStartDate = (LocalDate) convertRequestParam(LocalDate.class, filters.get("actualStartDate"));
+		LocalDate actualEndDate = (LocalDate) convertRequestParam(LocalDate.class, filters.get("actualEndDate"));
 		
 		Specification<ClassBatch> specification = Specification.where(alwaysTrue());
 		if (locationId != null) {
@@ -162,8 +166,20 @@ public class ClassBatchServiceImpl implements ClassBatchService {
 		
 		if (classBatchModels == null || classBatchModels.size() == 0) {
 			model.addAttribute("modal", "warningModal");
-			model.addAttribute("message", messageSource.getMessage("msg8", null, null));			
+			model.addAttribute("message", messageSource.getMessage("msg8", null, null));
 		}
+	}
+
+	@Override
+	public ClassBatchModel getEmptyClass() {
+		ClassBatchModel classBatchModel = new ClassBatchModel();
+		classBatchModel.setTrainerModels(new ArrayList<TrainerModel>());
+		classBatchModel.setBudgetModels(new ArrayList<BudgetModel>());
+		classBatchModel.setAuditModels(new ArrayList<AuditModel>());
+		
+		classBatchModel.getBudgetModels().add(new BudgetModel());
+		classBatchModel.getAuditModels().add(new AuditModel());
+		return classBatchModel;
 	}
 	
 	@Override
@@ -214,6 +230,45 @@ public class ClassBatchServiceImpl implements ClassBatchService {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	@Override
+	public void getClassTrainees(Model model, Map<String, String> filters) {
+		Long classId = (Long) convertRequestParam(Long.class, filters.get("classId"));
+		Integer pageSize = (Integer) convertRequestParam(Integer.class, filters.get("pageSize"));
+		Integer pageIndex = (Integer) convertRequestParam(Integer.class, filters.get("pageIndex"));
+		
+		classId = classId == null ? 0 : classId;
+		pageIndex = pageIndex == null ? 1 : pageIndex;
+		pageSize = pageSize == null ? ClassManagementConstant.CLASS_LIST_PAGE_SIZE.get(0) : pageSize;
+		
+		if(classBatchRepository.findById(classId).isEmpty()) {
+			model.addAttribute("traineeModels", new ArrayList<TraineeModel>());
+			model.addAttribute("tab", "trainee");
+			model.addAttribute("totalElements", 0);
+			model.addAttribute("totalPages", 1);
+			model.addAttribute("pageIndex", 1);
+			model.addAttribute("pageSize", pageSize);
+			model.addAttribute("modal", "messageModal");
+			model.addAttribute("message", messageSource.getMessage("msg55", null, null));
+		}
+		
+		Pageable pageable = PageRequest.of(pageIndex - 1, pageSize);
+		Page<Trainee> page = classBatchRepository.findTraineeByClassId(classId, pageable);
+		
+		int totalPages = page.getTotalPages();
+		totalPages = totalPages == 0 ? 1 : totalPages;
+		pageIndex = page.getNumber() + 1;
+		pageSize = page.getSize();
+		
+		List<TraineeModel> traineeModels = Converter.convertList(page.getContent(), trainee -> new TraineeModel(trainee));
+		
+		model.addAttribute("traineeModels", traineeModels);
+		model.addAttribute("tab", "trainee");
+		model.addAttribute("totalElements", page.getTotalElements());
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("pageIndex", pageIndex);
+		model.addAttribute("pageSize", pageSize);
 	}
 	
 	@Override
@@ -428,7 +483,7 @@ public class ClassBatchServiceImpl implements ClassBatchService {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private Object convertFilterType(@SuppressWarnings("rawtypes") Class type, String value) {
+	private Object convertRequestParam(@SuppressWarnings("rawtypes") Class type, String value) {
 		if (type.isAssignableFrom(String.class)) {
 			if (value == null || value.trim().equals("")) {
 				return null;				
@@ -438,6 +493,13 @@ public class ClassBatchServiceImpl implements ClassBatchService {
 		if (type.isAssignableFrom(Integer.class)) {
 			try {
 				return Integer.parseInt(value);
+			} catch (NumberFormatException e) {
+				return null;
+			}
+		}
+		if (type.isAssignableFrom(Long.class)) {
+			try {
+				return Long.parseLong(value);
 			} catch (NumberFormatException e) {
 				return null;
 			}
@@ -523,6 +585,5 @@ public class ClassBatchServiceImpl implements ClassBatchService {
 				stringIntegerEntry -> new ClassData(stringIntegerEntry.getKey(),
 						stringIntegerEntry.getValue())).collect(Collectors.toList());
 	}
-
 
 }

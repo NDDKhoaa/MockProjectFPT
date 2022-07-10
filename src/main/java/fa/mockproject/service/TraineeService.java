@@ -17,7 +17,6 @@ public interface TraineeService {
 
 	public TraineePage getTraineeModels(Pageable pageable);
 
-
 // 	public void update(TraineeModel traineeModelForm);
 		
 		
