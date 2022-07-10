@@ -2,13 +2,19 @@ package fa.mockproject.model;
 
 import java.time.LocalDate;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 import fa.mockproject.entity.Trainee;
 
 public class TraineeModel {
+	
 	private long id;
 	private String account;
+	@NotEmpty(message = "This field cannot be empty")
 	private String fullName;
 	private String status;
 	private String allocationStatus;
@@ -17,11 +23,19 @@ public class TraineeModel {
 	private LocalDate dayOfBirth;
 	private String universityName;
 	private String falcutyName;
+	
+	@Pattern(regexp="(^$|[0-9]{10})", message = "{msg5}")
+	@NotEmpty(message = "{msg5}")
 	private String phone;
+	
+	@Email(message = "{msg5}", regexp = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])")
+	@NotEmpty(message = "This field cannot be empty")
 	private String email;
 	private String salaryPaid;
 	private String allowanceGroup;
 	private String history;
+	
+	@Pattern(regexp="(^$|[0-9]{15})", message = "{msg5}")
 	private String tpbAccount;
 	private String commitment;
 	@DateTimeFormat(pattern = "dd/MM/yyyy")

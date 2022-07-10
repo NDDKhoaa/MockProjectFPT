@@ -15,4 +15,7 @@ public interface UniversityRepository extends JpaRepository<University, String>{
 	@Query(value = "SELECT u from University u where u.universityId LIKE '%' || :word || '%' "
 			+ "OR u.universityName LIKE '%' || :word || '%' " + "OR u.remarks LIKE '%' || :word || '%' ")
 	public List<University> search(@Param("word") String word);
+	
+	@Query("Select u From University u Where u.universityName = :universityName")
+	public University findByName(@Param("universityName") String universityName);
 }

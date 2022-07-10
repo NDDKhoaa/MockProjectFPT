@@ -14,8 +14,8 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
  <link th:href="@{css/viewEmployee.css}" rel="stylesheet" />
- <link rel="stylesheet" type="text/css" media="all" href="../static/css/traineeInfo.css"
-		th:href="@{/static/css/traineeInfo.css}" />
+ <link rel="stylesheet" type="text/css" media="all" href="../static/traineeCSSJS/css/traineeInfo.css"
+ th:href="@{/static/traineeCSSJS/css/traineeInfo.css}"/>
 </head>
 
 <body>	
@@ -67,6 +67,7 @@
 					</th>
 					<td>
 						<input th:field="*{id}" th:value="${trainee.id}"></input>
+						
 					</td>
 					<th>
 						<p>Type</p>
@@ -99,6 +100,8 @@
 					</th>
 					<td colspan="3">
 						<input th:field="*{fullName}" th:value="${trainee.fullName}"></input>
+						<div th:if="${#fields.hasErrors('fullName')}"
+							th:errors="*{fullName}" th:errorclass="error"></div>
 					</td>
 				</tr>
 				<tr>
@@ -117,7 +120,7 @@
 					</th>
 					<td colspan="3">
 						<span ></span>
-						<input type="date" th:value="${trainee.dayOfBirth}" th:field="*{dayOfBirth}"/>
+						<input  type="date" th:value="${trainee.dayOfBirth}" th:field="*{dayOfBirth}"/>
 					</td>
 				</tr>
 				
@@ -126,13 +129,24 @@
 						<p>University</p>
 					</th>
 					<td colspan="3">
-						<input th:field="*{universityName}" th:value="${trainee.universityName}"></input>
+						<select style="width: 300px; " class="col-lg-4 selectsetting"
+							th:field="*{universityName}">
+							<option th:value="0">Select University</option>
+							<option th:each="university:${universityList}"
+								th:value="${university.universityName}"
+								th:text="${university.universityName}"></option>
+						</select>
 					</td>
 					<th colspan="1">
 						<p>Faculty</p>
 					</th>
 					<td colspan="3">
-						<input th:field="*{falcutyName}" th:value="${trainee.falcutyName}"></input>
+						<select class="col-lg-4 selectsetting" th:field="*{falcutyName}">
+							<option th:value="0">Select Faculty</option>
+							<option th:each="faculty:${facultyList}"
+								th:value="${faculty.facultyName}"
+								th:text="${faculty.facultyName}"></option>
+						</select>
 					</td>
 				</tr>
 				<tr>
@@ -140,13 +154,17 @@
 						<p>Phone *</p>
 					</th>
 					<td colspan="3">
-						<input th:field="*{phone}" th:value="${trainee.phone}"></input>
+						<input  th:field="*{phone}" th:value="${trainee.phone}"></input>
+						<div th:if="${#fields.hasErrors('phone')}"
+							th:errors="*{phone}" th:errorclass="error"></div>
 					</td>
 					<th colspan="1">
 						<p>Email *</p>
 					</th>
 					<td colspan="3">
 						<input th:field="*{email}" th:value="${trainee.email}"></input>
+						<div th:if="${#fields.hasErrors('email')}"
+							th:errors="*{email}" th:errorclass="error"></div>
 					</td>
 				</tr>
 				<tr>
@@ -164,6 +182,8 @@
 					<td colspan="3">
 						<p>
 							<input type="text" th:field="*{tpbAccount}" th:value="${trainee.tpbAccount}" />
+							<div th:if="${#fields.hasErrors('tpbAccount')}"
+							th:errors="*{tpbAccount}" th:errorclass="error"></div>
 						</p>
 					</td>
 				</tr>
@@ -195,7 +215,8 @@
 					</td>
 				</tr>
 			</table>
-			<input type="submit" class="btn btn-warning text-light" value="Update"></input>
+			<button type="submit" class="btn btn-info"><i
+			class="fa fa-refresh" aria-hidden="true"></i>Update</button>
 				<a th:href="@{showTraineeInfo?id={id}(id=${trainee.id})}" class="btn btn-info"><i
 					class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
 			</form>

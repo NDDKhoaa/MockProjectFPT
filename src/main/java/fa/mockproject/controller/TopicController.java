@@ -38,16 +38,7 @@ public class TopicController {
 	
 	@Autowired
 	CommitmentServiceImpl commitmentService;
-	
-//	@PostMapping(value = "/trainingResult/createTopic")
-//	public String createTopic(@ModelAttribute("newTopic") Topic topic, 
-//								@RequestParam("milestoneid") String milestoneId) {
-//		
-//		
-//		String traineeid = topicService.createTopic(topic, milestoneId);
-//		
-//		return "redirect:/trainingResult/getMilestones?id="+traineeid;
-//	}
+
 	
 	@GetMapping(value = "/trainingResult/deleteTopic/{id}/{traineeid}")
 	public ModelAndView deleteMilestone(@PathVariable("id") String id, 
@@ -71,7 +62,7 @@ public class TopicController {
 		List<MilestoneTopicMarkModel> milestoneTopicMarkModels = topicService.getTopicMark(traineeId);
 		
 		model.addAttribute("milestoneTopicMarkModels", milestoneTopicMarkModels);
-		return "topicMark";
+		return "traineeManagement/topicMark";
 	}
 	
 	@GetMapping(value="/trainingResult/getTopicMark")
@@ -87,7 +78,7 @@ public class TopicController {
 		model.addAttribute("updatedMilestoneTopicMarkModels", milestoneTopicMarkDTOModel);
 		model.addAttribute("listMilestoneTopicMarkModels", milestoneTopicMarkDTOModel.getMilestoneTopicMarkModels());
 		
-		return "updateTopicMark";
+		return "traineeManagement/updateTopicMark";
 	}
 	
 	@PostMapping(value = "/trainingResult/updateTopicMark")
@@ -99,8 +90,9 @@ public class TopicController {
 		String message = topicService.updateTopics(milestoneTopicMarkDTOModel.getMilestoneTopicMarkModels());
 		String messageAllocation = allocationService.createAllocation(allocationModel, traineeId);
 
-		
-		String successMassage = rewardPenaltyService.createNewRewardAndPenalty(milestoneForRewardPenaltyDTOModel.rewardPenaltyModels);
+		if(milestoneForRewardPenaltyDTOModel.rewardPenaltyModels.get(0).getMilestoneId() != 1) {
+			String successMassage = rewardPenaltyService.createNewRewardAndPenalty(milestoneForRewardPenaltyDTOModel.rewardPenaltyModels);
+		}
 		commitmentService.createAndUpdate(commitmentViewModel, Long.parseLong(traineeId));
 
 		return "redirect:/trainingResult/getMilestones?id=" + traineeId;

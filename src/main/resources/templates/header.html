@@ -36,7 +36,7 @@
           <li><a th:href="@{'/classManagement'}">Class Management</a></li>
           <li><a th:href="@{'/'}">Candidate Management</a></li>
           <li><a th:href="@{'/'}">Trainer Management</a></li>
-          <li><a th:href="@{'/'}">Trainee Management</a></li>
+          <li><a th:href="@{'/showTraineeList/1'}">Trainee Management</a></li>
           <li><a th:href="@{'/'}">General Setting</a></li>
           <div sec:authorize="hasAnyRole('ROLE_SYSTEM_ADMIN')">
             <li><a th:href="@{'/listRole'}">Role management</a></li>
