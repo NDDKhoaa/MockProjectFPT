@@ -29,7 +29,7 @@ public class SkillServiceImpl implements SkillService {
 
 	public Skill get(String skillId) {
 		Optional<Skill> rs = repo.findById(skillId);
-		return rs.get();
+		return rs.orElse(null);
 	}
 
 	public void delete(Skill skill) {

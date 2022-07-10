@@ -26,7 +26,7 @@ public class TraineeCandidateProfileStatusServiceImpl implements TraineeCandidat
 
 	public TraineeCandidateProfileStatus findById(String statusId) {
 		Optional<TraineeCandidateProfileStatus> rs = repo.findById(statusId);
-		return rs.get();
+		return rs.orElse(null);
 	}
 
 	public void delete(TraineeCandidateProfileStatus status) {

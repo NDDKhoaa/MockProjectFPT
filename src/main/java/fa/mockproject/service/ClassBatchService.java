@@ -3,10 +3,8 @@ package fa.mockproject.service;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.util.Pair;
+import org.springframework.ui.Model;
 
-import fa.mockproject.entity.ClassBatch;
 import fa.mockproject.entity.ClassData;
 import fa.mockproject.entity.Location;
 import fa.mockproject.entity.enumtype.ClassBatchStatusEnum;
@@ -16,8 +14,9 @@ import fa.mockproject.model.ClassBatchModel;
 
 public interface ClassBatchService {
 	
-	public abstract Pair<List<ClassBatchModel>, Page<ClassBatch>> getClassList(Map<String, String> filters);
-	public abstract List<String> getAllClassNames();
+	public void getClasses(Model model, Map<String, String> filters);
+	public void getClassBaseData(Model model);
+	
 	public abstract ClassBatchModel getClazz(String classId);
 	ClassBatchStatusEnum getClassStatus(String classId);
 	public abstract ClassBatchModel createClass(ClassBatchModel classBatchModel);

@@ -139,9 +139,6 @@ SELECT * FROM class_admin;
 SELECT * FROM supplier_partner;
 SELECT * FROM class_batch;
 
-SELECT @dat := created_date FROM class_batch WHERE class_id = 28;
-SELECT datediff(now(), @dat);
-
 DELETE FROM curriculumn;
 DELETE FROM budget;
 DELETE FROM audit;
@@ -149,8 +146,6 @@ DELETE FROM trainer;
 DELETE FROM class_admin;
 DELETE FROM supplier_partner;
 DELETE FROM class_batch;
-
-DROP PROCEDURE UPDATE_CLASS_BATCH_STATUS
 
 DELIMITER $$
 CREATE PROCEDURE UPDATE_CLASS_BATCH_STATUS (
@@ -183,7 +178,7 @@ BEGIN
 			WHERE class_id = class_id;
             SELECT ROW_COUNT() INTO row_cnt;
 		END IF;
-    COMMIT;UPDATE_CLASS_BATCH_STATUS
+    COMMIT;
 END$$
 
 CALL UPDATE_CLASS_BATCH_STATUS (28, 'Submited', '06-Jul-2022 - Submited by anonymousUser', '', @row_cnt);

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Employee Infomation</title>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet"
+		type="text/css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link th:href="@{css/traineeInfo.css}" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" media="all" href="../static/css/traineeInfo.css"
+		th:href="@{/static/css/traineeInfo.css}" />
+</head>
+
+<body>
+	<div class="container-fluid">
+		<div class="row" style="height: 50px; background-color: #205081; vertical-align: middle;">
+			<div class="col-lg-2">
+				<img src="https://i.postimg.cc/7Y2Hrb9q/Logo.png" alt="" style="height: 47px; width: 90px;">
+			</div>
+			<div class="col">
+				<h2 style="font-size: 25px; color: white; font-weight: 780; margin-top: 10px;">FSOFT
+					HR ULTILITY</h2>
+			</div>
+		</div>
+		<div class="row" style="font-weight: 550;">
+			<div class="col-lg-2 menusetting" style="height: 900px;">
+				<label>Your role now is:</label> <select style="width: 170px; height: 30px; margin-bottom: 20px;">
+					<option>Select Role</option>
+				</select>
+				<div class="hrefsetting">
+					<a href=""><i class="fa fa-circle"></i> Dashboard</a>
+				</div>
+				<div class="hrefsetting">
+					<a href="/"><i class="fa fa-circle"></i> Class Management</a>
+				</div>
+				<div class="hrefsetting">
+					<a href="viewCandidate"><i class="fa fa-circle"></i> Candidate
+						Management</a>
+				</div>
+				<div class="hrefsetting">
+					<a href=""><i class="fa fa-circle"></i> Trainer Management</a>
+				</div>
+				<div class="hrefsetting">
+					<a href=""><i class="fa fa-circle"></i> Trainee Management</a>
+				</div>
+				<div class="hrefsetting">
+					<a href=""><i class="fa fa-circle"></i> General Setting</a>
+				</div>
+			</div>
+		</div>
+		<div style="width: 80%; margin-top: -870px; margin-left: 270px;">
+			<h3 style="margin-bottom: 20px;">Trainee Profile</h3>
+
+			<span> <a class="btn btn-info" th:href="@{http://localhost:8080/showTraineeInfo?id={id}(id=${trainee.id})}"> Trainee Profile</a> </span>
+			<span> <a class="btn btn-info" th:href="@{trainingResult/viewMilestones?id={id}(id=${trainee.id})}"> Training Result</a></span>
+			<hr>
+			<table class="table table-bordered">
+				
+				<tr>
+					<th>
+						<p>Empl ID</p>
+					</th>
+					<td>
+						<p th:text="${trainee.id}"></p>
+					</td>
+					<th>
+						<p>Type</p>
+					</th>
+					<td>
+						<p>Trainee</p>
+					</td>
+					<th>
+						<p>Status</p>
+					</th>
+					<td>
+						<p th:text="${trainee.status}"></p>
+					</td>
+					<th>
+						<p>Allocation Status</p>
+					</th>
+					<td>
+						<p></p>
+					</td>
+				</tr>
+				<tr>
+					<th colspan="1">
+						<p>Account</p>
+					</th>
+					<td colspan="3">
+						<p th:text="${trainee.account}"></p>
+					</td>
+					<th colspan="1">
+						<p>Name *</p>
+					</th>
+					<td colspan="3">
+						<p th:text="${trainee.fullName}"></p>
+					</td>
+				</tr>
+				<tr>
+					<th colspan="1">
+						<p>Gender *</p>
+					</th>
+					<td colspan="3">
+						<span th:text="${trainee.gender}"></span>
+					</td>
+					<th colspan="1">
+						<p>DOB *</p>
+					</th>
+					<td colspan="3">
+						<span th:text="${trainee.dayOfBirth}"></span>
+						<!-- <input type="date" th:field="*{dateOfBirth}"
+						/> -->
+					</td>
+				</tr>
+
+				<tr>
+					<th colspan="1">
+						<p>University</p>
+					</th>
+					<td colspan="3">
+						<p th:text="${trainee.universityName}"></p>
+					</td>
+					<th colspan="1">
+						<p>Faculty</p>
+					</th>
+					<td colspan="3">
+						<p th:text="${trainee.falcutyName}"></p>
+					</td>
+				</tr>
+				<tr>
+					<th colspan="1">
+						<p>Phone *</p>
+					</th>
+					<td colspan="3">
+						<p th:text="${trainee.phone}"></p>
+					</td>
+					<th colspan="1">
+						<p>Email *</p>
+					</th>
+					<td colspan="3">
+						<p th:text="${trainee.email}"></p>
+					</td>
+				</tr>
+				<tr>
+					<th colspan="1">
+						<p>Salary Paid *</p>
+					</th>
+					<td colspan="3">
+						<span th:text="${trainee.salaryPaid}"></span>
+					</td>
+					<th colspan="1">
+						<p>TPB Account</p>
+					</th>
+					<td colspan="3">
+						<p th:text="${trainee.tpbAccount}"></p>
+					</td>
+				</tr>
+				<tr>
+					<th colspan="1">
+						<p>Allowance Group</p>
+					</th>
+					<td colspan="3">
+						<p th:text="${trainee.allowanceGroup}"></p>
+					</td>
+					<th colspan="1">
+						<p>Commitment</p>
+					</th>
+					<td colspan="3">
+						<p th:text="${ trainee.commitment + ' months - ' + trainee.endDate}"></p>
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<p>History</p>
+					</th>
+					<td colspan="7">
+						<p></p>
+					</td>
+				</tr>
+
+			</table>
+			<div>
+				<a class="btn btn-warning text-light" th:href="@{getTraineeInfo?id={id}(id=${trainee.id})}"><i
+						class="fa fa-refresh" aria-hidden="true"></i>
+					Update Trainee</a>
+				<a class="btn btn-warning text-light" th:href="@{deleteTraineeById?id={id}(id=${trainee.id})}"><i
+						class="fa fa-refresh" aria-hidden="true"></i>
+					Delete Trainee</a>
+				<a href="showTraineeList/1" class="btn btn-info"><i class="fa fa-arrow-left" aria-hidden="true"></i>
+					Back</a>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

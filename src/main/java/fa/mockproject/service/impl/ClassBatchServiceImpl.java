@@ -13,14 +13,15 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.util.Pair;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
 import fa.mockproject.entity.ClassBatch;
@@ -33,26 +34,43 @@ import fa.mockproject.entity.enumtype.ClassManagementActionEnum;
 import fa.mockproject.entity.enumtype.WeightedNumberEnum;
 import fa.mockproject.model.AuditModel;
 import fa.mockproject.model.BudgetModel;
+import fa.mockproject.model.ClassAdminModel;
 import fa.mockproject.model.ClassBatchModel;
-import fa.mockproject.repository.AuditRepository;
-import fa.mockproject.repository.BudgetRepository;
+import fa.mockproject.model.ClassTypeModel;
+import fa.mockproject.model.DeliveryTypeModel;
+import fa.mockproject.model.FormatTypeModel;
+import fa.mockproject.model.LocationModel;
+import fa.mockproject.model.PositionModel;
+import fa.mockproject.model.ScopeModel;
+import fa.mockproject.model.SkillModel;
+import fa.mockproject.model.SubSubjectTypeModel;
+import fa.mockproject.model.SubjectTypeModel;
+import fa.mockproject.model.TrainerModel;
 import fa.mockproject.repository.ClassBatchRepository;
-import fa.mockproject.repository.ClassTypeRepository;
-import fa.mockproject.repository.LocationRepository;
 import fa.mockproject.repository.PositionRepository;
 import fa.mockproject.repository.SkillRepository;
-import fa.mockproject.repository.TrainerRepository;
 import fa.mockproject.service.AuditService;
 import fa.mockproject.service.BudgetService;
 import fa.mockproject.service.ClassAdminService;
 import fa.mockproject.service.ClassBatchService;
+import fa.mockproject.service.ClassTypeService;
 import fa.mockproject.service.CurriculumnService;
+import fa.mockproject.service.DeliveryTypeService;
+import fa.mockproject.service.FormatTypeService;
+import fa.mockproject.service.LocationService;
+import fa.mockproject.service.PositionService;
+import fa.mockproject.service.ScopeService;
+import fa.mockproject.service.SkillService;
+import fa.mockproject.service.SubSubjectTypeService;
+import fa.mockproject.service.SubjectTypeService;
 import fa.mockproject.service.TrainerService;
 import fa.mockproject.util.ClassManagementConstant;
 
 @Service
 public class ClassBatchServiceImpl implements ClassBatchService {
 	
+	@Autowired
+	ResourceBundleMessageSource messageSource;
 	@Autowired
 	private ClassBatchRepository classBatchRepository;
 	@Autowired
@@ -62,16 +80,6 @@ public class ClassBatchServiceImpl implements ClassBatchService {
 	@Autowired
 	private TrainerService trainerService;
 	@Autowired
-	private BudgetRepository budgetRepository;
-	@Autowired
-	private AuditRepository auditRepository;
-	@Autowired
-	private TrainerRepository trainerRepository;
-	@Autowired
-	private LocationRepository locationRepository;
-	@Autowired
-	private ClassTypeRepository classTypeRepository;
-	@Autowired
 	private SkillRepository skillRepository;
 	@Autowired
 	private PositionRepository positionRepository;
@@ -79,9 +87,27 @@ public class ClassBatchServiceImpl implements ClassBatchService {
 	private CurriculumnService curriculumnService;
 	@Autowired
 	private ClassAdminService classAdminService;
+	@Autowired
+	private LocationService locationService;
+	@Autowired
+	private SubjectTypeService subjectTypeService;
+	@Autowired
+	private SubSubjectTypeService subSubjectTypeService;
+	@Autowired
+	private DeliveryTypeService deliveryTypeService;
+	@Autowired
+	private FormatTypeService formatTypeService;
+	@Autowired
+	private ScopeService scopeService;
+	@Autowired
+	private ClassTypeService classTypeService;
+	@Autowired
+	private SkillService skillService;
+	@Autowired
+	private PositionService positionService;
 	
 	@Override
-	public Pair<List<ClassBatchModel>, Page<ClassBatch>> getClassList(Map<String, String> filters) {
+	public void getClasses(Model model, Map<String, String> filters) {
 		Integer pageSize = (Integer) convertFilterType(Integer.class, filters.get("pageSize"));
 		Integer pageIndex = (Integer) convertFilterType(Integer.class, filters.get("pageIndex"));
 		String locationId = (String) convertFilterType(String.class, filters.get("locationId"));
@@ -91,16 +117,21 @@ public class ClassBatchServiceImpl implements ClassBatchService {
 		LocalDate actualEndDate = (LocalDate) convertFilterType(LocalDate.class, filters.get("actualEndDate"));
 		
 		Specification<ClassBatch> specification = Specification.where(alwaysTrue());
-		if (locationId != null) 
-			specification.and(locationEqual(locationId));
-		if (className != null)
-			specification.and(nameLike(className));
-		if (status != null)
-			specification.and((statusLike(status)));
-		if (actualStartDate != null)
-			specification.and(fromDate(actualStartDate));
-		if (actualEndDate != null)
-			specification.and(toDate(actualEndDate));
+		if (locationId != null) {
+			specification = specification.and(locationEqual(locationId));
+		}
+		if (className != null) {
+			specification = specification.and(nameLike(className));
+		}
+		if (status != null) {
+			specification = specification.and((statusLike(status)));
+		}
+		if (actualStartDate != null) {
+			specification = specification.and(fromDate(actualStartDate));
+		}
+		if (actualEndDate != null) {
+			specification = specification.and(toDate(actualEndDate));
+		}
 		
 		pageIndex = pageIndex == null ? 1 : pageIndex;
 		pageSize = pageSize == null ? ClassManagementConstant.CLASS_LIST_PAGE_SIZE.get(0) : pageSize;
@@ -113,7 +144,53 @@ public class ClassBatchServiceImpl implements ClassBatchService {
 			classBatchModels.add(new ClassBatchModel(classBatch));
 		});
 		
-		return Pair.of(classBatchModels, page);
+		List<LocationModel> locationModels = locationService.getAll();
+		List<String> classNames = classBatchRepository.findAllClassName();
+		
+		int totalPages = page.getTotalPages();
+		totalPages = totalPages == 0 ? 1 : totalPages;
+		pageIndex = page.getNumber() + 1;
+		pageSize = page.getSize();
+		
+		model.addAttribute("classBatchModels", classBatchModels);
+		model.addAttribute("totalElements", page.getTotalElements());
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("pageIndex", pageIndex);
+		model.addAttribute("pageSize", pageSize);
+		model.addAttribute("locationModels", locationModels);
+		model.addAttribute("classNames", classNames);
+		
+		if (classBatchModels == null || classBatchModels.size() == 0) {
+			model.addAttribute("modal", "warningModal");
+			model.addAttribute("message", messageSource.getMessage("msg8", null, null));			
+		}
+	}
+	
+	@Override
+	public void getClassBaseData(Model model) {
+		List<LocationModel> locationModels = locationService.getAll();
+		List<ClassAdminModel> classAdminModels = classAdminService.getAllProfile();
+		List<SubjectTypeModel> subjectTypeModels = subjectTypeService.getAll();
+		List<SubSubjectTypeModel> subSubjectTypeModels = subSubjectTypeService.getAll();
+		List<DeliveryTypeModel> deliveryTypeModels = deliveryTypeService.getAll();
+		List<FormatTypeModel> formatTypeModels = formatTypeService.getAll();
+		List<ScopeModel> scopeModels = scopeService.getAll();
+		List<TrainerModel> trainerModels = trainerService.getAllProfile();
+		List<ClassTypeModel> classTypeModels = classTypeService.getAll();
+		List<SkillModel> skillModels = skillService.getAll();
+		List<PositionModel> positionModels = positionService.getAll();
+		
+		model.addAttribute("locationModels", locationModels);
+		model.addAttribute("classAdminModels", classAdminModels);
+		model.addAttribute("subjectTypeModels", subjectTypeModels);
+		model.addAttribute("subSubjectTypeModels", subSubjectTypeModels);
+		model.addAttribute("deliveryTypeModels", deliveryTypeModels);
+		model.addAttribute("formatTypeModels", formatTypeModels);
+		model.addAttribute("scopeModels", scopeModels);
+		model.addAttribute("trainerModels", trainerModels);
+		model.addAttribute("classTypeModels", classTypeModels);
+		model.addAttribute("skillModels", skillModels);
+		model.addAttribute("positionModels", positionModels);
 	}
 
 	@Override
@@ -243,11 +320,6 @@ public class ClassBatchServiceImpl implements ClassBatchService {
 			e.printStackTrace();
 		}	
 		return false;
-	}
-
-	@Override
-	public List<String> getAllClassNames() {
-		return classBatchRepository.findAllClassName();
 	}
 
 	@Override
@@ -451,4 +523,6 @@ public class ClassBatchServiceImpl implements ClassBatchService {
 				stringIntegerEntry -> new ClassData(stringIntegerEntry.getKey(),
 						stringIntegerEntry.getValue())).collect(Collectors.toList());
 	}
+
+
 }

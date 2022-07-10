@@ -29,7 +29,7 @@ $(document).ready(e => {
     // Handle add or remove row from budget and audit table
     addOrRemoveTableRow({ table: ".budget-table"});
     addOrRemoveTableRow({ table: ".audit-table"});
-
+    
     // Clear modal content when modal hide
     modal.on('hidden.bs.modal', (e) => {
         resetModal($(e.target))
@@ -62,7 +62,7 @@ $(document).ready(e => {
         let classId = $(".classbatch-infor-form").data('classId');
         if (action && classId) {
             if (action == 'update') {
-                window.location.href = CLASS_API + `/${action}/${classId}`;
+                window.location.href = CLASS_API + `/${action}?classId=${classId}`;
             }
 
             changeClassState(action, classId, {success: (data) => {
@@ -106,12 +106,14 @@ function submitClassBatch(form, url, {confirm = 'false', success = () => {}}) {
 }
 
 function changeClassState(action, classId, {confirm = 'false', method = 'GET', success = () => {}}) {
-    const data = {};
+    const data = {
+		classId: classId
+	};
     if (confirm === 'true') {
         data.confirm = confirm;
     }
     $.ajax({
-        url: CLASS_API + `/${action}/${classId}`,
+        url: CLASS_API + `/${action}`,
         data: data,
         dataType: "html",
         processData: true,

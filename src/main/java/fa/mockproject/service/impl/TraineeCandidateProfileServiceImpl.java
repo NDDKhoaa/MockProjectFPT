@@ -27,7 +27,7 @@ public class TraineeCandidateProfileServiceImpl implements TraineeCandidateProfi
 
 	public TraineeCandidateProfile findById(long profileId) {
 		Optional<TraineeCandidateProfile> rs = repo.findById(profileId);
-		return rs.get();
+		return rs.orElse(null);
 	}
 
 	public void delete(TraineeCandidateProfile profile) {

@@ -17,8 +17,8 @@
 							<h4 class="m-0">Class Listing</h4>          
 						</div>
 						<div class="content p-2 d-flex flex-column flex-grow-1">
- 							<form action="" class="serach-class-form form" novalidate>
-								<div class="form-row w-100 mb-2">
+ 							<form action="" class="search-class-form form" novalidate>
+								<div class="form-row w-100 mb-1">
 									<div class="col-4">
 										<div class="form-group mb-0 row justify-content-start">
 											<label for="" class="col-form-label col-4">Location</label>
@@ -51,7 +51,7 @@
 												</select>
 											</div>
 											<div class="col-auto ml-auto pr-1">
-												<button type="submit" class="search-btn btn btn-secondary">
+												<button type="submit" class="search-btn btn bg-gray border border-dark rounded-0 text-dark">
 													<i class="fa-solid fa-magnifying-glass"></i>
 													Search
 												</button>
@@ -78,92 +78,7 @@
 									</div>
 								</div>
 							</form>
-							<div class="table-wrapper" th:include="~{classManagement/fragments/classListTable :: table}">
-							</div>
-							<div class="mb-0 mt-auto">
-								<div class="pagination-control d-flex">
-									<div class="page-size form-row mr-5">
-										<label for="" class="col col-form-label text-nowrap">Page Size</label>
-										<select name="pageSize" class="form-control rounded-0 col border-dark">
-											<option th:each="size: ${T(fa.mockproject.util.ClassManagementConstant).CLASS_LIST_PAGE_SIZE}" th:selected="${size} == ${pageSize}" th:value="${size}" th:text="${size}"></option>
-										</select>
-									</div>
-									<div class="current-page form-row">
-										<label class="current-page-description col col-form-label text-nowrap">Show 1 - [[${pageSize} >= ${totalElements} ? ${totalElements} : ${pageSize} ]] of total [[${totalElements}]] items</label>
-										<select name="pageIndex" class="form-control rounded-0 col border-dark">
-											<option th:each="i: ${#numbers.sequence(1, totalPage)}"  th:selected="${i} == ${pageIndex}" th:value="${i}" th:text="'Page ' + ${i} + '/' + ${totalPage}"></option>
-										</select>
-									</div>
-									<nav class="ml-auto">
-										<ul class="pagination mb-0">
-											<li class="page-item" th:classappend="${pageIndex} == ${1} ? 'disabled' : ''">
-												<button class="page-link bg-light-gray border-dark rounded-0 text-body previous">
-													<span aria-hidden="true">&laquo;</span>
-												</button>
-											</li>
-											<li class="page-item" th:each="i: ${#numbers.sequence(1, totalPage)}" th:classappend="${i} == ${pageIndex} ? 'active' : ''">
-												<button class="page-link bg-light-gray border-dark rounded-0 text-body" th:text="${i}"></button>
-											</li>
-											<li class="page-item"  th:classappend="${pageIndex} == ${totalPage} ? 'disabled' : ''">
-												<button class="page-link bg-light-gray border-dark rounded-0 text-body next">
-													<span aria-hidden="true">&raquo;</span>
-												</button>
-											</li>
-										</ul>
-									</nav>
-								</div>
-								<div class="control-btn pt-3">
-									<div class="btn-wrapper w-75">
-										<button class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0 w-125px">
-											<i class="fa-solid fa-circle-plus float-left text-success"></i>
-											New Class
-										</button>
-										<button class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0 w-125px">
-											<i class="fa-solid fa-circle-arrow-up float-left text-primary"></i>
-											Update Class
-										</button>
-										<button class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0 w-125px">
-											<i class="fa-solid fa-turn-up float-left text-orange"></i>
-											Submit Class
-										</button>
-										<button class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0 w-125px">
-											<i class="fa-solid fa-play float-left text-cyan"></i>
-											Start Class
-										</button>
-										<button class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0 w-125px">
-											<i class="fa-solid fa-square-minus float-left text-yellow"></i>
-											Finish Class
-										</button>
-										<button class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0 w-125px">
-											<i class="fa-solid fa-ban float-left text-danger"></i>
-											Cancel Class
-										</button>
-										<button class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0 w-125px">
-											<i class="fa-solid fa-thumbs-up float-left text-pink"></i>
-											Approve Class
-										</button>
-										<button class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0 w-125px">
-											<i class="fa-solid fa-thumbs-down float-left text-brown"></i>
-											Reject Class
-										</button>
-										<button class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0 w-125px">
-											<i class="fa-solid fa-circle-minus float-left text-danger"></i>
-											Close Class
-										</button>
-										<button class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0 w-125px">
-											<i class="fa-solid fa-question float-left text-success"></i>
-											Request Infor
-										</button>
-										<button class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0 w-125px">
-											<i class="fa-regular fa-thumbs-up float-left text-purple"></i>
-											Accept Class
-										</button>
-										<button class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0 w-125px">
-											<i class="fa-regular fa-thumbs-down float-left text-info"></i>
-											Decline Class
-										</button>
-									</div>
-								</div>
+							<div th:replace="~{classManagement/fragments/classListTable :: table}">
 							</div>
 						</div>
 					</main>
@@ -174,5 +89,6 @@
         <div th:replace="fragments/modal :: #app-modal"></div>
     </div>
     <script type="text/javascript" th:replace="fragments/script :: script"></script>
+    <script th:src="@{/static/classManagement/js/classList.js}"></script>
 </body>
 </html>

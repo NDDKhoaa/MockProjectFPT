@@ -160,17 +160,17 @@ public class Candidate {
 		this.remarks = model.getRemarks();
 	}
 
-	public Candidate(Candidate findbyId) {
-		this.candidateId = findbyId.getCandidateId();
-		this.traineeCandidateProfile = findbyId.getTraineeCandidateProfile();
-		this.applicationDate = findbyId.getApplicationDate();
-		this.channel = findbyId.getChannel();
-		this.location = findbyId.getLocation();
-		this.entryTests = findbyId.getEntryTests();
-		this.interviews = findbyId.getInterviews();
-		this.offers = findbyId.getOffers();
-		this.status = findbyId.getStatus();
-		this.remarks = findbyId.getRemarks();
+	public Candidate(Candidate candidate) {
+		this.candidateId = candidate.getCandidateId();
+		this.traineeCandidateProfile = candidate.getTraineeCandidateProfile();
+		this.applicationDate = candidate.getApplicationDate();
+		this.channel = candidate.getChannel();
+		this.location = candidate.getLocation();
+		this.entryTests = candidate.getEntryTests();
+		this.interviews = candidate.getInterviews();
+		this.offers = candidate.getOffers();
+		this.status = candidate.getStatus();
+		this.remarks = candidate.getRemarks();
 	}
 
 	public Candidate(Candidate candidate2, Channel channel2, Location location2,TraineeCandidateProfileStatus status2) {

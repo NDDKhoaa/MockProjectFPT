@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import fa.mockproject.entity.Candidate;
+import fa.mockproject.entity.TraineeCandidateProfile;
 
 @Repository
 public interface CandidateRepository extends JpaRepository<Candidate, Long> {
@@ -17,4 +18,6 @@ public interface CandidateRepository extends JpaRepository<Candidate, Long> {
 			+ "OR c.channel LIKE '%' || :word || '%' " + "OR c.location LIKE '%' || :word || '%' "
 			+ "OR c.remarks LIKE '%' || :word || '%' ")
 	public List<Candidate> search(@Param("word") String word);
+	
+	public Candidate findByTraineeCandidateProfile(TraineeCandidateProfile profile);
 }

@@ -1,0 +1,117 @@
+		table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 20%;
+            
+        }
+        html:first-child caption { /* Opera only */
+		 	margin-left: 0;
+		}
+		.section-header {
+		    border: 1px solid black;
+		    font-size: 15px;
+            font-weight: bold;
+		    background-color: rgb(123, 208, 237);
+		    height: 30px;
+            margin-top: 10px;
+		}
+        .header-attendance {
+            margin-top: -2px;
+        }
+        .section-header p {
+            padding: 3px;
+            padding-left: 10px;
+        }
+        caption {
+        	
+        	caption-side: top;
+        	height: 50px;
+        	border: 1px solid black;
+        }
+        h5{
+        	margin-left: 20px;
+        }
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        
+        th {
+            background-color: #CCCCCC
+        }
+        
+        tr:nth-child(even) {
+            background-color: #EEEEEE;
+        }
+        
+        .menusetting {
+            background-color: #CCCCCC;
+        }
+        
+        .hrefsetting {
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        
+        .tablebackground {
+            background-color: #CCCCCC;
+        }
+        
+        .inputedbackground {
+            background-color: #DDDDDD;
+        }
+        
+        button {
+        	border-radius: 50%;
+        	height: 100%
+        }
+        .milestoneTables {
+            margin-top: -15px;
+        }
+        .collapse-btn {
+            background-color: rgb(123, 208, 237);
+        }
+
+        #delete_message, #validation_message , #nothing_message
+        {
+            display:none;
+            position:fixed;
+            top:200px;
+            left: 500px;
+            padding-top: 20px;
+            width: 500px;
+            height:150px;
+            background-color:#5882FA;
+            color: whitesmoke;
+            text-align:center;
+            border-radius: 10px;
+        }
+        #delete, #cancel, #cancel1, #cancel2
+        {
+            border:none;
+            background:none;
+            width:100px;
+            height:40px;
+            font-size:18px;
+            border-radius:5px;
+            border:2px solid white;
+            margin:10px;
+            color:#CED8F6;
+        }
+
+        .fa {
+            pointer-events:none;
+        }
+
+        .milestone-child-table, .topic-mark-table-final {
+            margin-top: -17px;
+            border-style: none;
+        }
+
+        .reward-penalty-table {
+            margin-top: 25px;
+        }
+        
+        

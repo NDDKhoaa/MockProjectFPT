@@ -9,8 +9,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.data.domain.Page;
-import org.springframework.data.util.Pair;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,25 +21,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import fa.mockproject.entity.ClassBatch;
 import fa.mockproject.entity.enumtype.ClassBatchStatusEnum;
 import fa.mockproject.entity.enumtype.ClassManagementActionEnum;
-import fa.mockproject.entity.enumtype.ClassManagementActionResultEnum;
 import fa.mockproject.entity.enumtype.ClassViewMode;
 import fa.mockproject.model.AuditModel;
 import fa.mockproject.model.BudgetModel;
-import fa.mockproject.model.ClassAdminModel;
 import fa.mockproject.model.ClassBatchModel;
-import fa.mockproject.model.ClassTypeModel;
 import fa.mockproject.model.CurriculumnModel;
-import fa.mockproject.model.DeliveryTypeModel;
-import fa.mockproject.model.FormatTypeModel;
-import fa.mockproject.model.LocationModel;
-import fa.mockproject.model.PositionModel;
-import fa.mockproject.model.ScopeModel;
-import fa.mockproject.model.SkillModel;
-import fa.mockproject.model.SubSubjectTypeModel;
-import fa.mockproject.model.SubjectTypeModel;
 import fa.mockproject.model.TrainerModel;
 import fa.mockproject.service.AuditService;
 import fa.mockproject.service.BudgetService;
@@ -59,7 +45,6 @@ import fa.mockproject.service.SubSubjectTypeService;
 import fa.mockproject.service.SubjectTypeService;
 import fa.mockproject.service.TrainerService;
 import fa.mockproject.util.ClassManagementConstant;
-import net.bytebuddy.implementation.bytecode.constant.ClassConstant;
 
 @Controller
 public class ClassManagementController {
@@ -97,34 +82,14 @@ public class ClassManagementController {
 	@Autowired
 	CurriculumnService curriculumnService;
 	
-	@GetMapping({"/classes", "/classes/view"})
+	@GetMapping("/classes")
 	public String getClassList(Model model, @RequestParam Map<String, String> params) {
-		
-		Pair<List<ClassBatchModel>, Page<ClassBatch>> pair = classBatchService.getClassList(params);
-		List<ClassBatchModel> classBatchModels = pair.getFirst();
-		
-		List<LocationModel> locationModels = locationService.getAll();
-		List<String> classNames = classBatchService.getAllClassNames();
-		
-		model.addAttribute("classBatchModels", classBatchModels);
-		model.addAttribute("totalElements", pair.getSecond().getTotalElements());
-		model.addAttribute("totalPage", pair.getSecond().getTotalPages());
-		model.addAttribute("pageIndex", pair.getSecond().getNumber() + 1);
-		model.addAttribute("pageSize", pair.getSecond().getSize());
-		model.addAttribute("locationModels", locationModels);
-		model.addAttribute("classNames", classNames);
-//		model.addAttribute("classListPageSize", ClassManagementConstant.CLASS_LIST_PAGE_SIZE);
-		
-		if (classBatchModels == null || classBatchModels.size() == 0) {
-			model.addAttribute("showModal", true);
-			model.addAttribute("message", messageSource.getMessage("msg8", null, null));			
-		}
-		
+		classBatchService.getClasses(model, params);
 		return "classManagement/classList";
 	}
 	
-	@GetMapping("/classes/view/{classId}")
-	public String getClass(Model model, @PathVariable(required = true) String classId) {
+	@GetMapping("/classes/view")
+	public String getClass(Model model, @RequestParam(name = "classId", defaultValue = "0") String classId) {
 
 		ClassBatchModel classBatchModel = classBatchService.getClazz(classId);
 		if (classBatchModel == null) {
@@ -148,19 +113,6 @@ public class ClassManagementController {
 	
 	@GetMapping(value = "/classes/create")
 	public String createNewClass(Model model) {
-		
-		List<LocationModel> locationModels = locationService.getAll();
-		List<ClassAdminModel> classAdminModels = classAdminService.getAllProfile();
-		List<SubjectTypeModel> subjectTypeModels = subjectTypeService.getAll();
-		List<SubSubjectTypeModel> subSubjectTypeModels = subSubjectTypeService.getAll();
-		List<DeliveryTypeModel> deliveryTypeModels = deliveryTypeService.getAll();
-		List<FormatTypeModel> formatTypeModels = formatTypeService.getAll();
-		List<ScopeModel> scopeModels = scopeService.getAll();
-		List<TrainerModel> trainerModels = trainerService.getAllProfile();
-		List<ClassTypeModel> classTypeModels = classTypeService.getAll();
-		List<SkillModel> skillModels = skillService.getAll();
-		List<PositionModel> positionModels = positionService.getAll();
-		
 		ClassBatchModel classBatchModel = new ClassBatchModel();
 		classBatchModel.setTrainerModels(new ArrayList<TrainerModel>());
 		classBatchModel.setBudgetModels(new ArrayList<BudgetModel>());
@@ -170,19 +122,10 @@ public class ClassManagementController {
 		classBatchModel.getAuditModels().add(new AuditModel());
 		
 		model.addAttribute("classBatchModel", classBatchModel);
-		model.addAttribute("locationModels", locationModels);
-		model.addAttribute("classAdminModels", classAdminModels);
-		model.addAttribute("subjectTypeModels", subjectTypeModels);
-		model.addAttribute("subSubjectTypeModels", subSubjectTypeModels);
-		model.addAttribute("deliveryTypeModels", deliveryTypeModels);
-		model.addAttribute("formatTypeModels", formatTypeModels);
-		model.addAttribute("scopeModels", scopeModels);
-		model.addAttribute("trainerModels", trainerModels);
-		model.addAttribute("classTypeModels", classTypeModels);
-		model.addAttribute("skillModels", skillModels);
-		model.addAttribute("positionModels", positionModels);
 		model.addAttribute("viewMode", ClassViewMode.CreateClass);
 		model.addAttribute("action", ClassManagementActionEnum.Create);
+		
+		classBatchService.getClassBaseData(model);
 
 		return "classManagement/classDetail";
 	}
@@ -222,14 +165,14 @@ public class ClassManagementController {
 		model.addAttribute("message", messageSource.getMessage("msg54", 
 				new Object[] {ClassManagementActionEnum.Create}, 
 				null));
-		model.addAttribute("redirect", "/classes/view/" + savedClassBatchModel.getClassId());
+		model.addAttribute("redirect", "/classes/view?classId=" + savedClassBatchModel.getClassId());
 		model.addAttribute("redirectDelay", 1000);
 		
 		return "modals/messageModal";
 	}
 
-	@GetMapping(value = "/classes/update/{classId}")
-	public String updateClass(Model model, @PathVariable(required = true) String classId) {
+	@GetMapping(value = "/classes/update")
+	public String updateClass(Model model, @RequestParam(name = "classId", defaultValue = "0") String classId) {
 		
 		ClassBatchStatusEnum classStatus = classBatchService.getClassStatus(classId);
 		
@@ -258,40 +201,19 @@ public class ClassManagementController {
 			model.addAttribute("viewMode", ClassViewMode.UpdateDraftClass);
 		}
 		
-		List<LocationModel> locationModels = locationService.getAll();
-		List<ClassAdminModel> classAdminModels = classAdminService.getAllProfile();
-		List<SubjectTypeModel> subjectTypeModels = subjectTypeService.getAll();
-		List<SubSubjectTypeModel> subSubjectTypeModels = subSubjectTypeService.getAll();
-		List<DeliveryTypeModel> deliveryTypeModels = deliveryTypeService.getAll();
-		List<FormatTypeModel> formatTypeModels = formatTypeService.getAll();
-		List<ScopeModel> scopeModels = scopeService.getAll();
-		List<TrainerModel> trainerModels = trainerService.getAllProfile();
-		List<ClassTypeModel> classTypeModels = classTypeService.getAll();
-		List<SkillModel> skillModels = skillService.getAll();
-		List<PositionModel> positionModels = positionService.getAll();
-		
 		model.addAttribute("classBatchModel", classBatchModel);
-		model.addAttribute("locationModels", locationModels);
-		model.addAttribute("classAdminModels", classAdminModels);
-		model.addAttribute("subjectTypeModels", subjectTypeModels);
-		model.addAttribute("subSubjectTypeModels", subSubjectTypeModels);
-		model.addAttribute("deliveryTypeModels", deliveryTypeModels);
-		model.addAttribute("formatTypeModels", formatTypeModels);
-		model.addAttribute("scopeModels", scopeModels);
-		model.addAttribute("trainerModels", trainerModels);
-		model.addAttribute("classTypeModels", classTypeModels);
-		model.addAttribute("skillModels", skillModels);
-		model.addAttribute("positionModels", positionModels);
 		model.addAttribute("action", ClassManagementActionEnum.Update);
+		
+		classBatchService.getClassBaseData(model);
 
 		return "classManagement/classDetail";
 	}
 	
-	@PostMapping(value = "/classes/update/{classId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/classes/update", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String updateClass(Model model, 
 			@ModelAttribute("classBatchModel") @Valid ClassBatchModel classBatchModel, 
 			BindingResult result,
-			@PathVariable(required = true) String classId,
+			@RequestParam(name = "classId", defaultValue = "0") String classId,
 			@RequestParam(name = "confirm", defaultValue = "false") String confirm) {
 		
 		if (result.hasErrors()) {
@@ -318,16 +240,16 @@ public class ClassManagementController {
 		model.addAttribute("message", messageSource.getMessage("msg54", 
 				new Object[] {ClassManagementActionEnum.Update}, 
 				null));
-		model.addAttribute("redirect", "/classes/view/" + classId);
+		model.addAttribute("redirect", "/classes/view?classId=" + classId);
 		model.addAttribute("redirectDelay", 1000);
 		
 		return "modals/messageModal";
 	}
 	
-	@GetMapping(value = "/classes/{action: |^submit$|^reject$|^cancel$|^approve$|^decline$|^accept$|^start$|^finish$|^close$|^request$}/{classId}")
+	@GetMapping(value = "/classes/{action: |^submit$|^reject$|^cancel$|^approve$|^decline$|^accept$|^start$|^finish$|^close$|^request$}")
 	public String changeClassState(Model model, 
 			@PathVariable(required = true) String action,
-			@PathVariable(required = true) String classId) {
+			@RequestParam(name = "classId", defaultValue = "0") String classId) {
 		
 		ClassBatchStatusEnum classStatus = classBatchService.getClassStatus(classId);
 		ClassManagementActionEnum actionEnum; 
@@ -358,10 +280,10 @@ public class ClassManagementController {
 		return "modals/messageModal";
 	}
 	
-	@PostMapping(value = "/classes/{action: |^submit$|^reject$|^cancel$|^approve$|^decline$|^accept$|^start$|^finish$|^close$|^request$}/{classId}")
+	@PostMapping(value = "/classes/{action: |^submit$|^reject$|^cancel$|^approve$|^decline$|^accept$|^start$|^finish$|^close$|^request$}")
 	public String changeClassState(Model model, 
 			@PathVariable(required = true) String action,
-			@PathVariable(required = true) String classId,
+			@RequestParam(name = "classId", defaultValue = "0") String classId,
 			@RequestParam(name = "remarks", defaultValue = "") String remarks) {
 		
 		ClassManagementActionEnum actionEnum; 
@@ -385,15 +307,15 @@ public class ClassManagementController {
 		model.addAttribute("message", messageSource.getMessage("msg54", 
 				new Object[] {actionEnum},
 				null));
-		model.addAttribute("redirect", "/classes/view/" + classId);
+		model.addAttribute("redirect", "/classes/view?classId=" + classId);
 		model.addAttribute("redirectDelay", 1000);
 		
 		return "modals/messageModal";
 	}
 	
-	@GetMapping(value = "/classes/curriculumn/{curriculumnId}", produces = {MediaType.APPLICATION_PDF_VALUE})
+	@GetMapping(value = "/classes/curriculumn", produces = {MediaType.APPLICATION_PDF_VALUE})
 	@ResponseBody
-	public byte[] downloadCurriculumn(@PathVariable(required = true) String curriculumnId) {
+	public byte[] downloadCurriculumn(@RequestParam(name = "curriculumnId", defaultValue = "0") String curriculumnId) {
 		CurriculumnModel curriculumnModel = curriculumnService.getOne(Long.parseLong(curriculumnId));
 		System.out.println(curriculumnModel);
 		return curriculumnModel.getContent();

@@ -31,7 +31,7 @@ public class Trainee {
 	@JoinColumn(name = "class_id", nullable = true)
 	private ClassBatch classBatch;
 
-	@OneToOne(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "trainee", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private TraineeCandidateProfile traineeCandidateProfile;
 
 	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -58,17 +58,29 @@ public class Trainee {
 	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Status> statuses;
 
-	@OneToMany(mappedBy = "trainee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "trainee", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Milestone> milestones;
+	
+	@OneToOne(mappedBy = "trainee", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Allocation allocation;
+	
+	@OneToOne(mappedBy = "trainee", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private AllowanceGroup allowanceGroup;
+	
+	@OneToOne(mappedBy = "trainee", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Commitment commitment;
 
+	@Column(name = "tpbank_account")
+	private String tpbankAccount;
+	
 	@Column(name = "remarks", nullable = true)
-	private int remarks;
+	private String remarks;
 
 	public Trainee() {
 		super();
 	}
 
-	public Trainee(long traineeCandidateID, int remarks) {
+	public Trainee(long traineeCandidateID, String remarks) {
 		super();
 		this.traineeCandidateId = traineeCandidateID;
 		this.remarks = remarks;
@@ -78,7 +90,8 @@ public class Trainee {
 			List<AttendantStatus> attendantStatuses, List<Allowance> allowances, List<GPA> gpas,
 			List<RewardPenalty> rewardPenalties, List<LearningPath> learningPaths, List<Guarantee> guarantees,
 			List<InterviewValuation> interviewValuations, List<Status> statuses, List<Milestone> milestones,
-			int remarks) {
+			Allocation allocation, Commitment commitment, String tpbankAccount, String remarks) {
+		super();
 		this.traineeCandidateId = traineeCandidateId;
 		this.classBatch = classBatch;
 		this.traineeCandidateProfile = traineeCandidateProfile;
@@ -91,6 +104,9 @@ public class Trainee {
 		this.interviewValuations = interviewValuations;
 		this.statuses = statuses;
 		this.milestones = milestones;
+		this.allocation = allocation;
+		this.commitment = commitment;
+		this.tpbankAccount = tpbankAccount;
 		this.remarks = remarks;
 	}
 
@@ -193,11 +209,11 @@ public class Trainee {
 		this.statuses = statuses;
 	}
 
-	public int getRemarks() {
+	public String getRemarks() {
 		return remarks;
 	}
 
-	public void setRemarks(int remarks) {
+	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
 
@@ -207,6 +223,38 @@ public class Trainee {
 
 	public void setMilestones(List<Milestone> milestones) {
 		this.milestones = milestones;
+	}
+
+	public Allocation getAllocation() {
+		return allocation;
+	}
+
+	public void setAllocation(Allocation allocation) {
+		this.allocation = allocation;
+	}
+
+	public String getTpbankAccount() {
+		return tpbankAccount;
+	}
+
+	public void setTpbankAccount(String tpbankAccount) {
+		this.tpbankAccount = tpbankAccount;
+	}
+
+	public Commitment getCommitment() {
+		return commitment;
+	}
+
+	public void setCommitment(Commitment commitment) {
+		this.commitment = commitment;
+	}
+	
+	public AllowanceGroup getAllowanceGroup() {
+		return allowanceGroup;
+	}
+
+	public void setAllowanceGroup(AllowanceGroup allowanceGroup) {
+		this.allowanceGroup = allowanceGroup;
 	}
 
 	@Override

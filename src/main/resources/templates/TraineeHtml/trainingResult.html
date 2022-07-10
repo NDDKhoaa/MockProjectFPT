@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http: //www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+        integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" type="text/css" media="all" href="../static/css/traineeInfo.css"
+        th:href="@{/static/css/traineeInfo.css}" />
+    <title>Training Result</title>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row" style="height: 50px; background-color: #205081; vertical-align: middle;">
+            <div class="col-lg-2">
+                <img src="https://i.postimg.cc/7Y2Hrb9q/Logo.png" alt="" style="height: 47px; width: 90px;">
+            </div>
+            <div class="col">
+                <h2 style="font-size: 25px; color: white; font-weight: 780; margin-top: 10px;">FSOFT
+                    HR ULTILITY</h2>
+            </div>
+        </div>
+        <div class="row" style="font-weight: 550;">
+            <div class="col-lg-2 menusetting" style="height: 3000px;">
+                <label>Your role now is:</label> <select style="width: 170px; height: 30px; margin-bottom: 20px;">
+                    <option>Select Role</option>
+                </select>
+                <div class="hrefsetting">
+                    <a href=""><i class="fa fa-circle"></i> Dashboard</a>
+                </div>
+                <div class="hrefsetting">
+                    <a href="/"><i class="fa fa-circle"></i> Class Management</a>
+                </div>
+                <div class="hrefsetting">
+                    <a href="viewCandidate"><i class="fa fa-circle"></i> Candidate
+                        Management</a>
+                </div>
+                <div class="hrefsetting">
+                    <a href=""><i class="fa fa-circle"></i> Trainer Management</a>
+                </div>
+                <div class="hrefsetting">
+                    <a href=""><i class="fa fa-circle"></i> Trainee Management</a>
+                </div>
+                <div class="hrefsetting">
+                    <a href=""><i class="fa fa-circle"></i> General Setting</a>
+                </div>
+            </div>
+        </div>
+    </div> 
+        
+        <div style="width: 80%; margin-top: -2980px; margin-left: 280px; font-size: 15px">
+            
+            <h3 style="margin-bottom: 20px;">Trainee Profile</h3>
+            <span> <a class="btn btn-info" th:href="@{http://localhost:8080/showTraineeInfo?id={traineeid}(traineeid=${#request.getParameter('id')})}"> Trainee Profile</a> </span>
+			<span> <a class="btn btn-info" th:href="@{http://localhost:8080/trainingResult/viewMilestones?id={traineeid}(traineeid=${#request.getParameter('id')})}"> Training Result</a></span>
+            <hr>
+            <table th:object="${milestone}" class="milestone-table table table-bordered">
+                <!-- <a th:text="Config Milestone" 
+                            th:href="@{/configeMilestone}"></a> -->
+                <div class="section-header d-flex flex-row">
+                    <button type="button" class="collapse-btn" style="border-radius: 0%">
+                        <i class="fa fa-solid fa-caret-down"></i>
+                    </button>
+                    <span>
+                        <p>Learning Path</p> <span>
+                </div>
+                <tr class="header">
+                    <th>
+                        <p>Total Max Score</p>
+                    </th>
+                    <td>
+                        <p th:text="${milestone.totalMaxScore}"></p>
+                    </td>
+                    <th>
+                        <p>Total Passing Score</p>
+                    </th>
+                    <td>
+                        <p th:text="${milestone.totalPassingScore}"></p>
+                    </td>
+                    <th>
+                        <p>Total Weighted Number</p>
+                    </th>
+                    <td>
+                        <p th:text="${milestone.totalWeightedNumber}"></p>
+                    </td>
+                </tr>
+
+                <table class="milestone-child-table table table-bordered" th:each="milestone : ${milestones}">
+                    <tr>
+                        <th colspan="2">
+                            <p>Milestone Name</p>
+                        </th>
+                        <th colspan="">
+                            <p>Salary Paid</p>
+                        </th>
+                        <th colspan="">
+                            <p>Start Date</p>
+                        </th>
+                        <th colspan="">
+                            <p>End Date</p>
+                        </th>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2">
+                            <p th:text="${milestone.milestoneName}"></p>
+                        </td>
+                        <td colspan="">
+                            <p th:text="${milestone.salaryPaid}"></p>
+                        </td>
+                        <td colspan="">
+                            <p th:text="${milestone.startDate}"></p>
+                        </td>
+                        <td colspan="">
+                            <p th:text="${milestone.endDate}"></p>
+                        </td>
+                    <tr>
+                        <th colspan="">
+
+                        </th>
+                        <th colspan="">
+                            <p>Topic</p>
+                        </th>
+                        <th colspan="">
+                            <p>Max Score</p>
+                        </th>
+                        <th colspan="">
+                            <p>Passing Score</p>
+                        </th>
+                        <th colspan="">
+                            <p>Weighted Number</p>
+                        </th>
+                    </tr>
+                    <tr th:each="topic : ${milestone.topics}">
+                        <td colspan="">
+
+                        </td>
+                        <td colspan="">
+                            <p th:text="${topic.topicName}"></p>
+                        </td>
+                        <td colspan="">
+                            <p th:text="${topic.maxScore}"></p>
+                        </td>
+                        <td colspan="">
+                            <p th:text="${topic.passingScore}"></p>
+                        </td>
+                        <td colspan="">
+                            <p th:text="${topic.weightedNumber}"></p>
+                        </td>
+                    </tr>
+                    </tr>
+                </table>
+            </table>
+            <table class="table table-striped table-bordered" th:object="${attendanceStatusModels}">
+                <div class="header-attendance section-header d-flex flex-row">
+                    <button type="button" class="collapse-btn" style="border-radius: 0%">
+                        <i class="fa fa-solid fa-caret-down"></i>
+                    </button>
+                    <span>
+                        <p>Attendance Status</p> <span>
+                </div>
+                <tr style="text-align: left;">
+                    <th></th>
+                    <th>Absent Times</th>
+                    <th>Late & Early Leave</th>
+                    <th>No Permission Rate</th>
+                    <th>Disciplinary Point</th>
+                </tr>
+                <tr th:each="attendanceStatusModel: ${attendanceStatusModels}">
+                    <td>
+                        <p th:text="${attendanceStatusModel.milestone.milestoneName}"> </p>
+                    </td>
+                    <td>
+                        <p th:text="${attendanceStatusModel.absentTimes}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${attendanceStatusModel.lateEarlyLeave}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${attendanceStatusModel.noPermissionRate}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${attendanceStatusModel.disciplinaryPoint}"></p>
+                    </td>
+                </tr>
+                <tr th:object="${finalAttendanceStatusModel}">
+                    <td>Final</td>
+                    <td>
+                        <p th:text="${finalAttendanceStatusModel.finalAbsentTimes}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${finalAttendanceStatusModel.finalLateEarlyLeave}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${finalAttendanceStatusModel.finalNoPermissionRate}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${finalAttendanceStatusModel.finalDisciplinaryPoint}"></p>
+                    </td>
+                </tr>
+            </table>
+
+            <div type="button" class="section-header d-flex flex-row">
+                <button type="button" class="collapse-btn" style="border-radius: 0%">
+                    <i class="fa fa-solid fa-caret-down"></i>
+                </button>
+                <span>
+                    <p>Topic Mark</p> <span>
+            </div>
+            <div class="topic-mark-table d-flex flex-row">
+                <table style="display:inline-block; table-layout: fixed" class=" table table-striped table-bordered"
+                    th:each="milestoneTopicMark : ${milestoneTopicMarkModels}">
+
+                    <tr style="text-align: left">
+                        <th>
+                            <p th:text="${milestoneTopicMark.milestoneName}"></p>
+                        </th>
+                        <td>
+                            <p th:text="${milestoneTopicMark.total}"></p>
+                        </td>
+                    </tr>
+                    <tr style="text-align: left">
+                        <th>
+                            <p>Topic</p>
+                        </th>
+                        <td>
+                            <p>Score</p>
+                        </td>
+                    </tr>
+                    <tr style="text-align: left" th:each="topic : ${milestoneTopicMark.topics}">
+                        <th>
+                            <p th:text="${topic.topicName}"></p>
+                        </th>
+                        <td>
+                            <p th:text="${topic.traineeScore}"></p>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+            <div class="topic-mark-table-final">
+                <table class="topic-mark-table-final d-flex flex-row table table-striped table-bordered">
+                    <tr>
+                        <th style="width: 105px;">
+                            <p>Final</p>
+                        </th>
+                        <td style="width: 1300px;">
+                            <p th:text="${finalTopicMarkScore}"></p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <table class="table table-striped table-bordered budget-table">
+                <div class="reward-penalty-table section-header d-flex flex-row">
+                    <button type="button" class="collapse-btn" style="border-radius: 0%">
+                        <i class="fa fa-solid fa-caret-down"></i>
+                    </button>
+                    <span>
+                        <p>Reward And Penalty</p> <span>
+                </div>
+                <tr style="text-align: left;">
+                    <td></td>
+                    <th>
+                        <p>Milestone</p>
+                    </th>
+                    <th>
+                        <p>Date</p>
+                    </th>
+                    <th>
+                        <p>Bonus Point</p>
+                    </th>
+                    <th>
+                        <p>Penalty Point</p>
+                    </th>
+                    <th>
+                        <p>Reason</p>
+                    </th>
+                </tr>
+                <tr class="content-item" th:each="rewardPenalty, itemStat : ${rewardPenaltyModels}">
+                    <td>
+                        <p th:text="${rewardPenalty.rewardPenaltyId}" type="text" style="display: none;"></p>
+                    </td>
+                    <td>
+                        <p th:text="${rewardPenalty.milestoneName}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${rewardPenalty.date}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${rewardPenalty.bonusPoint}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${rewardPenalty.penaltyPoint}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${rewardPenalty.reason}"></p>
+                    </td>
+                </tr>
+            </table>
+
+            <table class="table table-bordered" th:object="${gpaViewModels}">
+                <div class="section-header d-flex flex-row">
+                    <button type="button" class="collapse-btn" style="border-radius: 0%">
+                        <i class="fa fa-solid fa-caret-down"></i>
+                    </button>
+                    <span>
+                        <p>GPA</p> <span>
+                </div>
+                <tr style="text-align: left;">
+                    <th>
+
+                    </th>
+                    <th>
+                        <p>Academic Mark</p>
+                    </th>
+                    <th>
+                        <p>Disciplinary Point</p>
+                    </th>
+                    <th>
+                        <p>Bonus</p>
+                    </th>
+                    <th>
+                        <p>Penalty</p>
+                    </th>
+                    <th>
+                        <p>GPA</p>
+                    </th>
+                </tr>
+                <tr style="text-align: left;" th:each="gpaViewModel, stat : ${gpaViewModels}">
+                    <td>
+                        <p th:text="${gpaViewModel.milestoneName}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${gpaViewModel.academicMark}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${gpaViewModel.disciplinaryPoint}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${gpaViewModel.bonus}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${gpaViewModel.pelnaty}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${gpaViewModel.gpaResult}"></p>
+                    </td>
+                </tr>
+                <tr style="text-align: left;" th:object="${finalGpaResult}">
+                    <th>
+                        <p>Final</p>
+                    </th>
+                    <td>
+                        <p th:text="${finalGpaResult.finalAcademicMark}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${finalGpaResult.finalDisciplinaryPoint}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${finalGpaResult.finalBonus}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${finalGpaResult.finalPelnaty}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${finalGpaResult.finalGpaResult}"></p>
+                    </td>
+                </tr>
+            </table>
+            <table class="table table-striped table-bordered" th:object="${commitmentViewModel}">
+                <div class="section-header d-flex flex-row">
+                    <button type="button" class="collapse-btn" style="border-radius: 0%">
+                        <i class="fa fa-solid fa-caret-down"></i>
+                    </button>
+                    <span>
+                        <p>Commitment</p> <span>
+                </div>
+                <tr style="text-align: left;">
+                    <th>
+                        <p>Committed Value</p>
+                    </th>
+                    <th>
+                        <p>Committed Working Duration</p>
+                    </th>
+                    <th>
+                        <p>Committed Working Start Date</p>
+                    </th>
+                    <th>
+                        <p>Committed Working End Date</p>
+                    </th>
+                    <th>
+                        <p>Remarks</p>
+                    </th>
+                </tr>
+                <tr style="text-align: left;">
+                    <td>
+                        <p th:text="${commitmentViewModel.committedValue}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${commitmentViewModel.committedWorkingDuration}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${commitmentViewModel.committedWorkingStartDate}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${commitmentViewModel.committedWorkingEndDate}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${commitmentViewModel.remarks}"></p>
+                    </td>
+                </tr>
+            </table>
+
+            <table class="table table-striped table-bordered" th:object="${gpaViewModels}">
+                <div class="section-header d-flex flex-row">
+                    <button type="button" class="collapse-btn" style="border-radius: 0%">
+                        <i class="fa fa-solid fa-caret-down"></i>
+                    </button>
+                    <span>
+                        <p>Allowance</p> <span>
+                </div>
+                <tr style="text-align: left;">
+                    <th>
+
+                    </th>
+                    <th>
+                        <p>GPA</p>
+                    </th>
+                    <th>
+                        <p>Level</p>
+                    </th>
+                    <th>
+                        <p>SalaryPaid</p>
+                    </th>
+                    <th>
+                        <p>Standard Allowance</p>
+                    </th>
+                    <th>
+                        <p>Remarks</p>
+                    </th>
+                </tr>
+                <tr style="text-align: left;" th:each="allowanceModel, stat : ${allowanceModels}">
+                    <td>
+                        <p th:text="${allowanceModel.milestoneName}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${allowanceModel.gpa}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${allowanceModel.level}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${allowanceModel.salaryPaid}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${allowanceModel.allowanceStandard}"></p>
+                    </td>
+                    <td>
+                        <p th:text="${allowanceModel.remark}"></p>
+                    </td>
+                </tr>
+            </table>
+            <table class="table table-parent table-bordered" th:object="${allocationModel}">
+                <div class="section-header d-flex flex-row">
+                    <button type="button" class="collapse-btn" style="border-radius: 0%">
+                        <i class="fa fa-solid fa-caret-down"></i>
+                    </button>
+                    <span>
+                        <p>Allocation</p>
+                    </span>
+                </div>
+                <tr style="text-align: left;">
+                    <th>
+                        <p>Allocated FSU</p>
+                    </th>
+                    <th>
+                        <p>Salary</p>
+                    </th>
+                    <th>
+                        <p>Start Date</p>
+                    </th>
+                    <th>
+                        <p>Allocation Status</p>
+                    </th>
+                    <th>
+                        <p>Remarks</p>
+                    </th>
+                </tr>
+                <tr style="text-align: left;">
+                    <td>
+                        <p type="text" th:text="${allocationModel.allocationName}"></p>
+                    </td>
+                    <td>
+                        <p type="text" th:text="${allocationModel.salary}"></p>
+
+                    </td>
+                    <td>
+                        <p type="text" th:text="${allocationModel.startDate}"></p>
+
+                    </td>
+                    <td>
+                        <p type="text" th:text="${allocationModel.allocationStatus}"></p>
+                    </td>
+                    <td>
+                        <p type="text" th:text="${allocationModel.allocationRemarks}"></p>
+
+                    </td>
+                </tr>
+            </table>
+            <script type="text/javascript" th:src="@{/static/js/trainingResultView.js}"></script>
+            <div>
+                <a th:href="@{http://localhost:8080/trainingResult/getMilestones?id={traineeid}(traineeid=${#request.getParameter('id')})}" class="btn btn-info"><i
+                    class="fa fa-arrow-left" aria-hidden="true"></i> Update Trainee </a>
+                <a th:href="@{http://localhost:8080/deleteTraineeById?id={traineeid}(traineeid=${#request.getParameter('id')})}" class="btn btn-info"><i
+                        class="fa fa-arrow-left" aria-hidden="true"></i> Delete Trainee</a>
+                <a th:href="@{/showTraineeList/1}" class="btn btn-info"><i
+                    class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
+            </div>
+        </div> 
+        
+        
+</body>
+
+</html>
