@@ -34,19 +34,19 @@ public class Topic {
     @Column(name = "topic_name")
     private String topicName;
     
-    @Column(name = "max_score")
+    @Column(name = "max_score", columnDefinition = "int default 0")
     private int maxScore;
     
-    @Column(name = "passing_score")
+    @Column(name = "passing_score", columnDefinition = "int default 0")
     private int passingScore;
     
-    @Column(name = "weighted_number")
+    @Column(name = "weighted_number", columnDefinition = "int default 0")
     private int weightedNumber;
     
-    @Column(name = "trainee_score")
-    private Integer traineeScore;
+    @Column(name = "trainee_score", columnDefinition = "int default 0")
+    private int traineeScore;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "milestone_id")
     private Milestone milestone;
     public Topic() {
@@ -129,7 +129,7 @@ public class Topic {
 	public int getTraineeScore() {
 		return traineeScore;
 	}
-
+	
 	public void setTraineeScore(int traineeScore) {
 		this.traineeScore = traineeScore;
 	}
@@ -137,9 +137,7 @@ public class Topic {
 	public void setTopicId(long topicId) {
 		this.topicId = topicId;
 	}
-
-
-
+	
 	public Milestone getMilestone() {
 		return milestone;
 	}

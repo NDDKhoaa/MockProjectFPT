@@ -5,7 +5,6 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "Allowance")
-@Cacheable
 public class Allowance {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -20,43 +19,43 @@ public class Allowance {
     @JoinColumn(name = "group_id", nullable = false)
     private AllowanceGroup allowanceGroup;
 
-    @Column(name = "allowance_result", nullable = false)
+    @Column(name = "class_id")
+    private Integer classId;
+    
+    @Column(name = "standard_allowance")
+    private long standardAllowance;
+    
+    @Column(name = "level")
+    private String level;
+    
+    @Column(name = "allowance_result")
     private int allowanceResult;
 
-    @Column(name = "remarks",length = 255,nullable = true)
+    @Column(name = "remarks")
     private String remarks;
     
-    @OneToOne(mappedBy = "allowance")
-    private GPA gpa;
-
+    @OneToOne
+    @JoinColumn(name = "milestone_id")
+    private Milestone milestone;
+    
     public Allowance() {
     }
-    
-    public Allowance(long group, Trainee traineeId, AllowanceGroup allowanceGroup, int allowanceResult, String remarks) {
-        this.allowanceId = group;
-        this.trainee = traineeId;
-        this.allowanceGroup = allowanceGroup;
-        this.allowanceResult = allowanceResult;
-        this.remarks = remarks;
-    }
-    
-    
 
-    public Trainee getTrainee() {
-		return trainee;
-	}
-
-	public void setTrainee(Trainee trainee) {
+    public Allowance(long allowanceId, Trainee trainee, AllowanceGroup allowanceGroup, Integer classId,
+			long standardAllowance, String level, int allowanceResult, String remarks, Milestone milestone) {
+		super();
+		this.allowanceId = allowanceId;
 		this.trainee = trainee;
+		this.allowanceGroup = allowanceGroup;
+		this.classId = classId;
+		this.standardAllowance = standardAllowance;
+		this.level = level;
+		this.allowanceResult = allowanceResult;
+		this.remarks = remarks;
+		this.milestone = milestone;
 	}
 
-	public GPA getGpa() {
-		return gpa;
-	}
 
-	public void setGpa(GPA gpa) {
-		this.gpa = gpa;
-	}
 
 	public long getAllowanceId() {
         return allowanceId;
@@ -82,6 +81,14 @@ public class Allowance {
         this.allowanceGroup = allowanceGroup;
     }
 
+    public Integer getClassId() {
+        return classId;
+    }
+
+    public void setClassId(Integer classId) {
+        this.classId = classId;
+    }
+
     public int getAllowanceResult() {
         return allowanceResult;
     }
@@ -97,4 +104,54 @@ public class Allowance {
     public void setRemarks(String remarks) {
         this.remarks = remarks;
     }
+
+
+
+	public Trainee getTrainee() {
+		return trainee;
+	}
+
+
+
+	public void setTrainee(Trainee trainee) {
+		this.trainee = trainee;
+	}
+
+
+
+	public long getStandardAllowance() {
+		return standardAllowance;
+	}
+
+
+
+	public void setStandardAllowance(long standardAllowance) {
+		this.standardAllowance = standardAllowance;
+	}
+
+
+
+	public String getLevel() {
+		return level;
+	}
+
+
+
+	public void setLevel(String level) {
+		this.level = level;
+	}
+
+
+
+	public Milestone getMilestone() {
+		return milestone;
+	}
+
+
+
+	public void setMilestone(Milestone milestone) {
+		this.milestone = milestone;
+	}
+    
+    
 }

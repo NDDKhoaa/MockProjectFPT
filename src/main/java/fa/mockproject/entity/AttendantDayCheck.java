@@ -14,19 +14,19 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "AttendantDayCheck")
 public class AttendantDayCheck {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "day_check_id")
 	private long id;
-	
+
 	@Column(name = "day_check")
 	private int dayCheck;
-	
+
 	@Column(name = "attendant_status")
 	private String attendantStatus;
-	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "milestone_id")
 	private Milestone milestone;
 
@@ -42,19 +42,13 @@ public class AttendantDayCheck {
 		this.milestone = milestone;
 	}
 
-
-
 	public long getId() {
 		return id;
 	}
 
-
-
 	public void setId(long id) {
 		this.id = id;
 	}
-
-
 
 	public int getDayCheck() {
 		return dayCheck;
@@ -78,7 +72,6 @@ public class AttendantDayCheck {
 
 	public void setMilestone(Milestone milestone) {
 		this.milestone = milestone;
-	} 
-	
-	
+	}
+
 }

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<htmlxmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css"
+	rel="stylesheet" type="text/css" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>Attendace Day Status</title>
+</head>
+<body>
+	<tr>
+			<th></th>
+	</tr>
+	<th:block  >
+	<form th:action= "@{/trainingResult/updateViewAttendanceDayStatus?milestoneid={milestoneid}(milestoneid=${#request.getParameter('milestoneid')})}" method="post" th:object = "${updatedAttendantDayChecks}">
+		<table class="table table-striped table-bordered"  >
+				<tr > 
+					<td th:each = "updatedAttendantDayCheck, itemStat : *{attendantDayChecks}">
+						<input th:value="${listAttendantDayChecks[__${itemStat.index}__].id}"  th:field="*{attendantDayChecks[__${itemStat.index}__].id}" style = "display: none;"/>
+						<input th:value="${listAttendantDayChecks[__${itemStat.index}__].dayCheck}"  th:field="*{attendantDayChecks[__${itemStat.index}__].dayCheck}" style = "display: none;"/>
+						<span th:text="${listAttendantDayChecks[__${itemStat.index}__].dayCheck}"></span>
+					</td>
+				</tr>
+				<tr> 
+						<td th:each = "updatedAttendantDayCheck, itemStat : *{attendantDayChecks}">
+								<select th:field="*{attendantDayChecks[__${itemStat.index}__].attendantStatus}">
+									<option th:value = "${listAttendantDayChecks[__${itemStat.index}__].attendantStatus}" th:text = "${listAttendantDayChecks[__${itemStat.index}__].attendantStatus}">
+									<option th:each = "status : ${statuses}" th:value = "${status}" th:text = "${status}">
+								</select>
+						</td>
+				</tr>
+		</table>
+		<input type = "submit" value = "Submit" />
+	</form>
+	</th:block>
+	
+</body>
+</html>
