@@ -2,132 +2,144 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
-  <link th:replace="fragments/head :: head-infor"></link>
-  <title>Add user</title>
-  <link rel="stylesheet" th:href="@{/static/authentication/css/use-role.css}">
+    <link th:replace="fragments/head :: head-infor"></link>
+    <title>Add user</title>
+    <link rel="stylesheet" th:href="@{/static/authentication/css/use-role.css}">
 </head>
 <body>
 <div class="app container-fluid d-flex flex-column">
-  <header th:replace="fragments/header :: #app-header"></header>
-  <div class="row app-content flex-grow-1">
-    <div class="container-fluid">
-      <div class="row h-100">
-        <nav th:replace="fragments/sidebar :: #app-sidebar"></nav>
-        <main class="col col-10 px-0 d-flex flex-column">
-          <div class="body-content col-lg-12">
-            <h3>Add user</h3>
-            <div id="add-user-error"></div>
-            <form id="form-add-user" th:object="${userModel}">
-              <div class="form-group">
-                <label>First name
-                  <text style="color: red;">*</text>
-                </label>
-                <input type="text" id="firstName" class="form-control" required
-                       oninvalid="this.setCustomValidity('First name must be not empty!')"
-                       oninput="this.setCustomValidity('')">
-              </div>
-              <div class="form-group">
-                <label>Last name</label>
-                <input type="text" id="lastName" class="form-control"
-                       th:field="*{lastName}">
-              </div>
-              <div class="form-group">
-                <label>Email
-                  <text style="color: red;">*</text>
-                </label>
-                <input placeholder="test@gmail.com" type="email" id="email" class="form-control"
-                       th:field="*{email}" required
-                       oninvalid="this.setCustomValidity('Email must be not empty!')"
-                       oninput="this.setCustomValidity('')">
-              </div>
-              <div class="form-group">
-                <label>Password
-                  <text style="color: red;">*</text>
-                </label>
-                <input type="password" id="password" class="form-control" th:field="*{password}"
-                       required
-                       oninvalid="this.setCustomValidity('Password must be not empty!')"
-                       oninput="this.setCustomValidity('')">
-              </div>
-              <div class="form-group">
-                <label>Phone number</label>
-                <input type="text" id="phoneNumber" class="form-control" th:field="*{phoneNumber}">
-              </div>
-              <div class="form-group">
-                <label>Role
-                  <text style="color: red;">*</text>
-                </label>
-                <select class="form-control" th:field="*{roles}" multiple="multiple" id="roles">
-                  <option th:each=" role1:${listRole}" th:field="*{roles}"
-                          th:value="${role1.getRoleId()}" th:text="${role1.getName()}"></option>
-                </select>
-              </div>
-            </form>
-            <button type="button" id="save-user" class="btn btn-primary">Save</button>
-            <button type="button" id="clear-add-user" class="btn btn-warning">Clear</button>
-            <button class="btn btn-danger"><a th:href="@{'/listUser'}">Cancel</a></button>
-          </div>
-        </main>
-      </div>
+    <header th:replace="fragments/header :: #app-header"></header>
+    <div class="row app-content flex-grow-1">
+        <div class="container-fluid">
+            <div class="row h-100">
+                <nav th:replace="fragments/sidebar :: #app-sidebar"></nav>
+                <main class="col col-10 px-0 d-flex flex-column">
+                    <div class="body-content col-lg-12">
+                        <h3>Add user</h3>
+                        <div id="add-user-error"></div>
+                        <form id="form-add-user" th:object="${userModel}">
+                            <div class="form-group">
+                                <label>First name
+                                    <text style="color: red;">*</text>
+                                </label>
+                                <input required oninvalid="this.setCustomValidity('First name must be not empty!')"
+                                       oninput="this.setCustomValidity('')" type="text" id="firstName"
+                                       class="form-control"
+                                       autofocus="true"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Last name</label>
+                                <input type="text" id="lastName" class="form-control"
+                                       th:field="*{lastName}">
+                            </div>
+                            <div class="form-group">
+                                <label>Email
+                                    <text style="color: red;">*</text>
+                                </label>
+                                <input placeholder="test@gmail.com" type="email" id="email" class="form-control"
+                                       th:field="*{email}" required
+                                       oninvalid="this.setCustomValidity('Email must be not empty!')"
+                                       oninput="this.setCustomValidity('')">
+                            </div>
+                            <div class="form-group">
+                                <label>Password
+                                    <text style="color: red;">*</text>
+                                </label>
+                                <input type="password" id="password" class="form-control" th:field="*{password}"
+                                       required
+                                       oninvalid="this.setCustomValidity('Password must be not empty!')"
+                                       oninput="this.setCustomValidity('')">
+                            </div>
+                            <div class="form-group">
+                                <label>Phone number</label>
+                                <input type="text" id="phoneNumber" class="form-control" th:field="*{phoneNumber}">
+                            </div>
+                            <div class="form-group">
+                                <label>Role
+                                    <text style="color: red;">*</text>
+                                </label>
+                                <select required  oninvalid="this.setCustomValidity('Please select role for user!')"
+                                        oninput="this.setCustomValidity('')"  class="form-control" th:field="*{roles}" multiple="multiple" id="roles">
+                                    <option th:each=" role1:${listRole}" th:field="*{roles}"
+                                            th:value="${role1.getRoleId()}" th:text="${role1.getName()}"></option>
+                                </select>
+                            </div>
+                        </form>
+                      <button type="button" id="save-user" class="btn btn-primary">Save</button>
+                      <button type="button" id="clear-add-user" class="btn btn-warning">Clear</button>
+                      <button class="btn btn-danger"><a th:href="@{'/listUser'}">Cancel</a></button>
+                    </div>
+                </main>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 <footer th:replace="fragments/footer :: #app-footer"></footer>
 </body>
 </html>
 <script language="javascript">
-        $('#save-user').click(function() {
-         var firstName = $('#firstName').val();
-           var     lastName = $('#lastName').val();
-           var     email = $('#email').val();
-            var    password = $('#password').val();
-            var    phoneNumber= $('#phoneNumber').val();
-             var roleValue = $('#roles').val();
-   var pattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if (!email.match(pattern)) {
-     document.getElementById("add-user-error").innerHTML = "Please provide a valid email address. Example: test@gmail.com";
-     return;
-    }
-       var stringJson = [];
+  document.getElementById("save-user").addEventListener("click", function(event){
+    event.preventDefault()
+  });
+    $('#save-user').click(function () {
+        var firstName = $('#firstName').val();
+        var lastName = $('#lastName').val();
+        var email = $('#email').val();
+        var password = $('#password').val();
+        var phoneNumber = $('#phoneNumber').val();
+        var roleValue = $('#roles').val();
+        var pattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      document.getElementById("add-user-error").innerHTML ="";
+        if(firstName=="") {
+          document.getElementById("add-user-error").innerHTML = "First name must be not empty!";
+          return;
+        }
+      if(roleValue=="") {
+        document.getElementById("add-user-error").innerHTML = "Please select role for user!";
+        return;
+      }
+        if (email == "" || !email.match(pattern)) {
+            document.getElementById("add-user-error").innerHTML = "Please provide a valid email address. Example: test@gmail.com";
+            return;
+        }
+        var stringJson = [];
 
-        for(var i = 0; i < roleValue.length; i++) {
-          const role = {roleId:  roleValue[i]};
-          stringJson.push(role);
+        for (var i = 0; i < roleValue.length; i++) {
+            const role = {roleId: roleValue[i]};
+            stringJson.push(role);
 
         }
         var userModel = {
-                firstName : firstName,
-                lastName : lastName,
-                email : email,
-                password : password,
-                phoneNumber: phoneNumber,
-                roles: stringJson
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: password,
+            phoneNumber: phoneNumber,
+            roles: stringJson
         }
-         document.getElementById("add-user-error").innerHTML = "";
+        document.getElementById("add-user-error").innerHTML = "";
         $.ajax({
             url: '/addUser',
             method: 'POST',
             contentType: "application/json",
-            data:  JSON.stringify(userModel),
+            data: JSON.stringify(userModel),
             success: function (data) {
-            if(data == "OK"){
-              window.location = "/listUser";
-              }
+                if (data == "OK") {
+                    window.location = "/listUser";
+                }
             },
-            error: function(error) {
-             if(error.responseText == "Email existed."){
-              document.getElementById("add-user-error").innerHTML = "Email existed.";
-             }
-                    }
-                });
-
+            error: function (error) {
+                if (error.responseText == "Email existed.") {
+                    document.getElementById("add-user-error").innerHTML = "Email existed.";
+                }
+            }
         });
 
-    $('#clear-add-user').click(function() {
-      $("#form-add-user").trigger('reset');
-      });
+    });
 
-
+    $('#clear-add-user').click(function () {
+        $("#form-add-user").trigger('reset');
+    });
 
 
 </script>
