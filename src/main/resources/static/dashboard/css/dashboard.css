@@ -1,4 +1,4 @@
-:root {
+/*:root {
     --header-background: #BBB;
     --nav-backgound: #BBB;
     --footer-backgound: #BBB;
@@ -41,9 +41,9 @@ html {
     flex-direction: column;
     margin-left: auto;
     margin-right: auto;
-}
+}*/
 
-header {
+/*header {
     background-color: rgb(62, 62, 161);
     padding: 8px 0;
 }
@@ -239,7 +239,7 @@ main .control-btn {
 }
 .navbar-inner{
     color: blue;
-}
+}*/
 .dashboard{
     float: right;
     padding: 0px;
@@ -270,11 +270,11 @@ main .control-btn {
     padding: 15px;
     float:right;
 }
-footer {
+/*footer {
     background-color: rgb(227, 223, 223);
     border: 1px solid black;
     padding: 12px;
     height:50px;
     float: left;
     width: 100%;
-}
+}*/

@@ -38,9 +38,8 @@
               </tr>
               </tbody>
             </table>
-            <ul th:if="${totalElement > 0}" class="pagination"
-                th:each="pageNumber : ${#numbers.sequence( 1,totalPage ,1)}">
-              <li class="page-item" th:classappend="${pageNumber==page} ? active"><a
+            <ul class="pagination" >
+              <li th:if="${totalElement > 0}"  th:each="pageNumber : ${#numbers.sequence( 1,totalPage ,1)}" class="page-item" th:classappend="${pageNumber==page} ? active"><a
                   th:href="@{/listRole(size=${size}, page=${pageNumber})}"
                   th:text=${pageNumber}
                   class="page-link"></a></li>
