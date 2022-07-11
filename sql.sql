@@ -117,14 +117,7 @@ INSERT INTO `mockproject`.`trainer_profile` (trainer_profile_id, account, full_n
     (3, "LienDTM1", "Duong Thi My Lien", "1987-05-17", "LienDTM1@gmail.com", 6, 1, "Information Technology", "0575867654", "", ""),
     (4, "DungTV1", "Tran Van Dung", "1991-02-23", "DungTV1@gmail.com", 4, 0, "Computer Science", "0672437365", "", ""),
     (5, "HaiLH1", "Le Hoang Hai", "1989-08-12", "HaiLH1@gmail.com", 5, 0, "Information Technology", "0387654654", "", "");
-    
-INSERT INTO `mockproject`.`trainee_candidate_profile` (trainer_profile_id, account, full_name, date_of_birth, email, experience, gender, major, phone, remarks, unit) VALUES
-    (1, "MinhDV1", "Dang Van Minh", "1992-10-28", "MinhDV1@gmail.com", 4, 0, "Information Technology", "0538647284", "", ""),
-    (2, "DungNH1", "Nguyen Hoang Dung", "1990-06-06", "DungNH1@gmail.com", 3, 0, "Computer Science", "053764t535", "", ""),
-    (3, "LienDTM1", "Duong Thi My Lien", "1987-05-17", "LienDTM1@gmail.com", 6, 1, "Information Technology", "0575867654", "", ""),
-    (4, "DungTV1", "Tran Van Dung", "1991-02-23", "DungTV1@gmail.com", 4, 0, "Computer Science", "0672437365", "", ""),
-    (5, "HaiLH1", "Le Hoang Hai", "1989-08-12", "HaiLH1@gmail.com", 5, 0, "Information Technology", "0387654654", "", "");
-    
+        
 INSERT INTO `mockproject`.`account` (`account_id`, `account`, `password`) VALUES 
 ('1', 'KhoaNDD', 'KhoaNDD'),
 ('2', 'RomanovN', 'RomanovN'),

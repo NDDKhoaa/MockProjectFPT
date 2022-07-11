@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<link th:replace="fragments/head :: head-infor"></link>
+    <link rel="stylesheet" type="text/css" media="all" href="../static/traineeCSSJS/css/traineeInfo.css"
+		th:href="@{/static/traineeCSSJS/css/traineeInfo.css}" />
+	<title>Title</title>
+	<!-- meta, link and scripts -->
+</head>
+<body>
+    <div class="app container-fluid d-flex flex-column">
+        <header th:replace="fragments/header :: #app-header"></header>
+        <div class="row app-content flex-grow-1">
+			<div class="container-fluid">
+				<div class="row h-100">
+					<nav th:replace="fragments/sidebar :: #app-sidebar"></nav>
+					<main class="col col-10 px-0 d-flex flex-column">
+						<div class="header border-bottom border-dark py-1 px-3">
+							<h4 class="m-0">Page Title</h4>          
+						</div>
+						<div class="content p-2 d-flex flex-column flex-grow-1">
+                            <div style="width: 80%; margin-top: -870px; margin-left: 270px;">
+                                <h3 style="margin-bottom: 20px;">Trainee Profile</h3>
+                    
+                                <span> <a class="btn btn-info" th:href="@{http://localhost:8080/showTraineeInfo?id={id}(id=${trainee.id})}">
+                                        Trainee Profile</a> </span>
+                                <span> <a class="btn btn-info" th:href="@{trainingResult/viewMilestones?id={id}(id=${trainee.id})}">
+                                        Training Result</a></span>
+                                <hr>
+                                <table class="table table-bordered">
+                    
+                                    <tr>
+                                        <th>
+                                            <p>Empl ID</p>
+                                        </th>
+                                        <td>
+                                            <p th:text="${trainee.id}"></p>
+                                        </td>
+                                        <th>
+                                            <p>Type</p>
+                                        </th>
+                                        <td>
+                                            <p>Trainee</p>
+                                        </td>
+                                        <th>
+                                            <p>Status</p>
+                                        </th>
+                                        <td>
+                                            <p th:text="${trainee.status}"></p>
+                                        </td>
+                                        <th>
+                                            <p>Allocation Status</p>
+                                        </th>
+                                        <td>
+                                            <p></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="1">
+                                            <p>Account</p>
+                                        </th>
+                                        <td colspan="3">
+                                            <p th:text="${trainee.account}"></p>
+                                        </td>
+                                        <th colspan="1">
+                                            <p>Name *</p>
+                                        </th>
+                                        <td colspan="3">
+                                            <p th:text="${trainee.fullName}"></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="1">
+                                            <p>Gender *</p>
+                                        </th>
+                                        <td colspan="3">
+                                            <span th:text="${trainee.gender}"></span>
+                                        </td>
+                                        <th colspan="1">
+                                            <p>DOB *</p>
+                                        </th>
+                                        <td colspan="3">
+                                            <span th:text="${trainee.dayOfBirth}"></span>
+                                            <!-- <input type="date" th:field="*{dateOfBirth}"
+                                            /> -->
+                                        </td>
+                                    </tr>
+                    
+                                    <tr>
+                                        <th colspan="1">
+                                            <p>University</p>
+                                        </th>
+                                        <td colspan="3">
+                                            <p th:text="${trainee.universityName}"></p>
+                                        </td>
+                                        <th colspan="1">
+                                            <p>Faculty</p>
+                                        </th>
+                                        <td colspan="3">
+                                            <p th:text="${trainee.falcutyName}"></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="1">
+                                            <p>Phone *</p>
+                                        </th>
+                                        <td colspan="3">
+                                            <p th:text="${trainee.phone}"></p>
+                                        </td>
+                                        <th colspan="1">
+                                            <p>Email *</p>
+                                        </th>
+                                        <td colspan="3">
+                                            <p th:text="${trainee.email}"></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="1">
+                                            <p>Salary Paid *</p>
+                                        </th>
+                                        <td colspan="3">
+                                            <span th:text="${trainee.salaryPaid}"></span>
+                                        </td>
+                                        <th colspan="1">
+                                            <p>TPB Account</p>
+                                        </th>
+                                        <td colspan="3">
+                                            <p th:text="${trainee.tpbAccount}"></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="1">
+                                            <p>Allowance Group</p>
+                                        </th>
+                                        <td colspan="3">
+                                            <p th:text="${trainee.allowanceGroup}"></p>
+                                        </td>
+                                        <th colspan="1">
+                                            <p>Commitment</p>
+                                        </th>
+                                        <td colspan="3">
+                                            <p th:text="${ trainee.commitment + ' months - ' + trainee.endDate}"></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <p>History</p>
+                                        </th>
+                                        <td colspan="7">
+                                            <p></p>
+                                        </td>
+                                    </tr>
+                    
+                                </table>
+                                <div>
+                                    <a class="btn btn-info" th:href="@{getTraineeInfo?id={id}(id=${trainee.id})}"><i
+                                            class="fa fa-refresh" aria-hidden="true"></i>
+                                        Update Trainee</a>
+                                    <a class="btn btn-info" th:href="@{deleteTraineeById?id={id}(id=${trainee.id})}"><i
+                                            class="fa fa-trash" aria-hidden="true"></i>
+                                        Delete Trainee</a>
+                                    <a href="showTraineeList/1" class="btn btn-info"><i class="fa fa-arrow-left" aria-hidden="true"></i>
+                                        Back</a>
+                                </div>
+                            </div>
+                        </div>
+						</div>
+					</main>
+				</div>
+			</div>
+        </div>
+        <footer th:replace="fragments/footer :: #app-footer"></footer>
+        <div th:replace="fragments/modal :: #app-modal"></div>
+    </div>
+	<script type="text/javascript" th:replace="fragments/script :: script"></script>
+	<!-- put your script here -->
+</body>
+</html>

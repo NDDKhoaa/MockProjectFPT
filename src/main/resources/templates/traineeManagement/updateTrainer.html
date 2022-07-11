@@ -29,20 +29,25 @@
 				<select value="" class="role-option">
 					<option name="" id="" class="role-option-item">ROLE</option>
 				</select>
-				<ul class="nav-list">
-					<li class="nav-tabs"><a href="#" class="nav-link">Dashboard</a>
-					</li>
-					<li class="nav-tabs"><a href="#" class="nav-link">Candidate
-							Management</a></li>
-					<li class="nav-tabs"><a th:href="@{/showTrainerForm}"
-						class="nav-link">Trainer Management</a></li>
-					<li class="nav-tabs"><a href="#" class="nav-link">Trainee
-							Management</a></li>
-					<li class="nav-tabs"><a href="#" class="nav-link">Class
-							Management</a></li>
-					<li class="nav-tabs"><a href="#" class="nav-link">General
-							Setting</a></li>
-				</ul>
+				  <div class="hrefsetting">
+                    <a th:href="@{'/dashboard'}"><i class="fa fa-circle"></i> Dashboard</a>
+                </div>
+                <div class="hrefsetting">
+                    <a th:href="@{/classes}"><i class="fa fa-circle"></i> Class Management</a>
+                </div>
+                <div class="hrefsetting">
+                    <a th:href="@{/viewCandidate}"><i class="fa fa-circle"></i> Candidate
+                        Management</a>
+                </div>
+                <div class="hrefsetting">
+                    <a th:href="@{/showTrainerList}"><i class="fa fa-circle"></i> Trainer Management</a>
+                </div>
+                <div class="hrefsetting">
+                    <a th:href="@{/showTraineeList/1}"><i class="fa fa-circle"></i> Trainee Management</a>
+                </div>
+                <div class="hrefsetting">
+                    <a href=""><i class="fa fa-circle"></i> General Setting</a>
+                </div>
 			</nav>
 		</div>
 
