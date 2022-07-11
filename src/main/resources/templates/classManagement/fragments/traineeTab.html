@@ -49,8 +49,7 @@
 				</select>
 			</div>
 			<div class="current-page form-row">
-				<!-- <label class="current-page-description col col-form-label text-nowrap">Show [[${totalElements} == 0 ? 0 : 1]] - [[${pageSize} >= ${totalElements} ? ${totalElements} : ${pageSize} ]] of total [[${totalElements}]] items</label> -->
-				<label class="current-page-description col col-form-label text-nowrap"></label>
+				<label class="current-page-description col col-form-label text-nowrap">Show [[${totalElements} == 0 ? 0 : 1]] - [[${pageSize} >= ${totalElements} ? ${totalElements} : ${pageSize} ]] of total [[${totalElements}]] items</label>
 				<select name="pageIndex" class="form-control rounded-0 col border-dark">
 					<option th:each="i: ${#numbers.sequence(1, totalPages)}"  th:selected="${i} == ${pageIndex}" th:value="${i}" th:text="'Page ' + ${i} + '/' + ${totalPages}"></option>
 				</select>
@@ -74,20 +73,20 @@
 			</nav>
 		</div>
 		<div class="control-btn pt-3">
-			<div class="btn-wrapper w-75" th:with="Action=${T(fa.mockproject.entity.enumtype.ClassManagementActionEnum)}">
-				<button type="button" th:attr="data-action=${Action.Create}" class="create-btn btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0">
+			<div class="btn-wrapper w-75">
+				<button type="button" class="create-btn btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0">
 					<i class="fa-solid fa-upload text-blue-00"></i>
 					Import Trainee
 				</button>
-				<button type="button" th:attr="data-action=${Action.Update}" class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0">
+				<button type="button" class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0">
 					<i class="fa-solid fa-user-plus text-success"></i>
 					Add Trainee
 				</button>
-				<button type="button" th:attr="data-action=${Action.Submit}" class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0">
+				<button type="button" class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0">
 					<i class="fa-solid fa-user-xmark text-danger"></i>
 					Romove Trainee
 				</button>
-				<button type="button" th:attr="data-action=${Action.Start}" class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0">
+				<button type="button" class="btn btn-outline-dark pt-0 pb-1 px-1 mr-1 mb-2 rounded-0">
 					<i class="fa-solid fa-pencil text-dark"></i>
 					Update Trainee
 				</button>

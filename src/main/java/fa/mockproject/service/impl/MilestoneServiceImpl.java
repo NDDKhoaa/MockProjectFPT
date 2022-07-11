@@ -48,17 +48,20 @@ public class MilestoneServiceImpl implements MilestoneService {
 		int passingScore = 0;
 		int weightNumber = 0;
 		
-		for(Milestone milestone : milestones) {
-			
-			String milestoneName = "thg" + milestone.getStartDate().getMonthValue() + "-" + (milestone.getStartDate().getYear() % 100);
-			milestone.setMilestoneName(milestoneName);
-			
-			for(Topic topic : milestone.getTopics()) {
-				totalMaxScore += topic.getMaxScore() * topic.getWeightedNumber();
-				passingScore += topic.getPassingScore() * topic.getWeightedNumber();
-				weightNumber += topic.getWeightedNumber();	
+		if(milestones.get(0).getStartDate() != null) {
+			for(Milestone milestone : milestones) {
+				
+				String milestoneName = "thg" + milestone.getStartDate().getMonthValue() + "-" + (milestone.getStartDate().getYear() % 100);
+				milestone.setMilestoneName(milestoneName);
+				
+				for(Topic topic : milestone.getTopics()) {
+					totalMaxScore += topic.getMaxScore() * topic.getWeightedNumber();
+					passingScore += topic.getPassingScore() * topic.getWeightedNumber();
+					weightNumber += topic.getWeightedNumber();	
+				}
 			}
 		}
+		
 		
 		milestonesModel.setTotalMaxScore(totalMaxScore);
 		milestonesModel.setTotalPassingScore(passingScore);

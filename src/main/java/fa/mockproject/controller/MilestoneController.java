@@ -89,8 +89,18 @@ public class MilestoneController {
 		List<Milestone> milestonesForAttendanceStatus = milestonesModelForAttendanceStatus.getMileStones();
 		List<AttendanceStatusModel> attendanceStatusModels = attendaceStatusService
 				.getAttendaceStatusModels(milestonesForAttendanceStatus);
-		FinalAttendanceStatusModel finalAttendanceStatusModel = attendanceStatusModels.get(0)
-				.getFinalAttendanceStatusModel();
+		FinalAttendanceStatusModel finalAttendanceStatusModel = null;
+		if(!(attendanceStatusModels.isEmpty())) {
+			finalAttendanceStatusModel = attendanceStatusModels.get(0)
+					.getFinalAttendanceStatusModel();
+		} else {
+			finalAttendanceStatusModel = new FinalAttendanceStatusModel();
+			finalAttendanceStatusModel.setFinalAbsentTimes(0);
+			finalAttendanceStatusModel.setFinalDisciplinaryPoint(0);
+			finalAttendanceStatusModel.setFinalLateEarlyLeave(0);
+			finalAttendanceStatusModel.setFinalNoPermissionRate(0);
+		}
+		
 		List<MilestoneTopicMarkModel> milestoneTopicMarkModels = topicService.getTopicMark(traineeId);
 		List<RewardPenaltyModel> rewardPenaltyModels = rewardPenaltyService.getRewardAndPenalties(traineeId);
 		List<GpaViewModel> gpaViewModels = this.calculateGpaView(milestonesForAttendanceStatus, milestoneTopicMarkModels,
@@ -116,7 +126,7 @@ public class MilestoneController {
 		model.addAttribute("finalGpaResult", finalGpaResult);
 		model.addAttribute("allocationModel", allocationModel);
 		
-		return "trainingResult";
+		return "traineeManagement/trainingResult";
 	}
 
 	@GetMapping(value = "/trainingResult/getMilestones")
@@ -133,6 +143,16 @@ public class MilestoneController {
 				.getAttendaceStatusModels(milestones1);
 		List<MilestoneTopicMarkModel> milestoneTopicMarkModels = topicService.getTopicMark(traineeId);
 		FinalAttendanceStatusModel finalAttendanceStatusModel = new FinalAttendanceStatusModel();
+		if(!(attendanceStatusModels.isEmpty())) {
+			finalAttendanceStatusModel = attendanceStatusModels.get(0)
+					.getFinalAttendanceStatusModel();
+		} else {
+			finalAttendanceStatusModel = new FinalAttendanceStatusModel();
+			finalAttendanceStatusModel.setFinalAbsentTimes(0);
+			finalAttendanceStatusModel.setFinalDisciplinaryPoint(0);
+			finalAttendanceStatusModel.setFinalLateEarlyLeave(0);
+			finalAttendanceStatusModel.setFinalNoPermissionRate(0);
+		}
 		MilestoneTopicMarkDTOModel milestoneTopicMarkDTOModel = new MilestoneTopicMarkDTOModel(
 				milestoneTopicMarkModels);
 		TopicStatus[] topicStatusesEnum = TopicStatus.values();
@@ -182,7 +202,7 @@ public class MilestoneController {
 		model.addAttribute("finalGpaResult", finalGpaResult);
 		model.addAttribute("allocationModel", allocationModel);
 		
-		return "configureMilestone";
+		return "traineeManagement/configureMilestone";
 	}
 
 	@PostMapping(value = "/trainingResult/createMilestone")
@@ -394,11 +414,14 @@ public class MilestoneController {
 		if(milestones.size() != 0) {
 			minDate = milestones.get(0).getStartDate();
 		}
-		for (Milestone milestone : milestones) {
-			if(minDate.compareTo(milestone.getEndDate()) < 0) {
-				maxDate = milestone.getEndDate();
+		if(milestones.get(0).getEndDate() != null) {
+			for (Milestone milestone : milestones) {
+				if(minDate.compareTo(milestone.getEndDate()) < 0) {
+					maxDate = milestone.getEndDate();
+				}
 			}
 		}
+		
 		CommitmentViewModel commitmentViewModel = new CommitmentViewModel();
 		if(maxDate != null && minDate != null) {
 			commitmentViewModel.setCommittedWorkingStartDate(maxDate.plusDays(30));
@@ -437,6 +460,7 @@ public class MilestoneController {
 		FinalGpaResult finalGpaResult = new FinalGpaResult();
 		finalGpaResult.setFinalAcademicMark(finalScore);
 		finalGpaResult.setFinalDisciplinaryPoint(finalAttendanceStatusModel.getFinalDisciplinaryPoint());
+		
 		int totalBonus = 0;
 		int totalPenalty = 0;
 		int totalGpaResult = 0;

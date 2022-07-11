@@ -10,8 +10,8 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
     </script>
-    <link rel="stylesheet" type="text/css" media="all" href="../static/css/traineeInfo.css"
-        th:href="@{/static/css/traineeInfo.css}" />
+    <link rel="stylesheet" type="text/css" media="all" href="../static/traineeCSSJS/css/traineeInfo.css"
+        th:href="@{/static/traineeCSSJS/css/traineeInfo.css}" />
     <title>Training Result</title>
 </head>
 
@@ -514,12 +514,12 @@
                     </td>
                 </tr>
             </table>
-            <script type="text/javascript" th:src="@{/static/js/trainingResultView.js}"></script>
-            <div>
+            <script type="text/javascript" href="../static/traineeCSSJS/js/trainingResultView.js" th:src="@{/static/traineeCSSJS/js/trainingResultView.js}"></script>
+            <div style="margin-top: 20px;">
                 <a th:href="@{http://localhost:8080/trainingResult/getMilestones?id={traineeid}(traineeid=${#request.getParameter('id')})}" class="btn btn-info"><i
-                    class="fa fa-arrow-left" aria-hidden="true"></i> Update Trainee </a>
+                    class="fa fa-refresh" aria-hidden="true"></i> Update Trainee </a>
                 <a th:href="@{http://localhost:8080/deleteTraineeById?id={traineeid}(traineeid=${#request.getParameter('id')})}" class="btn btn-info"><i
-                        class="fa fa-arrow-left" aria-hidden="true"></i> Delete Trainee</a>
+                        class="fa fa-trash" aria-hidden="true"></i> Delete Trainee</a>
                 <a th:href="@{/showTraineeList/1}" class="btn btn-info"><i
                     class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
             </div>

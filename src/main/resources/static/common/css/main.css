@@ -192,6 +192,26 @@ header.navbar .login-control {
 	background-color: var(--gray);
 }
 
+.form-control {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + 0.75rem);
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+button:focus {
+    outline: 1px solid -webkit-focus-ring-color;
+}
+
 .app {
 	min-height: 100vh;
 }

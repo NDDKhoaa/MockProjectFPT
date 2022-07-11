@@ -12,17 +12,17 @@
 			<div class="container-fluid">
 				<div class="row h-100">
 					<nav th:replace="fragments/sidebar :: #app-sidebar"></nav>
-					<main class="ol col-10 px-0 d-flex flex-column">
+					<main class="col col-10 px-0 d-flex flex-column">
 						<div class="header border-bottom border-dark py-1 px-3">
 							<h4 class="m-0">Page Title</h4>          
 						</div>
 						<div class="content p-2 d-flex flex-column flex-grow-1 d-flex flex-column">
  							<ul class="nav nav-tabs pl-4 border-dark">
 								<li class="nav-item">
-									<a href="#" class="nav-link rounded-0 bg-gray text-body px-2 py-1 active">Information</a>
+									<button th:attr="data-path='view'" class="infor-tab nav-link rounded-0 bg-gray text-body px-2 py-1" th:classappend="${tab} == 'trainee' ? '' : 'active'">Information</button>
 								</li>
 								<li class="nav-item">
-									<a href="#" class="nav-link rounded-0 bg-gray text-body px-2 py-1">Trainee</a>
+									<button th:attr="data-path='trainees'" class="trainee-tab nav-link rounded-0 bg-gray text-body px-2 py-1" th:classappend="${tab} == 'trainee' ? 'active' : ''">Trainee</button>
 								</li>
 							</ul>
 							<div class="tab-content flex-grow-1">

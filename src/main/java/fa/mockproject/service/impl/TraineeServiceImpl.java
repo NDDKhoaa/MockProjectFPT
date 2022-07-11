@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import fa.mockproject.entity.Account;
 import fa.mockproject.entity.AllowanceGroup;
 import fa.mockproject.entity.Faculty;
 import fa.mockproject.entity.Milestone;
@@ -16,10 +17,13 @@ import fa.mockproject.entity.TraineeCandidateProfile;
 import fa.mockproject.entity.University;
 import fa.mockproject.model.TraineeModel;
 import fa.mockproject.model.TraineePage;
+import fa.mockproject.repository.AccountRepository;
 import fa.mockproject.repository.AllowanceGroupRepository;
+import fa.mockproject.repository.FacultyRepository;
 import fa.mockproject.repository.MilestoneRepository;
 import fa.mockproject.repository.TraineeCandidateProfileRepository;
 import fa.mockproject.repository.TraineeRepository;
+import fa.mockproject.repository.UniversityRepository;
 import fa.mockproject.service.TraineeService;
 
 @Service
@@ -37,6 +41,15 @@ public class TraineeServiceImpl implements TraineeService {
 	@Autowired
 	AllowanceGroupRepository allowanceGroupRepository;
 	
+	@Autowired
+	AccountRepository accountRepository;
+	
+	@Autowired
+	UniversityRepository universityRepository;
+	
+	@Autowired
+	FacultyRepository facultyRepository;
+	
 	public TraineePage getTraineeModels(Pageable pageable) {
 		TraineePage traineePage = new TraineePage();
 		List<TraineeModel> traineeModels = new ArrayList<>();
@@ -48,8 +61,10 @@ public class TraineeServiceImpl implements TraineeService {
 		for(Trainee trainee : trainees) {
 			TraineeModel traineeModel = new TraineeModel();
 			traineeModel.setId(trainee.getTraineeCandidateId());
-			traineeModel.setAccount(trainee.getTraineeCandidateProfile().getAccount().getAccount());
-			traineeModel.setFullName(trainee.getTraineeCandidateProfile().getFullName());
+			if(trainee.getTraineeCandidateProfile() != null) {
+				traineeModel.setAccount(trainee.getTraineeCandidateProfile().getAccount().getAccount());
+				traineeModel.setFullName(trainee.getTraineeCandidateProfile().getFullName());
+			}	
 //			traineeModel.setStatus(trainee.getStatuses().get(0).getRemarks());
 			traineeModels.add(traineeModel);
 		}
@@ -68,23 +83,34 @@ public class TraineeServiceImpl implements TraineeService {
 
 		
 		traineeModel.setId(trainee.getTraineeCandidateId());
-		traineeModel.setGender(trainee.getTraineeCandidateProfile().getGender());
-		traineeModel.setFullName(trainee.getTraineeCandidateProfile().getFullName());
-		traineeModel.setDayOfBirth(trainee.getTraineeCandidateProfile().getDateOfBirth());
-		traineeModel.setAccount(trainee.getTraineeCandidateProfile().getAccount().getAccount());
-		traineeModel.setUniversityName(trainee.getTraineeCandidateProfile().getUniversity().getUniversityName());
-		traineeModel.setFalcutyName(trainee.getTraineeCandidateProfile().getFaculty().getFacultyName());
-		traineeModel.setPhone(trainee.getTraineeCandidateProfile().getPhone());
-		traineeModel.setEmail(trainee.getTraineeCandidateProfile().getEmail());
-		traineeModel.setSalaryPaid(trainee.getMilestones().get(0).getSalaryPaid());
+		if(trainee.getTraineeCandidateProfile() != null) {
+			traineeModel.setGender(trainee.getTraineeCandidateProfile().getGender());
+			traineeModel.setFullName(trainee.getTraineeCandidateProfile().getFullName());
+			traineeModel.setDayOfBirth(trainee.getTraineeCandidateProfile().getDateOfBirth());
+			traineeModel.setAccount(trainee.getTraineeCandidateProfile().getAccount().getAccount());
+			traineeModel.setUniversityName(trainee.getTraineeCandidateProfile().getUniversity().getUniversityName());
+			traineeModel.setFalcutyName(trainee.getTraineeCandidateProfile().getFaculty().getFacultyName());
+			traineeModel.setPhone(trainee.getTraineeCandidateProfile().getPhone());
+			traineeModel.setEmail(trainee.getTraineeCandidateProfile().getEmail());
+			
+		}
+		if(!(trainee.getMilestones().isEmpty())) {
+			traineeModel.setSalaryPaid(trainee.getMilestones().get(0).getSalaryPaid());
+		}
+		if(trainee.getCommitment() != null) {
+			traineeModel.setCommitment(String.valueOf(trainee.getCommitment().getCommittedWorkingDuration()));
+			traineeModel.setEndDate(trainee.getCommitment().getCommittedWorkingEndDate());
+		}
+		
 		traineeModel.setTpbAccount(trainee.getTpbankAccount());
-		traineeModel.setCommitment(String.valueOf(trainee.getCommitment().getCommittedWorkingDuration()));
-		traineeModel.setEndDate(trainee.getCommitment().getCommittedWorkingEndDate());
-		traineeModel.setAllocationStatus(trainee.getAllocation().getAllocationStatus());
+		
+		if(trainee.getAllocation() != null) {
+			traineeModel.setAllocationStatus(trainee.getAllocation().getAllocationStatus());
+		}
+		
 		if(trainee.getAllowanceGroup() != null) {
 			traineeModel.setAllowanceGroup(trainee.getAllowanceGroup().getAllowanceGroupName());
 		}
-		
 		
 		return traineeModel;
 	}
@@ -96,9 +122,26 @@ public class TraineeServiceImpl implements TraineeService {
 
 	public String updateTrainee(TraineeModel traineeModel) {
 		
+		
  		Trainee trainee = traineeRepository.findByTraineeCandidateId(traineeModel.getId());
  		
- 		TraineeCandidateProfile traineeCandidateProfile = trainee.getTraineeCandidateProfile();
+ 		TraineeCandidateProfile traineeCandidateProfile = null;
+ 		
+ 		if(trainee.getTraineeCandidateProfile() != null) {
+ 			traineeCandidateProfile = trainee.getTraineeCandidateProfile();
+ 		} else {
+ 			traineeCandidateProfile = new TraineeCandidateProfile();
+ 		}
+ 		
+ 		String fullName = traineeModel.getFullName();
+ 		
+ 		Account account = new Account();
+ 		if(traineeModel.getAccount() == null) {
+ 			String accountName = fullName.substring(fullName.lastIndexOf(" ") + 1) + fullName.charAt(0) 
+				+ fullName.charAt(fullName.indexOf(" ") + 1);
+ 			
+ 			account.setAccount(accountName);
+ 		}
  		
  		traineeCandidateProfile.setFullName(traineeModel.getFullName());
  		traineeCandidateProfile.setGender(traineeModel.getGender());
@@ -106,20 +149,35 @@ public class TraineeServiceImpl implements TraineeService {
  		traineeCandidateProfile.setPhone(traineeModel.getPhone());
  		traineeCandidateProfile.setDateOfBirth(traineeModel.getDayOfBirth());
  		
- 		Faculty faculty = traineeCandidateProfile.getFaculty();
- 		faculty.setFacultyName(traineeModel.getFalcutyName());
- 		University university = traineeCandidateProfile.getUniversity();
- 		university.setUniversityName(traineeModel.getUniversityName());
- 		traineeCandidateProfile.setUniversity(university);
+ 		
+ 		
+ 		Faculty faculty = facultyRepository.findByName(traineeModel.getFalcutyName());
+ 		
  		traineeCandidateProfile.setFaculty(faculty);
  		
- 		Milestone milestone = trainee.getMilestones().get(0);
- 		milestone.setSalaryPaid(traineeModel.getSalaryPaid());
- 		milestoneRepository.save(milestone);
+ 		University university = universityRepository.findByName(traineeModel.getUniversityName());
+ 		
+ 		traineeCandidateProfile.setUniversity(university);
+
+ 		
+ 		
+ 		Milestone milestone = null;
+ 		if(!(trainee.getMilestones().isEmpty())) {
+ 			milestone = trainee.getMilestones().get(0);
+ 			milestone.setSalaryPaid(traineeModel.getSalaryPaid());
+ 			milestoneRepository.save(milestone);
+ 		} else {
+ 			milestone = new Milestone();
+ 			milestone.setSalaryPaid(traineeModel.getSalaryPaid());
+ 			milestone.setTrainee(trainee);
+ 			milestoneRepository.save(milestone);
+ 		}
+ 		
  		trainee.setTpbankAccount(traineeModel.getTpbAccount());
- 		AllowanceGroup allowanceGroup = trainee.getAllowanceGroup();
- 		System.out.println(allowanceGroup);
- 		if(allowanceGroup != null) {
+ 		AllowanceGroup allowanceGroup = null;
+
+ 		if(trainee.getAllowanceGroup() != null) {
+ 			allowanceGroup = trainee.getAllowanceGroup();
  			allowanceGroup.setAllowanceGroupName(traineeModel.getAllowanceGroup());
  			trainee.setAllowanceGroup(allowanceGroup);
  		} else {
@@ -128,7 +186,9 @@ public class TraineeServiceImpl implements TraineeService {
  			newAllowanceGroup.setTrainee(trainee);
  			allowanceGroupRepository.save(newAllowanceGroup);
  		}
+ 		
  		trainee.setTraineeCandidateProfile(traineeCandidateProfile);
+ 		account.setTraineeCandidateProfile(traineeCandidateProfile);
  		
  		traineeRepository.save(trainee);
  		
@@ -150,7 +210,11 @@ public class TraineeServiceImpl implements TraineeService {
 	}
 
 
+	@Override
+	public List<TraineeModel> getTraineeModelsByClassId(long classId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-// 	public void update(TraineeModel traineeModelForm) {
-// 		
+
 }

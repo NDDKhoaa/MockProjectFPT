@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,24 +13,35 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import fa.mockproject.entity.Faculty;
 import fa.mockproject.entity.Trainee;
+import fa.mockproject.entity.University;
 import fa.mockproject.entity.enumtype.AllowanceGroupEnum;
 import fa.mockproject.entity.enumtype.TopicStatus;
 import fa.mockproject.model.CommitmentViewModel;
 import fa.mockproject.model.TraineeModel;
+import fa.mockproject.service.impl.FacultyServiceImpl;
 import fa.mockproject.service.impl.TraineeServiceImpl;
+import fa.mockproject.service.impl.UniversityServiceImpl;
 
 @Controller
 public class TraineeController {
 	
 	@Autowired
 	TraineeServiceImpl traineeService;
+	
+	@Autowired
+	private UniversityServiceImpl universityService;
+	
+	@Autowired
+	private FacultyServiceImpl facultyService;
 	
 	@GetMapping(value = "/showTraineeInfo")
 	public String showUpdateTrainee(Model model, @RequestParam("id") long id) {
@@ -40,7 +52,7 @@ public class TraineeController {
 		model.addAttribute("traineeModel", traineeModel);
 		model.addAttribute("trainee", traineeModel);
 		
-		return "traineeInfo";
+		return "traineeManagement/traineeInfo";
 	}
 	
 	@GetMapping(value = "/getTraineeInfo")
@@ -53,11 +65,15 @@ public class TraineeController {
 		for(AllowanceGroupEnum status : allowanceGroupEnums) {
 			allowanceGroups.add(status.name());
 		}
+		List<University> universityList = universityService.listAll();
+		List<Faculty> facultyList = facultyService.listAll();
 		
+		model.addAttribute("facultyList", facultyList);
+		model.addAttribute("universityList", universityList);
 		model.addAttribute("trainee", traineeModel);
 		model.addAttribute("allowanceGroups", allowanceGroups);
 		
-		return "traineeForUpdate";
+		return "traineeManagement/traineeForUpdate";
 	}	
 	
 	@PostMapping(value = "/deleteTrainee")
@@ -66,9 +82,11 @@ public class TraineeController {
 								@RequestParam(value = "s", required = false) String s,
 								@RequestParam(value = "search", required = false) String filter,
 								HttpServletRequest rq) {
-		if(action.equals("Search")) {
-			rq.getSession().setAttribute("search", s);
-			rq.getSession().setAttribute("filter", filter);
+		if(action != null) {
+			if(action.equals("Search")) {
+				rq.getSession().setAttribute("search", s);
+				rq.getSession().setAttribute("filter", filter);
+			}
 		} else 
 		if(traineeIds.length != 0) {
 			String successMessage = traineeService.deleteTrainee(traineeIds);
@@ -76,15 +94,21 @@ public class TraineeController {
 		return "redirect:/showTraineeList/1";
 	}
 	
-	@PostMapping(value = "/deleteTraineeById")
+	@GetMapping(value = "/deleteTraineeById")
 	public String deleteTrainee (@RequestParam("id") long traineeId) {
 		String successMessage = traineeService.deleteTraineeById(traineeId);
 		return "redirect:/showTraineeList/1";
 	}
 	
 	@PostMapping(value = "/updateTrainee")
-	public String updateTrainee(@ModelAttribute("trainee") TraineeModel traineeModel, Model model,
-								@RequestParam("id") int id) {
+	public String updateTrainee(@Valid @ModelAttribute("trainee") TraineeModel traineeModel, Model model,
+								@RequestParam("id") int id,
+								BindingResult result) {
+		
+		if (result.hasErrors()) {
+			model.addAttribute("trainee", traineeModel);
+			return "traineeManagement/traineeForUpdate";
+		}
 		
 		String successMesage = traineeService.updateTrainee(traineeModel);
 		
@@ -105,27 +129,29 @@ public class TraineeController {
 		Pageable pageable = null;
 		Page<Trainee> page = null;
 		
-		if(filter.isEmpty()) {
-			pageable = PageRequest.of(pageNo - 1 , size);
-			
-			traineeModels = traineeService.getTraineeModels(pageable).getTraineeModels();
-			page = traineeService.getTraineeModels(pageable).getPage();
-		} if(filter.equals("id")) {
-			pageable = PageRequest.of(pageNo - 1 , size);
-			for (TraineeModel traineeModel : traineeService.getTraineeModels(pageable).getTraineeModels()) {
-				if(traineeModel.getId() == Long.parseLong(search)) {
-					traineeModels.add(traineeModel);
+		if(filter != null) {
+			if(filter.isEmpty()) {
+				pageable = PageRequest.of(pageNo - 1 , size);
+				
+				traineeModels = traineeService.getTraineeModels(pageable).getTraineeModels();
+				page = traineeService.getTraineeModels(pageable).getPage();
+			} if(filter.equals("id")) {
+				pageable = PageRequest.of(pageNo - 1 , size);
+				for (TraineeModel traineeModel : traineeService.getTraineeModels(pageable).getTraineeModels()) {
+					if(traineeModel.getId() == Long.parseLong(search)) {
+						traineeModels.add(traineeModel);
+					}
 				}
-			}
-			page = traineeService.getTraineeModels(pageable).getPage();
-		} if(filter.equals("name")) {
-			pageable = PageRequest.of(pageNo - 1 , size);
-			for (TraineeModel traineeModel : traineeService.getTraineeModels(pageable).getTraineeModels()) {
-				if(traineeModel.getFullName().equals(search)) {
-					traineeModels.add(traineeModel);
+				page = traineeService.getTraineeModels(pageable).getPage();
+			} if(filter.equals("name")) {
+				pageable = PageRequest.of(pageNo - 1 , size);
+				for (TraineeModel traineeModel : traineeService.getTraineeModels(pageable).getTraineeModels()) {
+					if(traineeModel.getFullName().equals(search)) {
+						traineeModels.add(traineeModel);
+					}
 				}
+				page = traineeService.getTraineeModels(pageable).getPage();
 			}
-			page = traineeService.getTraineeModels(pageable).getPage();
 		}
 		
 		pageable = PageRequest.of(pageNo - 1 , size);
@@ -158,6 +184,6 @@ public class TraineeController {
 		model.addAttribute("sizes", sizes);
 		model.addAttribute("size", size);
 		
-		return "traineeList";
+		return "traineeManagement/traineeList";
 	}
 }

@@ -1,32 +1,47 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
-<head th:replace="/header :: head">
+<head>
+  <link th:replace="fragments/head :: head-infor"></link>
   <title>Add role</title>
+  <link rel="stylesheet" th:href="@{/static/authentication/css/use-role.css}">
 </head>
 <body>
-  <div th:include="header :: header"></div>
-  <div class="body-content col-lg-9">
-  <h3>Add role</h3>
-    <form  name='f' th:action="@{/addRole}" th:object="${roleModel}" method='POST'>
-      <div class="form-group">
-        <label>Role Name</label>
-        <input class="form-control" required oninvalid="this.setCustomValidity('Role name must be not empty!')"
-                oninput="this.setCustomValidity('')" type='text' name='name' th:field="*{name}">
+<div class="app container-fluid d-flex flex-column">
+  <header th:replace="fragments/header :: #app-header"></header>
+  <div class="row app-content flex-grow-1">
+    <div class="container-fluid">
+      <div class="row h-100">
+        <nav th:replace="fragments/sidebar :: #app-sidebar"></nav>
+        <main class="col col-10 px-0 d-flex flex-column">
+          <div class="body-content col-lg-12">
+            <h3>Add role</h3>
+            <form name='f' th:action="@{/addRole}" th:object="${roleModel}" method='POST'>
+              <div class="form-group">
+                <label>Role Name</label>
+                <input class="form-control" required
+                       oninvalid="this.setCustomValidity('Role name must be not empty!')"
+                       oninput="this.setCustomValidity('')" type='text' name='name'
+                       th:field="*{name}">
+              </div>
+              <div class="form-group">
+                <label>Privileges</label>
+                <select multiple class="form-control" th:field="*{privileges}">
+                  <option th:each="privilege:${privileges}"
+                          th:value="${privilege}"
+                          th:text="${privilege}"></option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+              <button class="btn btn-danger"><a th:href="@{'/listRole'}">Cancel</a></button>
+            </form>
+          </div>
+        </main>
       </div>
-      <div class="form-group">
-        <label>Privileges</label>
-        <select multiple class="form-control" th:field="*{privileges}">
-          <option th:each="privilege:${privileges}"
-                  th:value="${privilege}"
-                  th:text="${privilege}"></option>
-        </select>
-      </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
-      <button class="btn btn-danger"><a th:href="@{'/listRole'}">Cancel</a></button>
-    </form>
+    </div>
   </div>
-  <footer th:replace="/footer :: footer"></footer>
+</div>
+<footer th:replace="fragments/footer :: #app-footer"></footer>
 </body>
 
 </html>

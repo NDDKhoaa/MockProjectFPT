@@ -15,7 +15,7 @@
       <div class="modal-footer py-3 border-light">                 
       </div>
     </div>
+	<script th:inline="javascript" th:if="${redirect} != null and ${redirectDelay} != null">
+		sendRedirect([[${redirect}]], [(${redirectDelay})]);
+	</script>
 </div>
-<script th:inline="javascript" th:if="${redirect} != null and ${redirectDelay} != null">
-	sendRedirect([[${redirect}]], [(${redirectDelay})]);
-</script>

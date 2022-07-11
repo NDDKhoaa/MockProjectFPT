@@ -2,17 +2,17 @@ package fa.mockproject.model;
 
 public class FinalAttendanceStatusModel {
 	
-	private int finalAbsentTimes;
-	private int finalLateEarlyLeave;
-	private int finalNoPermissionRate;
-	private int finalDisciplinaryPoint;
+	private Integer finalAbsentTimes;
+	private Integer finalLateEarlyLeave;
+	private Integer finalNoPermissionRate;
+	private Integer finalDisciplinaryPoint;
 
 	public FinalAttendanceStatusModel() {
 		super();
 	}
 
-	public FinalAttendanceStatusModel(int finalAbsentTimes, int finalLateEarlyLeave, int finalNoPermissionRate,
-			int finalDisciplinaryPoint) {
+	public FinalAttendanceStatusModel(Integer finalAbsentTimes, Integer finalLateEarlyLeave, Integer finalNoPermissionRate,
+			Integer finalDisciplinaryPoint) {
 		super();
 		this.finalAbsentTimes = finalAbsentTimes;
 		this.finalLateEarlyLeave = finalLateEarlyLeave;
@@ -20,19 +20,19 @@ public class FinalAttendanceStatusModel {
 		this.finalDisciplinaryPoint = finalDisciplinaryPoint;
 	}
 
-	public int getFinalAbsentTimes() {
+	public Integer getFinalAbsentTimes() {
 		return finalAbsentTimes;
 	}
 
-	public void setFinalAbsentTimes(int finalAbsentTimes) {
+	public void setFinalAbsentTimes(Integer finalAbsentTimes) {
 		this.finalAbsentTimes = finalAbsentTimes;
 	}
 
-	public int getFinalLateEarlyLeave() {
+	public Integer getFinalLateEarlyLeave() {
 		return finalLateEarlyLeave;
 	}
 
-	public void setFinalLateEarlyLeave(int finalLateEarlyLeave) {
+	public void setFinalLateEarlyLeave(Integer finalLateEarlyLeave) {
 		this.finalLateEarlyLeave = finalLateEarlyLeave;
 	}
 
@@ -40,7 +40,7 @@ public class FinalAttendanceStatusModel {
 		return finalNoPermissionRate;
 	}
 
-	public void setFinalNoPermissionRate(int finalNoPermissionRate) {
+	public void setFinalNoPermissionRate(Integer finalNoPermissionRate) {
 		this.finalNoPermissionRate = finalNoPermissionRate;
 	}
 
@@ -48,8 +48,16 @@ public class FinalAttendanceStatusModel {
 		return finalDisciplinaryPoint;
 	}
 
-	public void setFinalDisciplinaryPoint(int finalDisciplinaryPoint) {
+	public void setFinalDisciplinaryPoint(Integer finalDisciplinaryPoint) {
 		this.finalDisciplinaryPoint = finalDisciplinaryPoint;
 	}
 
+	@Override
+	public String toString() {
+		return "FinalAttendanceStatusModel [finalAbsentTimes=" + finalAbsentTimes + ", finalLateEarlyLeave="
+				+ finalLateEarlyLeave + ", finalNoPermissionRate=" + finalNoPermissionRate + ", finalDisciplinaryPoint="
+				+ finalDisciplinaryPoint + "]";
+	}
+	
+	
 }

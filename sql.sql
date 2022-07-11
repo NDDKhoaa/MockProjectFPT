@@ -145,7 +145,7 @@ DELETE FROM audit;
 DELETE FROM trainer;
 DELETE FROM class_admin;
 DELETE FROM supplier_partner;
-DELETE FROM class_batch;
+DELETE FROM class_batch where class_id in (31, 40);
 
 DELIMITER $$
 CREATE PROCEDURE UPDATE_CLASS_BATCH_STATUS (

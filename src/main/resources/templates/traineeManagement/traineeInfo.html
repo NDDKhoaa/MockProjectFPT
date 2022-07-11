@@ -11,8 +11,8 @@
 		type="text/css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link th:href="@{css/traineeInfo.css}" rel="stylesheet" />
-	<link rel="stylesheet" type="text/css" media="all" href="../static/css/traineeInfo.css"
-		th:href="@{/static/css/traineeInfo.css}" />
+	<link rel="stylesheet" type="text/css" media="all" href="../static/traineeCSSJS/css/traineeInfo.css"
+		th:href="@{/static/traineeCSSJS/css/traineeInfo.css}" />
 </head>
 
 <body>
@@ -55,11 +55,13 @@
 		<div style="width: 80%; margin-top: -870px; margin-left: 270px;">
 			<h3 style="margin-bottom: 20px;">Trainee Profile</h3>
 
-			<span> <a class="btn btn-info" th:href="@{http://localhost:8080/showTraineeInfo?id={id}(id=${trainee.id})}"> Trainee Profile</a> </span>
-			<span> <a class="btn btn-info" th:href="@{trainingResult/viewMilestones?id={id}(id=${trainee.id})}"> Training Result</a></span>
+			<span> <a class="btn btn-info" th:href="@{http://localhost:8080/showTraineeInfo?id={id}(id=${trainee.id})}">
+					Trainee Profile</a> </span>
+			<span> <a class="btn btn-info" th:href="@{trainingResult/viewMilestones?id={id}(id=${trainee.id})}">
+					Training Result</a></span>
 			<hr>
 			<table class="table table-bordered">
-				
+
 				<tr>
 					<th>
 						<p>Empl ID</p>
@@ -184,11 +186,11 @@
 
 			</table>
 			<div>
-				<a class="btn btn-warning text-light" th:href="@{getTraineeInfo?id={id}(id=${trainee.id})}"><i
+				<a class="btn btn-info" th:href="@{getTraineeInfo?id={id}(id=${trainee.id})}"><i
 						class="fa fa-refresh" aria-hidden="true"></i>
 					Update Trainee</a>
-				<a class="btn btn-warning text-light" th:href="@{deleteTraineeById?id={id}(id=${trainee.id})}"><i
-						class="fa fa-refresh" aria-hidden="true"></i>
+				<a class="btn btn-info" th:href="@{deleteTraineeById?id={id}(id=${trainee.id})}"><i
+						class="fa fa-trash" aria-hidden="true"></i>
 					Delete Trainee</a>
 				<a href="showTraineeList/1" class="btn btn-info"><i class="fa fa-arrow-left" aria-hidden="true"></i>
 					Back</a>

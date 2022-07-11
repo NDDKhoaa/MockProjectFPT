@@ -46,7 +46,7 @@ public class AttendanceStatusController {
 		model.addAttribute("attendanceStatusModels", attendanceStatusModels);
 		model.addAttribute("finalAttendanceStatusModel", finalAttendanceStatusModel);
 		
-		return "showAttendanceStatus";
+		return "traineeManagement/showAttendanceStatus";
 	}
 	
 	@GetMapping("/trainingResult/viewAttendanceDayStatus")
@@ -58,7 +58,7 @@ public class AttendanceStatusController {
 		
 		model.addAttribute("attendantDayChecks", attendantDayChecks);
 		
-		return "showAttendanceDayStatus";
+		return "traineeManagement/showAttendanceDayStatus";
 	}
 	
 	@GetMapping("/trainingResult/updateViewAttendanceDayStatus")
@@ -82,7 +82,7 @@ public class AttendanceStatusController {
 		model.addAttribute("statuses", status);
 		
 		
-		return "updateAttendanceDayStatus";
+		return "traineeManagement/updateAttendanceDayStatus";
 	}
 	
 	@PostMapping("/trainingResult/updateViewAttendanceDayStatus")

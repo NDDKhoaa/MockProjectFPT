@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.springframework.ui.Model;
 
-import fa.mockproject.entity.ClassData;
+import fa.mockproject.entity.DashboardData;
 import fa.mockproject.entity.Location;
 import fa.mockproject.entity.enumtype.ClassBatchStatusEnum;
 import fa.mockproject.entity.enumtype.ClassManagementActionEnum;
@@ -15,6 +15,8 @@ import fa.mockproject.model.ClassBatchModel;
 public interface ClassBatchService {
 	
 	public void getClasses(Model model, Map<String, String> filters);
+	public ClassBatchModel getEmptyClass();
+	public void getClassTrainees(Model model, Map<String, String> filters);
 	public void getClassBaseData(Model model);
 	
 	public abstract ClassBatchModel getClazz(String classId);
@@ -30,5 +32,5 @@ public interface ClassBatchService {
 	public abstract boolean removeTrainee(Long classId, List<Long> traineeId);
 	
 	public Map<WeightedNumberEnum, Integer> convertWeightedNumber(String weightedNumber);
-	List<ClassData> getListTrainee(Location location, ClassBatchStatusEnum status);
+	List<DashboardData> getListTrainee(Location location, ClassBatchStatusEnum status);
 }

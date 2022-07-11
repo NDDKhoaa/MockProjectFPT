@@ -15,4 +15,7 @@ public interface FacultyRepository extends JpaRepository<Faculty, String> {
 	@Query(value = "SELECT f from Faculty f where f.facultyId LIKE '%' || :word || '%' "
 			+ "OR f.facultyName LIKE '%' || :word || '%' " + "OR f.remarks LIKE '%' || :word || '%' ")
 	public List<Faculty> search(@Param("word") String word);
+
+	@Query(value = "Select f from Faculty f Where f.facultyName = :facultyName")
+	public Faculty findByName(@Param("facultyName") String falcutyName);
 }

@@ -1,5 +1,5 @@
 const btns = $(".collapse-btn");
-
+console.log('hieu');
 btns[0].addEventListener('click', (e) => {
     e.stopPropagation;
     $(e.target).parent().nextAll(".milestone-child-table").toggle();

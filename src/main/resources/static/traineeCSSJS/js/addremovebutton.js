@@ -1,3 +1,6 @@
+
+
+
 addRemoveTableRow($(".budget-table"));
 
 
@@ -13,8 +16,6 @@ function addRemoveTableRow(table) {
     addRowBtn.click(e => {
         addTableRow(table);
     })
-
-    
 }
 
 function addTableRow(table) {
@@ -49,7 +50,6 @@ function addTableRow(table) {
                 $(this).attr('name', prefix + "[" + i + "]" + subfix);
             })
             i += 1;
-            console.log($(item));
         });
     });
 }
@@ -67,9 +67,10 @@ const btns = $(".collapse-btn");
 
 btns[0].addEventListener('click', (e) => {
     e.stopPropagation;
-    $(e.target).parents().nextAll().nextAll("table").toggle();
+    $(e.target).parent().nextAll(".milestoneTables").toggle();
+
     $(".header").toggle();
-    $(".new-milestone-table").toggle();
+    $(".new-milestone-table").children('tbody').toggle();
 })
 
 btns[2].addEventListener('click', (e) => {
@@ -85,5 +86,4 @@ for(var i = 1; i < btns.length; i++) {
             $(e.target).parents().next('table').toggle();
         })
     }
-    
 }
