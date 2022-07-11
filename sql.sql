@@ -286,9 +286,10 @@ DELETE FROM class_admin;
 DELETE FROM supplier_partner;
 DELETE FROM class_batch where class_id in (31, 40);
 
+DROP PROCEDURE UPDATE_CLASS_BATCH_STATUS;
 DELIMITER $$
 CREATE PROCEDURE UPDATE_CLASS_BATCH_STATUS (
-	IN class_id BIGINT,
+	IN id BIGINT,
     IN status varchar(255),
     IN history varchar(255),
     IN remarks varchar(255),
@@ -302,23 +303,24 @@ BEGIN
         ROLLBACK;
     END;
     START TRANSACTION;
-		SET classCreatedDate = (SELECT created_date FROM class_batch WHERE class_id = class_id);
+		SET classCreatedDate = (SELECT created_date FROM class_batch WHERE class_id = id);
         IF classCreatedDate = null THEN SET classCreatedDate = now(); END IF;
 		IF status = 'cancelled' AND datediff(now(), classCreatedDate) >= 1 THEN
-			DELETE FROM curriculumn WHERE class_id = class_id;
- 			DELETE FROM budget WHERE class_id = class_id;
- 			DELETE FROM trainer WHERE class_id = class_id;
-			DELETE FROM class_admin WHERE class_id = class_id;
- 			DELETE FROM supplier_partner WHERE class_id = class_id;
- 			DELETE FROM class_batch WHERE class_id = class_id;
+			DELETE FROM curriculumn WHERE class_id = id;
+ 			DELETE FROM budget WHERE class_id = id;
+ 			DELETE FROM trainer WHERE class_id = id;
+			DELETE FROM class_admin WHERE class_id = id;
+ 			DELETE FROM supplier_partner WHERE class_id = id;
+ 			DELETE FROM class_batch WHERE class_id = id;
             SELECT ROW_COUNT() INTO row_cnt;
 		ELSE 
 			UPDATE class_batch SET status = status, history = history, remarks = remarks
-			WHERE class_id = class_id;
+			WHERE class_id = id;
             SELECT ROW_COUNT() INTO row_cnt;
 		END IF;
     COMMIT;
 END$$
 
-CALL UPDATE_CLASS_BATCH_STATUS (28, 'Submited', '06-Jul-2022 - Submited by anonymousUser', '', @row_cnt);
+CALL UPDATE_CLASS_BATCH_STATUS (78, 'Submited', '06-Jul-2022 - Submited by anonymousUser', '', @row_cnt);
 SELECT @row_cnt
+SELECT * FROM class_batch;

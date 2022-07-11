@@ -23,7 +23,7 @@
 		<tbody>
 			<tr class="class-item" th:each="class,iterStat : ${classBatchModels}">
 				<td class="py-0">
-					<input type="checkbox" name="classId" th:value="${class.classId}" class="check-class">
+					<input type="checkbox" name="classId" th:value="${class.classId}" th:attr="'data-class-status'=${class.status}" class="check-class">
 				</td>
 				<td class="py-0" th:text="${iterStat.count}"></td>
 				<td class="py-0">

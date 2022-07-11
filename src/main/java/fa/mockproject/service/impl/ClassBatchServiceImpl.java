@@ -389,11 +389,17 @@ public class ClassBatchServiceImpl implements ClassBatchService {
 		}
 		
 		try {
-			ClassBatchStatusEnum classStatus = classBatchRepository.findStatusByClassId(Long.parseLong(classId));
+			Long id = Long.parseLong(classId);
+			ClassBatchStatusEnum classStatus = classBatchRepository.findStatusByClassId(id);
 			if (ClassManagementConstant.CLASS_PRE_CONDITION.get(action).contains(classStatus)) {
-				if (classBatchRepository
-						.updateStatus(Long.parseLong(classId), action.getStatusAfterAction().toString(),createHistory(action), remark) == 0) {
+				if (classBatchRepository.updateStatus(id, action.getStatusAfterAction().toString(), createHistory(action), remark) == 0) {
 					return false;
+				}
+				if (action == ClassManagementActionEnum.Start) {
+					classBatchRepository.updateActualStartDateById(LocalDate.now(), id);
+				}
+				if (action == ClassManagementActionEnum.Close) {
+					classBatchRepository.updateActualEndDateById(LocalDate.now(), id);
 				}
 				// Send email
 				return true;
@@ -401,7 +407,6 @@ public class ClassBatchServiceImpl implements ClassBatchService {
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		}
-		
 		return false;
 	}
 

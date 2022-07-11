@@ -39,13 +39,42 @@ public class TrainerServiceImpl implements TrainerService{
 	@Autowired
 	ResourceBundleMessageSource messageSource;
 	@Override
-	public List<TrainerProfile> getAllTrainers(String keyword) {
-//		Pageable pageable = PageRequest.of(0, 2);
-//		if(keyword!=null) {
-//			return trainerProfileRepository.findAll(keyword); 
-//		}
-//		return trainerProfileRepository.findAll();
-		return null;
+	public void getAllTrainers(Model model, Map<String, String> filters,String keyword) {
+		
+		Integer pageSize = (Integer) convertFilterType(Integer.class, filters.get("pageSize"));
+		Integer pageIndex = (Integer) convertFilterType(Integer.class, filters.get("pageIndex"));
+		
+		pageIndex = pageIndex == null ? 1 : pageIndex;
+		pageSize = pageSize == null ? ClassManagementConstant.CLASS_LIST_PAGE_SIZE.get(0) : pageSize;
+		Sort sort = Sort.by("trainerProfileId").ascending();
+		Pageable pageable = PageRequest.of(pageIndex-1, pageSize,sort);
+	
+		Page<TrainerProfile> page;
+		if(keyword!=null) {
+			page = trainerProfileRepository.findAll(keyword,pageable);
+		}else {
+			page = trainerProfileRepository.findAll(pageable);
+		}
+		List<TrainerProfile> trainerList = page.getContent();
+		
+		long totalItems = page.getTotalElements();
+		int totalPages = page.getTotalPages();
+		totalPages = totalPages == 0 ? 1 : totalPages;
+		pageIndex = page.getNumber() + 1;
+		pageSize = page.getSize();
+		
+		model.addAttribute("pageSize",pageSize);
+		model.addAttribute("pageIndex",pageIndex);
+		model.addAttribute("totalItems",totalItems);
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("trainerList", trainerList);
+		System.out.println("page index"+pageIndex);
+		if (trainerList == null || trainerList.size() == 0) {
+			model.addAttribute("showModal", true);
+			model.addAttribute("modal", "warningModal");
+			model.addAttribute("message", messageSource.getMessage("msg8", null, null));			
+		}
+
 	}
 	@Override
 	public void getAllTrainers(Model model, Map<String, String> filters) {
@@ -71,7 +100,9 @@ public class TrainerServiceImpl implements TrainerService{
 		model.addAttribute("totalItems",totalItems);
 		model.addAttribute("totalPages", totalPages);
 		model.addAttribute("trainerList", trainerList);
+		System.out.println("page index"+pageIndex);
 		if (trainerList == null || trainerList.size() == 0) {
+			model.addAttribute("showModal", true);
 			model.addAttribute("modal", "warningModal");
 			model.addAttribute("message", messageSource.getMessage("msg8", null, null));			
 		}
