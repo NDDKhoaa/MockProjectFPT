@@ -33,7 +33,7 @@ public class DashboardController {
     @Autowired
     private TraineeCandidateProfileStatusService traineeCandidateProfileStatusService;
 
-    @GetMapping(path = {"/dashboard"})
+    @GetMapping(path = {"/dashboard", "/"})
     public String dashboardPage(Model model) {
         model.addAttribute("locations", locationService.listAll());
         model.addAttribute("classPlanning",
