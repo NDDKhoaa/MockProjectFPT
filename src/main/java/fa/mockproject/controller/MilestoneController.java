@@ -414,7 +414,7 @@ public class MilestoneController {
 		if(milestones.size() != 0) {
 			minDate = milestones.get(0).getStartDate();
 		}
-		if(milestones.get(0).getEndDate() != null) {
+		if(milestones != null && milestones.size() > 0 && milestones.get(0).getEndDate() != null) {
 			for (Milestone milestone : milestones) {
 				if(minDate.compareTo(milestone.getEndDate()) < 0) {
 					maxDate = milestone.getEndDate();

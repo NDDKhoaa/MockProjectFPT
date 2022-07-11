@@ -48,7 +48,7 @@ public class MilestoneServiceImpl implements MilestoneService {
 		int passingScore = 0;
 		int weightNumber = 0;
 		
-		if(milestones.get(0).getStartDate() != null) {
+		if(milestones != null && milestones.size() > 0 && milestones.get(0).getStartDate() != null) {
 			for(Milestone milestone : milestones) {
 				
 				String milestoneName = "thg" + milestone.getStartDate().getMonthValue() + "-" + (milestone.getStartDate().getYear() % 100);
