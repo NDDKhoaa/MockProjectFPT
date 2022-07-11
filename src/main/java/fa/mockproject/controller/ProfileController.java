@@ -276,7 +276,9 @@ public class ProfileController {
 			cvService.save(cv1);
 			candidateService.save(candidate);
 			traineeCandidateProfileService.save(profile);
-		} else {
+			cv1.setTraineeCandidateProfile(profile);
+			cvService.save(cv1);
+			} else {
 			TraineeCandidateProfile profileID = traineeCandidateProfileService.findById(traineeCandidateProfileId);
 			Candidate candidateID = profileID.getCandidate();
 			CV cvId = profileID.getCv();
@@ -304,6 +306,8 @@ public class ProfileController {
 			cvService.save(cv1);
 			candidateService.save(candidate);
 			traineeCandidateProfileService.save(profile);
+			cv1.setTraineeCandidateProfile(profile);
+			cvService.save(cv1);
 		}
 
 		return "redirect:/viewCandidate";
@@ -379,6 +383,9 @@ public class ProfileController {
 		traineeCandidateProfileService.save(profile);
 		account1.setTraineeCandidateProfile(profile);
 		accountServiceImpl.save(account1);
+		cv.setTraineeCandidateProfile(profile);
+		cvService.save(cv);
+		
 
 		return "redirect:/viewCandidate";
 	}
