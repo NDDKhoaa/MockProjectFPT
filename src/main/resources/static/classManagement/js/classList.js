@@ -46,7 +46,7 @@ $(document).ready(e => {
 
 function changeClassState(action, classId, {confirm = 'false', method = 'GET', success = () => {}}) {
     const data = {
-		classId: classId
+		classId: classId[0]
 	};
     if (confirm === 'true') {
         data.confirm = confirm;
