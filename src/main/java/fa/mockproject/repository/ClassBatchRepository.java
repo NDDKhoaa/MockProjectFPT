@@ -24,7 +24,7 @@ import fa.mockproject.entity.enumtype.ClassBatchStatusEnum;
 public interface ClassBatchRepository extends JpaRepository<ClassBatch, Long>, JpaSpecificationExecutor<ClassBatch> {
 	
 	@Procedure(name = "ClassBatch.updateStatus")
-	int updateStatus(@Param("class_id") Long classId,
+	int updateStatus(@Param("id") Long classId,
 			@Param("status") String classBatchStatus,
 			@Param("history") String history,
 			@Param("remarks") String remarks);

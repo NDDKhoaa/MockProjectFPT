@@ -34,7 +34,7 @@ import fa.mockproject.util.Converter;
 
 @NamedStoredProcedureQuery(name = "ClassBatch.updateStatus",
 		procedureName = "UPDATE_CLASS_BATCH_STATUS", parameters = {
-		@StoredProcedureParameter(mode = ParameterMode.IN, name = "class_id", type = Long.class),
+		@StoredProcedureParameter(mode = ParameterMode.IN, name = "id", type = Long.class),
 		@StoredProcedureParameter(mode = ParameterMode.IN, name = "status", type = String.class),
 		@StoredProcedureParameter(mode = ParameterMode.IN, name = "history", type = String.class),
 		@StoredProcedureParameter(mode = ParameterMode.IN, name = "remarks", type = String.class),

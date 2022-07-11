@@ -392,7 +392,7 @@ public class ClassBatchServiceImpl implements ClassBatchService {
 			Long id = Long.parseLong(classId);
 			ClassBatchStatusEnum classStatus = classBatchRepository.findStatusByClassId(id);
 			if (ClassManagementConstant.CLASS_PRE_CONDITION.get(action).contains(classStatus)) {
-				if (classBatchRepository.updateStatus(Long.parseLong(classId), action.getStatusAfterAction().toString(),createHistory(action), remark) == 0) {
+				if (classBatchRepository.updateStatus(id, action.getStatusAfterAction().toString(), createHistory(action), remark) == 0) {
 					return false;
 				}
 				if (action == ClassManagementActionEnum.Start) {
