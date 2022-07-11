@@ -53,7 +53,7 @@ function changeClassState(action, classId, {confirm = 'false', method = 'GET', s
     }
     $.ajax({
         url: `${CLASS_API}/${action}`,
-        data: data,
+        data: decodeURIComponent($.param( data )).replaceAll("[]", ""),
         dataType: "html",
         processData: true,
         cache: true,
@@ -110,18 +110,17 @@ function initClassTable() {
 
 	$(".check-class").change(e => {
 		let classActionables = [];
-		$(".check-class:checked").each(item => {
-			if (!classActionables.length) {
-				classActionables.push(...ACTIONABLE[e.target.dataset.classStatus]);
+		$(".check-class:checked").each((index, item) => {
+			if (classActionables.length == 0) {
+				classActionables.push(...ACTIONABLE[item.dataset.classStatus]);
 			}
 			else {
 				classActionables = classActionables.filter(a => {
-					return ACTIONABLE[e.target.dataset.classStatus].includes(a);
+					return ACTIONABLE[item.dataset.classStatus].includes(a);
 				})
 			}
 		})
 		for (let action in actionabels) {
-			console.log(classActionables.includes(action));
 			if (classActionables.includes(action)) {
 				actionabels[action] = true;
 			}

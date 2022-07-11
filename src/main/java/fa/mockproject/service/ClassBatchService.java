@@ -27,6 +27,7 @@ public interface ClassBatchService {
 	public abstract boolean updateInprogressClass(ClassBatchModel classBatchModel);
 	boolean changeClassState(String classId, ClassManagementActionEnum action);
 	boolean changeClassState(String classId, ClassManagementActionEnum action, String remark);
+	boolean changeClassState(String[] classIds, ClassManagementActionEnum action, String remark);
 	
 	public abstract boolean addTrainee(Long classId, List<Long> traineeId);
 	public abstract boolean removeTrainee(Long classId, List<Long> traineeId);

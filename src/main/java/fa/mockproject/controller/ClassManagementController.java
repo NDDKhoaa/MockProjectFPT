@@ -207,18 +207,46 @@ public class ClassManagementController {
 		return "modals/messageModal";
 	}
 	
+//	@GetMapping(value = "/classes/{action: |^submit$|^reject$|^cancel$|^approve$|^decline$|^accept$|^start$|^finish$|^close$|^request$}")
+//	public String changeClassState(Model model, 
+//			@PathVariable(required = true) String action,
+//			@RequestParam(name = "classId", defaultValue = "0") String classId) {
+//		
+//		ClassBatchStatusEnum classStatus = classBatchService.getClassStatus(classId);
+//		ClassManagementActionEnum actionEnum; 
+//		
+//		if (classStatus == null) {
+//			model.addAttribute("message", messageSource.getMessage("msg51", null, null));
+//			return "modals/errorModal";
+//		}
+//		
+//		try {
+//			actionEnum = ClassManagementActionEnum.valueOf(StringUtils.capitalize(action));
+//		} catch (IllegalArgumentException | NullPointerException e) {
+//			e.printStackTrace();
+//			model.addAttribute("message", messageSource.getMessage("msg51", null, null));
+//			return "modals/errorModal";
+//		}
+//		
+//		if (ClassManagementConstant.CLASS_PRE_CONDITION.get(actionEnum).contains(classStatus)) {
+//			model.addAttribute("classBatchModel", new ClassBatchModel(Long.parseLong(classId)));
+//			model.addAttribute("message", messageSource.getMessage(
+//					"msg53", 
+//					new Object[] {actionEnum.toString().toLowerCase()},
+//					null));
+//			return "modals/confirmModal";
+//		}
+//		
+//		model.addAttribute("message", messageSource.getMessage("msg52", null, null));
+//		return "modals/messageModal";
+//	}
+	
 	@GetMapping(value = "/classes/{action: |^submit$|^reject$|^cancel$|^approve$|^decline$|^accept$|^start$|^finish$|^close$|^request$}")
 	public String changeClassState(Model model, 
 			@PathVariable(required = true) String action,
-			@RequestParam(name = "classId", defaultValue = "0") String classId) {
+			@RequestParam(name = "classId") String[] classIds) {
 		
-		ClassBatchStatusEnum classStatus = classBatchService.getClassStatus(classId);
 		ClassManagementActionEnum actionEnum; 
-		
-		if (classStatus == null) {
-			model.addAttribute("message", messageSource.getMessage("msg51", null, null));
-			return "modals/errorModal";
-		}
 		
 		try {
 			actionEnum = ClassManagementActionEnum.valueOf(StringUtils.capitalize(action));
@@ -228,23 +256,50 @@ public class ClassManagementController {
 			return "modals/errorModal";
 		}
 		
-		if (ClassManagementConstant.CLASS_PRE_CONDITION.get(actionEnum).contains(classStatus)) {
-			model.addAttribute("classBatchModel", new ClassBatchModel(Long.parseLong(classId)));
-			model.addAttribute("message", messageSource.getMessage(
-					"msg53", 
-					new Object[] {actionEnum.toString().toLowerCase()},
-					null));
-			return "modals/confirmModal";
-		}
-		
-		model.addAttribute("message", messageSource.getMessage("msg52", null, null));
-		return "modals/messageModal";
+		model.addAttribute("message", messageSource.getMessage(
+				"msg53", 
+				new Object[] {actionEnum.toString().toLowerCase()},
+				null));
+		return "modals/confirmModal";
 	}
+	
+//	@PostMapping(value = "/classes/{action: |^submit$|^reject$|^cancel$|^approve$|^decline$|^accept$|^start$|^finish$|^close$|^request$}")
+//	public String changeClassState(Model model, 
+//			@PathVariable(required = true) String action,
+//			@RequestParam(name = "classId", defaultValue = "0") String classId,
+//			@RequestParam(name = "remarks", defaultValue = "") String remarks) {
+//		
+//		ClassManagementActionEnum actionEnum; 
+//		
+//		try {
+//			actionEnum = ClassManagementActionEnum.valueOf(StringUtils.capitalize(action));
+//		} catch (IllegalArgumentException | NullPointerException e) {
+//			e.printStackTrace();
+//			model.addAttribute("message", messageSource.getMessage("msg51", null, null));
+//			return "modals/errorModal";
+//		}
+//		
+//		if (!classBatchService.changeClassState(classId, actionEnum, remarks)) {
+//			model.addAttribute("message", messageSource.getMessage(
+//					"msg50", 
+//					new Object[] {actionEnum.toString()}, 
+//					null));
+//			return "modals/errorModal";
+//		}
+//		
+//		model.addAttribute("message", messageSource.getMessage("msg54", 
+//				new Object[] {actionEnum},
+//				null));
+//		model.addAttribute("redirect", "/classes");
+//		model.addAttribute("redirectDelay", 1000);
+//		
+//		return "modals/messageModal";
+//	}
 	
 	@PostMapping(value = "/classes/{action: |^submit$|^reject$|^cancel$|^approve$|^decline$|^accept$|^start$|^finish$|^close$|^request$}")
 	public String changeClassState(Model model, 
 			@PathVariable(required = true) String action,
-			@RequestParam(name = "classId", defaultValue = "0") String classId,
+			@RequestParam(name = "classId") String[] classIds,
 			@RequestParam(name = "remarks", defaultValue = "") String remarks) {
 		
 		ClassManagementActionEnum actionEnum; 
@@ -257,7 +312,7 @@ public class ClassManagementController {
 			return "modals/errorModal";
 		}
 		
-		if (!classBatchService.changeClassState(classId, actionEnum, remarks)) {
+		if (!classBatchService.changeClassState(classIds, actionEnum, remarks)) {
 			model.addAttribute("message", messageSource.getMessage(
 					"msg50", 
 					new Object[] {actionEnum.toString()}, 
@@ -268,7 +323,7 @@ public class ClassManagementController {
 		model.addAttribute("message", messageSource.getMessage("msg54", 
 				new Object[] {actionEnum},
 				null));
-		model.addAttribute("redirect", "/classes/view?classId=" + classId);
+		model.addAttribute("redirect", "/classes");
 		model.addAttribute("redirectDelay", 1000);
 		
 		return "modals/messageModal";

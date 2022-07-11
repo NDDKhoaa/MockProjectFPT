@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
@@ -65,7 +64,6 @@ import fa.mockproject.service.ScopeService;
 import fa.mockproject.service.SkillService;
 import fa.mockproject.service.SubSubjectTypeService;
 import fa.mockproject.service.SubjectTypeService;
-import fa.mockproject.service.TraineeService;
 import fa.mockproject.service.TrainerService;
 import fa.mockproject.util.ClassManagementConstant;
 import fa.mockproject.util.Converter;
@@ -408,6 +406,21 @@ public class ClassBatchServiceImpl implements ClassBatchService {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	@Override
+	public boolean changeClassState(String[] classIds, ClassManagementActionEnum action, String remark) {
+		if (action == null) {
+			return false;
+		}
+		boolean isSuccess = true;
+		
+		for (String classId : classIds) {
+			if(!changeClassState(classId, action, remark)) {
+				isSuccess = false;
+			}
+		}
+		return isSuccess;
 	}
 
 	@Override
