@@ -253,7 +253,7 @@
                                         <td th:text="${profile.statusName}"></td>
                                     </tr>
                                 </table>
-                                <div class="col-lg-2">
+                                <div class="col-lg-2" sec:authorize="hasAnyRole('ROLE_DELETE_CANDIDATE','ROLE_SYSTEM_ADMIN')">
                                     <a th:href="@{/deleteCandidates(chkCheckBoxId=*{chkCheckBoxId})}" style="color: black;"><button class="deleteButton"
                                             style="width: 180px;">
                                             <i class="fas fa-times-circle"></i> Delete Candidate
@@ -262,14 +262,14 @@
                                 </div>
                             </form>
                             <div class="col-lg-4">
-                                <div class="col-lg-2">
+                                <div class="col-lg-2" sec:authorize="hasAnyRole('ROLE_CREATE_NEW_CANDIDATE_PROFILE','ROLE_SYSTEM_ADMIN')">
                                     <a th:href="createNewCandidate" style="color: black;"><button
                                         class="newButton" style="width: 180px;">
                                         <i class="fas fa-plus-circle"></i> New Candidate
                                     </button></a>
                                 </div>
-                                <div class="col-lg-2">
-                                    <a th:href="@{/updateCandidate(chkCheckBoxId=*{chkCheckBoxId})}" style="color: black;"><button
+                                <div class="col-lg-2" sec:authorize="hasAnyRole('ROLE_UPDATE_CANDIDATE','ROLE_SYSTEM_ADMIN')">
+                                    <a th:href="viewCandidate" style="color: black;"><button
                                         style="width: 180px;" class="updateButton">
                                         <i class="fas fa-arrow-alt-circle-up"></i> Update Candidate
                                     </button></a>
