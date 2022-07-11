@@ -19,6 +19,6 @@ public interface TrainerService {
 	void save(TrainerModel trainerModel);
 	TrainerProfile findByTrainerId(long trainerId);
 	void deleteTrainerProfileById(long id);
-	List<TrainerProfile> getAllTrainers(String keyword);
 	void getAllTrainers(Model model, Map<String, String> filters);
+	void getAllTrainers(Model model, Map<String, String> filters,String keyword);
 }

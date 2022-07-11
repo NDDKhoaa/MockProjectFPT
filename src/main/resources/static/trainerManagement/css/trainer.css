@@ -49,3 +49,6 @@ table{
 	display:flex;
 	flex-direction: row;
 }
+.readonly{
+	padding: 1px 1px;
+}

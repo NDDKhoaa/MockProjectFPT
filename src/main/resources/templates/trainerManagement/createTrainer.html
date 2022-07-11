@@ -33,11 +33,10 @@
 
 							<form th:action="@{/saveTrainer}" th:object="${trainerModel}"
 								method="POST" class="content-form border1">
-								<div class="bg-light-blue border1 p-1">
-									Personal Information
-									</div>
+								<div class="bg-light-blue border1 p-1">Personal
+									Information</div>
 								<table class="border1 content-detail">
-									
+
 									<tbody>
 										<tr>
 											<th>Type</th>
@@ -108,14 +107,51 @@
 								</table>
 								<br>
 								<div>
-									<button type="submit" class="btn btn-outline-dark">
-									<i class="fa-solid fa-turn-up float-left text-orange"></i>
-									Submit</button>
+									<button type="button" class="btn btn-outline-dark"
+										data-toggle="modal" data-target="#submitModal">
+										<i class="fa-solid fa-turn-up float-left text-orange"></i>
+										Submit
+									</button>
 									<a th:href="@{/showTrainerList}" class="btn btn-outline-dark"><i
 										class="fas fa-reply" style="color: red"></i> Close</a>
 								</div>
-							</form>
 
+								<!-- Modal-->
+								<div class="modal fade" data-backdrop="true" tabindex="-1"
+									aria-hidden="true" id="submitModal">
+									<div class="modal-dialog modal-dialog-centered">
+										<div class="modal-content border-dark rounded-0">
+											<div class="modal-header py-1 border-dark">
+												<h5 class="modal-title font-weight-normal text-body"
+													style="font-size: 18px;">Confirm</h5>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body text-center">
+												<div class="d-flex justify-content-center align-top">
+													<i class="fa-solid fa-circle-info text-success mr-2"
+														style="font-size: 22px;"></i> <span>Are you sure to
+														submit?</span>
+												</div>
+												<div class="pt-2">
+													<button type="submit"
+														class="btn bg-light border border-dark rounded-0 confirm-btn"
+														style="width: 75px;">OK</button>
+													<button type="button"
+														class="btn bg-light border border-dark rounded-0 ml-3"
+														data-dismiss="modal" style="width: 75px;">Cancel</button>
+												</div>
+											</div>
+
+											<div class="modal-footer py-3 border-dark"></div>
+										</div>
+									</div>
+								</div>
+
+
+							</form>
 
 
 						</div>
@@ -123,9 +159,11 @@
 				</div>
 			</div>
 		</div>
+		<footer th:replace="fragments/footer :: #app-footer"></footer>
+		<div th:replace="fragments/modal :: #app-modal"></div>
 	</div>
-	<footer th:replace="fragments/footer :: #app-footer"></footer>
-	<div th:replace="fragments/modal :: #app-modal"></div>
+
 	<script type="text/javascript" th:replace="fragments/script :: script"></script>
+
 </body>
 </html>
