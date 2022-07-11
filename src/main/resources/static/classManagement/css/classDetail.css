@@ -14,3 +14,7 @@
   	-webkit-box-orient: vertical;  
   	overflow: hidden;
 }
+
+.control-btn button:disabled i {
+	color: var(--light-gray) !important;
+}

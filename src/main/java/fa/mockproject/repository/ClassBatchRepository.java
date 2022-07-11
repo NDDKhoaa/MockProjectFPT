@@ -1,11 +1,13 @@
 package fa.mockproject.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
@@ -41,6 +43,14 @@ public interface ClassBatchRepository extends JpaRepository<ClassBatch, Long>, J
 	
 	@Query("SELECT c.trainees FROM ClassBatch c WHERE c.classId = ?1")
 	Page<Trainee> findTraineeByClassId(Long classId, Pageable pageable);
+	
+	@Modifying
+	@Query("UPDATE ClassBatch c SET c.actualStartDate = ?1 WHERE c.classId = ?2")
+	void updateActualStartDateById(LocalDate actualStartDate, Long classId);
+	
+	@Modifying
+	@Query("UPDATE ClassBatch c SET c.actualEndDate = ?1 WHERE c.classId = ?2")
+	void updateActualEndDateById(LocalDate actualEndDate, Long classId);
 
     List<ClassBatch> findByLocationAndStatus(Location location, ClassBatchStatusEnum status);
     List<ClassBatch> findByLocation(Location location);

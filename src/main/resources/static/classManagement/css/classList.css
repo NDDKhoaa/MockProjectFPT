@@ -1,3 +1,7 @@
 .control-btn i {
     padding-top: 0.39rem;
 }
+
+.control-btn button:disabled i {
+	color: var(--light-gray) !important;
+}
