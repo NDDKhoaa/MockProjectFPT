@@ -28,55 +28,57 @@
 										style="color: black;">Trainer List</a></li>
 								</ul>
 							</div>
-							
-							<form class="content-form border1" th:action="@{/searchTrainer}">
+
+							<form class="content-form" th:action="@{/searchTrainer}">
 								Filter: <input type="text" name="keyword" th:value="${keyword}" />
 								&nbsp; <input type="submit" value="Search" />
-								<div>&nbsp;</div>
-								<table class="border1 content-detail" cellpadding="3" border="1">
-									<thead>
-										<tr>
-											<th>ID</th>
-											<th>Account</th>
-											<th>Full name</th>
-											<th>Date Of Birth</th>
-											<th>Gender</th>
-											<th>Unit</th>
-											<th>Major</th>
-											<th>Phone</th>
-											<th>Email</th>
-											<th>Experience</th>
-											<th>Remarks</th>
-											<th colspan="2" style="text-align: center;">Action</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr th:each="trainer:${trainerList}">
-											<td th:text="${trainer.trainerProfileId}"></td>
-											<td th:text=${trainer.account}></td>
-											<td th:text=${trainer.fullName}></td>
-											<td th:text=${trainer.dateOfBirth}></td>
-											<td th:text=${trainer.gender}></td>
-											<td th:text=${trainer.unit}></td>
-											<td th:text=${trainer.major}></td>
-											<td th:text=${trainer.phone}></td>
-											<td th:text=${trainer.email}></td>
-											<td th:text=${trainer.experience}></td>
-											<td th:text=${trainer.remarks}></td>
-											<!-- <td th:text=${trainer.type}></td> -->
-											<td><a
-												th:href="@{/showFormForUpdateTrainer/{id}(id=${trainer.trainerProfileId})}"
-												class="btn btn-sm btn-outline-dark"><i
-													class="fas fa-pen"></i> Edit</a></td>
-											<td><a
-												th:href="@{/deleteTrainer/{id}(id=${trainer.trainerProfileId})}"
-												class="btn btn-sm btn-outline-dark"><i
-													class="fas fa-trash-alt" style="color: red"></i>Delete</a></td>
-										</tr>
-									</tbody>
-
-								</table>
 							</form>
+							<div>&nbsp;</div>
+							<table class="border1 content-detail" cellpadding="3" border="1">
+								<thead>
+									<tr>
+										<th>ID</th>
+										<th>Account</th>
+										<th>Full name</th>
+										<th>Date Of Birth</th>
+										<th>Gender</th>
+										<th>Unit</th>
+										<th>Major</th>
+										<th>Phone</th>
+										<th>Email</th>
+										<th>Experience</th>
+										<th>Remarks</th>
+										<th colspan="2" style="text-align: center;">Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="trainer:${trainerList}">
+										<td th:text="${trainer.trainerProfileId}"></td>
+										<td th:text=${trainer.account}></td>
+										<td th:text=${trainer.fullName}></td>
+										<td th:text=${trainer.dateOfBirth}></td>
+										<td th:text=${trainer.gender}></td>
+										<td th:text=${trainer.unit}></td>
+										<td th:text=${trainer.major}></td>
+										<td th:text=${trainer.phone}></td>
+										<td th:text=${trainer.email}></td>
+										<td th:text=${trainer.experience}></td>
+										<td th:text=${trainer.remarks}></td>
+
+										<td><a
+											th:href="@{'/showTrainerInfo/' + ${trainer.trainerProfileId}}"
+											class="btn btn-sm btn-outline-dark"><i class="fas fa-pen"></i>
+												View</a></td>
+
+										<td><a
+											th:href="@{'/deleteTrainer/'+ ${trainer.trainerProfileId}}"
+											class="btn btn-sm btn-outline-dark"><i
+												class="fas fa-trash-alt" style="color: red"></i>Delete</a></td>
+									</tr>
+
+								</tbody>
+
+							</table>
 							<br>
 
 							<div class="pagination">
@@ -106,7 +108,8 @@
 											th:classappend="${pageIndex} == ${1} ? 'disabled' : ''">
 											<button
 												class="page-link bg-light-gray border-dark rounded-0 text-body previous">
-												<span aria-hidden="true"><i class="fas fa-angle-double-left"></i></span>
+												<span aria-hidden="true"><i
+													class="fas fa-angle-double-left"></i></span>
 											</button>
 										</li>
 										<li class="page-item"
@@ -120,7 +123,8 @@
 											th:classappend="${pageIndex} == ${totalPages} ? 'disabled' : ''">
 											<button
 												class="page-link bg-light-gray border-dark rounded-0 text-body next">
-												<span aria-hidden="true"><i class="fas fa-angle-double-right"></i></span>
+												<span aria-hidden="true"><i
+													class="fas fa-angle-double-right"></i></span>
 											</button>
 										</li>
 									</ul>
@@ -130,13 +134,17 @@
 								class="btn btn-outline-dark w-125px"><i
 								class="fas fa-user-plus" style="color: green"></i> Add Trainer</a>
 						</div>
+
+
 					</main>
 				</div>
 			</div>
 		</div>
+		<footer th:replace="fragments/footer :: #app-footer"></footer>
+		<div th:replace="fragments/modal :: #app-modal"></div>
 	</div>
-	<footer th:replace="fragments/footer :: #app-footer"></footer>
-	<div th:replace="fragments/modal :: #app-modal"></div>
+
 	<script type="text/javascript" th:replace="fragments/script :: script"></script>
+
 </body>
 </html>
