@@ -327,6 +327,30 @@ public class TraineeCandidateProfile {
 		this.account = account1;
 	}
 
+	public TraineeCandidateProfile(TraineeCandidateProfileModel model, Candidate candidate2, University university2,
+			Faculty faculty2, Skill skill2, TraineeCandidateProfileType type2, Account account1) {
+		this.traineeCandidateProfileId = model.getTraineeCandidateProfileId();
+		this.trainee = model.getTrainee();
+		this.candidate = candidate2;
+		this.fullName = model.getFullName();
+		this.dateOfBirth = model.getDateOfBirth();
+		this.gender = model.getGender();
+		String stringGraduationYear = model.getGraduationYear() + "-01";
+		LocalDate localDateGraduationYear = LocalDate.parse(stringGraduationYear);
+		this.graduationYear = localDateGraduationYear;
+		this.phone = model.getPhone();
+		this.email = model.getEmail();
+		this.type = type2;
+		this.foreignLanguage = model.getForeignLanguage();
+		this.level = model.getLevel();
+		this.allocationStatus = model.getAllocationStatus();
+		this.remarks = model.getRemarks();
+		this.university = university2;
+		this.faculty = faculty2;
+		this.skill = skill2;
+		this.account = account1;
+	}
+
 	@Override
 	public String toString() {
 		return "TraineeCandidateProfile [traineeCandidateProfileId=" + traineeCandidateProfileId + ", fullName="
