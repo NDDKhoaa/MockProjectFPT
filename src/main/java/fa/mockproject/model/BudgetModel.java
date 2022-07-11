@@ -73,6 +73,9 @@ public class BudgetModel {
 		}
 		return (long) (this.unitExpense * this.quantity);
 	}
+	public void setTax(Integer tax) {
+		this.tax = tax;
+	}
 	public Integer getTax() {
 		return tax;
 	}
@@ -81,7 +84,7 @@ public class BudgetModel {
 		if (amount == null || tax == null) {
 			return 0F;
 		}		
-		return (float) amount + amount * tax;
+		return (float) amount + amount * tax / 100;
 	}
 	public String getNote() {
 		return note;

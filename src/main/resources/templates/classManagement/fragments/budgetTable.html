@@ -17,11 +17,11 @@
 			<tr>
 				<td colspan="2" class="bg-gray">Total</td>
 				<td colspan="2">
-					<input readonly type="text" name="" class="w-100 border-0">
+					<input readonly type="text" name="" th:value="*{budgetTotal}" class="w-100 border-0">
 				</td>
 				<td colspan="2" class="bg-gray">Over Budget</td>
 				<td colspan="2">
-					<input readonly type="text" name="" class="w-100 border-0">
+					<input readonly type="text" th:value="*{overBudget} == true ? 'Yes' : 'No'" name="" class="w-100 border-0">
 				</td>
 			</tr>
 			<tr>
@@ -106,13 +106,13 @@
 					<input class="w-100 border-0" type="number" th:field=*{budgetModels[__${itemStat.index}__].quantity}>
 				</td>
 				<td>
-					<input class="w-100 border-0" type="number" th:field=*{budgetModels[__${itemStat.index}__].amount}>
+					<input readonly class="w-100 border-0" type="number" th:field=*{budgetModels[__${itemStat.index}__].amount}>
 				</td>
 				<td>
 					<input class="w-100 border-0" type="number" th:field=*{budgetModels[__${itemStat.index}__].tax}>
 				</td>
 				<td>
-					<input class="w-100 border-0" type="number" th:field=*{budgetModels[__${itemStat.index}__].sum}>
+					<input readonly class="w-100 border-0" type="number" th:field=*{budgetModels[__${itemStat.index}__].sum}>
 				</td>
 				<td>
 					<input class="w-100 border-0" type="text" th:field=*{budgetModels[__${itemStat.index}__].note}>

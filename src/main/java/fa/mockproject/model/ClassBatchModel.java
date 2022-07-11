@@ -498,6 +498,20 @@ public class ClassBatchModel {
 	public void setPositionModel(PositionModel positionModel) {
 		this.positionModel = positionModel;
 	}
+	
+	public int getBudgetTotal() {
+		int total = 0;
+		if (this.getBudgetModels() != null) {
+			for (BudgetModel budgetModel : this.getBudgetModels()) {
+				total += budgetModel.getSum();
+			}
+		}
+		return total;
+	}
+	
+	public boolean isOverBudget() {
+		return this.getBudgetTotal() > this.estimatedBudget;
+	}
 
 	@Override
 	public String toString() {
