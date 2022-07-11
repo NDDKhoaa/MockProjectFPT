@@ -23,9 +23,9 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set <Role> roles = user.getRoles();
+        Set<Role> roles = user.getRoles();
         Set<PrivilegesEnum> privilegesEnums = new HashSet<>();
-        for(Role role: roles){
+        for (Role role : roles) {
             privilegesEnums.addAll(role.getPrivileges());
         }
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
@@ -67,5 +67,13 @@ public class CustomUserDetails implements UserDetails {
 
     public User getUser() {
         return user;
+    }
+
+    public String getFullName() {
+        String lastName = "";
+        if (user.getLastName() != null) {
+            lastName = " " + user.getLastName();
+        }
+        return user.getFirstName() + lastName;
     }
 }

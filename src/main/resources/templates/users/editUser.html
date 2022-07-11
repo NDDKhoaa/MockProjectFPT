@@ -82,10 +82,19 @@
         var    phoneNumber= $('#phoneNumber').val();
         var roleValue = $('#roles').val();
         var pattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-        if (!email.match(pattern)) {
-            document.getElementById("add-user-error").innerHTML = "Please provide a valid email address. Example: test@gmail.com";
-            return;
-        }
+      document.getElementById("add-user-error").innerHTML ="";
+      if(firstName=="") {
+        document.getElementById("add-user-error").innerHTML = "First name must be not empty!";
+        return;
+      }
+      if(roleValue=="") {
+        document.getElementById("add-user-error").innerHTML = "Please select role for user!";
+        return;
+      }
+      if (email == "" || !email.match(pattern)) {
+        document.getElementById("add-user-error").innerHTML = "Please provide a valid email address. Example: test@gmail.com";
+        return;
+      }
         var stringJson = [];
 
         for(var i = 0; i < roleValue.length; i++) {

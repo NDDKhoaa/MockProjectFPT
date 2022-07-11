@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
 </head>
 <body>
@@ -9,7 +9,7 @@
 			FSOFT HR UTILITY
 		</div>
 		<div class="login-control text-white">
-			<div class="user-infor mb-0 small p-0">Welcome, <a href="#" class="text-white" th:utext="${fullName}"></a></div>
+			<div class="user-infor mb-0 small p-0">Welcome, <a href="#" class="text-white" sec:authentication="principal.fullName"></a></div>
 			<div class="logout-btn">
 				<a th:href="@{/logout}" class="logout-link text-white small">Logout</a>
 			</div>

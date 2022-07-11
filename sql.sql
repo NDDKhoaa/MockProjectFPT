@@ -117,6 +117,42 @@ INSERT INTO `mockproject`.`trainer_profile` (trainer_profile_id, account, full_n
     (3, "LienDTM1", "Duong Thi My Lien", "1987-05-17", "LienDTM1@gmail.com", 6, 1, "Information Technology", "0575867654", "", ""),
     (4, "DungTV1", "Tran Van Dung", "1991-02-23", "DungTV1@gmail.com", 4, 0, "Computer Science", "0672437365", "", ""),
     (5, "HaiLH1", "Le Hoang Hai", "1989-08-12", "HaiLH1@gmail.com", 5, 0, "Information Technology", "0387654654", "", "");
+    
+INSERT INTO `mockproject`.`trainee_candidate_profile` (trainer_profile_id, account, full_name, date_of_birth, email, experience, gender, major, phone, remarks, unit) VALUES
+    (1, "MinhDV1", "Dang Van Minh", "1992-10-28", "MinhDV1@gmail.com", 4, 0, "Information Technology", "0538647284", "", ""),
+    (2, "DungNH1", "Nguyen Hoang Dung", "1990-06-06", "DungNH1@gmail.com", 3, 0, "Computer Science", "053764t535", "", ""),
+    (3, "LienDTM1", "Duong Thi My Lien", "1987-05-17", "LienDTM1@gmail.com", 6, 1, "Information Technology", "0575867654", "", ""),
+    (4, "DungTV1", "Tran Van Dung", "1991-02-23", "DungTV1@gmail.com", 4, 0, "Computer Science", "0672437365", "", ""),
+    (5, "HaiLH1", "Le Hoang Hai", "1989-08-12", "HaiLH1@gmail.com", 5, 0, "Information Technology", "0387654654", "", "");
+    
+INSERT INTO `mockproject`.`account` (`account_id`, `account`, `password`) VALUES 
+('1', 'KhoaNDD', 'KhoaNDD'),
+('2', 'RomanovN', 'RomanovN'),
+('3', 'CarterP', 'CarterP'),
+('4', 'StarkT', 'StarkT'),
+('5', 'RogersS', 'RogersS');
+
+INSERT INTO `mockproject`.`candidate` (`candidate_id`, `application_date`, `channel_id`, `location_id`, `status`) VALUES 
+('1', '2022-11-07', 'INSTA', 'HCM', 'New'),
+('2', '2022-11-07', 'FBOOK', 'HN', 'New'),
+('3', '2022-11-07', 'NEWS', 'DN', 'New'),
+('4', '2022-11-07', 'TV', 'CG', 'New'),
+('5', '2022-11-07', 'MAIL', 'QN', 'New');
+
+INSERT INTO `mockproject`.`cv` (`cv_id`, `name`, `size`, `trainee_candidate_profile_id`) VALUES 
+('1', '', '0', '1'),
+('2', '', '0', '2'),
+('3', '', '0', '3'),
+('4', '', '0', '4'),
+('5', '', '0', '5');
+INSERT INTO `mockproject`.`trainee_candidate_profile` (`trainee_candidate_profile_id`, `date_of_birth`, `email`, `foreign_language`, `full_name`, `gender`, `graduation_year`, `level`, `phone`, `account_account_id`, `candidate_candidate_id`, `cv_id`, `faculty_id`, `skill_id`, `type`, `university_id`) VALUES 
+('1', '1998-08-24', 'nddkhoaa2408@gmail.com', 'English', 'Nguyen Do Dang Khoa', 'Male', '2020-08-01', 'Bachelor\'s Degree', '0929411586', '1', '1', '1', 'FL', 'Java', 'Candidate', 'VLU'),
+('2', '1984-12-03', 'blackwidow@gmail.com', 'English,France,Italy', 'Natasha Romanov', 'Female', '2002-08-01', 'Bachelor\'s Degree', '0929411587', '2', '2', '2', 'FL', 'Java', 'Candidate', 'VLU'),
+('3', '1921-04-09', 'agentpeggy@gmail.com', 'English', 'Peggy Carter', 'Male', '1945-08-01', 'Bachelor\'s Degree', '0929411588', '3', '3', '3', 'FL', 'Java', 'Candidate', 'VLU'),
+('4', '1970-05-29', 'ironman@gmail.com', 'English', 'Tony Stark', 'Male', '1990-08-01', 'Bachelor\'s Degree', '0929411589', '4', '4', '4', 'FL', 'Java', 'Candidate', 'VLU'),
+('5', '1918-07-04', 'captainamerica@gmail.com', 'English', 'Steve Rogers', 'Male', '2012-08-01', 'Bachelor\'s Degree', '0929411590', '5', '5', '5', 'FL', 'Java', 'Candidate', 'VLU');
+
+
 
 INSERT INTO `mockproject`.`class_type` (class_type_id, class_type_name, remarks) VALUES
 	('FR', 'Fresher', ""),
@@ -128,6 +164,109 @@ INSERT INTO `mockproject`.`position` (position_id, position_name, remarks) VALUE
     ('EMB', 'Embedded', ""),
     ('DOPS', 'DevOps', ""),
     ('DATA', 'Data Analysis', "");
+    
+    INSERT INTO `mockproject`.`roles` (role_id, name )VALUES
+( 3, " FA. Manager"  ),
+(4, " Delivery  Manager"  ),
+(5 , "Class Admin"    ),
+(6,  "FA. Rec"   ),
+(18 , "Trainer" );
+
+
+INSERT INTO `mockproject`.`role_privileges`(role_role_id , privileges )VALUES
+(6,"ROLE_VIEW_TRAINER_PROFILE"),
+(3, "ROLE_CREATE_CLASS"),
+(5, "ROLE_VIEW_CLASS"),
+(4, "ROLE_UPDATE_CLASS"),
+(3, "ROLE_IMPORT_TRAINEE_TO_CLASS"),
+(3, "ROLE_REMOVE_TRAINEE_FROM_CLASS"),
+(3, "ROLE_SUBMIT_CLASS"),
+(3, "ROLE_VIEW_CLASS"),
+(3, "ROLE_ADD_TRAINEE_TO_CLASS"),
+(3, "ROLE_CANCEL_CLASS"),
+(3, "ROLE_UPDATE_CLASS"),
+(3, "ROLE_SEARCH_CLASS"),
+(4, "ROLE_CREATE_CLASS"),
+(4, "ROLE_VIEW_TRAINER_PROFILE"),
+(4, "ROLE_REMOVE_TRAINEE_FROM_CLASS"),
+(4, "ROLE_CANCEL_CLASS"),
+(4, "ROLE_DELETE_TRAINEE_PROFILE"),
+(4, "ROLE_TRANSFER_CANDIDATE"),
+(4, "ROLE_START_AN_ACCEPTED_CLASS"),
+(4, "ROLE_FINISH_AN_IN_PROGRESS_CLASS"),
+(4, "ROLE_REQUEST_FOR_MORE_INFORMATION"),
+(4, "ROLE_APPROVE_A_SUBMITTED_CLASS"),
+(4, "ROLE_REJECT_A_SUBMITTED_CLASS"),
+(4, "ROLE_IMPORT_TRAINEE_TO_CLASS"),
+(4, "ROLE_SEARCH_TRAINEE"),
+(4, "ROLE_SUBMIT_CLASS"),
+(4, "ROLE_UPDATE_TRAINEE_PROFILE"),
+(4, "ROLE_VIEW_CLASS"),
+(4, "ROLE_ADD_TRAINEE_TO_CLASS"),
+(4, "ROLE_CLOSE_A_FINISHED_CLASS"),
+(4, "ROLE_SEARCH_CLASS"),
+(4, "ROLE_VIEW_CANDIDATE_DETAILS"),
+(4, "ROLE_VIEW_TRAINEE_PROFILE"),
+(3, "ROLE_VIEW_TRAINER_PROFILE"),
+(3, "ROLE_UPDATE_CANDIDATE  "),
+(3, "ROLE_CREATE_NEW_CANDIDATE_PROFILE" ),
+(3, "ROLE_TRANSFER_CANDIDATE"),
+(3, "ROLE_CREATE_TRAINER_PROFILE"),
+(3, "ROLE_DELETE_TRAINER_PROFILE "),
+(3, "ROLE_ACCEPT_AN_APPROVED_CLASS "),
+(3, "ROLE_GENERATE_REPORT    "),
+(3, "ROLE_REQUEST_FOR_MORE_INFORMATION "),
+(3, "ROLE_REJECT_A_SUBMITTED_CLASS "),
+(3, "ROLE_DECLINE_AN_APPROVED_CLASS"),
+(3, "ROLE_SEARCH_TRAINEE   "),
+(3, "ROLE_UPDATE_TRAINEE_PROFILE "),
+(3, "ROLE_CLOSE_A_FINISHED_CLASS"),
+(3, "ROLE_DELETE_CANDIDATE       "),
+(3, "ROLE_VIEW_CANDIDATE_DETAILS "),
+(3, "ROLE_VIEW_TRAINEE_PROFILE  "),
+(3, "ROLE_DELETE_TRAINEE_PROFILE "),
+(3, "ROLE_VIEW_REPORT     "),
+(3, "ROLE_START_AN_ACCEPTED_CLASS"),
+(3, "ROLE_FINISH_AN_IN_PROGRESS_CLASS"),
+(3, "ROLE_APPROVE_A_SUBMITTED_CLASS"),
+(3, "ROLE_EXPORT_REPORT       "),
+(3, "ROLE_UPDATE_TRAINER_PROFILE  "),
+(4, "ROLE_GENERATE_REPORT"),
+(4, "ROLE_VIEW_REPORT "),
+(4, "ROLE_EXPORT_REPORT  "),
+(5, "ROLE_FINISH_AN_IN_PROGRESS_CLASS"),
+(5, "ROLE_GENERATE_REPORT     "),
+(5, "ROLE_VIEW_TRAINER_PROFILE  "),
+(5, "ROLE_SUBMIT_CLASS "),
+(5, "ROLE_UPDATE_TRAINEE_PROFILE "),
+(5, "ROLE_EXPORT_REPORT   "),
+(5, "ROLE_VIEW_REPORT "),
+(5, "ROLE_SEARCH_CLASS    "),
+(5, "ROLE_START_AN_ACCEPTED_CLASS "),
+(5, "ROLE_VIEW_CANDIDATE_DETAILS"),
+(5, "ROLE_UPDATE_TRAINER_PROFILE  "),
+(6, "ROLE_UPDATE_CANDIDATE   "),
+(6, "ROLE_VIEW_REPORT     "),
+(6, "ROLE_CREATE_NEW_CANDIDATE_PROFILE" ),
+(6, "ROLE_TRANSFER_CANDIDATE"),
+(6, "ROLE_GENERATE_REPORT    "),
+(6, "ROLE_VIEW_CLASS      "),
+(6, "ROLE_EXPORT_REPORT  "),
+(6, "ROLE_DELETE_CANDIDATE "),
+(6, "ROLE_SEARCH_CLASS"),
+(6, "ROLE_CANDIDATE_LISTING"),
+(6, "ROLE_SEARCH_CANDIDATE"),
+(6, "ROLE_VIEW_CANDIDATE_DETAILS"),
+(6, "ROLE_VIEW_TRAINEE_PROFILE  "),
+(18, "ROLE_VIEW_CLASS"),
+(18, "ROLE_SEARCH_CLASS "),
+(18, "ROLE_CANDIDATE_LISTING "),
+(18, "ROLE_VIEW_CANDIDATE_DETAILS"),
+(18, "ROLE_UPDATE_TRAINER_PROFILE"),
+(18, "ROLE_VIEW_TRAINER_PROFILE "),
+(18, "ROLE_GENERATE_REPORT"),
+(18, "ROLE_VIEW_REPORT   "),
+(18, "ROLE_EXPORT_REPORT");
 
 SELECT * FROM class_admin_profile;
 
