@@ -1,5 +1,5 @@
 #MOCK PROJECT
-
+School and Student Management System
 ###Tools Using
 
 - Spring Tool 4  
